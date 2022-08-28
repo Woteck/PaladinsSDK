@@ -1,6 +1,6 @@
 #pragma once
 
-// Paladins (3.05) SDK
+// Paladins (5.5) SDK
 
 #ifdef _MSC_VER
 	#pragma pack(push, 0x8)
@@ -378,7 +378,7 @@ public:
 	void STATIC_PlayAkEvent(class UAkEvent* InSoundCue, bool bNotReplicated, bool bNoRepToOwner, bool bStopWhenOwnerDestroyed, const struct FVector& SoundLocation, bool bNoRepToRelevant);
 	void PlaySound(class USoundCue* InSoundCue, bool bNotReplicated, bool bNoRepToOwner, bool bStopWhenOwnerDestroyed, const struct FVector& SoundLocation, bool bNoRepToRelevant);
 	void AudioComponentAttached(class UAudioComponent* AC, int DatabaseID, int LoopIndex);
-	class UAudioComponent* CreateAudioComponent(class USoundCue* InSoundCue, bool bPlay, bool bStopWhenOwnerDestroyed, bool bUseLocation, const struct FVector& SourceLocation, bool bAttachToSelf);
+	class UAudioComponent* STATIC_CreateAudioComponent(class USoundCue* InSoundCue, bool bPlay, bool bStopWhenOwnerDestroyed, bool bUseLocation, const struct FVector& SourceLocation, bool bAttachToSelf);
 	void ResetTimerTimeDilation(const struct FName& TimerName, class UObject* inObj);
 	void STATIC_ModifyTimerTimeDilation(const struct FName& TimerName, float InTimerTimeDilation, class UObject* inObj);
 	float STATIC_GetTimerPercent(const struct FName& TimerFuncName, class UObject* inObj);
@@ -748,7 +748,7 @@ public:
 	void AllPawns(class UClass* BaseClass, const struct FVector& TestLocation, float TestRadius, class APawn** P);
 	void AllControllers(class UClass* BaseClass, class AController** C);
 	void STATIC_NavigationPointCheck(const struct FVector& Point, const struct FVector& Extent, TArray<class ANavigationPoint*>* Navs, TArray<class UReachSpec*>* Specs);
-	void STATIC_RadiusNavigationPoints(class UClass* BaseClass, const struct FVector& Point, float Radius, class ANavigationPoint** N);
+	void RadiusNavigationPoints(class UClass* BaseClass, const struct FVector& Point, float Radius, class ANavigationPoint** N);
 	void AllNavigationPoints(class UClass* BaseClass, class ANavigationPoint** N);
 	void Reset();
 	void PostBeginPlay();
@@ -1149,7 +1149,7 @@ public:
 	class UFont* STATIC_GetTinyFont();
 	void ResetPeerNetDriver();
 	void CleanUpPeerNetDriver();
-	void CreatePeerNetDriver();
+	void STATIC_CreatePeerNetDriver();
 	bool STATIC_HasNetworkConnection();
 	struct FString BuildBugSubmissionString(const struct FString& BugField, const struct FString& BugFieldData);
 	struct FString STATIC_GetDevicePushNotificationToken();
@@ -1217,7 +1217,7 @@ public:
 	class UDownloadableContentEnumerator* STATIC_GetDLCEnumerator();
 	class UOnlineSubsystem* STATIC_GetOnlineSubsystem();
 	void STATIC_DestroyNamedNetDriver(const struct FName& NetDriverName);
-	bool CreateNamedNetDriver(const struct FName& NetDriverName);
+	bool STATIC_CreateNamedNetDriver(const struct FName& NetDriverName);
 };
 
 
@@ -1343,7 +1343,7 @@ public:
 	void STATIC_OnChangeCollision(class USeqAct_ChangeCollision* Action);
 	void CollisionChanged();
 	void ApplyCheckpointRecord(struct ADynamicBlockingVolume_FCheckpointRecord* Record);
-	void CreateCheckpointRecord(struct ADynamicBlockingVolume_FCheckpointRecord* Record);
+	void STATIC_CreateCheckpointRecord(struct ADynamicBlockingVolume_FCheckpointRecord* Record);
 	void PostBeginPlay();
 	void UnRegisterObstacle();
 	void RegisterObstacle();
@@ -1411,7 +1411,7 @@ public:
 
 
 	void ApplyCheckpointRecord(struct ALevelStreamingVolume_FCheckpointRecord* Record);
-	void CreateCheckpointRecord(struct ALevelStreamingVolume_FCheckpointRecord* Record);
+	void STATIC_CreateCheckpointRecord(struct ALevelStreamingVolume_FCheckpointRecord* Record);
 	void STATIC_OnToggle(class USeqAct_Toggle* Action);
 };
 
@@ -1519,7 +1519,7 @@ public:
 
 
 	void ApplyCheckpointRecord(struct APhysicsVolume_FCheckpointRecord* Record);
-	void CreateCheckpointRecord(struct APhysicsVolume_FCheckpointRecord* Record);
+	void STATIC_CreateCheckpointRecord(struct APhysicsVolume_FCheckpointRecord* Record);
 	bool ShouldSaveForCheckpoint();
 	void STATIC_OnSetDamageInstigator(class USeqAct_SetDamageInstigator* Action);
 	void STATIC_NotifyPawnBecameViewTarget(class APawn* P, class APlayerController* PC);
@@ -1854,7 +1854,7 @@ public:
 
 
 	void ApplyCheckpointRecord(struct AInterpActor_FCheckpointRecord* Record);
-	void CreateCheckpointRecord(struct AInterpActor_FCheckpointRecord* Record);
+	void STATIC_CreateCheckpointRecord(struct AInterpActor_FCheckpointRecord* Record);
 	bool ShouldSaveForCheckpoint();
 	void ShutDown();
 	void InterpolationChanged(class USeqAct_Interp* InterpAction);
@@ -1891,7 +1891,7 @@ public:
 
 	void STATIC_HideSelf();
 	void ApplyCheckpointRecord(struct AEmitter_FCheckpointRecord* Record);
-	void CreateCheckpointRecord(struct AEmitter_FCheckpointRecord* Record);
+	void STATIC_CreateCheckpointRecord(struct AEmitter_FCheckpointRecord* Record);
 	bool ShouldSaveForCheckpoint();
 	void STATIC_OnSetParticleSysParam(class USeqAct_SetParticleSysParam* Action);
 	void SetActorParameter(const struct FName& ParameterName, class AActor* Param);
@@ -1901,7 +1901,7 @@ public:
 	void SetFloatParameter(const struct FName& ParameterName, float Param);
 	void ShutDown();
 	void STATIC_OnParticleEventGenerator(class USeqAct_ParticleEventGenerator* Action);
-	void Deactivate();
+	void STATIC_Deactivate();
 	void Activate();
 	void STATIC_OnToggle(class USeqAct_Toggle* Action);
 	void OnParticleSystemFinished(class UParticleSystemComponent* FinishedComponent);
@@ -1940,7 +1940,7 @@ public:
 
 	void PreBeginPlay();
 	void ActivateSpawnedEmitter(class UParticleSystemComponent* PSC);
-	void CreateInitialPooledComponents();
+	void STATIC_CreateInitialPooledComponents();
 	class UParticleSystemComponent* SpawnEmitterCustomLifetime(class UParticleSystem* EmitterTemplate, bool bSkipAutoActivate);
 	class UParticleSystemComponent* SpawnEmitterMeshAttachment(class UParticleSystem* EmitterTemplate, class USkeletalMeshComponent* Mesh, const struct FName& AttachPointName, bool bAttachToSocket, const struct FVector& RelativeLoc, const struct FRotator& RelativeRot, const struct FParticleChannelContainer& PSysChannels);
 	class UParticleSystemComponent* SpawnEmitter(class UParticleSystem* EmitterTemplate, const struct FVector& SpawnLocation, const struct FRotator& SpawnRotation, class AActor* AttachToActor, class AActor* InInstigator, int MaxDLEPooledReuses, bool bInheritScaleFromBase, const struct FParticleChannelContainer& PSysChannels, bool bSkipAutoActivate);
@@ -2366,7 +2366,7 @@ public:
 	bool CheckScore(class APlayerReplicationInfo* Scorer);
 	void ScoreObjective(class APlayerReplicationInfo* Scorer, int Score);
 	void AddObjectiveScore(class APlayerReplicationInfo* Scorer, int Score);
-	float STATIC_RatePlayerStart(class APlayerStart* P, unsigned char Team, class AController* Player);
+	float RatePlayerStart(class APlayerStart* P, unsigned char Team, class AController* Player);
 	class APlayerStart* ChoosePlayerStart(class AController* Player, unsigned char InTeam);
 	class ANavigationPoint* STATIC_FindPlayerStart(class AController* Player, unsigned char InTeam, const struct FString& IncomingName);
 	bool ShouldSpawnAtStartSpot(class AController* Player);
@@ -2848,7 +2848,7 @@ public:
 
 	struct FString GetDebugAbbrev();
 	void ApplyCheckpointRecord(struct ANavigationPoint_FCheckpointRecord* Record);
-	void CreateCheckpointRecord(struct ANavigationPoint_FCheckpointRecord* Record);
+	void STATIC_CreateCheckpointRecord(struct ANavigationPoint_FCheckpointRecord* Record);
 	bool ShouldSaveForCheckpoint();
 	void ShutDown();
 	void STATIC_OnToggle(class USeqAct_Toggle* inAction);
@@ -2923,7 +2923,7 @@ public:
 	bool STATIC_GetSwatTurnTarget(int SlotIdx, int Direction, struct FCoverInfo* out_Info);
 	void ShutDown();
 	void ApplyCheckpointRecord(struct ANavigationPoint_FCheckpointRecord* Record);
-	void CreateCheckpointRecord(struct ANavigationPoint_FCheckpointRecord* Record);
+	void STATIC_CreateCheckpointRecord(struct ANavigationPoint_FCheckpointRecord* Record);
 	void STATIC_OnToggle(class USeqAct_Toggle* inAction);
 	bool IsEnabled();
 	bool AutoAdjustSlot(int SlotIdx, bool bOnlyCheckLeans);
@@ -3154,7 +3154,7 @@ public:
 	void RecheckValidTouch();
 	void STATIC_PickedUpBy(class APawn* P);
 	void STATIC_GiveTo(class APawn* P);
-	bool STATIC_ReadyToPickup(float MaxWait);
+	bool ReadyToPickup(float MaxWait);
 	void SpawnCopyFor(class APawn* Recipient);
 	float DetourWeight(class APawn* Other, float PathWeight);
 	void StartSleeping();
@@ -3411,14 +3411,14 @@ public:
 	float STATIC_GetTimeToLocation(const struct FVector& TargetLoc);
 	void FellOutOfWorld(class UClass* dmgType);
 	bool STATIC_IsStationary();
-	void STATIC_RandSpin(float spinRate);
+	void RandSpin(float spinRate);
 	void Explode(const struct FVector& HitLocation, const struct FVector& HitNormal);
 	void EncroachedBy(class AActor* Other);
 	void HitWall(const struct FVector& HitNormal, class AActor* Wall, class UPrimitiveComponent* WallComp);
 	void STATIC_ProcessTouch(class AActor* Other, const struct FVector& HitLocation, const struct FVector& HitNormal);
 	void Touch(class AActor* Other, class UPrimitiveComponent* OtherComp, const struct FVector& HitLocation, const struct FVector& HitNormal);
 	bool STATIC_HurtRadius(float DamageAmount, float InDamageRadius, class UClass* DamageType, float Momentum, const struct FVector& HurtOrigin, class AActor* IgnoredActor, class AController* InstigatedByController, bool bDoFullDamage);
-	bool STATIC_ProjectileHurtRadius(const struct FVector& HurtOrigin, const struct FVector& HitNormal);
+	bool ProjectileHurtRadius(const struct FVector& HurtOrigin, const struct FVector& HitNormal);
 	void Reset();
 	bool CanSplash();
 	unsigned char STATIC_GetTeamNum();
@@ -3548,7 +3548,7 @@ public:
 
 
 	bool StopsProjectile(class AProjectile* P);
-	class UTextureRenderTarget2D* CreatePortalTexture();
+	class UTextureRenderTarget2D* STATIC_CreatePortalTexture();
 	struct FVector TransformHitLocation(const struct FVector& HitLocation);
 	struct FVector TransformVectorDir(const struct FVector& V);
 	bool TransformActor(class AActor* A);
@@ -3652,7 +3652,7 @@ public:
 
 
 	void ApplyCheckpointRecord(struct ATrigger_FCheckpointRecord* Record);
-	void CreateCheckpointRecord(struct ATrigger_FCheckpointRecord* Record);
+	void STATIC_CreateCheckpointRecord(struct ATrigger_FCheckpointRecord* Record);
 	bool ShouldSaveForCheckpoint();
 	bool StopsProjectile(class AProjectile* P);
 	void UnTrigger();
@@ -4093,7 +4093,7 @@ public:
 	void SetRBCollidesWithChannel(TEnumAsByte<ERBCollisionChannel> Channel, bool bNewCollides);
 	void SetBlockRigidBody(bool bNewBlockRigidBody);
 	bool RigidBodyIsAwake(const struct FName& BoneName);
-	void STATIC_PutRigidBodyToSleep(const struct FName& BoneName);
+	void PutRigidBodyToSleep(const struct FName& BoneName);
 	void WakeRigidBody(const struct FName& BoneName);
 	void SetRBRotation(const struct FRotator& NewRot, const struct FName& BoneName);
 	void SetRBPosition(const struct FVector& NewPos, const struct FName& BoneName);
@@ -5410,20 +5410,20 @@ public:
 	void STATIC_DrawBlendedTile(class UTexture* Tex, float XL, float YL, float U, float V, float UL, float VL, TEnumAsByte<ECanvasBlendMode> Blend, TEnumAsByte<EDisplayPlane> DisplayPlane);
 	void STATIC_DrawTexture(class UTexture* Tex, float Scale, TEnumAsByte<EDisplayPlane> DisplayPlane);
 	void STATIC_PopMaskRegion();
-	void STATIC_PushMaskRegion(float X, float Y, float XL, float YL);
+	void PushMaskRegion(float X, float Y, float XL, float YL);
 	void SetClip(float X, float Y);
 	void SetOrigin(float X, float Y);
 	void SetPos(float PosX, float PosY, float PosZ);
 	class UFont* STATIC_GetDefaultCanvasFont();
 	void Reset(bool bKeepOrigin);
 	void STATIC_PopTransform();
-	void STATIC_PushTranslationMatrix(const struct FVector& TranslationVector);
+	void PushTranslationMatrix(const struct FVector& TranslationVector);
 	void STATIC_DeProject(const struct FVector2D& ScreenPos, struct FVector* WorldOrigin, struct FVector* WorldDirection);
-	struct FVector STATIC_Project(const struct FVector& Location);
+	struct FVector Project(const struct FVector& Location);
 	void STATIC_DrawText(const struct FString& Text, bool CR, float XScale, float YScale, TEnumAsByte<EDisplayPlane> DisplayPlane, struct FFontRenderInfo* RenderInfo);
 	void TextSize(const struct FString& String, float XScale, float YScale, float* XL, float* YL);
 	void StrLen(const struct FString& String, float* XL, float* YL);
-	struct FFontRenderInfo CreateFontRenderInfo(bool bClipText, bool bEnableShadow, const struct FLinearColor& GlowColor, const struct FVector2D& GlowOuterRadius, const struct FVector2D& GlowInnerRadius);
+	struct FFontRenderInfo STATIC_CreateFontRenderInfo(bool bClipText, bool bEnableShadow, const struct FLinearColor& GlowColor, const struct FVector2D& GlowOuterRadius, const struct FVector2D& GlowInnerRadius);
 	void STATIC_DrawTris(class UTexture* Tex, TArray<struct FCanvasUVTri> Triangles, const struct FColor& InColor);
 	void STATIC_DrawTileStretched(class UTexture* Tex, float XL, float YL, float U, float V, float UL, float VL, const struct FLinearColor& LColor, bool bStretchHorizontally, bool bStretchVertically, float ScalingFactor, TEnumAsByte<EDisplayPlane> DisplayPlane);
 	void STATIC_DrawTimer(class UTexture* Tex, float StartTime, float TotalTime, float XL, float YL, float U, float V, float UL, float VL, const struct FLinearColor& LColor, TEnumAsByte<EBlendMode> Blend);
@@ -5600,7 +5600,7 @@ public:
 	void InterpolationStarted(class USeqAct_Interp* InterpAction, class UInterpGroupInst* GroupInst);
 	void InitNavigationHandle();
 	void Stun(bool bStunController, TEnumAsByte<EStunType> eType);
-	void STATIC_ReadyForLift();
+	void ReadyForLift();
 	void SendMessage(class APlayerReplicationInfo* Recipient, const struct FName& MessageType, float Wait, class UClass* DamageType);
 	void CurrentLevelUnloaded();
 	bool IsInCombat(bool bForceCheck);
@@ -6005,7 +6005,7 @@ public:
 	void ShowGameState();
 	void ShowPlayerState();
 	void ServerRemoteEvent(const struct FName& EventName);
-	void STATIC_RE(const struct FName& EventName);
+	void RE(const struct FName& EventName);
 	void RemoteEvent(const struct FName& EventName);
 	void STATIC_ListCE();
 	void STATIC_ListConsoleEvents();
@@ -6172,7 +6172,7 @@ public:
 	void SpeakTTS(const struct FString& S, class APlayerReplicationInfo* PRI);
 	void TeamTalk();
 	void Talk();
-	class USoundCue* CreateTTSSoundCue(const struct FString& StrToSpeak, class APlayerReplicationInfo* PRI);
+	class USoundCue* STATIC_CreateTTSSoundCue(const struct FString& StrToSpeak, class APlayerReplicationInfo* PRI);
 	bool AllowTTSMessageFrom(class APlayerReplicationInfo* PRI);
 	bool CanCommunicate();
 	void ClientMessage(const struct FString& S, const struct FName& Type, float MsgLifeTime);
@@ -8060,13 +8060,13 @@ public:
 	void STATIC_EndRemoteServerAuthSession(const struct FUniqueNetId& ServerUID, const struct FIpAddr& ServerIP);
 	void STATIC_EndLocalServerAuthSession(const struct FUniqueNetId& ClientUID, const struct FIpAddr& ClientIP);
 	bool VerifyServerAuthSession(const struct FUniqueNetId& ServerUID, const struct FIpAddr& ServerIP, int AuthTicketUID);
-	bool CreateServerAuthSession(const struct FUniqueNetId& ClientUID, const struct FIpAddr& ClientIP, int ClientPort, int* OutAuthTicketUID);
+	bool STATIC_CreateServerAuthSession(const struct FUniqueNetId& ClientUID, const struct FIpAddr& ClientIP, int ClientPort, int* OutAuthTicketUID);
 	void STATIC_EndAllRemoteClientAuthSessions();
 	void STATIC_EndAllLocalClientAuthSessions();
 	void STATIC_EndRemoteClientAuthSession(const struct FUniqueNetId& ClientUID, const struct FIpAddr& ClientIP);
 	void STATIC_EndLocalClientAuthSession(const struct FUniqueNetId& ServerUID, const struct FIpAddr& ServerIP, int ServerPort);
 	bool VerifyClientAuthSession(const struct FUniqueNetId& ClientUID, const struct FIpAddr& ClientIP, int ClientPort, int AuthTicketUID);
-	bool CreateClientAuthSession(const struct FUniqueNetId& ServerUID, const struct FIpAddr& ServerIP, int ServerPort, bool bSecure, int* OutAuthTicketUID);
+	bool STATIC_CreateClientAuthSession(const struct FUniqueNetId& ServerUID, const struct FIpAddr& ServerIP, int ServerPort, bool bSecure, int* OutAuthTicketUID);
 	bool SendServerAuthRetryRequest();
 	bool SendClientAuthEndSessionRequest(class UPlayer* ClientConnection);
 	bool SendServerAuthResponse(class UPlayer* ClientConnection, int AuthTicketUID);
@@ -8588,7 +8588,7 @@ public:
 	struct FUniqueNetId GetUniqueNetId();
 	struct FVector2D STATIC_FastProject(const struct FVector& WorldLoc);
 	void STATIC_FastDeProject(const struct FVector2D& RelativeScreenPos, struct FVector* WorldOrigin, struct FVector* WorldDirection);
-	struct FVector2D STATIC_Project(const struct FVector& WorldLoc);
+	struct FVector2D Project(const struct FVector& WorldLoc);
 	void STATIC_DeProject(const struct FVector2D& RelativeScreenPos, struct FVector* WorldOrigin, struct FVector* WorldDirection);
 	void TouchPlayerPostProcessChain();
 	class UPostProcessChain* STATIC_GetPostProcessChain(int InIndex);
@@ -9044,7 +9044,7 @@ public:
 	bool STATIC_IsBlockedFor(class APawn* P);
 	struct FVector STATIC_GetDirection();
 	class ANavigationPoint* STATIC_GetEnd();
-	int CostFor(class APawn* P);
+	int STATIC_CostFor(class APawn* P);
 };
 
 
@@ -9398,7 +9398,7 @@ public:
 	bool STATIC_HasLeftSafeZone(int LocalPlayerIndex);
 	bool STATIC_HasBottomSafeZone(int LocalPlayerIndex);
 	bool STATIC_HasTopSafeZone(int LocalPlayerIndex);
-	int ConvertLocalPlayerToGamePlayerIndex(class ULocalPlayer* LPlayer);
+	int STATIC_ConvertLocalPlayerToGamePlayerIndex(class ULocalPlayer* LPlayer);
 	void GetSubtitleRegion(struct FVector2D* MinPos, struct FVector2D* MaxPos);
 	void LayoutPlayers();
 	void UpdateActiveSplitscreenType();
@@ -9406,7 +9406,7 @@ public:
 	void SetSplitscreenConfiguration(TEnumAsByte<ESplitScreenType> SplitType);
 	void GameSessionEnded();
 	int InsertInteraction(class UInteraction* NewInteraction, int InIndex);
-	bool CreateInitialPlayer(struct FString* OutError);
+	bool STATIC_CreateInitialPlayer(struct FString* OutError);
 	bool Init(struct FString* OutError);
 	bool STATIC_IsConsoleEnabled();
 	class ULocalPlayer* FindPlayerByControllerId(int ControllerId);
@@ -10555,7 +10555,7 @@ public:
 
 
 	void ApplyCheckpointRecord(struct ANavMeshObstacle_FCheckpointRecord* Record);
-	void CreateCheckpointRecord(struct ANavMeshObstacle_FCheckpointRecord* Record);
+	void STATIC_CreateCheckpointRecord(struct ANavMeshObstacle_FCheckpointRecord* Record);
 	void SetEnabled(bool bInEnabled);
 	void STATIC_OnToggle(class USeqAct_Toggle* Action);
 	void PostBeginPlay();
@@ -10632,8 +10632,8 @@ public:
 	class UObject* STATIC_FxGet(const struct FName& nmGroup, int nMode, int nIndex, int nSocketIndex, int nEquipSlot);
 	void STATIC_FxRemove(class UObject* Fx);
 	void STATIC_FxAdd(class UObject* Fx);
-	class UMaterialInstanceTimeVarying* CreateAndSetMaterialInstanceTimeVarying(int ElementIndex);
-	class UMaterialInstanceConstant* CreateAndSetMaterialInstanceConstant(int ElementIndex);
+	class UMaterialInstanceTimeVarying* STATIC_CreateAndSetMaterialInstanceTimeVarying(int ElementIndex);
+	class UMaterialInstanceConstant* STATIC_CreateAndSetMaterialInstanceConstant(int ElementIndex);
 	void STATIC_PrestreamTextures(float Seconds, bool bPrioritizeCharacterTextures, TArray<unsigned char> CinematicTextureGroups);
 	int STATIC_GetNumElements();
 	void SetMaterial(int ElementIndex, class UMaterialInterface* Material);
@@ -10923,7 +10923,7 @@ public:
 	bool STATIC_GetAllCoverSlotsInRadius(const struct FVector& FromLoc, float Radius, TArray<struct FCoverInfo>* out_CoverList);
 	bool STATIC_PopulatePathfindingParamCache();
 	struct FVector STATIC_MoveToDesiredHeightAboveMesh(const struct FVector& Point, float Height);
-	void CopyMovePointsFromPathCache(const struct FVector& FinalDest, TArray<struct FVector>* out_MovePoints);
+	void STATIC_CopyMovePointsFromPathCache(const struct FVector& FinalDest, TArray<struct FVector>* out_MovePoints);
 	float CalculatePathDistance(const struct FVector& FinalDest);
 	struct FVector STATIC_GetFirstMoveLocation();
 	bool STATIC_IsAnchorInescapable();
@@ -10953,8 +10953,8 @@ public:
 	struct FVector STATIC_PathCache_GetGoalPoint();
 	bool STATIC_PathCache_Empty();
 	int STATIC_GetPathCacheLength();
-	class UNavMeshPathGoalEvaluator* CreatePathGoalEvaluator(class UClass* GoalEvalClass);
-	class UNavMeshPathConstraint* CreatePathConstraint(class UClass* ConstraintClass);
+	class UNavMeshPathGoalEvaluator* STATIC_CreatePathGoalEvaluator(class UClass* GoalEvalClass);
+	class UNavMeshPathConstraint* STATIC_CreatePathConstraint(class UClass* ConstraintClass);
 	bool STATIC_DoesPylonAHaveAPathToPylonB(class APylon* A, class APylon* B);
 	class APylon* BuildFromPylonAToPylonB(class APylon* A, class APylon* B);
 	void AddGoalEvaluator(class UNavMeshPathGoalEvaluator* Evaluator);
@@ -10962,7 +10962,7 @@ public:
 	void ClearConstraints();
 	bool STATIC_GetNextBreadCrumb(struct FVector* out_BreadCrumbLoc);
 	void UpdateBreadCrumbs(const struct FVector& InLocation);
-	void CopyPathStoreToPathCache(struct FPathStore* InStore);
+	void STATIC_CopyPathStoreToPathCache(struct FPathStore* InStore);
 };
 
 
@@ -11343,8 +11343,8 @@ public:
 	void Recycle();
 	struct FVector STATIC_GetGoalPoint();
 	class UNavMeshGoal_Filter* STATIC_GetFilterOfType(class UClass* Filter_Class);
-	class UNavMeshGoal_GenericFilterContainer* CreateAndAddFilterToNavHandleFromSeedList(class UNavigationHandle* NavHandle, int InMaxPathVisits, TArray<struct FVector>* InSearchSeeds);
-	class UNavMeshGoal_GenericFilterContainer* CreateAndAddFilterToNavHandle(class UNavigationHandle* NavHandle, int InMaxPathVisits);
+	class UNavMeshGoal_GenericFilterContainer* STATIC_CreateAndAddFilterToNavHandleFromSeedList(class UNavigationHandle* NavHandle, int InMaxPathVisits, TArray<struct FVector>* InSearchSeeds);
+	class UNavMeshGoal_GenericFilterContainer* STATIC_CreateAndAddFilterToNavHandle(class UNavigationHandle* NavHandle, int InMaxPathVisits);
 };
 
 
@@ -11691,7 +11691,7 @@ public:
 	void SkelMeshActorOnParticleSystemFinished(class UParticleSystemComponent* PSC);
 	bool PlayParticleEffect(class UAnimNotify_PlayParticleEffect* AnimNotifyData);
 	void ApplyCheckpointRecord(struct ASkeletalMeshActor_FCheckpointRecord* Record);
-	void CreateCheckpointRecord(struct ASkeletalMeshActor_FCheckpointRecord* Record);
+	void STATIC_CreateCheckpointRecord(struct ASkeletalMeshActor_FCheckpointRecord* Record);
 	bool ShouldSaveForCheckpoint();
 	void TakeDamage(int Damage, class AController* EventInstigator, const struct FVector& HitLocation, const struct FVector& Momentum, class UClass* DamageType, const struct FTraceHitInfo& HitInfo, class AActor* DamageCauser);
 	void STATIC_DoKismetAttachment(class AActor* Attachment, class USeqAct_AttachToActor* Action);
@@ -14132,7 +14132,7 @@ public:
 
 
 	void ApplyCheckpointRecord(struct AFogVolumeDensityInfo_FCheckpointRecord* Record);
-	void CreateCheckpointRecord(struct AFogVolumeDensityInfo_FCheckpointRecord* Record);
+	void STATIC_CreateCheckpointRecord(struct AFogVolumeDensityInfo_FCheckpointRecord* Record);
 	bool ShouldSaveForCheckpoint();
 	void STATIC_OnToggle(class USeqAct_Toggle* Action);
 	void ReplicatedEvent(const struct FName& VarName);
@@ -14458,7 +14458,7 @@ public:
 	bool SpawnDeferredParts();
 	void BreakOffIsolatedIslands(TArray<int> IgnoreFrags, const struct FVector& ChunkDir, TArray<class AFracturedStaticMeshPart*> DisableCollWithPart, bool bWantPhysChunks, TArray<unsigned char>* FragmentVis);
 	void ApplyCheckpointRecord(struct AFracturedStaticMeshActor_FCheckpointRecord* Record);
-	void CreateCheckpointRecord(struct AFracturedStaticMeshActor_FCheckpointRecord* Record);
+	void STATIC_CreateCheckpointRecord(struct AFracturedStaticMeshActor_FCheckpointRecord* Record);
 	bool ShouldSaveForCheckpoint();
 	void ResetHealth();
 	void PostBeginPlay();
@@ -14530,7 +14530,7 @@ public:
 	class AFracturedStaticMeshPart* SpawnPartActor(class AFracturedStaticMeshActor* Parent, const struct FVector& SpawnLocation, const struct FRotator& SpawnRotation);
 	class AFracturedStaticMeshPart* STATIC_GetFSMPart(class AFracturedStaticMeshActor* Parent, const struct FVector& SpawnLocation, const struct FRotator& SpawnRotation);
 	void ResetPoolVisibility();
-	void CreateFSMParts();
+	void STATIC_CreateFSMParts();
 	void CleanUpFSMParts();
 	void Destroyed();
 	void PreBeginPlay();
@@ -18593,7 +18593,7 @@ public:
 	void SetSkipUpdateDynamicDataDuringTick(bool bInSkipUpdateDynamicDataDuringTick);
 	void STATIC_KillParticlesInEmitter(const struct FName& InEmitterName);
 	void STATIC_KillParticlesForced();
-	void DeactivateSystem();
+	void STATIC_DeactivateSystem();
 	void ActivateSystem(bool bFlagAsJustAttached);
 	void SetTemplate(class UParticleSystem* NewTemplate);
 	void OnSystemDurationElapsed(class UParticleSystemComponent* PSystem);
@@ -21760,8 +21760,8 @@ public:
 	void STATIC_DrawPathStep(class UCanvas* C);
 	void STATIC_IncrementPathChild(int Cnt, class UCanvas* C);
 	void STATIC_IncrementPathStep(int Cnt, class UCanvas* C);
-	class UPathGoalEvaluator* CreatePathGoalEvaluator(class UClass* GoalEvalClass);
-	class UPathConstraint* CreatePathConstraint(class UClass* ConstraintClass);
+	class UPathGoalEvaluator* STATIC_CreatePathGoalEvaluator(class UClass* GoalEvalClass);
+	class UPathConstraint* STATIC_CreatePathConstraint(class UClass* ConstraintClass);
 	void AddGoalEvaluator(class UPathGoalEvaluator* Evaluator);
 	void AddPathConstraint(class UPathConstraint* Constraint);
 	void ClearConstraints();
@@ -21821,7 +21821,7 @@ public:
 	class AController* SetKillInstigator(class AController* InstigatedBy, class UClass* DamageType);
 	void STATIC_NotifyTakeHit(class AController* InstigatedBy, const struct FVector& HitLocation, int Damage, class UClass* DamageType, const struct FVector& Momentum, class AActor* DamageCauser);
 	bool TakeRadiusDamageOnBones(class AController* InstigatedBy, float BaseDamage, float DamageRadius, class UClass* DamageType, float Momentum, const struct FVector& HurtOrigin, bool bFullDamage, class AActor* DamageCauser, TArray<struct FName> Bones);
-	void STATIC_PruneDamagedBoneList(TArray<struct FName>* Bones);
+	void PruneDamagedBoneList(TArray<struct FName>* Bones);
 	bool HealDamage(int Amount, class AController* Healer, class UClass* DamageType);
 	void AdjustDamage(class AController* InstigatedBy, const struct FVector& HitLocation, class UClass* DamageType, const struct FTraceHitInfo& HitInfo, class AActor* DamageCauser, int* InDamage, struct FVector* Momentum);
 	void SetMovementPhysics();
@@ -21834,7 +21834,7 @@ public:
 	void PreBeginPlay();
 	void Destroyed();
 	void STATIC_DetachFromController(bool bDestroyController);
-	void CrushedBy(class APawn* OtherPawn);
+	void STATIC_CrushedBy(class APawn* OtherPawn);
 	bool CanBeBaseForPawn(class APawn* aPawn);
 	void BaseChange();
 	void StuckOnPawn(class APawn* OtherPawn);
@@ -21877,7 +21877,7 @@ public:
 	void ClimbLadder(class ALadderVolume* L);
 	void STATIC_EndClimbLadder(class ALadderVolume* OldLadder);
 	bool CanSplash();
-	float STATIC_RangedAttackTime();
+	float RangedAttackTime();
 	bool RecommendLongRangedAttack();
 	bool CanGrabLadder();
 	void STATIC_DropToGround();
@@ -21917,10 +21917,10 @@ public:
 	bool TermRagdoll();
 	bool STATIC_InitRagdoll();
 	void STATIC_GetBoundingCylinder(float* CollisionRadius, float* CollisionHeight);
-	bool STATIC_ReachedDesiredRotation();
+	bool ReachedDesiredRotation();
 	void SetPushesRigidBodies(bool NewPush);
 	void STATIC_ForceCrouch();
-	bool STATIC_ReachedPoint(const struct FVector& Point, class AActor* NewAnchor);
+	bool ReachedPoint(const struct FVector& Point, class AActor* NewAnchor);
 	bool ReachedDestination(class AActor* Goal);
 	class ANavigationPoint* STATIC_GetBestAnchor(class AActor* TestActor, const struct FVector& TestLocation, bool bStartPoint, bool bOnlyCheckVisible, float* out_Dist);
 	void SetAnchor(class ANavigationPoint* NewAnchor);
@@ -22035,7 +22035,7 @@ public:
 	void STATIC_DrivingStatusChanged();
 	void SetDriving(bool B);
 	struct FVector GetEntryLocation();
-	void CrushedBy(class APawn* OtherPawn);
+	void STATIC_CrushedBy(class APawn* OtherPawn);
 	void STATIC_PancakeOther(class APawn* Other);
 	bool EncroachingOn(class AActor* Other);
 	class AController* STATIC_GetCollisionDamageInstigator();
@@ -23941,7 +23941,7 @@ public:
 	class AController* STATIC_GetController(class AActor* TheActor);
 	class APawn* STATIC_GetPawn(class AActor* TheActor);
 	void Reset();
-	void STATIC_PublishLinkedVariableValues();
+	void PublishLinkedVariableValues();
 	void STATIC_PopulateLinkedVariableValues();
 	void VersionUpdated(int OldVersion, int NewVersion);
 	void Deactivated();
@@ -26921,7 +26921,7 @@ public:
 
 
 	void ApplyCheckpointRecord(struct AAmbientSoundSimpleToggleable_FCheckpointRecord* Record);
-	void CreateCheckpointRecord(struct AAmbientSoundSimpleToggleable_FCheckpointRecord* Record);
+	void STATIC_CreateCheckpointRecord(struct AAmbientSoundSimpleToggleable_FCheckpointRecord* Record);
 	void STATIC_OnToggle(class USeqAct_Toggle* Action);
 	void StopPlaying();
 	void StartPlaying();
@@ -27920,7 +27920,7 @@ public:
 	int STATIC_FindPlayerDataStoreIndex(class ULocalPlayer* PlayerOwner);
 	bool UnregisterDataStore(class UUIDataStore* DataStore);
 	bool RegisterDataStore(class UUIDataStore* DataStore, class ULocalPlayer* PlayerOwner);
-	class UUIDataStore* CreateDataStore(class UClass* DataStoreClass);
+	class UUIDataStore* STATIC_CreateDataStore(class UClass* DataStoreClass);
 	class UUIDataStore* STATIC_FindDataStore(const struct FName& DataStoreTag, class ULocalPlayer* PlayerOwner);
 };
 
@@ -27978,7 +27978,7 @@ public:
 	void STATIC_OutputTextLine(const struct FString& Text);
 	void ClearOutput();
 	void ConsoleCommand(const struct FString& Command);
-	void STATIC_PurgeCommandFromHistory(const struct FString& Command);
+	void PurgeCommandFromHistory(const struct FString& Command);
 	void SetCursorPos(int Position);
 	void SetInputText(const struct FString& Text);
 	void Initialized();
@@ -28100,7 +28100,7 @@ public:
 	void ClientInitInputSystem();
 	void InitInputSystem();
 	void SmartJump();
-	void STATIC_Jump();
+	void Jump();
 	void PlayerInput(float DeltaTime);
 	void STATIC_DrawHUD(class AHUD* H);
 	void SetSensitivity(float F);
@@ -28268,7 +28268,7 @@ public:
 	void STATIC_OnLoginChange(unsigned char LocalUserNum);
 	void STATIC_OnFriendMessageReceived(unsigned char LocalUserNum, const struct FUniqueNetId& SendingPlayer, const struct FString& SendingNick, const struct FString& Message);
 	void STATIC_OnFriendInviteReceived(unsigned char LocalUserNum, const struct FUniqueNetId& RequestingPlayer, const struct FString& RequestingNick, const struct FString& Message);
-	void STATIC_ReadMessages();
+	void ReadMessages();
 	void OnUnregister();
 	void OnRegister(class ULocalPlayer* InPlayer);
 };
@@ -28372,7 +28372,7 @@ public:
 	void AddReadCompleteDelegate(const TScriptInterface<class UOnlinePlayerInterface>& PlayerInterface, unsigned char LocalUserNum);
 	bool GetData(const TScriptInterface<class UOnlinePlayerInterface>& PlayerInterface, unsigned char LocalUserNum);
 	bool WriteData(const TScriptInterface<class UOnlinePlayerInterface>& PlayerInterface, unsigned char LocalUserNum, int DeviceID, class UOnlinePlayerStorage* PlayerStorage);
-	bool STATIC_ReadData(const TScriptInterface<class UOnlinePlayerInterface>& PlayerInterface, unsigned char LocalUserNum, int DeviceID, class UOnlinePlayerStorage* PlayerStorage);
+	bool ReadData(const TScriptInterface<class UOnlinePlayerInterface>& PlayerInterface, unsigned char LocalUserNum, int DeviceID, class UOnlinePlayerStorage* PlayerStorage);
 };
 
 
@@ -28395,7 +28395,7 @@ public:
 	void AddReadCompleteDelegate(const TScriptInterface<class UOnlinePlayerInterface>& PlayerInterface, unsigned char LocalUserNum);
 	bool GetData(const TScriptInterface<class UOnlinePlayerInterface>& PlayerInterface, unsigned char LocalUserNum);
 	bool WriteData(const TScriptInterface<class UOnlinePlayerInterface>& PlayerInterface, unsigned char LocalUserNum, int DeviceID, class UOnlinePlayerStorage* PlayerStorage);
-	bool STATIC_ReadData(const TScriptInterface<class UOnlinePlayerInterface>& PlayerInterface, unsigned char LocalUserNum, int DeviceID, class UOnlinePlayerStorage* PlayerStorage);
+	bool ReadData(const TScriptInterface<class UOnlinePlayerInterface>& PlayerInterface, unsigned char LocalUserNum, int DeviceID, class UOnlinePlayerStorage* PlayerStorage);
 };
 
 
@@ -29039,7 +29039,7 @@ public:
 
 
 	void STATIC_ForceRemoveStreamGroups();
-	void STATIC_QueueRemoveStreamGroups();
+	void QueueRemoveStreamGroups();
 	void AddStreamGroups();
 	void STATIC_GenerateStreamGroups();
 };
@@ -29552,7 +29552,7 @@ public:
 	}
 
 
-	class UMaterialInstanceConstant* CreateAndSetMaterialInstanceConstant(int ElementIndex);
+	class UMaterialInstanceConstant* STATIC_CreateAndSetMaterialInstanceConstant(int ElementIndex);
 	void SetMaterial(int ElementIndex, class UMaterialInterface* Material);
 	class UMaterialInterface* STATIC_GetMaterial(int ElementIndex);
 	void SetIsActive(bool bInIsActive);
@@ -30154,7 +30154,7 @@ public:
 
 
 	void ApplyCheckpointRecord(struct APointLightToggleable_FCheckpointRecord* Record);
-	void CreateCheckpointRecord(struct APointLightToggleable_FCheckpointRecord* Record);
+	void STATIC_CreateCheckpointRecord(struct APointLightToggleable_FCheckpointRecord* Record);
 	bool ShouldSaveForCheckpoint();
 };
 
@@ -30263,7 +30263,7 @@ public:
 
 
 	void ApplyCheckpointRecord(struct ASpotLightToggleable_FCheckpointRecord* Record);
-	void CreateCheckpointRecord(struct ASpotLightToggleable_FCheckpointRecord* Record);
+	void STATIC_CreateCheckpointRecord(struct ASpotLightToggleable_FCheckpointRecord* Record);
 	bool ShouldSaveForCheckpoint();
 };
 
@@ -31929,7 +31929,7 @@ public:
 	void SetUniqueId(const struct FUniqueNetId& PlayerUniqueId);
 	void SeamlessTravelTo(class APlayerReplicationInfo* NewPRI);
 	void STATIC_IncrementDeaths(int Amt);
-	void CopyProperties(class APlayerReplicationInfo* PRI);
+	void STATIC_CopyProperties(class APlayerReplicationInfo* PRI);
 	void STATIC_OverrideWith(class APlayerReplicationInfo* PRI);
 	class APlayerReplicationInfo* Duplicate();
 	void SetWaitingPlayer(bool B);
@@ -32072,7 +32072,7 @@ public:
 	void ApplyCameraModifiers(float DeltaTime, struct FTPOV* OutPOV);
 	void Destroyed();
 	void PostBeginPlay();
-	class UCameraModifier* CreateCameraModifier(class UClass* ModifierClass);
+	class UCameraModifier* STATIC_CreateCameraModifier(class UClass* ModifierClass);
 };
 
 
@@ -32768,7 +32768,7 @@ public:
 
 
 	bool STATIC_PathCache_RemoveIndex(int Index, int Count);
-	void CopyMovePointsFromPathCache(const struct FVector& FinalDest, TArray<struct FVector>* MovePoints);
+	void STATIC_CopyMovePointsFromPathCache(const struct FVector& FinalDest, TArray<struct FVector>* MovePoints);
 	TEnumAsByte<ENavMeshEdgeType> STATIC_GetCurrentEdgeType();
 	void ClearCurrentEdge();
 	int STATIC_GetPackedKeyForPosition(int PreviousKey, struct FVector* pos, struct FVector* PrevPos);
@@ -32966,7 +32966,7 @@ public:
 	void ClearReadAchievementsCompleteDelegate(unsigned char LocalUserNum, const struct FScriptDelegate& ReadAchievementsCompleteDelegate);
 	void AddReadAchievementsCompleteDelegate(unsigned char LocalUserNum, const struct FScriptDelegate& ReadAchievementsCompleteDelegate);
 	void STATIC_OnReadAchievementsComplete(int TitleId);
-	bool STATIC_ReadAchievements(unsigned char LocalUserNum, int TitleId, bool bShouldReadText, bool bShouldReadImages);
+	bool ReadAchievements(unsigned char LocalUserNum, int TitleId, bool bShouldReadText, bool bShouldReadImages);
 	void ClearUnlockAchievementCompleteDelegate(unsigned char LocalUserNum, const struct FScriptDelegate& UnlockAchievementCompleteDelegate);
 	void AddUnlockAchievementCompleteDelegate(unsigned char LocalUserNum, const struct FScriptDelegate& UnlockAchievementCompleteDelegate);
 	void STATIC_OnUnlockAchievementComplete(bool bWasSuccessful);
@@ -33009,7 +33009,7 @@ public:
 	void ClearReadFriendsCompleteDelegate(unsigned char LocalUserNum, const struct FScriptDelegate& ReadFriendsCompleteDelegate);
 	void AddReadFriendsCompleteDelegate(unsigned char LocalUserNum, const struct FScriptDelegate& ReadFriendsCompleteDelegate);
 	void STATIC_OnReadFriendsComplete(bool bWasSuccessful);
-	bool STATIC_ReadFriendsList(unsigned char LocalUserNum, int Count, int StartingAt);
+	bool ReadFriendsList(unsigned char LocalUserNum, int Count, int StartingAt);
 	void ClearWritePlayerStorageCompleteDelegate(unsigned char LocalUserNum, const struct FScriptDelegate& WritePlayerStorageCompleteDelegate);
 	void AddWritePlayerStorageCompleteDelegate(unsigned char LocalUserNum, const struct FScriptDelegate& WritePlayerStorageCompleteDelegate);
 	void STATIC_OnWritePlayerStorageComplete(unsigned char LocalUserNum, bool bWasSuccessful);
@@ -33018,11 +33018,11 @@ public:
 	void ClearReadPlayerStorageForNetIdCompleteDelegate(const struct FUniqueNetId& NetId, const struct FScriptDelegate& ReadPlayerStorageForNetIdCompleteDelegate);
 	void AddReadPlayerStorageForNetIdCompleteDelegate(const struct FUniqueNetId& NetId, const struct FScriptDelegate& ReadPlayerStorageForNetIdCompleteDelegate);
 	void STATIC_OnReadPlayerStorageForNetIdComplete(const struct FUniqueNetId& NetId, bool bWasSuccessful);
-	bool STATIC_ReadPlayerStorageForNetId(unsigned char LocalUserNum, const struct FUniqueNetId& NetId, class UOnlinePlayerStorage* PlayerStorage);
+	bool ReadPlayerStorageForNetId(unsigned char LocalUserNum, const struct FUniqueNetId& NetId, class UOnlinePlayerStorage* PlayerStorage);
 	void ClearReadPlayerStorageCompleteDelegate(unsigned char LocalUserNum, const struct FScriptDelegate& ReadPlayerStorageCompleteDelegate);
 	void AddReadPlayerStorageCompleteDelegate(unsigned char LocalUserNum, const struct FScriptDelegate& ReadPlayerStorageCompleteDelegate);
 	void STATIC_OnReadPlayerStorageComplete(unsigned char LocalUserNum, bool bWasSuccessful);
-	bool STATIC_ReadPlayerStorage(unsigned char LocalUserNum, class UOnlinePlayerStorage* PlayerStorage, int DeviceID);
+	bool ReadPlayerStorage(unsigned char LocalUserNum, class UOnlinePlayerStorage* PlayerStorage, int DeviceID);
 	void ClearWriteProfileSettingsCompleteDelegate(unsigned char LocalUserNum, const struct FScriptDelegate& WriteProfileSettingsCompleteDelegate);
 	void AddWriteProfileSettingsCompleteDelegate(unsigned char LocalUserNum, const struct FScriptDelegate& WriteProfileSettingsCompleteDelegate);
 	void STATIC_OnWriteProfileSettingsComplete(unsigned char LocalUserNum, bool bWasSuccessful);
@@ -33031,7 +33031,7 @@ public:
 	void ClearReadProfileSettingsCompleteDelegate(unsigned char LocalUserNum, const struct FScriptDelegate& ReadProfileSettingsCompleteDelegate);
 	void AddReadProfileSettingsCompleteDelegate(unsigned char LocalUserNum, const struct FScriptDelegate& ReadProfileSettingsCompleteDelegate);
 	void STATIC_OnReadProfileSettingsComplete(unsigned char LocalUserNum, bool bWasSuccessful);
-	bool STATIC_ReadProfileSettings(unsigned char LocalUserNum, class UOnlineProfileSettings* ProfileSettings);
+	bool ReadProfileSettings(unsigned char LocalUserNum, class UOnlineProfileSettings* ProfileSettings);
 	void ClearFriendsChangeDelegate(unsigned char LocalUserNum, const struct FScriptDelegate& FriendsDelegate);
 	void AddFriendsChangeDelegate(unsigned char LocalUserNum, const struct FScriptDelegate& FriendsDelegate);
 	void ClearMutingChangeDelegate(const struct FScriptDelegate& MutingDelegate);
@@ -33137,7 +33137,7 @@ public:
 	}
 
 
-	void STATIC_RateContent(unsigned char PlayerNum, int NewRating, struct FCommunityContentFile* FileToRate);
+	void RateContent(unsigned char PlayerNum, int NewRating, struct FCommunityContentFile* FileToRate);
 	void ClearDeleteContentCompleteDelegate(const struct FScriptDelegate& DeleteContentCompleteDelegate);
 	void AddDeleteContentCompleteDelegate(const struct FScriptDelegate& DeleteContentCompleteDelegate);
 	void STATIC_OnDeleteContentComplete(bool bWasSuccessful);
@@ -33154,12 +33154,12 @@ public:
 	void ClearReadFriendsContentListCompleteDelegate(const struct FScriptDelegate& ReadFriendsContentListCompleteDelegate);
 	void AddReadFriendsContentListCompleteDelegate(const struct FScriptDelegate& ReadFriendsContentListCompleteDelegate);
 	void STATIC_OnReadFriendsContentListComplete(bool bWasSuccessful);
-	bool STATIC_ReadFriendsContentList(unsigned char PlayerNum, int StartAt, int NumToRead, TArray<struct FOnlineFriend>* Friends);
+	bool ReadFriendsContentList(unsigned char PlayerNum, int StartAt, int NumToRead, TArray<struct FOnlineFriend>* Friends);
 	bool STATIC_GetContentList(unsigned char PlayerNum, TArray<struct FCommunityContentFile>* ContentFiles);
 	void ClearReadContentListCompleteDelegate(const struct FScriptDelegate& ReadContentListCompleteDelegate);
 	void AddReadContentListCompleteDelegate(const struct FScriptDelegate& ReadContentListCompleteDelegate);
 	void STATIC_OnReadContentListComplete(bool bWasSuccessful, TArray<struct FCommunityContentFile> ContentFiles);
-	bool STATIC_ReadContentList(unsigned char PlayerNum, const struct FUniqueNetId& NetId, const struct FString& Path, int StartAt, int NumToRead);
+	bool ReadContentList(unsigned char PlayerNum, const struct FUniqueNetId& NetId, const struct FString& Path, int StartAt, int NumToRead);
 	void Exit();
 	bool Init();
 };
@@ -33189,7 +33189,7 @@ public:
 	void AddReadRecordedClipsCompleteDelegate(unsigned char LocalUserNum, const struct FScriptDelegate& ReadRecordedClipsCompleteDelegate);
 	void ClearCachedRecordedClips(unsigned char LocalUserNum);
 	void STATIC_OnReadRecordedClipsComplete(bool bWasSuccessful, unsigned char LocalUserNum);
-	bool STATIC_ReadRecordedClips(unsigned char LocalUserNum);
+	bool ReadRecordedClips(unsigned char LocalUserNum);
 	void STATIC_DisableRecording();
 	void STATIC_EnableRecording();
 };
@@ -33214,7 +33214,7 @@ public:
 	void STATIC_OnWriteSharedFileComplete(bool bWasSuccessful, const struct FString& UserId, const struct FString& Filename, const struct FString& SharedHandle);
 	void ClearReadSharedFileCompleteDelegate(const struct FScriptDelegate& ReadSharedFileCompleteDelegate);
 	void AddReadSharedFileCompleteDelegate(const struct FScriptDelegate& ReadSharedFileCompleteDelegate);
-	bool STATIC_ReadSharedFile(const struct FString& SharedHandle);
+	bool ReadSharedFile(const struct FString& SharedHandle);
 	void STATIC_OnReadSharedFileComplete(bool bWasSuccessful, const struct FString& SharedHandle);
 	bool ClearSharedFile(const struct FString& SharedHandle);
 	bool ClearSharedFiles();
@@ -33246,7 +33246,7 @@ public:
 	void STATIC_OnWriteUserFileComplete(bool bWasSuccessful, const struct FString& UserId, const struct FString& Filename);
 	void ClearReadUserFileCompleteDelegate(const struct FScriptDelegate& ReadUserFileCompleteDelegate);
 	void AddReadUserFileCompleteDelegate(const struct FScriptDelegate& ReadUserFileCompleteDelegate);
-	bool STATIC_ReadUserFile(const struct FString& UserId, const struct FString& Filename);
+	bool ReadUserFile(const struct FString& UserId, const struct FString& Filename);
 	void STATIC_OnReadUserFileComplete(bool bWasSuccessful, const struct FString& UserId, const struct FString& Filename);
 	void STATIC_GetUserFileList(const struct FString& UserId, TArray<struct FEmsFile>* UserFiles);
 	void ClearEnumerateUserFileCompleteDelegate(const struct FScriptDelegate& EnumerateUserFileCompleteDelegate);
@@ -33283,7 +33283,7 @@ public:
 	void ClearQuerySocialPostPrivilegesCompleted(const struct FScriptDelegate& PostPrivilegesDelegate);
 	void AddQuerySocialPostPrivilegesCompleted(const struct FScriptDelegate& PostPrivilegesDelegate);
 	void STATIC_OnQuerySocialPostPrivilegesCompleted(bool bWasSuccessful, const struct FSocialPostPrivileges& PostPrivileges);
-	bool STATIC_QuerySocialPostPrivileges();
+	bool QuerySocialPostPrivileges();
 };
 
 
@@ -33363,7 +33363,7 @@ public:
 	bool STATIC_GetTitleFileContents(const struct FString& Filename, TArray<unsigned char>* FileContents);
 	void ClearReadTitleFileCompleteDelegate(const struct FScriptDelegate& ReadTitleFileCompleteDelegate);
 	void AddReadTitleFileCompleteDelegate(const struct FScriptDelegate& ReadTitleFileCompleteDelegate);
-	bool STATIC_ReadTitleFile(const struct FString& FileToRead, TEnumAsByte<EOnlineFileType> FileType);
+	bool ReadTitleFile(const struct FString& FileToRead, TEnumAsByte<EOnlineFileType> FileType);
 	void STATIC_OnReadTitleFileComplete(bool bWasSuccessful, const struct FString& Filename);
 };
 
@@ -33431,7 +33431,7 @@ public:
 	void ClearReadNewsCompletedDelegate(const struct FScriptDelegate& ReadNewsDelegate);
 	void AddReadNewsCompletedDelegate(const struct FScriptDelegate& ReadNewsDelegate);
 	void OnReadNewsCompleted(bool bWasSuccessful, TEnumAsByte<EOnlineNewsType> NewsType);
-	bool STATIC_ReadNews(unsigned char LocalUserNum, TEnumAsByte<EOnlineNewsType> NewsType);
+	bool ReadNews(unsigned char LocalUserNum, TEnumAsByte<EOnlineNewsType> NewsType);
 };
 
 
@@ -33473,11 +33473,11 @@ public:
 	void ClearReadOnlineStatsCompleteDelegate(const struct FScriptDelegate& ReadOnlineStatsCompleteDelegate);
 	void AddReadOnlineStatsCompleteDelegate(const struct FScriptDelegate& ReadOnlineStatsCompleteDelegate);
 	void STATIC_OnReadOnlineStatsComplete(bool bWasSuccessful);
-	bool STATIC_ReadOnlineStatsByRankAroundPlayer(unsigned char LocalUserNum, class UOnlineStatsRead* StatsRead, int NumRows);
-	bool STATIC_ReadOnlineStatsByRank(unsigned char LocalUserNum, class UOnlineStatsRead* StatsRead, int StartIndex, int NumToRead);
-	bool STATIC_ReadOnlineStatForFriends(unsigned char LocalUserNum, class UOnlineStatsRead* StatsRead, bool FavoriteFriendsOnly, int NumToRead);
-	bool STATIC_ReadOnlineStats(unsigned char LocalUserNum, class UOnlineStatsRead* StatsRead, TArray<struct FUniqueNetId>* Players);
-	bool STATIC_ReadOnlineStatsForPlayer(unsigned char LocalUserNum, class UOnlineStatsRead* StatsRead);
+	bool ReadOnlineStatsByRankAroundPlayer(unsigned char LocalUserNum, class UOnlineStatsRead* StatsRead, int NumRows);
+	bool ReadOnlineStatsByRank(unsigned char LocalUserNum, class UOnlineStatsRead* StatsRead, int StartIndex, int NumToRead);
+	bool ReadOnlineStatForFriends(unsigned char LocalUserNum, class UOnlineStatsRead* StatsRead, bool FavoriteFriendsOnly, int NumToRead);
+	bool ReadOnlineStats(unsigned char LocalUserNum, class UOnlineStatsRead* StatsRead, TArray<struct FUniqueNetId>* Players);
+	bool ReadOnlineStatsForPlayer(unsigned char LocalUserNum, class UOnlineStatsRead* StatsRead);
 };
 
 
@@ -33550,27 +33550,27 @@ public:
 	void AddReadSaveGameDataCompleteDelegate(unsigned char LocalUserNum, const struct FScriptDelegate& ReadSaveGameDataCompleteDelegate);
 	void STATIC_OnReadSaveGameDataComplete(bool bWasSuccessful, unsigned char LocalUserNum, const struct FString& SaveFileName);
 	bool STATIC_GetSaveGameData(unsigned char LocalUserNum, const struct FString& SaveFileName, unsigned char* bIsValid, TArray<unsigned char>* SaveGameData);
-	bool STATIC_ReadSaveGameData(unsigned char LocalUserNum, const struct FString& SaveFileName);
+	bool ReadSaveGameData(unsigned char LocalUserNum, const struct FString& SaveFileName);
 	void STATIC_GetAvailableDownloadCounts(unsigned char LocalUserNum, int* NewDownloads, int* TotalDownloads);
 	void ClearQueryAvailableDownloadsComplete(unsigned char LocalUserNum, const struct FScriptDelegate& QueryDownloadsDelegate);
 	void AddQueryAvailableDownloadsComplete(unsigned char LocalUserNum, const struct FScriptDelegate& QueryDownloadsDelegate);
 	void STATIC_OnQueryAvailableDownloadsComplete(bool bWasSuccessful);
-	bool STATIC_QueryAvailableDownloads(unsigned char LocalUserNum, int CategoryMask);
+	bool QueryAvailableDownloads(unsigned char LocalUserNum, int CategoryMask);
 	bool ClearCrossTitleSaveGames(unsigned char LocalUserNum);
 	void ClearReadCrossTitleSaveGameDataComplete(unsigned char LocalUserNum, const struct FScriptDelegate& ReadSaveGameDataCompleteDelegate);
 	void AddReadCrossTitleSaveGameDataComplete(unsigned char LocalUserNum, const struct FScriptDelegate& ReadSaveGameDataCompleteDelegate);
 	void STATIC_OnReadCrossTitleSaveGameDataComplete(bool bWasSuccessful, unsigned char LocalUserNum, int DeviceID, int TitleId, const struct FString& FriendlyName, const struct FString& Filename, const struct FString& SaveFileName);
 	bool STATIC_GetCrossTitleSaveGameData(unsigned char LocalUserNum, int DeviceID, int TitleId, const struct FString& FriendlyName, const struct FString& Filename, const struct FString& SaveFileName, unsigned char* bIsValid, TArray<unsigned char>* SaveGameData);
-	bool STATIC_ReadCrossTitleSaveGameData(unsigned char LocalUserNum, int DeviceID, int TitleId, const struct FString& FriendlyName, const struct FString& Filename, const struct FString& SaveFileName);
+	bool ReadCrossTitleSaveGameData(unsigned char LocalUserNum, int DeviceID, int TitleId, const struct FString& FriendlyName, const struct FString& Filename, const struct FString& SaveFileName);
 	void ClearReadCrossTitleDownloadableContentCompleteDelegate(unsigned char LocalUserNum, const struct FScriptDelegate& ReadCrossTitleDLCCompleteDelegate);
 	void AddReadCrossTitleDownloadableContentCompleteDelegate(unsigned char LocalUserNum, const struct FScriptDelegate& ReadCrossTitleDLCCompleteDelegate);
 	void STATIC_OnReadCrossTitleDownloadableContentComplete(bool bWasSuccessful);
 	TEnumAsByte<EOnlineEnumerationReadState> STATIC_GetCrossTitleDownloadableContentList(unsigned char LocalUserNum, TArray<struct FOnlineCrossTitleContent>* ContentList);
 	void ClearCrossTitleDownloadableContentList(unsigned char LocalUserNum);
-	bool STATIC_ReadCrossTitleDownloadableContentList(unsigned char LocalUserNum, int TitleId);
+	bool ReadCrossTitleDownloadableContentList(unsigned char LocalUserNum, int TitleId);
 	TEnumAsByte<EOnlineEnumerationReadState> STATIC_GetDownloadableContentList(unsigned char LocalUserNum, TArray<struct FOnlineContent>* ContentList);
 	void ClearDownloadableContentList(unsigned char LocalUserNum);
-	bool STATIC_ReadDownloadableContentList(unsigned char LocalUserNum);
+	bool ReadDownloadableContentList(unsigned char LocalUserNum);
 	void ClearReadDownloadableContentComplete(unsigned char LocalUserNum, const struct FScriptDelegate& ReadDLCCompleteDelegate);
 	void AddReadDownloadableContentComplete(unsigned char LocalUserNum, const struct FScriptDelegate& ReadDLCCompleteDelegate);
 	void STATIC_OnReadDownloadableContentComplete(bool bWasSuccessful);
@@ -33663,8 +33663,8 @@ public:
 	void ClearQuerySessionsForUserCompleteDelegate(const struct FScriptDelegate& QuerySessionsForUserCompleteDelegate);
 	void AddQuerySessionsForUserCompleteDelegate(const struct FScriptDelegate& QuerySessionsForUserCompleteDelegate);
 	void OnQuerySessionsForUserComplete(unsigned char LocalPlayerNum, bool bWasSuccessful);
-	bool STATIC_QuerySessionsByKeyword(unsigned char LocalPlayerNum, const struct FString& Keyword, class UOnlineGameSearch* SearchSettings);
-	bool STATIC_QuerySessionsForUser(unsigned char LocalPlayerNum);
+	bool QuerySessionsByKeyword(unsigned char LocalPlayerNum, const struct FString& Keyword, class UOnlineGameSearch* SearchSettings);
+	bool QuerySessionsForUser(unsigned char LocalPlayerNum);
 	void STATIC_LeaveAllOnlineSessions(bool bClearSessionIfHost);
 	bool STATIC_LeaveOnlineSession(unsigned char LocalPlayerNum, const struct FName& SessionName, bool bClearSessionIfHost);
 	void ClearMatchStatusChangedDelegate(const struct FScriptDelegate& MatchStatusChangedDelegate);
@@ -33697,7 +33697,7 @@ public:
 	bool AddSessionMembers(unsigned char ScoutingPlayerNum, const struct FName& SessionName, TArray<struct FUniqueNetId> Members);
 	bool AddSessionMember(unsigned char ScoutingPlayerNum, const struct FName& SessionName, const struct FUniqueNetId& Member);
 	bool AddSessionMemberByString(unsigned char ScoutingPlayerNum, const struct FName& SessionName, const struct FString& Member);
-	bool CreateOnlineSessionWithTemplate(unsigned char ScoutingPlayerNum, const struct FName& SessionName, class UOnlineGameSettings* NewGameSettings, const struct FString& TemplateName, const struct FString& SessionKeyword);
+	bool STATIC_CreateOnlineSessionWithTemplate(unsigned char ScoutingPlayerNum, const struct FName& SessionName, class UOnlineGameSettings* NewGameSettings, const struct FString& TemplateName, const struct FString& SessionKeyword);
 	bool STATIC_InitiatedSessionSearch(const struct FName& SessionName);
 	bool STATIC_IsHostOfSession(const struct FName& SessionName);
 	void ClearMatchmakeOnlineGameWithPartyCompleteDelegate(const struct FScriptDelegate& MatchmakeOnlineGameWithPartyCompleteDelegate);
@@ -33707,7 +33707,7 @@ public:
 	void ClearCreateOnlineGameWithPartyCompleteDelegate(const struct FScriptDelegate& CreateOnlineGameWithPartyCompleteDelegate);
 	void AddCreateOnlineGameWithPartyCompleteDelegate(const struct FScriptDelegate& CreateOnlineGameWithPartyCompleteDelegate);
 	void OnCreateOnlineGameWithPartyComplete(const struct FName& SessionName, bool bWasSuccessful);
-	bool CreateOnlineGameWithParty(unsigned char ScoutingPlayerNum, const struct FName& SessionName, class UOnlineGameSettings* NewGameSettings);
+	bool STATIC_CreateOnlineGameWithParty(unsigned char ScoutingPlayerNum, const struct FName& SessionName, class UOnlineGameSettings* NewGameSettings);
 	void ClearJoinOnlineGameCompleteDelegate(const struct FScriptDelegate& JoinOnlineGameCompleteDelegate);
 	void AddJoinOnlineGameCompleteDelegate(const struct FScriptDelegate& JoinOnlineGameCompleteDelegate);
 	void OnJoinOnlineGameComplete(const struct FName& SessionName, bool bWasSuccessful);
@@ -33719,12 +33719,12 @@ public:
 	void STATIC_OnMapChangePending();
 	bool STATIC_JoinOnlineGameBySessionHandle(unsigned char PlayerNum, const struct FName& SessionName, const struct FString& InSessionGuid);
 	bool STATIC_JoinOnlineGame(unsigned char PlayerNum, const struct FName& SessionName, struct FOnlineGameSearchResult* DesiredGame);
-	bool STATIC_QueryNonAdvertisedData(int StartAt, int NumberToQuery);
+	bool QueryNonAdvertisedData(int StartAt, int NumberToQuery);
 	bool STATIC_FreeSearchResults(class UOnlineGameSearch* Search);
 	class UOnlineGameSearch* STATIC_GetGameSearch();
 	bool BindPlatformSpecificSessionToSearch(unsigned char SearchingPlayerNum, class UOnlineGameSearch* SearchSettings, unsigned char PlatformSpecificInfo);
-	bool STATIC_ReadPlatformSpecificSessionInfoBySessionName(const struct FName& SessionName, unsigned char* PlatformSpecificInfo);
-	bool STATIC_ReadPlatformSpecificSessionInfo(struct FOnlineGameSearchResult* DesiredGame, unsigned char* PlatformSpecificInfo);
+	bool ReadPlatformSpecificSessionInfoBySessionName(const struct FName& SessionName, unsigned char* PlatformSpecificInfo);
+	bool ReadPlatformSpecificSessionInfo(struct FOnlineGameSearchResult* DesiredGame, unsigned char* PlatformSpecificInfo);
 	void ClearQosStatusChangedDelegate(const struct FScriptDelegate& QosStatusChangedDelegate);
 	void AddQosStatusChangedDelegate(const struct FScriptDelegate& QosStatusChangedDelegate);
 	void OnQosStatusChanged(int NumComplete, int NumTotal);
@@ -33748,7 +33748,7 @@ public:
 	void ClearCreateOnlineGameCompleteDelegate(const struct FScriptDelegate& CreateOnlineGameCompleteDelegate);
 	void AddCreateOnlineGameCompleteDelegate(const struct FScriptDelegate& CreateOnlineGameCompleteDelegate);
 	void OnCreateOnlineGameComplete(const struct FName& SessionName, bool bWasSuccessful);
-	bool CreateOnlineGame(unsigned char HostingPlayerNum, const struct FName& SessionName, class UOnlineGameSettings* NewGameSettings);
+	bool STATIC_CreateOnlineGame(unsigned char HostingPlayerNum, const struct FName& SessionName, class UOnlineGameSettings* NewGameSettings);
 };
 
 
@@ -33816,21 +33816,21 @@ public:
 	void ClearReadInventoryItemsCompleteDelegate(unsigned char LocalUserNum, const struct FScriptDelegate& ReadInventoryItemsCompleteDelegate);
 	void AddReadInventoryItemsCompleteDelegate(unsigned char LocalUserNum, const struct FScriptDelegate& ReadInventoryItemsCompleteDelegate);
 	void STATIC_OnReadInventoryItemsComplete();
-	bool STATIC_ReadInventoryItems(unsigned char LocalUserNum);
+	bool ReadInventoryItems(unsigned char LocalUserNum);
 	void ClearReadDetailsForProductIdListCompleteDelegate(unsigned char LocalUserNum, const struct FScriptDelegate& InDelegate);
 	void AddReadDetailsForProductIdListCompleteDelegate(unsigned char LocalUserNum, const struct FScriptDelegate& InDelegate);
-	bool STATIC_ReadDetailsForProductIdList(unsigned char LocalUserNum, TArray<struct FString> ProductIds);
+	bool ReadDetailsForProductIdList(unsigned char LocalUserNum, TArray<struct FString> ProductIds);
 	void STATIC_OnReadDetailsForProductIdList(TArray<struct FMarketplaceProductDetails>* ProductList);
 	void ClearReadAdditionalProductDetailsCompleteDelegate(unsigned char LocalUserNum, const struct FScriptDelegate& ReadAdditionalProductDetailsCompleteDelegate);
 	void AddReadAdditionalProductDetailsCompleteDelegate(unsigned char LocalUserNum, const struct FScriptDelegate& ReadAdditionalProductDetailsCompleteDelegate);
 	void STATIC_OnReadAdditionalProductDetailsComplete(TEnumAsByte<EMediaItemType> MediaType);
-	bool STATIC_ReadAdditionalDetailsForProducts(unsigned char LocalUserNum, TEnumAsByte<EMediaItemType> MediaType);
+	bool ReadAdditionalDetailsForProducts(unsigned char LocalUserNum, TEnumAsByte<EMediaItemType> MediaType);
 	void ResetAvailableProducts(unsigned char LocalUserNum, TEnumAsByte<EMediaItemType> MediaType);
 	TEnumAsByte<EOnlineEnumerationReadState> STATIC_GetAvailableProducts(unsigned char LocalUserNum, TEnumAsByte<EMediaItemType> MediaType, TArray<struct FMarketplaceProductDetails>* AvailableProducts);
 	void ClearReadAvailableProductsCompleteDelegate(unsigned char LocalUserNum, const struct FScriptDelegate& ReadAvailableProductsCompleteDelegate);
 	void AddReadAvailableProductsCompleteDelegate(unsigned char LocalUserNum, const struct FScriptDelegate& ReadAvailableProductsCompleteDelegate);
 	void STATIC_OnReadAvailableProductsComplete(TEnumAsByte<EMediaItemType> MediaType);
-	bool STATIC_ReadAvailableProducts(unsigned char LocalUserNum, const struct FString& ParentId, TEnumAsByte<EMediaItemType> ParentMediaType, TEnumAsByte<EMediaItemType> ChildMediaType, TEnumAsByte<ECatalogSortOrder> SortOrder);
+	bool ReadAvailableProducts(unsigned char LocalUserNum, const struct FString& ParentId, TEnumAsByte<EMediaItemType> ParentMediaType, TEnumAsByte<EMediaItemType> ChildMediaType, TEnumAsByte<ECatalogSortOrder> SortOrder);
 };
 
 
@@ -33860,7 +33860,7 @@ public:
 	void ClearReadOnlineProfilesCompleteDelegate(const struct FScriptDelegate& ReadOnlineProfileDelegate);
 	void AddReadOnlineProfilesCompleteDelegate(const struct FScriptDelegate& ReadOnlineProfileDelegate);
 	void STATIC_OnReadOnlineProfilesComplete(bool bWasSuccessful, TArray<struct FString> PlayerIDs, TArray<struct FOnlineProfile> OnlineProfiles);
-	bool STATIC_ReadOnlineProfilesForPlayers(TArray<struct FString> PlayerIDs);
+	bool ReadOnlineProfilesForPlayers(TArray<struct FString> PlayerIDs);
 	bool STATIC_GetPlayerIDForPlayerNickname(const struct FString& InPlayerNickname, struct FUniqueNetId* OutPlayerId);
 	bool STATIC_GetPlayerNicknameForPlayerId(const struct FUniqueNetId& InPlayerId, struct FString* OutPlayerNickname);
 	bool ShowCustomErrorUI(int ErrorCode, const struct FString& ErrorContext, const struct FString& DialogTitle, const struct FString& DialogContent);
@@ -33871,7 +33871,7 @@ public:
 	void ClearReadCrossTitleProfileSettingsCompleteDelegate(unsigned char LocalUserNum, const struct FScriptDelegate& ReadProfileSettingsCompleteDelegate);
 	void AddReadCrossTitleProfileSettingsCompleteDelegate(unsigned char LocalUserNum, const struct FScriptDelegate& ReadProfileSettingsCompleteDelegate);
 	void STATIC_OnReadCrossTitleProfileSettingsComplete(unsigned char LocalUserNum, int TitleId, bool bWasSuccessful);
-	bool STATIC_ReadCrossTitleProfileSettings(unsigned char LocalUserNum, int TitleId, class UOnlineProfileSettings* ProfileSettings);
+	bool ReadCrossTitleProfileSettings(unsigned char LocalUserNum, int TitleId, class UOnlineProfileSettings* ProfileSettings);
 	bool UnlockAvatarAward(unsigned char LocalUserNum, int AvatarItemId);
 	bool ShowCustomPlayersUI(unsigned char LocalUserNum, const struct FString& Title, const struct FString& Description, TArray<struct FUniqueNetId>* Players);
 	bool ShowPlayersUI(unsigned char LocalUserNum);
@@ -33942,11 +33942,11 @@ public:
 	bool STATIC_GetLocalAccountNames(TArray<struct FString>* Accounts);
 	bool STATIC_DeleteLocalAccount(const struct FString& UserName, const struct FString& Password);
 	bool RenameLocalAccount(const struct FString& NewUserName, const struct FString& OldUserName, const struct FString& Password);
-	bool CreateLocalAccount(const struct FString& UserName, const struct FString& Password);
+	bool STATIC_CreateLocalAccount(const struct FString& UserName, const struct FString& Password);
 	void ClearCreateOnlineAccountCompletedDelegate(const struct FScriptDelegate& AccountCreateDelegate);
 	void AddCreateOnlineAccountCompletedDelegate(const struct FScriptDelegate& AccountCreateDelegate);
 	void STATIC_OnCreateOnlineAccountCompleted(TEnumAsByte<EOnlineAccountCreateStatus> ErrorStatus);
-	bool CreateOnlineAccount(const struct FString& UserName, const struct FString& Password, const struct FString& EmailAddress, const struct FString& ProductKey);
+	bool STATIC_CreateOnlineAccount(const struct FString& UserName, const struct FString& Password, const struct FString& EmailAddress, const struct FString& ProductKey);
 };
 
 
@@ -34209,7 +34209,7 @@ public:
 	void ServerSendInitialCoverReplicationInfo(int Index);
 	void ClientSetOwner(class APlayerController* PC);
 	void ReplicateInitialCoverInfo();
-	void STATIC_PurgeOldEntries();
+	void PurgeOldEntries();
 };
 
 
@@ -34571,7 +34571,7 @@ public:
 	}
 
 
-	class UHttpRequestInterface* CreateRequest();
+	class UHttpRequestInterface* STATIC_CreateRequest();
 };
 
 

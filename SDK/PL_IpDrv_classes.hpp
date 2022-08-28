@@ -1,6 +1,6 @@
 #pragma once
 
-// Paladins (3.05) SDK
+// Paladins (5.5) SDK
 
 #ifdef _MSC_VER
 	#pragma pack(push, 0x8)
@@ -206,7 +206,7 @@ public:
 	void ClearReadNewsCompletedDelegate(const struct FScriptDelegate& ReadGameNewsDelegate);
 	void AddReadNewsCompletedDelegate(const struct FScriptDelegate& ReadNewsDelegate);
 	void OnReadNewsCompleted(bool bWasSuccessful, TEnumAsByte<EOnlineNewsType> NewsType);
-	bool STATIC_ReadNews(unsigned char LocalUserNum, TEnumAsByte<EOnlineNewsType> NewsType);
+	bool ReadNews(unsigned char LocalUserNum, TEnumAsByte<EOnlineNewsType> NewsType);
 };
 
 
@@ -245,7 +245,7 @@ public:
 	bool STATIC_GetTitleFileContents(const struct FString& Filename, TArray<unsigned char>* FileContents);
 	void ClearReadTitleFileCompleteDelegate(const struct FScriptDelegate& ReadTitleFileCompleteDelegate);
 	void AddReadTitleFileCompleteDelegate(const struct FScriptDelegate& ReadTitleFileCompleteDelegate);
-	bool STATIC_ReadTitleFile(const struct FString& FileToRead, TEnumAsByte<EOnlineFileType> FileType);
+	bool ReadTitleFile(const struct FString& FileToRead, TEnumAsByte<EOnlineFileType> FileType);
 	void STATIC_OnReadTitleFileComplete(bool bWasSuccessful, const struct FString& Filename);
 };
 
@@ -269,7 +269,7 @@ public:
 	bool ClearDownloadedFiles();
 	TEnumAsByte<EOnlineEnumerationReadState> STATIC_GetTitleFileState(const struct FString& Filename);
 	bool STATIC_GetTitleFileContents(const struct FString& Filename, TArray<unsigned char>* FileContents);
-	bool STATIC_ReadTitleFile(const struct FString& FileToRead, TEnumAsByte<EOnlineFileType> FileType);
+	bool ReadTitleFile(const struct FString& FileToRead, TEnumAsByte<EOnlineFileType> FileType);
 };
 
 
@@ -296,7 +296,7 @@ public:
 	bool STATIC_GetTitleFileContents(const struct FString& Filename, TArray<unsigned char>* FileContents);
 	void TriggerDelegates(bool bSuccess, const struct FString& FileRead);
 	void OnFileDownloadComplete(class UHttpRequestInterface* Request, class UHttpResponseInterface* Response, bool bDidSucceed);
-	bool STATIC_ReadTitleFile(const struct FString& FileToRead, TEnumAsByte<EOnlineFileType> FileType);
+	bool ReadTitleFile(const struct FString& FileToRead, TEnumAsByte<EOnlineFileType> FileType);
 	bool UncompressTitleFileContents(TEnumAsByte<EMcpFileCompressionType> FileCompressionType, TArray<unsigned char>* CompressedFileContents, TArray<unsigned char>* UncompressedFileContents);
 };
 
@@ -471,7 +471,7 @@ public:
 	void CallReadUserFileCompleteDelegates(bool bWasSuccessful, const struct FString& UserId, const struct FString& Filename);
 	void STATIC_OnReadUserFileComplete(bool bWasSuccessful, const struct FString& UserId, const struct FString& Filename);
 	void OnHTTPRequestReadUserFileComplete(class UHttpRequestInterface* Request, class UHttpResponseInterface* Response, bool bWasSuccessful);
-	bool STATIC_ReadUserFile(const struct FString& UserId, const struct FString& Filename);
+	bool ReadUserFile(const struct FString& UserId, const struct FString& Filename);
 	void STATIC_GetUserFileList(const struct FString& UserId, TArray<struct FEmsFile>* UserFiles);
 	void ClearEnumerateUserFileCompleteDelegate(const struct FScriptDelegate& EnumerateUserFileCompleteDelegate);
 	void AddEnumerateUserFileCompleteDelegate(const struct FScriptDelegate& EnumerateUserFileCompleteDelegate);
@@ -709,13 +709,13 @@ public:
 	void STATIC_EndRemoteServerAuthSession(const struct FUniqueNetId& ServerUID, const struct FIpAddr& ServerIP);
 	void STATIC_EndLocalServerAuthSession(const struct FUniqueNetId& ClientUID, const struct FIpAddr& ClientIP);
 	bool VerifyServerAuthSession(const struct FUniqueNetId& ServerUID, const struct FIpAddr& ServerIP, int AuthTicketUID);
-	bool CreateServerAuthSession(const struct FUniqueNetId& ClientUID, const struct FIpAddr& ClientIP, int ClientPort, int* OutAuthTicketUID);
+	bool STATIC_CreateServerAuthSession(const struct FUniqueNetId& ClientUID, const struct FIpAddr& ClientIP, int ClientPort, int* OutAuthTicketUID);
 	void STATIC_EndAllRemoteClientAuthSessions();
 	void STATIC_EndAllLocalClientAuthSessions();
 	void STATIC_EndRemoteClientAuthSession(const struct FUniqueNetId& ClientUID, const struct FIpAddr& ClientIP);
 	void STATIC_EndLocalClientAuthSession(const struct FUniqueNetId& ServerUID, const struct FIpAddr& ServerIP, int ServerPort);
 	bool VerifyClientAuthSession(const struct FUniqueNetId& ClientUID, const struct FIpAddr& ClientIP, int ClientPort, int AuthTicketUID);
-	bool CreateClientAuthSession(const struct FUniqueNetId& ServerUID, const struct FIpAddr& ServerIP, int ServerPort, bool bSecure, int* OutAuthTicketUID);
+	bool STATIC_CreateClientAuthSession(const struct FUniqueNetId& ServerUID, const struct FIpAddr& ServerIP, int ServerPort, bool bSecure, int* OutAuthTicketUID);
 	bool SendServerAuthRetryRequest();
 	bool SendClientAuthEndSessionRequest(class UPlayer* ClientConnection);
 	bool SendServerAuthResponse(class UPlayer* ClientConnection, int AuthTicketUID);
@@ -885,9 +885,9 @@ public:
 	void AddQosStatusChangedDelegate(const struct FScriptDelegate& QosStatusChangedDelegate);
 	void OnQosStatusChanged(int NumComplete, int NumTotal);
 	bool BindPlatformSpecificSessionToSearch(unsigned char SearchingPlayerNum, class UOnlineGameSearch* SearchSettings, unsigned char PlatformSpecificInfo);
-	bool STATIC_ReadPlatformSpecificSessionInfoBySessionName(const struct FName& SessionName, unsigned char* PlatformSpecificInfo);
-	bool STATIC_ReadPlatformSpecificSessionInfo(struct FOnlineGameSearchResult* DesiredGame, unsigned char* PlatformSpecificInfo);
-	bool STATIC_QueryNonAdvertisedData(int StartAt, int NumberToQuery);
+	bool ReadPlatformSpecificSessionInfoBySessionName(const struct FName& SessionName, unsigned char* PlatformSpecificInfo);
+	bool ReadPlatformSpecificSessionInfo(struct FOnlineGameSearchResult* DesiredGame, unsigned char* PlatformSpecificInfo);
+	bool QueryNonAdvertisedData(int StartAt, int NumberToQuery);
 	void ClearJoinMigratedOnlineGameCompleteDelegate(const struct FScriptDelegate& JoinMigratedOnlineGameCompleteDelegate);
 	void AddJoinMigratedOnlineGameCompleteDelegate(const struct FScriptDelegate& JoinMigratedOnlineGameCompleteDelegate);
 	void OnJoinMigratedOnlineGameComplete(const struct FName& SessionName, bool bWasSuccessful);
@@ -935,8 +935,8 @@ public:
 	void ClearQuerySessionsForUserCompleteDelegate(const struct FScriptDelegate& QuerySessionsForUserCompleteDelegate);
 	void AddQuerySessionsForUserCompleteDelegate(const struct FScriptDelegate& QuerySessionsForUserCompleteDelegate);
 	void OnQuerySessionsForUserComplete(unsigned char LocalPlayerNum, bool bWasSuccessful);
-	bool STATIC_QuerySessionsByKeyword(unsigned char LocalPlayerNum, const struct FString& Keyword, class UOnlineGameSearch* SearchSettings);
-	bool STATIC_QuerySessionsForUser(unsigned char LocalPlayerNum);
+	bool QuerySessionsByKeyword(unsigned char LocalPlayerNum, const struct FString& Keyword, class UOnlineGameSearch* SearchSettings);
+	bool QuerySessionsForUser(unsigned char LocalPlayerNum);
 	void STATIC_LeaveAllOnlineSessions(bool bClearSessionIfHost);
 	bool STATIC_LeaveOnlineSession(unsigned char LocalPlayerNum, const struct FName& SessionName, bool bClearSessionIfHost);
 	void ClearMatchStatusChangedDelegate(const struct FScriptDelegate& MatchStatusChangedDelegate);
@@ -969,7 +969,7 @@ public:
 	bool AddSessionMembers(unsigned char ScoutingPlayerNum, const struct FName& SessionName, TArray<struct FUniqueNetId> Members);
 	bool AddSessionMember(unsigned char ScoutingPlayerNum, const struct FName& SessionName, const struct FUniqueNetId& Member);
 	bool AddSessionMemberByString(unsigned char ScoutingPlayerNum, const struct FName& SessionName, const struct FString& Member);
-	bool CreateOnlineSessionWithTemplate(unsigned char ScoutingPlayerNum, const struct FName& SessionName, class UOnlineGameSettings* NewGameSettings, const struct FString& TemplateName, const struct FString& SessionKeyword);
+	bool STATIC_CreateOnlineSessionWithTemplate(unsigned char ScoutingPlayerNum, const struct FName& SessionName, class UOnlineGameSettings* NewGameSettings, const struct FString& TemplateName, const struct FString& SessionKeyword);
 	bool STATIC_InitiatedSessionSearch(const struct FName& SessionName);
 	bool STATIC_IsHostOfSession(const struct FName& SessionName);
 	void ClearMatchmakeOnlineGameWithPartyCompleteDelegate(const struct FScriptDelegate& MatchmakeOnlineGameWithPartyCompleteDelegate);
@@ -979,7 +979,7 @@ public:
 	void ClearCreateOnlineGameWithPartyCompleteDelegate(const struct FScriptDelegate& CreateOnlineGameWithPartyCompleteDelegate);
 	void AddCreateOnlineGameWithPartyCompleteDelegate(const struct FScriptDelegate& CreateOnlineGameWithPartyCompleteDelegate);
 	void OnCreateOnlineGameWithPartyComplete(const struct FName& SessionName, bool bWasSuccessful);
-	bool CreateOnlineGameWithParty(unsigned char ScoutingPlayerNum, const struct FName& SessionName, class UOnlineGameSettings* NewGameSettings);
+	bool STATIC_CreateOnlineGameWithParty(unsigned char ScoutingPlayerNum, const struct FName& SessionName, class UOnlineGameSettings* NewGameSettings);
 	void ClearJoinOnlineGameCompleteDelegate(const struct FScriptDelegate& JoinOnlineGameCompleteDelegate);
 	void AddJoinOnlineGameCompleteDelegate(const struct FScriptDelegate& JoinOnlineGameCompleteDelegate);
 	void OnJoinOnlineGameComplete(const struct FName& SessionName, bool bWasSuccessful);
@@ -1010,7 +1010,7 @@ public:
 	void ClearCreateOnlineGameCompleteDelegate(const struct FScriptDelegate& CreateOnlineGameCompleteDelegate);
 	void AddCreateOnlineGameCompleteDelegate(const struct FScriptDelegate& CreateOnlineGameCompleteDelegate);
 	void OnCreateOnlineGameComplete(const struct FName& SessionName, bool bWasSuccessful);
-	bool CreateOnlineGame(unsigned char HostingPlayerNum, const struct FName& SessionName, class UOnlineGameSettings* NewGameSettings);
+	bool STATIC_CreateOnlineGame(unsigned char HostingPlayerNum, const struct FName& SessionName, class UOnlineGameSettings* NewGameSettings);
 	class UOnlineGameSearch* STATIC_GetGameSearch();
 	class UOnlineGameSettings* STATIC_GetGameSettings(const struct FName& SessionName);
 	void OnFindOnlineGamesComplete(bool bWasSuccessful);
@@ -1416,7 +1416,7 @@ public:
 
 
 	void PostQuery(class UWebRequest* Request, class UWebResponse* Response);
-	void STATIC_Query(class UWebRequest* Request, class UWebResponse* Response);
+	void Query(class UWebRequest* Request, class UWebResponse* Response);
 	bool PreQuery(class UWebRequest* Request, class UWebResponse* Response);
 	void CleanupApp();
 	void Cleanup();
@@ -1470,7 +1470,7 @@ public:
 	}
 
 
-	void STATIC_Query(class UWebRequest* Request, class UWebResponse* Response);
+	void Query(class UWebRequest* Request, class UWebResponse* Response);
 	void Init();
 };
 
@@ -1488,7 +1488,7 @@ public:
 	}
 
 
-	void STATIC_Query(class UWebRequest* Request, class UWebResponse* Response);
+	void Query(class UWebRequest* Request, class UWebResponse* Response);
 };
 
 

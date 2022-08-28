@@ -1,4 +1,4 @@
-// Paladins (3.05) SDK
+// Paladins (5.5) SDK
 
 #ifdef _MSC_VER
 	#pragma pack(push, 0x8)
@@ -13,16 +13,15 @@ namespace SDK
 //---------------------------------------------------------------------------
 
 // Function AkAudio.AkAmbientSound.StopPlayback
-// (PreOperator, Singular, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
+// (Latent, PreOperator, Singular, NetReliable, Static, HasOptionalParms)
 
-void AAkAmbientSound::StopPlayback()
+void AAkAmbientSound::STATIC_StopPlayback()
 {
 	static auto fn = UObject::FindObject<UFunction>("Function AkAudio.AkAmbientSound.StopPlayback");
 
 	AAkAmbientSound_StopPlayback_Params params;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -31,16 +30,15 @@ void AAkAmbientSound::StopPlayback()
 
 
 // Function AkAudio.AkAmbientSound.StartPlayback
-// (Defined, Iterator, Latent, Singular, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
+// (Defined, Iterator, PreOperator, Singular, NetReliable, Static, HasOptionalParms)
 
-void AAkAmbientSound::StartPlayback()
+void AAkAmbientSound::STATIC_StartPlayback()
 {
 	static auto fn = UObject::FindObject<UFunction>("Function AkAudio.AkAmbientSound.StartPlayback");
 
 	AAkAmbientSound_StartPlayback_Params params;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 

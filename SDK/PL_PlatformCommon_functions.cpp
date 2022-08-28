@@ -1,4 +1,4 @@
-// Paladins (3.05) SDK
+// Paladins (5.5) SDK
 
 #ifdef _MSC_VER
 	#pragma pack(push, 0x8)
@@ -13,7 +13,7 @@ namespace SDK
 //---------------------------------------------------------------------------
 
 // Function PlatformCommon.PComBrowserManager.OpenURL
-// (Iterator, Latent, Net, NetReliable, Simulated, Native, Event, Operator, HasOptionalParms)
+// (Iterator, PreOperator, Net, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FString                 URL                            (Parm, NeedCtorLink)
 // bool                           bShowNavButtons                (OptionalParm, Parm)
@@ -38,7 +38,7 @@ void UPComBrowserManager::OpenURL(const struct FString& URL, bool bShowNavButton
 
 
 // Function PlatformCommon.PComGameEngine.SendGameRequest
-// (Final, PreOperator, Singular, Exec, Native, Event, Operator, HasOptionalParms)
+// (Final, Latent, PreOperator, Singular, NetReliable, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FString                 fsRequest                      (Parm, NeedCtorLink)
 
@@ -59,7 +59,7 @@ void UPComGameEngine::SendGameRequest(const struct FString& fsRequest)
 
 
 // Function PlatformCommon.PComGameEngine.SendCtrlRequest
-// (PreOperator, Singular, Exec, Native, Event, Operator, HasOptionalParms)
+// (Latent, PreOperator, Singular, NetReliable, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FString                 fsRequest                      (Parm, NeedCtorLink)
 
@@ -80,7 +80,7 @@ void UPComGameEngine::SendCtrlRequest(const struct FString& fsRequest)
 
 
 // Function PlatformCommon.PComGameEngine.SendMarshalAll
-// (Final, Defined, PreOperator, Singular, Exec, Native, Event, Operator, HasOptionalParms)
+// (Final, Defined, Latent, PreOperator, Singular, NetReliable, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // bool                           bLowPriority                   (Parm)
 
@@ -101,7 +101,7 @@ void UPComGameEngine::SendMarshalAll(bool bLowPriority)
 
 
 // Function PlatformCommon.PComGameEngine.SendMarshal
-// (Defined, PreOperator, Singular, Exec, Native, Event, Operator, HasOptionalParms)
+// (Defined, Latent, PreOperator, Singular, NetReliable, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FUniqueNetId            qwPlayerId                     (Parm)
 // bool                           bLowPriority                   (Parm)
@@ -124,7 +124,7 @@ void UPComGameEngine::SendMarshal(const struct FUniqueNetId& qwPlayerId, bool bL
 
 
 // Function PlatformCommon.PComGameEngine.ClearMarshal
-// (Defined, Iterator, PreOperator, NetReliable, Native, Event, Operator, HasOptionalParms)
+// (Final, Defined, Singular, Exec, Native, Event, Operator, HasOptionalParms)
 
 void UPComGameEngine::ClearMarshal()
 {
@@ -142,7 +142,7 @@ void UPComGameEngine::ClearMarshal()
 
 
 // Function PlatformCommon.PComGameEngine.SetFieldString
-// (Defined, Iterator, Net, Exec, Native, Event, Operator, HasOptionalParms)
+// (Defined, Iterator, Latent, Net, NetReliable, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // int                            nToken                         (Parm)
 // struct FString                 StrValue                       (Parm, NeedCtorLink)
@@ -168,7 +168,7 @@ bool UPComGameEngine::SetFieldString(int nToken, const struct FString& StrValue)
 
 
 // Function PlatformCommon.PComGameEngine.SetFieldFloat
-// (Iterator, Net, Exec, Native, Event, Operator, HasOptionalParms)
+// (Iterator, Latent, Net, NetReliable, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // int                            nToken                         (Parm)
 // float                          FloatValue                     (Parm)
@@ -194,7 +194,7 @@ bool UPComGameEngine::SetFieldFloat(int nToken, float FloatValue)
 
 
 // Function PlatformCommon.PComGameEngine.SetFieldInt
-// (Final, Iterator, Net, Exec, Native, Event, Operator, HasOptionalParms)
+// (Final, Iterator, Latent, Net, NetReliable, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // int                            nToken                         (Parm)
 // int                            IntValue                       (Parm)
@@ -220,7 +220,7 @@ bool UPComGameEngine::SetFieldInt(int nToken, int IntValue)
 
 
 // Function PlatformCommon.PComGameEngine.SetFunction
-// (Defined, Latent, NetReliable, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, PreOperator, Exec, Operator, HasOptionalParms)
 // Parameters:
 // int                            nFunction                      (Parm)
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -268,7 +268,7 @@ bool UPComGameViewportClient::Init(struct FString* OutError)
 
 
 // Function PlatformCommon.PComGameViewportClient.StartFacebookStreaming
-// (Defined, Iterator, Singular, Net, Exec, Native, Event, Operator, HasOptionalParms)
+// (Defined, Iterator, Latent, Singular, Net, NetReliable, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 
 void UPComGameViewportClient::StartFacebookStreaming()
 {
@@ -286,16 +286,15 @@ void UPComGameViewportClient::StartFacebookStreaming()
 
 
 // Function PlatformCommon.PComGameViewportClient.StopRTMPStreaming
-// (Defined, Iterator, Latent, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
+// (Defined, Iterator, PreOperator, Static, HasOptionalParms)
 
-void UPComGameViewportClient::StopRTMPStreaming()
+void UPComGameViewportClient::STATIC_StopRTMPStreaming()
 {
 	static auto fn = UObject::FindObject<UFunction>("Function PlatformCommon.PComGameViewportClient.StopRTMPStreaming");
 
 	UPComGameViewportClient_StopRTMPStreaming_Params params;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -304,7 +303,7 @@ void UPComGameViewportClient::StopRTMPStreaming()
 
 
 // Function PlatformCommon.PComGameViewportClient.StartRTMPStreaming
-// (Final, Defined, Iterator, Singular, Net, Exec, Native, Event, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, Latent, Singular, Net, NetReliable, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FString                 InServer                       (Parm, NeedCtorLink)
 // struct FString                 InKey                          (Parm, NeedCtorLink)
@@ -327,7 +326,7 @@ void UPComGameViewportClient::StartRTMPStreaming(const struct FString& InServer,
 
 
 // Function PlatformCommon.PComGameViewportClient.SetRTMPSettings
-// (Defined, Iterator, Latent, Net, Exec, Native, Event, Operator, HasOptionalParms)
+// (Defined, Iterator, PreOperator, Net, NetReliable, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // bool                           bAllowWebcam                   (Parm)
 // bool                           bAllowMicrophone               (Parm)
@@ -352,7 +351,7 @@ void UPComGameViewportClient::SetRTMPSettings(bool bAllowWebcam, bool bAllowMicr
 
 
 // Function PlatformCommon.PComGameViewportClient.CheckGameSettingsVersion
-// (Final, Defined, PreOperator, NetReliable, Native, Event, Operator, HasOptionalParms)
+// (Singular, Exec, Native, Event, Operator, HasOptionalParms)
 
 void UPComGameViewportClient::CheckGameSettingsVersion()
 {
@@ -370,7 +369,7 @@ void UPComGameViewportClient::CheckGameSettingsVersion()
 
 
 // Function PlatformCommon.PComGameViewportClient.HandleGameSettingsMigration
-// (Final, Defined, PreOperator, Singular, Simulated, Native, Event, Operator, HasOptionalParms)
+// (Net, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // int                            OldGameSettingsVersion         (Parm)
 
@@ -391,7 +390,7 @@ void UPComGameViewportClient::HandleGameSettingsMigration(int OldGameSettingsVer
 
 
 // Function PlatformCommon.PComGameViewportClient.GetCurrentGameSettingsVersion
-// (Final, Defined, Iterator, PreOperator, Simulated, Native, Event, Operator, HasOptionalParms)
+// (Iterator, Singular, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // int                            ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -413,7 +412,7 @@ int UPComGameViewportClient::GetCurrentGameSettingsVersion()
 
 
 // Function PlatformCommon.PComGameViewportClient.InitDynamicResolutionScaler
-// (Final, Defined, Latent, PreOperator, Singular, Simulated, Native, Event, Operator, HasOptionalParms)
+// (Latent, Net, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
 
 void UPComGameViewportClient::InitDynamicResolutionScaler()
 {
@@ -431,7 +430,7 @@ void UPComGameViewportClient::InitDynamicResolutionScaler()
 
 
 // Function PlatformCommon.PComImageDownloader.SetPComImageDownloadedDelegate
-// (Final, Iterator, Latent, Net, Exec, Native, Event, Operator, HasOptionalParms)
+// (Final, Iterator, PreOperator, Net, NetReliable, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FScriptDelegate         PComImageDownloadedDelegate    (Parm, NeedCtorLink)
 
@@ -452,7 +451,7 @@ void UPComImageDownloader::SetPComImageDownloadedDelegate(const struct FScriptDe
 
 
 // Function PlatformCommon.PComImageDownloader.OnPComImageDownloaded
-// (Iterator, PreOperator, Singular, Simulated, Exec, Native, HasOptionalParms)
+// (Defined, Iterator, Latent, Singular, Net, Simulated, Exec, Native, HasOptionalParms)
 // Parameters:
 // struct FPComImageDownload      CachedEntry                    (Parm, NeedCtorLink)
 
@@ -473,7 +472,7 @@ void UPComImageDownloader::OnPComImageDownloaded(const struct FPComImageDownload
 
 
 // Function PlatformCommon.PComInputLightingEffect.IsLogitechSdkVersionValid
-// (Final, PreOperator, Net, Simulated, Native, Event, Operator, HasOptionalParms)
+// (Defined, Iterator, Latent, PreOperator, Net, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -495,7 +494,7 @@ bool UPComInputLightingEffect::IsLogitechSdkVersionValid()
 
 
 // Function PlatformCommon.PComInputLightingEffect.SetCurrentTime
-// (Final, Net, Exec, Native, Event, Operator, HasOptionalParms)
+// (Final, Latent, Net, NetReliable, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FName                   InPresetName                   (Parm)
 // float                          CurrentTime                    (Parm)
@@ -518,11 +517,11 @@ void UPComInputLightingEffect::SetCurrentTime(const struct FName& InPresetName, 
 
 
 // Function PlatformCommon.PComInputLightingEffect.StopPreset
-// (Final, Iterator, Latent, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
+// (Final, Iterator, PreOperator, Static, HasOptionalParms)
 // Parameters:
 // struct FName                   InPresetName                   (Parm)
 
-void UPComInputLightingEffect::StopPreset(const struct FName& InPresetName)
+void UPComInputLightingEffect::STATIC_StopPreset(const struct FName& InPresetName)
 {
 	static auto fn = UObject::FindObject<UFunction>("Function PlatformCommon.PComInputLightingEffect.StopPreset");
 
@@ -530,7 +529,6 @@ void UPComInputLightingEffect::StopPreset(const struct FName& InPresetName)
 	params.InPresetName = InPresetName;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -539,7 +537,7 @@ void UPComInputLightingEffect::StopPreset(const struct FName& InPresetName)
 
 
 // Function PlatformCommon.PComInputLightingEffect.PlayPreset
-// (Defined, Latent, Singular, Net, NetReliable, Simulated, Native, Event, Operator, HasOptionalParms)
+// (Defined, PreOperator, Singular, Net, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FName                   InPresetName                   (Parm)
 // bool                           bUseOverrideStartTime          (OptionalParm, Parm)
@@ -564,7 +562,7 @@ void UPComInputLightingEffect::PlayPreset(const struct FName& InPresetName, bool
 
 
 // Function PlatformCommon.PComInputLightingEffect.DisableSystem
-// (Final, Defined, PreOperator, Singular, NetReliable, Native, Event, Operator, HasOptionalParms)
+// (Net, Exec, Native, Event, Operator, HasOptionalParms)
 
 void UPComInputLightingEffect::DisableSystem()
 {
@@ -582,16 +580,15 @@ void UPComInputLightingEffect::DisableSystem()
 
 
 // Function PlatformCommon.PComInputLightingEffect.TryEnableSystem
-// (Iterator, Latent, Singular, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
+// (Iterator, PreOperator, Singular, Static, HasOptionalParms)
 
-void UPComInputLightingEffect::TryEnableSystem()
+void UPComInputLightingEffect::STATIC_TryEnableSystem()
 {
 	static auto fn = UObject::FindObject<UFunction>("Function PlatformCommon.PComInputLightingEffect.TryEnableSystem");
 
 	UPComInputLightingEffect_TryEnableSystem_Params params;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -600,7 +597,7 @@ void UPComInputLightingEffect::TryEnableSystem()
 
 
 // Function PlatformCommon.PComJsonHandler.OnImageDownloaded
-// (Final, Net, NetReliable, Simulated, Native, Event, Operator, HasOptionalParms)
+// (Final, Latent, Net, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FPComImageDownload      CachedEntry                    (Parm, NeedCtorLink)
 
@@ -621,7 +618,7 @@ void UPComJsonHandler::OnImageDownloaded(const struct FPComImageDownload& Cached
 
 
 // Function PlatformCommon.PComOpenBroadcaster.DecodeFacebookRTMPUrl
-// (Iterator, Singular, Simulated, Exec, Native, HasOptionalParms)
+// (Defined, Iterator, Latent, PreOperator, Net, Simulated, Exec, Native, HasOptionalParms)
 // Parameters:
 // struct FString                 InRequest                      (Parm, NeedCtorLink)
 // class UWebRequest*             ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -662,7 +659,7 @@ void UPComOpenBroadcaster::Tick()
 
 
 // Function PlatformCommon.PComOpenBroadcaster.ForceStopStreaming
-// (Latent, PreOperator, Net, NetReliable, Native, Event, Operator, HasOptionalParms)
+// (Final, Iterator, Singular, Net, Exec, Native, Event, Operator, HasOptionalParms)
 
 void UPComOpenBroadcaster::ForceStopStreaming()
 {
@@ -680,16 +677,15 @@ void UPComOpenBroadcaster::ForceStopStreaming()
 
 
 // Function PlatformCommon.PComOpenBroadcaster.StopStreaming
-// (Final, Defined, Iterator, Latent, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, PreOperator, Static, HasOptionalParms)
 
-void UPComOpenBroadcaster::StopStreaming()
+void UPComOpenBroadcaster::STATIC_StopStreaming()
 {
 	static auto fn = UObject::FindObject<UFunction>("Function PlatformCommon.PComOpenBroadcaster.StopStreaming");
 
 	UPComOpenBroadcaster_StopStreaming_Params params;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -698,7 +694,7 @@ void UPComOpenBroadcaster::StopStreaming()
 
 
 // Function PlatformCommon.PComOpenBroadcaster.StartRTMPStreaming
-// (Final, Defined, Iterator, Singular, Net, Exec, Native, Event, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, Latent, Singular, Net, NetReliable, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FString                 InServer                       (Parm, NeedCtorLink)
 // struct FString                 InKey                          (Parm, NeedCtorLink)
@@ -721,7 +717,7 @@ void UPComOpenBroadcaster::StartRTMPStreaming(const struct FString& InServer, co
 
 
 // Function PlatformCommon.PComOpenBroadcaster.StartFacebookStreaming
-// (Defined, Iterator, Singular, Net, Exec, Native, Event, Operator, HasOptionalParms)
+// (Defined, Iterator, Latent, Singular, Net, NetReliable, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 
 void UPComOpenBroadcaster::StartFacebookStreaming()
 {
@@ -739,7 +735,7 @@ void UPComOpenBroadcaster::StartFacebookStreaming()
 
 
 // Function PlatformCommon.PComOpenBroadcaster.QueueFacebookStreaming
-// (Final, Iterator, Latent, Exec, Native, Event, Operator, HasOptionalParms)
+// (Final, Iterator, PreOperator, NetReliable, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 
 void UPComOpenBroadcaster::QueueFacebookStreaming()
 {
@@ -757,7 +753,7 @@ void UPComOpenBroadcaster::QueueFacebookStreaming()
 
 
 // Function PlatformCommon.PComOpenBroadcaster.SetStreamSettings
-// (Final, PreOperator, Net, Exec, Native, Event, Operator, HasOptionalParms)
+// (Final, Latent, PreOperator, Net, NetReliable, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FPComOpenBroadcasterSettings InSettings                     (Const, Parm, OutParm)
 
@@ -780,7 +776,7 @@ void UPComOpenBroadcaster::SetStreamSettings(struct FPComOpenBroadcasterSettings
 
 
 // Function PlatformCommon.PComOpenBroadcaster.IsStreaming
-// (Iterator, PreOperator, Net, Simulated, Native, Event, Operator, HasOptionalParms)
+// (Final, Singular, Net, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -802,7 +798,7 @@ bool UPComOpenBroadcaster::IsStreaming()
 
 
 // Function PlatformCommon.PComOpenBroadcaster.CloseWebBrowser
-// (Final, Singular, Simulated, Exec, Native, HasOptionalParms)
+// (Final, Defined, Latent, PreOperator, Net, Simulated, Exec, Native, HasOptionalParms)
 
 void UPComOpenBroadcaster::CloseWebBrowser()
 {
@@ -820,7 +816,7 @@ void UPComOpenBroadcaster::CloseWebBrowser()
 
 
 // Function PlatformCommon.PComOpenBroadcaster.OpenWebBrowser
-// (Final, Defined, Iterator, PreOperator, Singular, Simulated, Exec, Native, HasOptionalParms)
+// (Final, PreOperator, Singular, Net, Simulated, Exec, Native, HasOptionalParms)
 // Parameters:
 // struct FString                 URL                            (Parm, NeedCtorLink)
 
@@ -841,7 +837,7 @@ void UPComOpenBroadcaster::OpenWebBrowser(const struct FString& URL)
 
 
 // Function PlatformCommon.PComOpenBroadcaster.IsWebBrowserLoaded
-// (PreOperator, Singular, Simulated, Exec, Native, HasOptionalParms)
+// (Defined, Latent, Singular, Net, Simulated, Exec, Native, HasOptionalParms)
 // Parameters:
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -863,7 +859,7 @@ bool UPComOpenBroadcaster::IsWebBrowserLoaded()
 
 
 // Function PlatformCommon.PComOpenBroadcaster.PreloadWebBrowser
-// (Defined, Latent, PreOperator, Singular, Simulated, Exec, Native, HasOptionalParms)
+// (Iterator, PreOperator, Singular, Net, Simulated, Exec, Native, HasOptionalParms)
 
 void UPComOpenBroadcaster::PreloadWebBrowser()
 {
@@ -881,7 +877,7 @@ void UPComOpenBroadcaster::PreloadWebBrowser()
 
 
 // Function PlatformCommon.PComPerformanceCaptureBase.CreateFileAndExit
-// (Final, Iterator, Singular, NetReliable, Native, Event, Operator, HasOptionalParms)
+// (Defined, PreOperator, Singular, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FString                 FileNameWithExtension          (Parm, NeedCtorLink)
 // struct FString                 FileContents                   (Parm, NeedCtorLink)
@@ -906,7 +902,7 @@ void UPComPerformanceCaptureBase::CreateFileAndExit(const struct FString& FileNa
 
 
 // Function PlatformCommon.PComPerformanceCaptureBase.GetPerfStats
-// (Singular, Simulated, Native, Event, Operator, HasOptionalParms)
+// (Final, Iterator, Latent, Singular, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // TArray<struct FPComPerformanceCaptureStat> PerfStats                      (Const, Parm, NeedCtorLink)
 // struct FString                 FileContents                   (Parm, OutParm, NeedCtorLink)
@@ -931,7 +927,7 @@ void UPComPerformanceCaptureBase::GetPerfStats(TArray<struct FPComPerformanceCap
 
 
 // Function PlatformCommon.PComPerformanceCaptureBase.GetStatsToCollect
-// (Final, Singular, Simulated, Native, Event, Operator, HasOptionalParms)
+// (Defined, Iterator, Latent, Singular, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FString                 FileContents                   (Parm, OutParm, NeedCtorLink)
 
@@ -954,7 +950,7 @@ void UPComPerformanceCaptureBase::GetStatsToCollect(struct FString* FileContents
 
 
 // Function PlatformCommon.PComPerformanceCaptureBase.GetMapNameAndTime
-// (Final, Defined, Latent, PreOperator, Simulated, Native, Event, Operator, HasOptionalParms)
+// (Latent, Singular, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FString                 MapNameStr                     (Parm, OutParm, NeedCtorLink)
 // struct FString                 FormattedDate                  (Parm, OutParm, NeedCtorLink)
@@ -983,18 +979,17 @@ void UPComPerformanceCaptureBase::GetMapNameAndTime(struct FString* MapNameStr, 
 
 
 // Function PlatformCommon.PComPerformanceCaptureBase.StopCycleStats
-// (Defined, Latent, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
+// (Defined, PreOperator, Static, HasOptionalParms)
 // Parameters:
 // TArray<struct FPComPerformanceCaptureStat> PerfStats                      (Parm, OutParm, NeedCtorLink)
 
-void UPComPerformanceCaptureBase::StopCycleStats(TArray<struct FPComPerformanceCaptureStat>* PerfStats)
+void UPComPerformanceCaptureBase::STATIC_StopCycleStats(TArray<struct FPComPerformanceCaptureStat>* PerfStats)
 {
 	static auto fn = UObject::FindObject<UFunction>("Function PlatformCommon.PComPerformanceCaptureBase.StopCycleStats");
 
 	UPComPerformanceCaptureBase_StopCycleStats_Params params;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -1006,7 +1001,7 @@ void UPComPerformanceCaptureBase::StopCycleStats(TArray<struct FPComPerformanceC
 
 
 // Function PlatformCommon.PComPerformanceCaptureBase.GetPerformanceData
-// (Final, Defined, Iterator, Latent, PreOperator, Simulated, Native, Event, Operator, HasOptionalParms)
+// (Iterator, Latent, Singular, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // TArray<struct FPComPerformanceCaptureStat> PerfStats                      (Parm, OutParm, NeedCtorLink)
 
@@ -1029,7 +1024,7 @@ void UPComPerformanceCaptureBase::GetPerformanceData(TArray<struct FPComPerforma
 
 
 // Function PlatformCommon.PComPerformanceCaptureBase.EnableStatNotify
-// (Final, Defined, Iterator, Latent, PreOperator, Singular, NetReliable, Native, Event, Operator, HasOptionalParms)
+// (Iterator, Latent, Net, Exec, Native, Event, Operator, HasOptionalParms)
 
 void UPComPerformanceCaptureBase::EnableStatNotify()
 {
@@ -1047,7 +1042,7 @@ void UPComPerformanceCaptureBase::EnableStatNotify()
 
 
 // Function PlatformCommon.PComPerformanceCaptureBase.EnableNonCycleStats
-// (Defined, Iterator, Latent, PreOperator, Singular, NetReliable, Native, Event, Operator, HasOptionalParms)
+// (Final, Defined, Latent, Net, Exec, Native, Event, Operator, HasOptionalParms)
 
 void UPComPerformanceCaptureBase::EnableNonCycleStats()
 {
@@ -1065,7 +1060,7 @@ void UPComPerformanceCaptureBase::EnableNonCycleStats()
 
 
 // Function PlatformCommon.PComPerformanceCaptureBase.MoveCamera
-// (Defined, PreOperator, NetReliable, Simulated, Native, Event, Operator, HasOptionalParms)
+// (Defined, Latent, PreOperator, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // class APlayerController*       PlayerController               (Parm)
 // class AActor*                  Node                           (Parm)
@@ -1088,7 +1083,7 @@ void UPComPerformanceCaptureBase::MoveCamera(class APlayerController* PlayerCont
 
 
 // Function PlatformCommon.PComPerformanceCaptureBase.InitializePerformanceCaptureSettings
-// (Iterator, Latent, PreOperator, Singular, Simulated, Native, Event, Operator, HasOptionalParms)
+// (Final, Latent, Net, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
 
 void UPComPerformanceCaptureBase::InitializePerformanceCaptureSettings()
 {
@@ -1106,7 +1101,7 @@ void UPComPerformanceCaptureBase::InitializePerformanceCaptureSettings()
 
 
 // Function PlatformCommon.PComPerformanceCaptureGame.DoNextAction
-// (Final, Iterator, PreOperator, Singular, NetReliable, Native, Event, Operator, HasOptionalParms)
+// (Defined, Net, Exec, Native, Event, Operator, HasOptionalParms)
 
 void APComPerformanceCaptureGame::DoNextAction()
 {
@@ -1124,7 +1119,7 @@ void APComPerformanceCaptureGame::DoNextAction()
 
 
 // Function PlatformCommon.PComPerformanceCaptureGame.CollectNodes
-// (Final, Singular, NetReliable, Native, Event, Operator, HasOptionalParms)
+// (Defined, Iterator, Latent, Singular, Exec, Native, Event, Operator, HasOptionalParms)
 
 void APComPerformanceCaptureGame::CollectNodes()
 {
@@ -1159,16 +1154,15 @@ void APComPerformanceCaptureGame::PostBeginPlay()
 
 
 // Function PlatformCommon.PComPictureInPicture.TestPictureInPicture
-// (Final, Latent, PreOperator, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
+// (Final, Singular, Static, HasOptionalParms)
 
-void UPComPictureInPicture::TestPictureInPicture()
+void UPComPictureInPicture::STATIC_TestPictureInPicture()
 {
 	static auto fn = UObject::FindObject<UFunction>("Function PlatformCommon.PComPictureInPicture.TestPictureInPicture");
 
 	UPComPictureInPicture_TestPictureInPicture_Params params;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -1177,7 +1171,7 @@ void UPComPictureInPicture::TestPictureInPicture()
 
 
 // Function PlatformCommon.PComPictureInPicture.DebugRender
-// (Defined, Iterator, Latent, Singular, NetReliable, Native, Event, Operator, HasOptionalParms)
+// (Final, Defined, Latent, PreOperator, Singular, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // class UCanvas*                 Canvas                         (Parm)
 
@@ -1198,7 +1192,7 @@ void UPComPictureInPicture::DebugRender(class UCanvas* Canvas)
 
 
 // Function PlatformCommon.PComPictureInPicture.IsViewDescReady
-// (Final, Iterator, PreOperator, Net, Simulated, Native, Event, Operator, HasOptionalParms)
+// (Defined, Singular, Net, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FPComPipViewDesc        ViewDesc                       (Const, Parm, OutParm, NeedCtorLink)
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -1224,7 +1218,7 @@ bool UPComPictureInPicture::IsViewDescReady(struct FPComPipViewDesc* ViewDesc)
 
 
 // Function PlatformCommon.PComPictureInPicture.IsViewReady
-// (Defined, Iterator, PreOperator, Net, Simulated, Native, Event, Operator, HasOptionalParms)
+// (Final, Defined, Singular, Net, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FName                   ViewName                       (Parm)
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -1248,7 +1242,7 @@ bool UPComPictureInPicture::IsViewReady(const struct FName& ViewName)
 
 
 // Function PlatformCommon.PComPictureInPicture.RequestRender
-// (Final, Iterator, PreOperator, Exec, Native, Event, Operator, HasOptionalParms)
+// (Final, Iterator, Latent, PreOperator, NetReliable, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FName                   ViewName                       (Parm)
 
@@ -1269,7 +1263,7 @@ void UPComPictureInPicture::RequestRender(const struct FName& ViewName)
 
 
 // Function PlatformCommon.PComPictureInPicture.RemoveView
-// (Defined, PreOperator, Exec, Native, Event, Operator, HasOptionalParms)
+// (Defined, Latent, PreOperator, NetReliable, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FName                   ViewName                       (Parm)
 
@@ -1290,7 +1284,7 @@ void UPComPictureInPicture::RemoveView(const struct FName& ViewName)
 
 
 // Function PlatformCommon.PComPictureInPicture.AddView
-// (Final, Defined, Iterator, Latent, Net, Native, Event, Operator, HasOptionalParms)
+// (Iterator, Latent, PreOperator, Net, NetReliable, Simulated, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FPComPipViewDesc        InViewDesc                     (Const, Parm, OutParm, NeedCtorLink)
 
@@ -1313,7 +1307,7 @@ void UPComPictureInPicture::AddView(struct FPComPipViewDesc* InViewDesc)
 
 
 // Function PlatformCommon.PComPictureInPicture.InitializeRenderTarget
-// (Final, Iterator, Latent, PreOperator, Singular, Simulated, Native, Event, Operator, HasOptionalParms)
+// (Defined, Latent, Net, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
 
 void UPComPictureInPicture::InitializeRenderTarget()
 {
@@ -1331,7 +1325,7 @@ void UPComPictureInPicture::InitializeRenderTarget()
 
 
 // Function PlatformCommon.PComPictureInPictureScene.SetSkyColor
-// (PreOperator, Net, Exec, Native, Event, Operator, HasOptionalParms)
+// (Latent, PreOperator, Net, NetReliable, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FColor                  InSkyColor                     (Const, Parm, OutParm)
 
@@ -1354,7 +1348,7 @@ void UPComPictureInPictureScene::SetSkyColor(struct FColor* InSkyColor)
 
 
 // Function PlatformCommon.PComPictureInPictureScene.SetSkyBrightness
-// (Final, Defined, Iterator, Latent, Net, Exec, Native, Event, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, PreOperator, Net, NetReliable, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // float                          InSkyBrightness                (Parm)
 
@@ -1375,7 +1369,7 @@ void UPComPictureInPictureScene::SetSkyBrightness(float InSkyBrightness)
 
 
 // Function PlatformCommon.PComPictureInPictureScene.SetBounceLightColor
-// (Defined, Iterator, Latent, PreOperator, Singular, Exec, Native, Event, Operator, HasOptionalParms)
+// (Defined, Iterator, Net, NetReliable, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FColor                  LightColor                     (Const, Parm, OutParm)
 
@@ -1398,7 +1392,7 @@ void UPComPictureInPictureScene::SetBounceLightColor(struct FColor* LightColor)
 
 
 // Function PlatformCommon.PComPictureInPictureScene.SetBounceLightBrightness
-// (Final, Iterator, Latent, PreOperator, Singular, Exec, Native, Event, Operator, HasOptionalParms)
+// (Final, Iterator, Net, NetReliable, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // float                          InLightBrightness              (Parm)
 
@@ -1419,7 +1413,7 @@ void UPComPictureInPictureScene::SetBounceLightBrightness(float InLightBrightnes
 
 
 // Function PlatformCommon.PComPictureInPictureScene.SetBounceLightDirection
-// (Final, Defined, Iterator, Latent, PreOperator, Singular, Exec, Native, Event, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, Net, NetReliable, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FRotator                InLightDir                     (Const, Parm, OutParm)
 
@@ -1442,7 +1436,7 @@ void UPComPictureInPictureScene::SetBounceLightDirection(struct FRotator* InLigh
 
 
 // Function PlatformCommon.PComPictureInPictureScene.EnableDirectionalBounceLight
-// (Final, Iterator, Latent, PreOperator, Singular, NetReliable, Native, Event, Operator, HasOptionalParms)
+// (Defined, Latent, Net, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // bool                           bInEnableBoundLight            (Parm)
 // float                          InBounceLightBrightness        (OptionalParm, Parm)
@@ -1467,7 +1461,7 @@ void UPComPictureInPictureScene::EnableDirectionalBounceLight(bool bInEnableBoun
 
 
 // Function PlatformCommon.PComPictureInPictureScene.SetLightColor
-// (Latent, Net, Exec, Native, Event, Operator, HasOptionalParms)
+// (PreOperator, Net, NetReliable, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FColor                  LightColor                     (Const, Parm, OutParm)
 
@@ -1490,7 +1484,7 @@ void UPComPictureInPictureScene::SetLightColor(struct FColor* LightColor)
 
 
 // Function PlatformCommon.PComPictureInPictureScene.SetLightBrightness
-// (Final, Defined, Iterator, Net, Exec, Native, Event, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, Latent, Net, NetReliable, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // float                          InLightBrightness              (Parm)
 
@@ -1511,7 +1505,7 @@ void UPComPictureInPictureScene::SetLightBrightness(float InLightBrightness)
 
 
 // Function PlatformCommon.PComPictureInPictureScene.SetLightDirection
-// (Final, Latent, Net, Exec, Native, Event, Operator, HasOptionalParms)
+// (Final, PreOperator, Net, NetReliable, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FRotator                InLightDir                     (Const, Parm, OutParm)
 
@@ -1534,7 +1528,7 @@ void UPComPictureInPictureScene::SetLightDirection(struct FRotator* InLightDir)
 
 
 // Function PlatformCommon.PComPictureInPictureScene.GetLightDirection
-// (Defined, Latent, PreOperator, Simulated, Native, Event, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, Singular, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FRotator                ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -1556,7 +1550,7 @@ struct FRotator UPComPictureInPictureScene::GetLightDirection()
 
 
 // Function PlatformCommon.PComPictureInPictureScene.RemoveComponent
-// (Final, PreOperator, Singular, Net, Native, Event, Operator, HasOptionalParms)
+// (Defined, Iterator, Latent, Singular, NetReliable, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // class UActorComponent*         Component                      (Parm, EditInline)
 
@@ -1577,7 +1571,7 @@ void UPComPictureInPictureScene::RemoveComponent(class UActorComponent* Componen
 
 
 // Function PlatformCommon.PComPictureInPictureScene.AddComponent
-// (Defined, Iterator, Latent, Net, Native, Event, Operator, HasOptionalParms)
+// (Final, Defined, Latent, PreOperator, Net, NetReliable, Simulated, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // class UActorComponent*         Component                      (Parm, EditInline)
 // struct FMatrix                 LocalToWorld                   (Const, Parm, OutParm)
@@ -1602,7 +1596,7 @@ void UPComPictureInPictureScene::AddComponent(class UActorComponent* Component, 
 
 
 // Function PlatformCommon.PComPictureInPictureScene.InitScene
-// (Defined, Iterator, Latent, PreOperator, Singular, Simulated, Native, Event, Operator, HasOptionalParms)
+// (Final, Defined, Latent, Net, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
 
 void UPComPictureInPictureScene::InitScene()
 {
@@ -1620,7 +1614,7 @@ void UPComPictureInPictureScene::InitScene()
 
 
 // Function PlatformCommon.PComPlayerController.PlayTestInputLightingEffect
-// (Final, Latent, PreOperator, Singular, Simulated, Exec, Native, HasOptionalParms)
+// (Final, Defined, PreOperator, Singular, Net, Simulated, Exec, Native, HasOptionalParms)
 // Parameters:
 // struct FName                   InPresetName                   (Parm)
 
@@ -1641,7 +1635,7 @@ void APComPlayerController::PlayTestInputLightingEffect(const struct FName& InPr
 
 
 // Function PlatformCommon.PComPlayerController.SetCurrentTimeForInputLightingEffect
-// (Defined, Net, Exec, Native, Event, Operator, HasOptionalParms)
+// (Defined, Latent, Net, NetReliable, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FName                   InPresetName                   (Parm)
 // float                          InCurrentTime                  (Parm)
@@ -1664,11 +1658,11 @@ void APComPlayerController::SetCurrentTimeForInputLightingEffect(const struct FN
 
 
 // Function PlatformCommon.PComPlayerController.StopInputLightingEffect
-// (Final, Defined, Latent, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
+// (Final, Defined, PreOperator, Static, HasOptionalParms)
 // Parameters:
 // struct FName                   InPresetName                   (Parm)
 
-void APComPlayerController::StopInputLightingEffect(const struct FName& InPresetName)
+void APComPlayerController::STATIC_StopInputLightingEffect(const struct FName& InPresetName)
 {
 	static auto fn = UObject::FindObject<UFunction>("Function PlatformCommon.PComPlayerController.StopInputLightingEffect");
 
@@ -1676,7 +1670,6 @@ void APComPlayerController::StopInputLightingEffect(const struct FName& InPreset
 	params.InPresetName = InPresetName;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -1685,7 +1678,7 @@ void APComPlayerController::StopInputLightingEffect(const struct FName& InPreset
 
 
 // Function PlatformCommon.PComPlayerController.PlayInputLightingEffect
-// (Latent, Singular, Net, NetReliable, Simulated, Native, Event, Operator, HasOptionalParms)
+// (PreOperator, Singular, Net, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FName                   InPresetName                   (Parm)
 // bool                           bUseOverrideStartTime          (OptionalParm, Parm)
@@ -1710,7 +1703,7 @@ void APComPlayerController::PlayInputLightingEffect(const struct FName& InPreset
 
 
 // Function PlatformCommon.PComPlayerController.ClientPlayInputLightingEffect
-// (Singular, Simulated, Exec, Native, HasOptionalParms)
+// (Defined, Latent, PreOperator, Net, Simulated, Exec, Native, HasOptionalParms)
 // Parameters:
 // struct FName                   InPresetName                   (Parm)
 // bool                           bUseOverrideStartTime          (OptionalParm, Parm)
@@ -1735,18 +1728,17 @@ void APComPlayerController::ClientPlayInputLightingEffect(const struct FName& In
 
 
 // Function PlatformCommon.PComPlayerController.TryAutoLogin
-// (Final, Defined, Latent, Singular, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
+// (Final, Defined, PreOperator, Singular, Static, HasOptionalParms)
 // Parameters:
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
 
-bool APComPlayerController::TryAutoLogin()
+bool APComPlayerController::STATIC_TryAutoLogin()
 {
 	static auto fn = UObject::FindObject<UFunction>("Function PlatformCommon.PComPlayerController.TryAutoLogin");
 
 	APComPlayerController_TryAutoLogin_Params params;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -1757,7 +1749,7 @@ bool APComPlayerController::TryAutoLogin()
 
 
 // Function PlatformCommon.PComPlayerController.TryAutoLoginDelayed
-// (Defined, Iterator, Net, Simulated, Exec, Native, HasOptionalParms)
+// (NetReliable, Simulated, Exec, Native, HasOptionalParms)
 
 void APComPlayerController::TryAutoLoginDelayed()
 {
@@ -1775,7 +1767,7 @@ void APComPlayerController::TryAutoLoginDelayed()
 
 
 // Function PlatformCommon.PComPlayerController.SetAsNewPartyHost
-// (Net, Simulated, Exec, Native, HasOptionalParms)
+// (Defined, Latent, PreOperator, Singular, Net, Simulated, Exec, Native, HasOptionalParms)
 
 void APComPlayerController::SetAsNewPartyHost()
 {
@@ -1793,7 +1785,7 @@ void APComPlayerController::SetAsNewPartyHost()
 
 
 // Function PlatformCommon.PComPlayerController.ToggleGameSessionInvitesAllowed
-// (Iterator, Net, Simulated, Exec, Native, HasOptionalParms)
+// (Defined, Iterator, Latent, PreOperator, Singular, Net, Simulated, Exec, Native, HasOptionalParms)
 // Parameters:
 // bool                           bAllowed                       (Parm)
 
@@ -1814,7 +1806,7 @@ void APComPlayerController::ToggleGameSessionInvitesAllowed(bool bAllowed)
 
 
 // Function PlatformCommon.PComPlayerController.TogglePartySessionInvitesAllowed
-// (Final, Iterator, Net, Simulated, Exec, Native, HasOptionalParms)
+// (Final, Defined, Iterator, Latent, PreOperator, Singular, Net, Simulated, Exec, Native, HasOptionalParms)
 // Parameters:
 // bool                           bAllowed                       (Parm)
 
@@ -1835,7 +1827,7 @@ void APComPlayerController::TogglePartySessionInvitesAllowed(bool bAllowed)
 
 
 // Function PlatformCommon.PComPlayerController.UpdateMCTSWithNewPartyInfo
-// (Final, Latent, Net, Simulated, Exec, Native, HasOptionalParms)
+// (Final, Defined, NetReliable, Simulated, Exec, Native, HasOptionalParms)
 
 void APComPlayerController::UpdateMCTSWithNewPartyInfo()
 {
@@ -1853,7 +1845,7 @@ void APComPlayerController::UpdateMCTSWithNewPartyInfo()
 
 
 // Function PlatformCommon.PComPlayerController.IsHostOfParty
-// (Defined, Iterator, Latent, Singular, Simulated, Exec, Native, HasOptionalParms)
+// (Latent, Singular, Net, Simulated, Exec, Native, HasOptionalParms)
 // Parameters:
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -1875,7 +1867,7 @@ bool APComPlayerController::IsHostOfParty()
 
 
 // Function PlatformCommon.PComPlayerController.OnPeoplePickerComplete
-// (Final, Singular, Net, NetReliable, Simulated, Native, Event, Static)
+// (Final, Iterator, Singular, Net, NetReliable, Simulated, Native, Event, Static)
 // Parameters:
 // bool                           bWasSuccessful                 (Parm)
 // TArray<struct FOnlineFriend>   PeoplePicked                   (Parm, NeedCtorLink)
@@ -1898,7 +1890,7 @@ void APComPlayerController::STATIC_OnPeoplePickerComplete(bool bWasSuccessful, T
 
 
 // Function PlatformCommon.PComPlayerController.OnReadFriendsListComplete
-// (Final, Defined, Iterator, Net, NetReliable, Simulated, Native, Event, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, Latent, Net, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // bool                           bWasSuccessful                 (Parm)
 
@@ -1919,7 +1911,7 @@ void APComPlayerController::OnReadFriendsListComplete(bool bWasSuccessful)
 
 
 // Function PlatformCommon.PComPlayerController.ShowPeoplePickerUI
-// (Final, Defined, Net, Simulated, Exec, Native, HasOptionalParms)
+// (Final, Iterator, Latent, PreOperator, Singular, Net, Simulated, Exec, Native, HasOptionalParms)
 // Parameters:
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -1941,7 +1933,7 @@ bool APComPlayerController::ShowPeoplePickerUI()
 
 
 // Function PlatformCommon.PComPlayerController.JoinCustomMatchForInviteDelay
-// (Final, Defined, Iterator, PreOperator, Net, Simulated, Native, Event, Operator, HasOptionalParms)
+// (Iterator, Singular, Net, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
 
 void APComPlayerController::JoinCustomMatchForInviteDelay()
 {
@@ -1959,7 +1951,7 @@ void APComPlayerController::JoinCustomMatchForInviteDelay()
 
 
 // Function PlatformCommon.PComPlayerController.JoinCustomMatchFromInvite
-// (Final, PreOperator, Singular, Simulated, Exec, Native, HasOptionalParms)
+// (Final, Defined, Latent, Singular, Net, Simulated, Exec, Native, HasOptionalParms)
 
 void APComPlayerController::JoinCustomMatchFromInvite()
 {
@@ -1977,7 +1969,7 @@ void APComPlayerController::JoinCustomMatchFromInvite()
 
 
 // Function PlatformCommon.PComPlayerController.OnJoinSessionForReceivedInviteComplete
-// (Final, Defined, Net, NetReliable, Simulated, Native, Event, Operator, HasOptionalParms)
+// (Final, Defined, Latent, Net, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FName                   SessionName                    (Parm)
 // bool                           bWasSuccessful                 (Parm)
@@ -2000,7 +1992,7 @@ void APComPlayerController::OnJoinSessionForReceivedInviteComplete(const struct 
 
 
 // Function PlatformCommon.PComPlayerController.OnPrivilegeCheckForGameSessionJoin
-// (Iterator, Net, NetReliable, Simulated, Native, Event, Operator, HasOptionalParms)
+// (Iterator, Latent, Net, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // unsigned char                  LocalUserNum                   (Parm)
 // TEnumAsByte<EFeaturePrivilege> Privilege                      (Parm)
@@ -2027,7 +2019,7 @@ void APComPlayerController::OnPrivilegeCheckForGameSessionJoin(unsigned char Loc
 
 
 // Function PlatformCommon.PComPlayerController.OnPrivilegeLevelCheckedCompleteForPartyJoin
-// (Final, Iterator, Net, NetReliable, Simulated, Native, Event, Operator, HasOptionalParms)
+// (Final, Iterator, Latent, Net, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // unsigned char                  LocalUserNum                   (Parm)
 // TEnumAsByte<EFeaturePrivilege> Privilege                      (Parm)
@@ -2054,7 +2046,7 @@ void APComPlayerController::OnPrivilegeLevelCheckedCompleteForPartyJoin(unsigned
 
 
 // Function PlatformCommon.PComPlayerController.OnGameDestroyedForPartyJoin
-// (Final, Defined, Iterator, Latent, PreOperator, Singular, NetReliable, Simulated, Native, Event, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, Net, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FName                   SessionName                    (Parm)
 // bool                           bWasSuccessful                 (Parm)
@@ -2077,7 +2069,7 @@ void APComPlayerController::OnGameDestroyedForPartyJoin(const struct FName& Sess
 
 
 // Function PlatformCommon.PComPlayerController.OnAlternatePrivilegeLevelCheckedComplete
-// (Iterator, Latent, PreOperator, Singular, NetReliable, Simulated, Native, Event, Operator, HasOptionalParms)
+// (Iterator, Net, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // unsigned char                  LocalUserNum                   (Parm)
 // TEnumAsByte<EFeaturePrivilege> Privilege                      (Parm)
@@ -2104,7 +2096,7 @@ void APComPlayerController::OnAlternatePrivilegeLevelCheckedComplete(unsigned ch
 
 
 // Function PlatformCommon.PComPlayerController.OnGameInviteAccepted
-// (Defined, Iterator, Singular, Net, NetReliable, Exec, Native, HasOptionalParms)
+// (Singular, Simulated, Exec, Native, HasOptionalParms)
 // Parameters:
 // struct FOnlineGameSearchResult InviteResult                   (Const, Parm, OutParm)
 
@@ -2127,7 +2119,7 @@ void APComPlayerController::OnGameInviteAccepted(struct FOnlineGameSearchResult*
 
 
 // Function PlatformCommon.PComPlayerController.JoinPartySession
-// (Defined, PreOperator, Singular, Simulated, Exec, Native, HasOptionalParms)
+// (Iterator, Latent, Singular, Net, Simulated, Exec, Native, HasOptionalParms)
 // Parameters:
 // unsigned char                  PartySessionGuid               (Parm)
 
@@ -2148,7 +2140,7 @@ void APComPlayerController::JoinPartySession(unsigned char PartySessionGuid)
 
 
 // Function PlatformCommon.PComPlayerController.OnPartySessionDestroyed
-// (Final, Defined, PreOperator, Singular, Simulated, Exec, Native, HasOptionalParms)
+// (Final, Iterator, Latent, Singular, Net, Simulated, Exec, Native, HasOptionalParms)
 // Parameters:
 // struct FName                   SessionName                    (Parm)
 // bool                           bWasSuccessful                 (Parm)
@@ -2171,7 +2163,7 @@ void APComPlayerController::OnPartySessionDestroyed(const struct FName& SessionN
 
 
 // Function PlatformCommon.PComPlayerController.DestroyPartySession
-// (Final, Iterator, Singular, Simulated, Exec, Native, HasOptionalParms)
+// (Final, Defined, Iterator, Latent, PreOperator, Net, Simulated, Exec, Native, HasOptionalParms)
 
 void APComPlayerController::DestroyPartySession()
 {
@@ -2189,7 +2181,7 @@ void APComPlayerController::DestroyPartySession()
 
 
 // Function PlatformCommon.PComPlayerController.InvitePlayerToParty
-// (Iterator, Latent, Singular, Simulated, Exec, Native, HasOptionalParms)
+// (Defined, Iterator, Singular, Net, Simulated, Exec, Native, HasOptionalParms)
 // Parameters:
 // struct FUniqueNetId            InPlayerId                     (Parm)
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -2213,7 +2205,7 @@ bool APComPlayerController::InvitePlayerToParty(const struct FUniqueNetId& InPla
 
 
 // Function PlatformCommon.PComPlayerController.InvitePlayerToPartyByName
-// (Final, Iterator, Latent, Singular, Simulated, Exec, Native, HasOptionalParms)
+// (Final, Defined, Iterator, Singular, Net, Simulated, Exec, Native, HasOptionalParms)
 // Parameters:
 // struct FString                 InPlayerName                   (Parm, NeedCtorLink)
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -2237,7 +2229,7 @@ bool APComPlayerController::InvitePlayerToPartyByName(const struct FString& InPl
 
 
 // Function PlatformCommon.PComPlayerController.OnCreatePartySessionComplete
-// (Defined, Iterator, Latent, PreOperator, Singular, NetReliable, Simulated, Native, Event, Operator, HasOptionalParms)
+// (Defined, Iterator, Net, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FName                   SessionName                    (Parm)
 // bool                           bSuccessful                    (Parm)
@@ -2260,7 +2252,7 @@ void APComPlayerController::OnCreatePartySessionComplete(const struct FName& Ses
 
 
 // Function PlatformCommon.PComPlayerController.CreatePartySession
-// (Defined, Singular, Simulated, Exec, Native, HasOptionalParms)
+// (Iterator, Latent, PreOperator, Net, Simulated, Exec, Native, HasOptionalParms)
 
 void APComPlayerController::CreatePartySession()
 {
@@ -2278,7 +2270,7 @@ void APComPlayerController::CreatePartySession()
 
 
 // Function PlatformCommon.PComPlayerController.UnregisterP2PEnemiesForCustomMatch
-// (Latent, Net, Simulated, Exec, Native, HasOptionalParms)
+// (Defined, NetReliable, Simulated, Exec, Native, HasOptionalParms)
 // Parameters:
 // TArray<struct FUniqueNetId>    EnemyIds                       (Parm, NeedCtorLink)
 
@@ -2299,7 +2291,7 @@ void APComPlayerController::UnregisterP2PEnemiesForCustomMatch(TArray<struct FUn
 
 
 // Function PlatformCommon.PComPlayerController.OnGetVoicePermissionsForUsersComplete
-// (Net, NetReliable, Simulated, Native, Event, Operator, HasOptionalParms)
+// (Latent, Net, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // unsigned char                  LocalUserNum                   (Parm)
 // TEnumAsByte<EFeaturePrivilege> Privilege                      (Parm)
@@ -2324,7 +2316,7 @@ void APComPlayerController::OnGetVoicePermissionsForUsersComplete(unsigned char 
 
 
 // Function PlatformCommon.PComPlayerController.OnGetSessionMemberInfoComplete
-// (Defined, Latent, Singular, Net, NetReliable, Exec, Native, HasOptionalParms)
+// (Iterator, Singular, Simulated, Exec, Native, HasOptionalParms)
 // Parameters:
 // TArray<struct FSessionMemberInfo> SessionListInfo                (Parm, NeedCtorLink)
 // bool                           bWasSuccessful                 (Parm)
@@ -2347,7 +2339,7 @@ void APComPlayerController::OnGetSessionMemberInfoComplete(TArray<struct FSessio
 
 
 // Function PlatformCommon.PComPlayerController.OnGetUserConnectionInfoComplete
-// (Final, Defined, Latent, Singular, Net, NetReliable, Exec, Native, HasOptionalParms)
+// (Final, Iterator, Singular, Simulated, Exec, Native, HasOptionalParms)
 // Parameters:
 // TArray<struct FSessionMemberInfo> SessionListInfo                (Parm, NeedCtorLink)
 // bool                           bWasSuccessful                 (Parm)
@@ -2370,7 +2362,7 @@ void APComPlayerController::OnGetUserConnectionInfoComplete(TArray<struct FSessi
 
 
 // Function PlatformCommon.PComPlayerController.GetUserNamesForPS4P2PConnections
-// (Defined, Singular, Simulated, Native, Event, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, Latent, Singular, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // TArray<struct FString>         ReturnValue                    (Parm, OutParm, ReturnParm, NeedCtorLink)
 
@@ -2392,7 +2384,7 @@ TArray<struct FString> APComPlayerController::GetUserNamesForPS4P2PConnections()
 
 
 // Function PlatformCommon.PComPlayerController.CloseConnectionsToInvalidPeers
-// (Defined, Latent, PreOperator, NetReliable, Native, Event, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, Singular, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // TArray<struct FSessionMemberInfo> SessionListInfo                (Parm, NeedCtorLink)
 
@@ -2413,7 +2405,7 @@ void APComPlayerController::CloseConnectionsToInvalidPeers(TArray<struct FSessio
 
 
 // Function PlatformCommon.PComPlayerController.EstablishPeers
-// (Defined, Iterator, Singular, Simulated, Exec, Native, HasOptionalParms)
+// (Singular, Net, Simulated, Exec, Native, HasOptionalParms)
 
 void APComPlayerController::EstablishPeers()
 {
@@ -2431,7 +2423,7 @@ void APComPlayerController::EstablishPeers()
 
 
 // Function PlatformCommon.PComPlayerController.LostP2PConnection
-// (Net, Simulated, Native, HasOptionalParms)
+// (Defined, Latent, PreOperator, Singular, Net, Simulated, Native, HasOptionalParms)
 // Parameters:
 // struct FUniqueNetId            UniqueId                       (Parm)
 
@@ -2452,7 +2444,7 @@ void APComPlayerController::LostP2PConnection(const struct FUniqueNetId& UniqueI
 
 
 // Function PlatformCommon.PComPlayerController.GetControllerIdFromNetId
-// (Final, Defined, Iterator, Singular, Simulated, Exec, Native, HasOptionalParms)
+// (Final, Singular, Net, Simulated, Exec, Native, HasOptionalParms)
 // Parameters:
 // struct FUniqueNetId            PlayerID                       (Parm)
 // int                            ControllerId                   (Parm, OutParm)
@@ -2477,7 +2469,7 @@ void APComPlayerController::GetControllerIdFromNetId(const struct FUniqueNetId& 
 
 
 // Function PlatformCommon.PComPlayerController.PairLoggedInUserAndCurrentController
-// (Latent, PreOperator, Singular, Simulated, Exec, Native, HasOptionalParms)
+// (Defined, PreOperator, Singular, Net, Simulated, Exec, Native, HasOptionalParms)
 
 void APComPlayerController::PairLoggedInUserAndCurrentController()
 {
@@ -2495,7 +2487,7 @@ void APComPlayerController::PairLoggedInUserAndCurrentController()
 
 
 // Function PlatformCommon.PComPlayerController.IsInGame
-// (Final, Defined, Iterator, Latent, Net, Simulated, Native, Event, Operator, HasOptionalParms)
+// (Iterator, Latent, PreOperator, Net, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -2517,7 +2509,7 @@ bool APComPlayerController::IsInGame()
 
 
 // Function PlatformCommon.PComPlayerController.IsPackageInstalled
-// (Defined, PreOperator, Net, Simulated, Native, Event, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, Latent, PreOperator, Net, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -2539,7 +2531,7 @@ bool APComPlayerController::IsPackageInstalled()
 
 
 // Function PlatformCommon.PComPlayerController.OnMultiplayerSessionChange
-// (Iterator, PreOperator, Singular, Net, NetReliable, Exec, Native, HasOptionalParms)
+// (Defined, Iterator, Latent, Singular, Simulated, Exec, Native, HasOptionalParms)
 // Parameters:
 // struct FName                   SessionName                    (Parm)
 // struct FSessionUpdateInfo      SessionChanges                 (Parm, NeedCtorLink)
@@ -2562,7 +2554,7 @@ void APComPlayerController::OnMultiplayerSessionChange(const struct FName& Sessi
 
 
 // Function PlatformCommon.PComPlayerController.CheckFilterText
-// (Defined, Iterator, Latent, PreOperator, Simulated, Exec, Native, HasOptionalParms)
+// (Latent, PreOperator, Net, Simulated, Exec, Native, HasOptionalParms)
 // Parameters:
 // struct FString                 Text                           (Parm, NeedCtorLink)
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -2586,7 +2578,7 @@ bool APComPlayerController::CheckFilterText(const struct FString& Text)
 
 
 // Function PlatformCommon.PComPlayerController.CanCommunicateTextWithUsersByUniqueNetIds
-// (Final, Iterator, Latent, PreOperator, Simulated, Exec, Native, HasOptionalParms)
+// (Final, Defined, Iterator, PreOperator, Net, Simulated, Exec, Native, HasOptionalParms)
 // Parameters:
 // unsigned char                  LocalUserNum                   (Parm)
 // TArray<struct FUniqueNetId>    Users                          (Parm, NeedCtorLink)
@@ -2612,7 +2604,7 @@ bool APComPlayerController::CanCommunicateTextWithUsersByUniqueNetIds(unsigned c
 
 
 // Function PlatformCommon.PComPlayerController.CanCommunicateText
-// (Iterator, Latent, PreOperator, Simulated, Exec, Native, HasOptionalParms)
+// (Defined, Iterator, PreOperator, Net, Simulated, Exec, Native, HasOptionalParms)
 // Parameters:
 // unsigned char                  LocalUserNum                   (Parm)
 // TEnumAsByte<EFeaturePrivilegeLevel> PrivilegeLevelHint             (Parm, OutParm)
@@ -2644,13 +2636,13 @@ bool APComPlayerController::CanCommunicateText(unsigned char LocalUserNum, bool 
 
 
 // Function PlatformCommon.PComPlayerController.OnTextFilterApplied
-// (Final, Iterator, Net, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
+// (Final, Iterator, Latent, Net, Static, HasOptionalParms)
 // Parameters:
 // struct FString                 OriginalText                   (Parm, NeedCtorLink)
 // struct FString                 FilteredText                   (Parm, NeedCtorLink)
 // bool                           bCensorCompletely              (Parm)
 
-void APComPlayerController::OnTextFilterApplied(const struct FString& OriginalText, const struct FString& FilteredText, bool bCensorCompletely)
+void APComPlayerController::STATIC_OnTextFilterApplied(const struct FString& OriginalText, const struct FString& FilteredText, bool bCensorCompletely)
 {
 	static auto fn = UObject::FindObject<UFunction>("Function PlatformCommon.PComPlayerController.OnTextFilterApplied");
 
@@ -2660,7 +2652,6 @@ void APComPlayerController::OnTextFilterApplied(const struct FString& OriginalTe
 	params.bCensorCompletely = bCensorCompletely;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -2669,7 +2660,7 @@ void APComPlayerController::OnTextFilterApplied(const struct FString& OriginalTe
 
 
 // Function PlatformCommon.PComPlayerController.RequestUpdateFriendsList
-// (Final, Defined, Iterator, PreOperator, Exec, Native, Event, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, Latent, PreOperator, NetReliable, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // bool                           bForceRequest                  (OptionalParm, Parm)
 
@@ -2690,11 +2681,11 @@ void APComPlayerController::RequestUpdateFriendsList(bool bForceRequest)
 
 
 // Function PlatformCommon.PComPlayerController.UpdateMctsWithFriends
-// (Defined, PreOperator, Singular, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
+// (Defined, Latent, PreOperator, Singular, Static, HasOptionalParms)
 // Parameters:
 // bool                           bWasSuccessful                 (Parm)
 
-void APComPlayerController::UpdateMctsWithFriends(bool bWasSuccessful)
+void APComPlayerController::STATIC_UpdateMctsWithFriends(bool bWasSuccessful)
 {
 	static auto fn = UObject::FindObject<UFunction>("Function PlatformCommon.PComPlayerController.UpdateMctsWithFriends");
 
@@ -2702,7 +2693,6 @@ void APComPlayerController::UpdateMctsWithFriends(bool bWasSuccessful)
 	params.bWasSuccessful = bWasSuccessful;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -2711,7 +2701,7 @@ void APComPlayerController::UpdateMctsWithFriends(bool bWasSuccessful)
 
 
 // Function PlatformCommon.PComPlayerController.OnContentPurchaseResponse
-// (Defined, Latent, Net, NetReliable, Simulated, Native, Event, Static)
+// (Defined, Iterator, Latent, Net, NetReliable, Simulated, Native, Event, Static)
 // Parameters:
 // bool                           bAuthorized                    (Parm)
 // struct FQWord                  qwOrderId                      (Parm)
@@ -2734,7 +2724,7 @@ void APComPlayerController::STATIC_OnContentPurchaseResponse(bool bAuthorized, c
 
 
 // Function PlatformCommon.PComPlayerController.OnPrivilegeCheckedForUsersByUniqueNetIds
-// (Iterator, Singular, Net, NetReliable, Simulated, Native, Event, Static)
+// (Latent, Singular, Net, NetReliable, Simulated, Native, Event, Static)
 // Parameters:
 // unsigned char                  LocalUserNum                   (Parm)
 // TEnumAsByte<EFeaturePrivilege> Privilege                      (Parm)
@@ -2759,7 +2749,7 @@ void APComPlayerController::STATIC_OnPrivilegeCheckedForUsersByUniqueNetIds(unsi
 
 
 // Function PlatformCommon.PComPlayerController.OnPrivilegeLevelChecked
-// (Final, Iterator, Singular, Net, NetReliable, Simulated, Native, Event, Static)
+// (Final, Latent, Singular, Net, NetReliable, Simulated, Native, Event, Static)
 // Parameters:
 // unsigned char                  LocalUserNum                   (Parm)
 // TEnumAsByte<EFeaturePrivilege> Privilege                      (Parm)
@@ -2786,7 +2776,7 @@ void APComPlayerController::STATIC_OnPrivilegeLevelChecked(unsigned char LocalUs
 
 
 // Function PlatformCommon.PComPlayerController.ClearOnlineDelegates
-// (Defined, Iterator, NetReliable, Native, HasOptionalParms)
+// (Net, NetReliable, Native, HasOptionalParms)
 
 void APComPlayerController::ClearOnlineDelegates()
 {
@@ -2804,7 +2794,7 @@ void APComPlayerController::ClearOnlineDelegates()
 
 
 // Function PlatformCommon.PComPlayerController.RegisterOnlineDelegates
-// (Final, Latent, PreOperator, Singular, NetReliable, Simulated, Native, Event, Static)
+// (Final, Iterator, Latent, PreOperator, Singular, NetReliable, Simulated, Native, Event, Static)
 
 void APComPlayerController::STATIC_RegisterOnlineDelegates()
 {
@@ -2822,7 +2812,7 @@ void APComPlayerController::STATIC_RegisterOnlineDelegates()
 
 
 // Function PlatformCommon.PComPlayerController.ClientRestablishP2PConnections
-// (Latent, PreOperator, NetReliable, Native, Event, Operator, HasOptionalParms)
+// (Final, Iterator, Singular, Exec, Native, Event, Operator, HasOptionalParms)
 
 void APComPlayerController::ClientRestablishP2PConnections()
 {
@@ -2840,7 +2830,7 @@ void APComPlayerController::ClientRestablishP2PConnections()
 
 
 // Function PlatformCommon.PComPlayerController.ServerReEstablishP2PConnections
-// (Final, Defined, Iterator, PreOperator, Singular, Exec, Native, Event, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, Latent, PreOperator, Singular, NetReliable, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 
 void APComPlayerController::ServerReEstablishP2PConnections()
 {
@@ -2858,7 +2848,7 @@ void APComPlayerController::ServerReEstablishP2PConnections()
 
 
 // Function PlatformCommon.PComPlayerController.IsReconnect
-// (Final, Defined, PreOperator, Net, Simulated, Native, Event, Operator, HasOptionalParms)
+// (Singular, Net, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -2880,7 +2870,7 @@ bool APComPlayerController::IsReconnect()
 
 
 // Function PlatformCommon.PComPlayerController.RestablishVoiceForReconnect
-// (Final, Defined, Iterator, Latent, PreOperator, Singular, Simulated, Exec, Native, HasOptionalParms)
+// (Final, Latent, PreOperator, Singular, Net, Simulated, Exec, Native, HasOptionalParms)
 
 void APComPlayerController::RestablishVoiceForReconnect()
 {
@@ -2898,7 +2888,7 @@ void APComPlayerController::RestablishVoiceForReconnect()
 
 
 // Function PlatformCommon.PComPlayerController.OnJoinOnlineGameCompleteForReceivedSessionInfo
-// (Defined, Net, NetReliable, Simulated, Native, Event, Operator, HasOptionalParms)
+// (Defined, Latent, Net, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FName                   SessionName                    (Parm)
 // bool                           bWasSuccessful                 (Parm)
@@ -2921,7 +2911,7 @@ void APComPlayerController::OnJoinOnlineGameCompleteForReceivedSessionInfo(const
 
 
 // Function PlatformCommon.PComPlayerController.ReceiveSessionInfo
-// (Final, Iterator, Latent, PreOperator, Singular, Simulated, Exec, Native, HasOptionalParms)
+// (Final, Defined, Iterator, PreOperator, Singular, Net, Simulated, Exec, Native, HasOptionalParms)
 // Parameters:
 // unsigned char                  PlatformSpecificInfo           (Parm)
 // TEnumAsByte<EConsoleType>      ConsoleType                    (Parm)
@@ -2944,7 +2934,7 @@ void APComPlayerController::ReceiveSessionInfo(unsigned char PlatformSpecificInf
 
 
 // Function PlatformCommon.PComPlayerController.OnCreateOnlineGameComplete
-// (Defined, Iterator, Latent, PreOperator, Net, NetReliable, Exec, Native, HasOptionalParms)
+// (Latent, PreOperator, Simulated, Exec, Native, HasOptionalParms)
 // Parameters:
 // struct FName                   SessionName                    (Parm)
 // bool                           bWasSuccessful                 (Parm)
@@ -2967,7 +2957,7 @@ void APComPlayerController::OnCreateOnlineGameComplete(const struct FName& Sessi
 
 
 // Function PlatformCommon.PComPlayerController.ChooseThisControllerForSessionScout
-// (Final, Defined, Iterator, Latent, PreOperator, Simulated, Exec, Native, HasOptionalParms)
+// (Final, Latent, PreOperator, Net, Simulated, Exec, Native, HasOptionalParms)
 // Parameters:
 // bool                           bCustomMatch                   (Parm)
 // int                            MaxPlayers                     (Parm)
@@ -2996,7 +2986,7 @@ void APComPlayerController::ChooseThisControllerForSessionScout(bool bCustomMatc
 
 
 // Function PlatformCommon.PComPlayerController.OnDestroyOnlineGameComplete
-// (Defined, Singular, Net, NetReliable, Exec, Native, HasOptionalParms)
+// (Iterator, Latent, PreOperator, Simulated, Exec, Native, HasOptionalParms)
 // Parameters:
 // struct FName                   SessionName                    (Parm)
 // bool                           bWasSuccessful                 (Parm)
@@ -3019,7 +3009,7 @@ void APComPlayerController::OnDestroyOnlineGameComplete(const struct FName& Sess
 
 
 // Function PlatformCommon.PComPlayerController.OnEndOnlineGameComplete
-// (Final, Defined, Singular, Net, NetReliable, Exec, Native, HasOptionalParms)
+// (Final, Iterator, Latent, PreOperator, Simulated, Exec, Native, HasOptionalParms)
 // Parameters:
 // struct FName                   SessionName                    (Parm)
 // bool                           bWasSuccessful                 (Parm)
@@ -3042,7 +3032,7 @@ void APComPlayerController::OnEndOnlineGameComplete(const struct FName& SessionN
 
 
 // Function PlatformCommon.PComPlayerController.FinishQuitToMainMenu
-// (Iterator, PreOperator, Net, NetReliable, Native, Event, Operator, HasOptionalParms)
+// (Final, Singular, Net, Exec, Native, Event, Operator, HasOptionalParms)
 
 void APComPlayerController::FinishQuitToMainMenu()
 {
@@ -3060,7 +3050,7 @@ void APComPlayerController::FinishQuitToMainMenu()
 
 
 // Function PlatformCommon.PComPlayerController.CleanupOnlineSubsystemSession
-// (Final, Iterator, PreOperator, NetReliable, Native, Event, Operator, HasOptionalParms)
+// (Defined, Singular, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // bool                           bWasFromMenu                   (Parm)
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -3084,7 +3074,7 @@ bool APComPlayerController::CleanupOnlineSubsystemSession(bool bWasFromMenu)
 
 
 // Function PlatformCommon.PComPlayerController.QuitToMainMenu
-// (Iterator, Latent, PreOperator, Singular, Simulated, Exec, Native, HasOptionalParms)
+// (Defined, Iterator, PreOperator, Singular, Net, Simulated, Exec, Native, HasOptionalParms)
 
 void APComPlayerController::QuitToMainMenu()
 {
@@ -3102,7 +3092,7 @@ void APComPlayerController::QuitToMainMenu()
 
 
 // Function PlatformCommon.PComPlayerController.ServerAcknowledgePossession
-// (PreOperator, Singular, Net, NetReliable, Simulated, Native, HasOptionalParms)
+// (Defined, Latent, Singular, Exec, Native, HasOptionalParms)
 // Parameters:
 // class APawn*                   P                              (Parm)
 
@@ -3123,7 +3113,7 @@ void APComPlayerController::ServerAcknowledgePossession(class APawn* P)
 
 
 // Function PlatformCommon.PComPlayerController.AcknowledgePossession
-// (Final, Defined, Iterator, PreOperator, Net, Native, HasOptionalParms)
+// (Final, PreOperator, NetReliable, Native, HasOptionalParms)
 // Parameters:
 // class APawn*                   P                              (Parm)
 
@@ -3144,7 +3134,7 @@ void APComPlayerController::AcknowledgePossession(class APawn* P)
 
 
 // Function PlatformCommon.PComPlayerController.OnAllMarketplaceProductDetailsRead
-// (Final, Defined, Latent, PreOperator, Singular, NetReliable, Simulated, Native, Event, Operator, HasOptionalParms)
+// (Final, Defined, Net, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 
 void APComPlayerController::OnAllMarketplaceProductDetailsRead()
 {
@@ -3162,7 +3152,7 @@ void APComPlayerController::OnAllMarketplaceProductDetailsRead()
 
 
 // Function PlatformCommon.PComPlayerController.LeaveMatchQueue
-// (Iterator, Latent, PreOperator, Net, Simulated, Native, Event, Operator, HasOptionalParms)
+// (Final, Latent, Singular, Net, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
 
 void APComPlayerController::LeaveMatchQueue()
 {
@@ -3180,16 +3170,15 @@ void APComPlayerController::LeaveMatchQueue()
 
 
 // Function PlatformCommon.PComPlayerController.UpdatePartyUI
-// (Final, Iterator, PreOperator, Singular, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
+// (Final, Iterator, Latent, PreOperator, Singular, Static, HasOptionalParms)
 
-void APComPlayerController::UpdatePartyUI()
+void APComPlayerController::STATIC_UpdatePartyUI()
 {
 	static auto fn = UObject::FindObject<UFunction>("Function PlatformCommon.PComPlayerController.UpdatePartyUI");
 
 	APComPlayerController_UpdatePartyUI_Params params;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -3198,16 +3187,15 @@ void APComPlayerController::UpdatePartyUI()
 
 
 // Function PlatformCommon.PComPlayerController.TryOpenPartyUI
-// (Defined, Iterator, Latent, Singular, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
+// (Defined, Iterator, PreOperator, Singular, Static, HasOptionalParms)
 
-void APComPlayerController::TryOpenPartyUI()
+void APComPlayerController::STATIC_TryOpenPartyUI()
 {
 	static auto fn = UObject::FindObject<UFunction>("Function PlatformCommon.PComPlayerController.TryOpenPartyUI");
 
 	APComPlayerController_TryOpenPartyUI_Params params;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -3216,7 +3204,7 @@ void APComPlayerController::TryOpenPartyUI()
 
 
 // Function PlatformCommon.PComPlayerController.ShowCustomGameDisallowedPopup
-// (Iterator, PreOperator, Net, Exec, Native, Event, Operator, HasOptionalParms)
+// (Iterator, Latent, PreOperator, Net, NetReliable, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 
 void APComPlayerController::ShowCustomGameDisallowedPopup()
 {
@@ -3234,7 +3222,7 @@ void APComPlayerController::ShowCustomGameDisallowedPopup()
 
 
 // Function PlatformCommon.PComPlayerController.ShowPackageNotInstalledForPartyInviteWarning
-// (Defined, Iterator, PreOperator, Net, Exec, Native, Event, Operator, HasOptionalParms)
+// (Defined, Iterator, Latent, PreOperator, Net, NetReliable, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 
 void APComPlayerController::ShowPackageNotInstalledForPartyInviteWarning()
 {
@@ -3252,7 +3240,7 @@ void APComPlayerController::ShowPackageNotInstalledForPartyInviteWarning()
 
 
 // Function PlatformCommon.PComPlayerController.ShowPartyNoLongerAvailableWarning
-// (Latent, PreOperator, Net, Exec, Native, Event, Operator, HasOptionalParms)
+// (Singular, Net, NetReliable, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 
 void APComPlayerController::ShowPartyNoLongerAvailableWarning()
 {
@@ -3270,7 +3258,7 @@ void APComPlayerController::ShowPartyNoLongerAvailableWarning()
 
 
 // Function PlatformCommon.PComPlayerController.ShowPartyFullWarning
-// (Final, Defined, Iterator, PreOperator, Net, Exec, Native, Event, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, Latent, PreOperator, Net, NetReliable, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // bool                           bPartySession                  (Parm)
 
@@ -3291,7 +3279,7 @@ void APComPlayerController::ShowPartyFullWarning(bool bPartySession)
 
 
 // Function PlatformCommon.PComPlayerController.ShowUnableToReadFriendsListWarning
-// (Defined, Latent, PreOperator, Net, Exec, Native, Event, Operator, HasOptionalParms)
+// (Defined, Singular, Net, NetReliable, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 
 void APComPlayerController::ShowUnableToReadFriendsListWarning()
 {
@@ -3309,7 +3297,7 @@ void APComPlayerController::ShowUnableToReadFriendsListWarning()
 
 
 // Function PlatformCommon.PComPlayerController.ShowNoFriendsForPartyInviteWarning
-// (Final, Iterator, PreOperator, Net, Exec, Native, Event, Operator, HasOptionalParms)
+// (Final, Iterator, Latent, PreOperator, Net, NetReliable, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 
 void APComPlayerController::ShowNoFriendsForPartyInviteWarning()
 {
@@ -3327,7 +3315,7 @@ void APComPlayerController::ShowNoFriendsForPartyInviteWarning()
 
 
 // Function PlatformCommon.PComPlayerController.ShowControllerDisconnectedWarning
-// (Final, Defined, PreOperator, Net, Exec, Native, Event, Operator, HasOptionalParms)
+// (Final, Defined, Latent, PreOperator, Net, NetReliable, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 
 void APComPlayerController::ShowControllerDisconnectedWarning()
 {
@@ -3345,7 +3333,7 @@ void APComPlayerController::ShowControllerDisconnectedWarning()
 
 
 // Function PlatformCommon.PComPlayerController.ShouldPartySessionsBePublic
-// (Defined, PreOperator, Net, Exec, Native, Event, Operator, HasOptionalParms)
+// (Defined, Latent, PreOperator, Net, NetReliable, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -3367,7 +3355,7 @@ bool APComPlayerController::ShouldPartySessionsBePublic()
 
 
 // Function PlatformCommon.PComPlayerController.CreateOrJoinPartySession
-// (Final, Defined, Iterator, Singular, NetReliable, Native, Event, Operator, HasOptionalParms)
+// (Iterator, PreOperator, Singular, Exec, Native, Event, Operator, HasOptionalParms)
 
 void APComPlayerController::CreateOrJoinPartySession()
 {
@@ -3385,7 +3373,7 @@ void APComPlayerController::CreateOrJoinPartySession()
 
 
 // Function PlatformCommon.PComPlayerController.ArePartySessionInvitesAllowed
-// (Final, Defined, PreOperator, Net, Native, Event, Operator, HasOptionalParms)
+// (Singular, Net, NetReliable, Simulated, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -3407,12 +3395,12 @@ bool APComPlayerController::ArePartySessionInvitesAllowed()
 
 
 // Function PlatformCommon.PComPlayerController.UpdateMCTSSession
-// (Final, PreOperator, Singular, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
+// (Final, Latent, PreOperator, Singular, Static, HasOptionalParms)
 // Parameters:
 // struct FString                 SessionGuid                    (Parm, NeedCtorLink)
 // bool                           bIsHost                        (Parm)
 
-void APComPlayerController::UpdateMCTSSession(const struct FString& SessionGuid, bool bIsHost)
+void APComPlayerController::STATIC_UpdateMCTSSession(const struct FString& SessionGuid, bool bIsHost)
 {
 	static auto fn = UObject::FindObject<UFunction>("Function PlatformCommon.PComPlayerController.UpdateMCTSSession");
 
@@ -3421,7 +3409,6 @@ void APComPlayerController::UpdateMCTSSession(const struct FString& SessionGuid,
 	params.bIsHost = bIsHost;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -3430,7 +3417,7 @@ void APComPlayerController::UpdateMCTSSession(const struct FString& SessionGuid,
 
 
 // Function PlatformCommon.PComPlayerController.BlockPartySceneInput
-// (Final, Iterator, Latent, PreOperator, Singular, Net, Native, Event, Operator, HasOptionalParms)
+// (Defined, Latent, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // bool                           bBlockInput                    (Parm)
 
@@ -3451,7 +3438,7 @@ void APComPlayerController::BlockPartySceneInput(bool bBlockInput)
 
 
 // Function PlatformCommon.PComPlayerController.FilterFriendListForPeoplePicker
-// (Final, Defined, PreOperator, Net, NetReliable, Native, Event, Operator, HasOptionalParms)
+// (Singular, Net, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // TArray<struct FOnlineFriend>   FriendList                     (Parm, OutParm, NeedCtorLink)
 // TArray<struct FSessionMemberInfo> SessionMemberList              (Parm, OutParm, NeedCtorLink)
@@ -3477,7 +3464,7 @@ void APComPlayerController::FilterFriendListForPeoplePicker(TArray<struct FOnlin
 
 
 // Function PlatformCommon.PComPlayerController.ShowPrivilegeMessageAndDeclineInvite
-// (Final, Latent, PreOperator, Net, Exec, Native, Event, Operator, HasOptionalParms)
+// (Final, Singular, Net, NetReliable, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 
 void APComPlayerController::ShowPrivilegeMessageAndDeclineInvite()
 {
@@ -3495,7 +3482,7 @@ void APComPlayerController::ShowPrivilegeMessageAndDeclineInvite()
 
 
 // Function PlatformCommon.PComPlayerController.ConnectToPeers
-// (Iterator, Singular, NetReliable, Native, Event, Operator, HasOptionalParms)
+// (Final, PreOperator, Singular, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // TArray<struct FSessionMemberInfo> SessionListInfo                (Parm, OutParm, NeedCtorLink)
 
@@ -3518,16 +3505,15 @@ void APComPlayerController::ConnectToPeers(TArray<struct FSessionMemberInfo>* Se
 
 
 // Function PlatformCommon.PComPlayerController.TryJoinSession
-// (Final, Iterator, Latent, Singular, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
+// (Final, Iterator, PreOperator, Singular, Static, HasOptionalParms)
 
-void APComPlayerController::TryJoinSession()
+void APComPlayerController::STATIC_TryJoinSession()
 {
 	static auto fn = UObject::FindObject<UFunction>("Function PlatformCommon.PComPlayerController.TryJoinSession");
 
 	APComPlayerController_TryJoinSession_Params params;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -3536,7 +3522,7 @@ void APComPlayerController::TryJoinSession()
 
 
 // Function PlatformCommon.PComPlayerController.MCTSSetSessionId
-// (Iterator, Latent, NetReliable, Simulated, Native, Event, Operator, HasOptionalParms)
+// (Iterator, PreOperator, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // unsigned char                  PlatformSpecificInfo           (Parm)
 
@@ -3557,7 +3543,7 @@ void APComPlayerController::MCTSSetSessionId(unsigned char PlatformSpecificInfo)
 
 
 // Function PlatformCommon.PComPlayerController.IsInCustomMatch
-// (Defined, Iterator, Latent, Net, Simulated, Native, Event, Operator, HasOptionalParms)
+// (Final, Defined, Latent, PreOperator, Net, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -3579,7 +3565,7 @@ bool APComPlayerController::IsInCustomMatch()
 
 
 // Function PlatformCommon.PComPlayerController.SendSessionEnd
-// (Final, Iterator, PreOperator, Singular, Exec, Native, Event, Operator, HasOptionalParms)
+// (Final, Iterator, Latent, PreOperator, Singular, NetReliable, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 
 void APComPlayerController::SendSessionEnd()
 {
@@ -3597,7 +3583,7 @@ void APComPlayerController::SendSessionEnd()
 
 
 // Function PlatformCommon.PComPlayerController.SendSessionStart
-// (Defined, Iterator, PreOperator, Singular, Exec, Native, Event, Operator, HasOptionalParms)
+// (Defined, Iterator, Latent, PreOperator, Singular, NetReliable, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // int                            GameModeId                     (Parm)
 
@@ -3618,7 +3604,7 @@ void APComPlayerController::SendSessionStart(int GameModeId)
 
 
 // Function PlatformCommon.PComPlayerController.OnRemoteTalkerStatusChange
-// (Final, Defined, Iterator, PreOperator, Singular, Net, NetReliable, Simulated, Native, Event, Static)
+// (Final, Defined, Latent, PreOperator, Singular, Net, NetReliable, Simulated, Native, Event, Static)
 // Parameters:
 // struct FUniqueNetId            RemoteNetId                    (Parm)
 // bool                           bIsTalking                     (Parm)
@@ -3641,7 +3627,7 @@ void APComPlayerController::STATIC_OnRemoteTalkerStatusChange(const struct FUniq
 
 
 // Function PlatformCommon.PComPlayerController.OnCurrentUserChanged
-// (Final, Iterator, Latent, Net, NetReliable, Simulated, Native, Event, Static)
+// (Final, PreOperator, Net, NetReliable, Simulated, Native, Event, Static)
 // Parameters:
 // unsigned char                  LocalUserNum                   (Parm)
 // struct FString                 CurrentUser                    (Parm, NeedCtorLink)
@@ -3666,7 +3652,7 @@ void APComPlayerController::STATIC_OnCurrentUserChanged(unsigned char LocalUserN
 
 
 // Function PlatformCommon.PComPlayerController.OnConnectionStatusChange
-// (Final, Latent, Net, NetReliable, Simulated, Native, Event, Static)
+// (Final, Iterator, Latent, Net, NetReliable, Simulated, Native, Event, Static)
 // Parameters:
 // TEnumAsByte<EOnlineServerConnectionStatus> ConnectionStatus               (Parm)
 
@@ -3687,7 +3673,7 @@ void APComPlayerController::STATIC_OnConnectionStatusChange(TEnumAsByte<EOnlineS
 
 
 // Function PlatformCommon.PComPlayerController.OnLoginStatusChange
-// (Defined, Iterator, Latent, PreOperator, Net, NetReliable, Simulated, Native, Event, Static)
+// (Defined, Singular, Net, NetReliable, Simulated, Native, Event, Static)
 // Parameters:
 // TEnumAsByte<ELoginStatus>      NewStatus                      (Parm)
 // struct FUniqueNetId            NewId                          (Parm)
@@ -3710,7 +3696,7 @@ void APComPlayerController::STATIC_OnLoginStatusChange(TEnumAsByte<ELoginStatus>
 
 
 // Function PlatformCommon.PComPlayerController.OnMarketplaceItemPurchased
-// (Defined, Iterator, Latent, Exec, Native, Event, Static)
+// (Defined, PreOperator, Exec, Native, Event, Static)
 
 void APComPlayerController::STATIC_OnMarketplaceItemPurchased()
 {
@@ -3728,7 +3714,7 @@ void APComPlayerController::STATIC_OnMarketplaceItemPurchased()
 
 
 // Function PlatformCommon.PComPlayerController.GetPlayerDLCLicenses
-// (Final, Defined, Latent, Singular, Simulated, Exec, Native, HasOptionalParms)
+// (Final, Iterator, Singular, Net, Simulated, Exec, Native, HasOptionalParms)
 // Parameters:
 // TArray<struct FOnlineContent>  ContentList                    (Parm, OutParm, NeedCtorLink)
 // TEnumAsByte<EOnlineEnumerationReadState> ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -3754,7 +3740,7 @@ TEnumAsByte<EOnlineEnumerationReadState> APComPlayerController::GetPlayerDLCLice
 
 
 // Function PlatformCommon.PComPlayerController.OnReadPlayerMarketplaceInventoryComplete
-// (Latent, Net, NetReliable, Simulated, Native, Event, Operator, HasOptionalParms)
+// (PreOperator, Net, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 
 void APComPlayerController::OnReadPlayerMarketplaceInventoryComplete()
 {
@@ -3772,7 +3758,7 @@ void APComPlayerController::OnReadPlayerMarketplaceInventoryComplete()
 
 
 // Function PlatformCommon.PComPlayerController.PlayerReceivedURLTokenAndSignatureForPortalInventory
-// (Latent, Net, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
+// (PreOperator, Net, Static, HasOptionalParms)
 // Parameters:
 // bool                           bSuccess                       (Parm)
 // unsigned char                  LocalUserNum                   (Parm)
@@ -3781,7 +3767,7 @@ void APComPlayerController::OnReadPlayerMarketplaceInventoryComplete()
 // struct FString                 AuthToken                      (Parm, NeedCtorLink)
 // struct FString                 Signature                      (Parm, NeedCtorLink)
 
-void APComPlayerController::PlayerReceivedURLTokenAndSignatureForPortalInventory(bool bSuccess, unsigned char LocalUserNum, const struct FString& URL, const struct FString& Token, const struct FString& AuthToken, const struct FString& Signature)
+void APComPlayerController::STATIC_PlayerReceivedURLTokenAndSignatureForPortalInventory(bool bSuccess, unsigned char LocalUserNum, const struct FString& URL, const struct FString& Token, const struct FString& AuthToken, const struct FString& Signature)
 {
 	static auto fn = UObject::FindObject<UFunction>("Function PlatformCommon.PComPlayerController.PlayerReceivedURLTokenAndSignatureForPortalInventory");
 
@@ -3794,7 +3780,6 @@ void APComPlayerController::PlayerReceivedURLTokenAndSignatureForPortalInventory
 	params.Signature = Signature;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -3803,7 +3788,7 @@ void APComPlayerController::PlayerReceivedURLTokenAndSignatureForPortalInventory
 
 
 // Function PlatformCommon.PComPlayerController.ProcessPortalInventoryWithAuthToken
-// (Final, Defined, Latent, PreOperator, Singular, Simulated, Exec, Native, HasOptionalParms)
+// (Final, Iterator, PreOperator, Singular, Net, Simulated, Exec, Native, HasOptionalParms)
 
 void APComPlayerController::ProcessPortalInventoryWithAuthToken()
 {
@@ -3821,7 +3806,7 @@ void APComPlayerController::ProcessPortalInventoryWithAuthToken()
 
 
 // Function PlatformCommon.PComPlayerController.DumpStoreCatalog
-// (Defined, Latent, PreOperator, Singular, NetReliable, Native, Event, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, Net, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // TEnumAsByte<EMediaItemType>    MediaType                      (Parm)
 
@@ -3842,7 +3827,7 @@ void APComPlayerController::DumpStoreCatalog(TEnumAsByte<EMediaItemType> MediaTy
 
 
 // Function PlatformCommon.PComPlayerController.DumpConumables
-// (Final, Defined, Iterator, PreOperator, Singular, NetReliable, Native, Event, Operator, HasOptionalParms)
+// (Iterator, Net, Exec, Native, Event, Operator, HasOptionalParms)
 
 void APComPlayerController::DumpConumables()
 {
@@ -3860,7 +3845,7 @@ void APComPlayerController::DumpConumables()
 
 
 // Function PlatformCommon.PComPlayerController.DumpDurables
-// (Latent, PreOperator, Singular, NetReliable, Native, Event, Operator, HasOptionalParms)
+// (Final, Iterator, Net, Exec, Native, Event, Operator, HasOptionalParms)
 
 void APComPlayerController::DumpDurables()
 {
@@ -3878,7 +3863,7 @@ void APComPlayerController::DumpDurables()
 
 
 // Function PlatformCommon.PComPlayerController.DumpGameProducts
-// (Final, Latent, PreOperator, Singular, NetReliable, Native, Event, Operator, HasOptionalParms)
+// (Defined, Iterator, Net, Exec, Native, Event, Operator, HasOptionalParms)
 
 void APComPlayerController::DumpGameProducts()
 {
@@ -3896,7 +3881,7 @@ void APComPlayerController::DumpGameProducts()
 
 
 // Function PlatformCommon.PComPlayerController.OnReadAdditionalProductDetailsComplete
-// (Final, Defined, Iterator, Latent, Exec, Native, Event, Static)
+// (Final, Defined, PreOperator, Exec, Native, Event, Static)
 // Parameters:
 // TEnumAsByte<EMediaItemType>    MediaType                      (Parm)
 
@@ -3917,7 +3902,7 @@ void APComPlayerController::STATIC_OnReadAdditionalProductDetailsComplete(TEnumA
 
 
 // Function PlatformCommon.PComPlayerController.OnReadDetailsForProductIdListComplete
-// (Defined, Iterator, Net, NetReliable, Simulated, Native, Event, Operator, HasOptionalParms)
+// (Defined, Iterator, Latent, Net, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // TArray<struct FMarketplaceProductDetails> ProductList                    (Parm, OutParm, NeedCtorLink)
 
@@ -3940,7 +3925,7 @@ void APComPlayerController::OnReadDetailsForProductIdListComplete(TArray<struct 
 
 
 // Function PlatformCommon.PComPlayerController.OnReadAvailableProductsComplete
-// (PreOperator, Exec, Native, Event, Static)
+// (Iterator, PreOperator, Exec, Native, Event, Static)
 // Parameters:
 // TEnumAsByte<EMediaItemType>    MediaType                      (Parm)
 
@@ -3961,7 +3946,7 @@ void APComPlayerController::STATIC_OnReadAvailableProductsComplete(TEnumAsByte<E
 
 
 // Function PlatformCommon.PComPlayerController.RefreshStoreData
-// (Defined, Iterator, Latent, PreOperator, Singular, Simulated, Exec, Native, HasOptionalParms)
+// (Latent, PreOperator, Singular, Net, Simulated, Exec, Native, HasOptionalParms)
 
 void APComPlayerController::RefreshStoreData()
 {
@@ -3979,7 +3964,7 @@ void APComPlayerController::RefreshStoreData()
 
 
 // Function PlatformCommon.PComPlayerController.IsLoggedIntoOSS
-// (Final, Defined, Iterator, Latent, Singular, Simulated, Exec, Native, HasOptionalParms)
+// (Final, Latent, Singular, Net, Simulated, Exec, Native, HasOptionalParms)
 // Parameters:
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -4001,7 +3986,7 @@ bool APComPlayerController::IsLoggedIntoOSS()
 
 
 // Function PlatformCommon.PComPlayerController.ShowConsoleLoginUI
-// (Defined, Net, Simulated, Exec, Native, HasOptionalParms)
+// (Iterator, Latent, PreOperator, Singular, Net, Simulated, Exec, Native, HasOptionalParms)
 // Parameters:
 // int                            ControllerId                   (Parm)
 // bool                           bForceLoginAfter               (OptionalParm, Parm)
@@ -4027,7 +4012,7 @@ bool APComPlayerController::ShowConsoleLoginUI(int ControllerId, bool bForceLogi
 
 
 // Function PlatformCommon.PComPlayerController.CacheLoggedInGamepad
-// (Final, Defined, Latent, PreOperator, Simulated, Exec, Native, HasOptionalParms)
+// (Final, Iterator, PreOperator, Net, Simulated, Exec, Native, HasOptionalParms)
 
 void APComPlayerController::CacheLoggedInGamepad()
 {
@@ -4045,11 +4030,11 @@ void APComPlayerController::CacheLoggedInGamepad()
 
 
 // Function PlatformCommon.PComPlayerController.PlayerReceivedTokenForLogin
-// (Defined, Iterator, Net, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
+// (Defined, Iterator, Latent, Net, Static, HasOptionalParms)
 // Parameters:
 // bool                           bSuccess                       (Parm)
 
-void APComPlayerController::PlayerReceivedTokenForLogin(bool bSuccess)
+void APComPlayerController::STATIC_PlayerReceivedTokenForLogin(bool bSuccess)
 {
 	static auto fn = UObject::FindObject<UFunction>("Function PlatformCommon.PComPlayerController.PlayerReceivedTokenForLogin");
 
@@ -4057,7 +4042,6 @@ void APComPlayerController::PlayerReceivedTokenForLogin(bool bSuccess)
 	params.bSuccess = bSuccess;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -4066,7 +4050,7 @@ void APComPlayerController::PlayerReceivedTokenForLogin(bool bSuccess)
 
 
 // Function PlatformCommon.PComPlayerController.PlayerReceivedURLTokenAndSignatureForLogin
-// (Final, Defined, Iterator, Net, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, Latent, Net, Static, HasOptionalParms)
 // Parameters:
 // bool                           bSuccess                       (Parm)
 // unsigned char                  LocalUserNum                   (Parm)
@@ -4075,7 +4059,7 @@ void APComPlayerController::PlayerReceivedTokenForLogin(bool bSuccess)
 // struct FString                 AuthToken                      (Parm, NeedCtorLink)
 // struct FString                 Signature                      (Parm, NeedCtorLink)
 
-void APComPlayerController::PlayerReceivedURLTokenAndSignatureForLogin(bool bSuccess, unsigned char LocalUserNum, const struct FString& URL, const struct FString& Token, const struct FString& AuthToken, const struct FString& Signature)
+void APComPlayerController::STATIC_PlayerReceivedURLTokenAndSignatureForLogin(bool bSuccess, unsigned char LocalUserNum, const struct FString& URL, const struct FString& Token, const struct FString& AuthToken, const struct FString& Signature)
 {
 	static auto fn = UObject::FindObject<UFunction>("Function PlatformCommon.PComPlayerController.PlayerReceivedURLTokenAndSignatureForLogin");
 
@@ -4088,7 +4072,6 @@ void APComPlayerController::PlayerReceivedURLTokenAndSignatureForLogin(bool bSuc
 	params.Signature = Signature;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -4097,7 +4080,7 @@ void APComPlayerController::PlayerReceivedURLTokenAndSignatureForLogin(bool bSuc
 
 
 // Function PlatformCommon.PComPlayerController.GetOSSTokenAndSignatureForLogin
-// (Defined, Latent, Singular, Simulated, Exec, Native, HasOptionalParms)
+// (Iterator, Singular, Net, Simulated, Exec, Native, HasOptionalParms)
 
 void APComPlayerController::GetOSSTokenAndSignatureForLogin()
 {
@@ -4115,18 +4098,17 @@ void APComPlayerController::GetOSSTokenAndSignatureForLogin()
 
 
 // Function PlatformCommon.PComPlayerController.GetTokenURL
-// (Net, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
+// (Latent, Net, Static, HasOptionalParms)
 // Parameters:
 // struct FString                 ReturnValue                    (Parm, OutParm, ReturnParm, NeedCtorLink)
 
-struct FString APComPlayerController::GetTokenURL()
+struct FString APComPlayerController::STATIC_GetTokenURL()
 {
 	static auto fn = UObject::FindObject<UFunction>("Function PlatformCommon.PComPlayerController.GetTokenURL");
 
 	APComPlayerController_GetTokenURL_Params params;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -4137,7 +4119,7 @@ struct FString APComPlayerController::GetTokenURL()
 
 
 // Function PlatformCommon.PComPlayerController.BeginLogin
-// (Iterator, Latent, Singular, Net, Native, Event, Operator, HasOptionalParms)
+// (Final, Latent, PreOperator, Singular, Net, NetReliable, Simulated, Native, Event, Operator, HasOptionalParms)
 
 void APComPlayerController::BeginLogin()
 {
@@ -4155,7 +4137,7 @@ void APComPlayerController::BeginLogin()
 
 
 // Function PlatformCommon.PComPlayerController.PlayerRetrievedOSSInventory
-// (Final, Defined, Iterator, Singular, Net, NetReliable, Simulated, Native, Event, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, Latent, Singular, Net, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // TArray<struct FMarketplaceInventoryItem> Items                          (Parm, OutParm, NeedCtorLink)
 
@@ -4178,16 +4160,15 @@ void APComPlayerController::PlayerRetrievedOSSInventory(TArray<struct FMarketpla
 
 
 // Function PlatformCommon.PComPlayerController.ValidateCreatedPartySession
-// (Final, Iterator, Latent, Net, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
+// (Final, Iterator, PreOperator, Net, Static, HasOptionalParms)
 
-void APComPlayerController::ValidateCreatedPartySession()
+void APComPlayerController::STATIC_ValidateCreatedPartySession()
 {
 	static auto fn = UObject::FindObject<UFunction>("Function PlatformCommon.PComPlayerController.ValidateCreatedPartySession");
 
 	APComPlayerController_ValidateCreatedPartySession_Params params;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -4196,11 +4177,11 @@ void APComPlayerController::ValidateCreatedPartySession()
 
 
 // Function PlatformCommon.PComPlayerController.UpdateClientAuthToken
-// (Defined, Latent, Net, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
+// (Defined, PreOperator, Net, Static, HasOptionalParms)
 // Parameters:
 // struct FString                 Token                          (Parm, NeedCtorLink)
 
-void APComPlayerController::UpdateClientAuthToken(const struct FString& Token)
+void APComPlayerController::STATIC_UpdateClientAuthToken(const struct FString& Token)
 {
 	static auto fn = UObject::FindObject<UFunction>("Function PlatformCommon.PComPlayerController.UpdateClientAuthToken");
 
@@ -4208,7 +4189,6 @@ void APComPlayerController::UpdateClientAuthToken(const struct FString& Token)
 	params.Token = Token;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -4217,11 +4197,11 @@ void APComPlayerController::UpdateClientAuthToken(const struct FString& Token)
 
 
 // Function PlatformCommon.PComPlayerController.UpdateClientToken
-// (Final, Defined, Latent, Net, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
+// (Final, Defined, PreOperator, Net, Static, HasOptionalParms)
 // Parameters:
 // struct FString                 Token                          (Parm, NeedCtorLink)
 
-void APComPlayerController::UpdateClientToken(const struct FString& Token)
+void APComPlayerController::STATIC_UpdateClientToken(const struct FString& Token)
 {
 	static auto fn = UObject::FindObject<UFunction>("Function PlatformCommon.PComPlayerController.UpdateClientToken");
 
@@ -4229,7 +4209,6 @@ void APComPlayerController::UpdateClientToken(const struct FString& Token)
 	params.Token = Token;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -4238,7 +4217,7 @@ void APComPlayerController::UpdateClientToken(const struct FString& Token)
 
 
 // Function PlatformCommon.PComPlayerController.ChallengeJoin
-// (Defined, PreOperator, NetReliable, Native, Event, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, Latent, PreOperator, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // int                            nMatchId                       (Parm)
 // struct FString                 fsName                         (Parm, NeedCtorLink)
@@ -4263,7 +4242,7 @@ void APComPlayerController::ChallengeJoin(int nMatchId, const struct FString& fs
 
 
 // Function PlatformCommon.PComPlayerController.ChallengeCreate
-// (Final, PreOperator, NetReliable, Native, Event, Operator, HasOptionalParms)
+// (Defined, Iterator, Latent, PreOperator, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // int                            nQueue                         (Parm)
 // struct FString                 fsName                         (Parm, NeedCtorLink)
@@ -4288,16 +4267,15 @@ void APComPlayerController::ChallengeCreate(int nQueue, const struct FString& fs
 
 
 // Function PlatformCommon.PComPlayerController.UpdateDatacenterPing
-// (Iterator, Latent, Net, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
+// (Iterator, PreOperator, Net, Static, HasOptionalParms)
 
-void APComPlayerController::UpdateDatacenterPing()
+void APComPlayerController::STATIC_UpdateDatacenterPing()
 {
 	static auto fn = UObject::FindObject<UFunction>("Function PlatformCommon.PComPlayerController.UpdateDatacenterPing");
 
 	APComPlayerController_UpdateDatacenterPing_Params params;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -4306,16 +4284,15 @@ void APComPlayerController::UpdateDatacenterPing()
 
 
 // Function PlatformCommon.PComPlayerController.TestVideoPlayer
-// (Defined, Latent, PreOperator, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
+// (Defined, Singular, Static, HasOptionalParms)
 
-void APComPlayerController::TestVideoPlayer()
+void APComPlayerController::STATIC_TestVideoPlayer()
 {
 	static auto fn = UObject::FindObject<UFunction>("Function PlatformCommon.PComPlayerController.TestVideoPlayer");
 
 	APComPlayerController_TestVideoPlayer_Params params;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -4324,7 +4301,7 @@ void APComPlayerController::TestVideoPlayer()
 
 
 // Function PlatformCommon.PComPlayerController.AddCheats
-// (Final, Defined, Latent, Singular, Native, Event)
+// (Final, Latent, PreOperator, Singular, NetReliable, Simulated, Native, Event)
 
 void APComPlayerController::AddCheats()
 {
@@ -4342,7 +4319,7 @@ void APComPlayerController::AddCheats()
 
 
 // Function PlatformCommon.PComPlayerController.ClientAddCheats
-// (Final, Defined, Iterator, PreOperator, NetReliable, Native, Event, Operator, HasOptionalParms)
+// (Iterator, Singular, Exec, Native, Event, Operator, HasOptionalParms)
 
 void APComPlayerController::ClientAddCheats()
 {
@@ -4360,16 +4337,15 @@ void APComPlayerController::ClientAddCheats()
 
 
 // Function PlatformCommon.PComPlayerInput.Jump
-// (Defined, Latent, Singular, Net, NetReliable, Simulated, Exec, Native, Event, Operator, Static, HasOptionalParms)
+// (Final, Defined, Iterator, Singular, Const)
 
-void UPComPlayerInput::STATIC_Jump()
+void UPComPlayerInput::Jump()
 {
 	static auto fn = UObject::FindObject<UFunction>("Function PlatformCommon.PComPlayerInput.Jump");
 
 	UPComPlayerInput_Jump_Params params;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -4378,13 +4354,13 @@ void UPComPlayerInput::STATIC_Jump()
 
 
 // Function PlatformCommon.PComPlayerInput.UnbindCommand
-// (Final, Defined, Iterator, Latent, Singular, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, PreOperator, Singular, Static, HasOptionalParms)
 // Parameters:
 // struct FString                 Command                        (Parm, NeedCtorLink)
 // bool                           bGamepad                       (Parm)
 // int                            nAlternate                     (OptionalParm, Parm)
 
-void UPComPlayerInput::UnbindCommand(const struct FString& Command, bool bGamepad, int nAlternate)
+void UPComPlayerInput::STATIC_UnbindCommand(const struct FString& Command, bool bGamepad, int nAlternate)
 {
 	static auto fn = UObject::FindObject<UFunction>("Function PlatformCommon.PComPlayerInput.UnbindCommand");
 
@@ -4394,7 +4370,6 @@ void UPComPlayerInput::UnbindCommand(const struct FString& Command, bool bGamepa
 	params.nAlternate = nAlternate;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -4403,7 +4378,7 @@ void UPComPlayerInput::UnbindCommand(const struct FString& Command, bool bGamepa
 
 
 // Function PlatformCommon.PComPlayerInput.UnbindCommandAll
-// (Final, Defined, Iterator, Net, Simulated, Exec, Native, HasOptionalParms)
+// (Final, NetReliable, Simulated, Exec, Native, HasOptionalParms)
 // Parameters:
 // struct FString                 Command                        (Parm, NeedCtorLink)
 
@@ -4424,18 +4399,17 @@ void UPComPlayerInput::UnbindCommandAll(const struct FString& Command)
 
 
 // Function PlatformCommon.PComPlayerInput.UnbindKey
-// (PreOperator, Singular, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
+// (Latent, PreOperator, Singular, Static, HasOptionalParms)
 // Parameters:
 // struct FName                   BindName                       (Const, Parm, OutParm)
 
-void UPComPlayerInput::UnbindKey(struct FName* BindName)
+void UPComPlayerInput::STATIC_UnbindKey(struct FName* BindName)
 {
 	static auto fn = UObject::FindObject<UFunction>("Function PlatformCommon.PComPlayerInput.UnbindKey");
 
 	UPComPlayerInput_UnbindKey_Params params;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -4447,7 +4421,7 @@ void UPComPlayerInput::UnbindKey(struct FName* BindName)
 
 
 // Function PlatformCommon.PComPlayerInput.SetCommandBind
-// (Final, Net, Simulated, Exec, Native, HasOptionalParms)
+// (Final, Defined, Latent, PreOperator, Singular, Net, Simulated, Exec, Native, HasOptionalParms)
 // Parameters:
 // struct FString                 Command                        (Parm, NeedCtorLink)
 // bool                           bGamepad                       (Parm)
@@ -4474,7 +4448,7 @@ void UPComPlayerInput::SetCommandBind(const struct FString& Command, bool bGamep
 
 
 // Function PlatformCommon.PComPlayerInput.SetBindExtended
-// (Iterator, Latent, PreOperator, Singular, Exec, Native, Event, Operator, HasOptionalParms)
+// (Iterator, Net, NetReliable, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FString                 ExtendedBinding                (Const, Parm, NeedCtorLink)
 // struct FString                 Command                        (Parm, NeedCtorLink)
@@ -4497,7 +4471,7 @@ void UPComPlayerInput::SetBindExtended(const struct FString& ExtendedBinding, co
 
 
 // Function PlatformCommon.PComPlayerInput.GetDisplayLookSensitivityY
-// (Final, Latent, Singular, Simulated, Exec, Native, HasOptionalParms)
+// (Final, Defined, Singular, Net, Simulated, Exec, Native, HasOptionalParms)
 // Parameters:
 // float                          ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -4519,7 +4493,7 @@ float UPComPlayerInput::GetDisplayLookSensitivityY()
 
 
 // Function PlatformCommon.PComPlayerInput.GetDisplayLookSensitivity
-// (Latent, Singular, Simulated, Exec, Native, HasOptionalParms)
+// (Defined, Singular, Net, Simulated, Exec, Native, HasOptionalParms)
 // Parameters:
 // float                          ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -4541,7 +4515,7 @@ float UPComPlayerInput::GetDisplayLookSensitivity()
 
 
 // Function PlatformCommon.PComPlayerInput.SetAimAcceleration
-// (Final, Defined, Latent, PreOperator, Singular, Exec, Native, Event, Operator, HasOptionalParms)
+// (Final, Defined, Net, NetReliable, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // float                          fLookAccel                     (Parm)
 
@@ -4562,7 +4536,7 @@ void UPComPlayerInput::SetAimAcceleration(float fLookAccel)
 
 
 // Function PlatformCommon.PComPlayerInput.SetLookSensitivity
-// (Final, Defined, Latent, Net, Exec, Native, Event, Operator, HasOptionalParms)
+// (Final, Defined, PreOperator, Net, NetReliable, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // float                          fSensitivity                   (Parm)
 // float                          fSensitivityY                  (OptionalParm, Parm)
@@ -4585,7 +4559,7 @@ void UPComPlayerInput::SetLookSensitivity(float fSensitivity, float fSensitivity
 
 
 // Function PlatformCommon.PComPlayerInput.SetMouseInput
-// (Iterator, Latent, Net, Exec, Native, Event, Operator, HasOptionalParms)
+// (Iterator, PreOperator, Net, NetReliable, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // bool                           bInvert                        (Parm)
 // bool                           bSmooth                        (Parm)
@@ -4610,7 +4584,7 @@ void UPComPlayerInput::SetMouseInput(bool bInvert, bool bSmooth, float fSensitiv
 
 
 // Function PlatformCommon.PComPlayerInput.SetDirty
-// (Final, Defined, Net, Exec, Native, Event, Operator, HasOptionalParms)
+// (Final, Defined, Latent, Net, NetReliable, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 
 void UPComPlayerInput::SetDirty()
 {
@@ -4628,7 +4602,7 @@ void UPComPlayerInput::SetDirty()
 
 
 // Function PlatformCommon.PComPlayerInput.ReadMouseSettings
-// (PreOperator, Exec, Native, Event, Operator, HasOptionalParms)
+// (Latent, PreOperator, NetReliable, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 
 void UPComPlayerInput::ReadMouseSettings()
 {
@@ -4646,16 +4620,15 @@ void UPComPlayerInput::ReadMouseSettings()
 
 
 // Function PlatformCommon.PComPlayerInput.StoreMouseSettings
-// (PreOperator, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
+// (Latent, PreOperator, Static, HasOptionalParms)
 
-void UPComPlayerInput::StoreMouseSettings()
+void UPComPlayerInput::STATIC_StoreMouseSettings()
 {
 	static auto fn = UObject::FindObject<UFunction>("Function PlatformCommon.PComPlayerInput.StoreMouseSettings");
 
 	UPComPlayerInput_StoreMouseSettings_Params params;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -4664,7 +4637,7 @@ void UPComPlayerInput::StoreMouseSettings()
 
 
 // Function PlatformCommon.PComPlayerInput.GetKeybindWithCurrentModifiers
-// (Defined, Net, NetReliable, Exec, Event, Static)
+// (Final, Defined, Iterator, Latent, Net, Native, Event, Static)
 // Parameters:
 // struct FName                   Key                            (Const, Parm, OutParm)
 // struct FKeyBind                ReturnValue                    (Parm, OutParm, ReturnParm, NeedCtorLink)
@@ -4676,6 +4649,7 @@ struct FKeyBind UPComPlayerInput::STATIC_GetKeybindWithCurrentModifiers(struct F
 	UPComPlayerInput_GetKeybindWithCurrentModifiers_Params params;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -4689,7 +4663,7 @@ struct FKeyBind UPComPlayerInput::STATIC_GetKeybindWithCurrentModifiers(struct F
 
 
 // Function PlatformCommon.PComPlayerInput.GetBind
-// (Iterator, PreOperator, Exec, Event, Static)
+// (Final, Singular, NetReliable, Simulated, Exec, Event, Static)
 // Parameters:
 // struct FName                   Key                            (Const, Parm, OutParm)
 // struct FKeyBind                ModifierKeyBind                (Const, OptionalParm, Parm, OutParm, NeedCtorLink)
@@ -4717,7 +4691,7 @@ struct FString UPComPlayerInput::STATIC_GetBind(struct FName* Key, struct FKeyBi
 
 
 // Function PlatformCommon.PComPlayerInput.KeybindToExtendedString
-// (Final, Latent, PreOperator, Net, Simulated, Native, Event, Operator, HasOptionalParms)
+// (Defined, Iterator, Singular, Net, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FKeyBind                Bind                           (Const, Parm, OutParm, NeedCtorLink)
 // struct FString                 ReturnValue                    (Parm, OutParm, ReturnParm, NeedCtorLink)
@@ -4743,7 +4717,7 @@ struct FString UPComPlayerInput::KeybindToExtendedString(struct FKeyBind* Bind)
 
 
 // Function PlatformCommon.PComPlayerInput.ExtendedStringToKeybind
-// (Defined, Latent, Net, NetReliable, Native, Event, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, PreOperator, Net, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FString                 Str                            (Parm, NeedCtorLink)
 // struct FString                 Cmd                            (Parm, NeedCtorLink)
@@ -4769,7 +4743,7 @@ struct FKeyBind UPComPlayerInput::ExtendedStringToKeybind(const struct FString& 
 
 
 // Function PlatformCommon.PComPlayerInput.GetBindFromCommand
-// (Final, Defined, PreOperator, Simulated, Native, Event, Operator, HasOptionalParms)
+// (Singular, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FString                 Cmd                            (Parm, NeedCtorLink)
 // bool                           bGamepad                       (Parm)
@@ -4797,7 +4771,7 @@ struct FKeyBind UPComPlayerInput::GetBindFromCommand(const struct FString& Cmd, 
 
 
 // Function PlatformCommon.PComPlayerInput.GetBindExtended
-// (Defined, PreOperator, Simulated, Native, Event, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, Latent, PreOperator, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FString                 Str                            (Parm, NeedCtorLink)
 // struct FKeyBind                Bind                           (Parm, OutParm, NeedCtorLink)
@@ -4827,7 +4801,7 @@ bool UPComPlayerInput::GetBindExtended(const struct FString& Str, bool bExactMat
 
 
 // Function PlatformCommon.PComPlayerInput.ResetKeysToDefault
-// (Latent, PreOperator, Exec, Native, Event, Operator, HasOptionalParms)
+// (Singular, NetReliable, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 
 void UPComPlayerInput::ResetKeysToDefault()
 {
@@ -4845,7 +4819,7 @@ void UPComPlayerInput::ResetKeysToDefault()
 
 
 // Function PlatformCommon.PComPositionHistoryServerComponent.IsInSphere
-// (PreOperator, Net, Simulated, Native, Event, Operator, HasOptionalParms)
+// (Final, Iterator, Latent, PreOperator, Net, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // float                          RewindTime                     (Parm)
 // struct FVector                 LocationToCheck                (Parm)
@@ -4877,7 +4851,7 @@ bool UPComPositionHistoryServerComponent::IsInSphere(float RewindTime, const str
 
 
 // Function PlatformCommon.PComPositionHistoryServerComponent.IsOverlapping
-// (Final, Defined, Iterator, Latent, NetReliable, Simulated, Exec, Native, Event, Static)
+// (Iterator, Latent, PreOperator, Simulated, Operator, Static)
 // Parameters:
 // float                          RewindTime                     (Parm)
 // struct FVector                 LocationToCheck                (Parm)
@@ -4895,7 +4869,6 @@ bool UPComPositionHistoryServerComponent::STATIC_IsOverlapping(float RewindTime,
 	params.RadiusToCheck = RadiusToCheck;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -4909,7 +4882,7 @@ bool UPComPositionHistoryServerComponent::STATIC_IsOverlapping(float RewindTime,
 
 
 // Function PlatformCommon.PComPositionHistoryServerComponent.GetPastData
-// (Defined, Iterator, Latent, PreOperator, Simulated, Native, Event, Operator, HasOptionalParms)
+// (Final, Defined, Latent, Singular, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // float                          RewindTime                     (Parm)
 // bool                           bUseClientTimeStamps           (OptionalParm, Parm)
@@ -4935,7 +4908,7 @@ struct FPComPositionHistoryData UPComPositionHistoryServerComponent::GetPastData
 
 
 // Function PlatformCommon.PComPositionHistoryServerComponent.RecordData
-// (Final, PreOperator, Exec, Native, Event, Operator, HasOptionalParms)
+// (Final, Latent, PreOperator, NetReliable, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 
 void UPComPositionHistoryServerComponent::RecordData()
 {
@@ -4953,7 +4926,7 @@ void UPComPositionHistoryServerComponent::RecordData()
 
 
 // Function PlatformCommon.PComRepInfo_Game.CreateMusicThemePlayer
-// (Defined, Iterator, Singular, NetReliable, Native, Event, Operator, HasOptionalParms)
+// (Final, Defined, PreOperator, Singular, Exec, Native, Event, Operator, HasOptionalParms)
 
 void APComRepInfo_Game::CreateMusicThemePlayer()
 {
@@ -4988,7 +4961,7 @@ void APComRepInfo_Game::PostBeginPlay()
 
 
 // Function PlatformCommon.PComRepInfo_Game.PlayMusicEvent
-// (Final, Latent, Singular, Net, NetReliable, Simulated, Native, Event, Operator, HasOptionalParms)
+// (Final, PreOperator, Singular, Net, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FName                   EventName                      (Const, Parm)
 
@@ -5009,7 +4982,7 @@ void APComRepInfo_Game::PlayMusicEvent(const struct FName& EventName)
 
 
 // Function PlatformCommon.PComSupportCommands.scLogTickFlags
-// (Iterator, Singular, Exec, Native, Event, Operator, HasOptionalParms)
+// (Iterator, Latent, Singular, NetReliable, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // int                            nFlags                         (Parm)
 // bool                           bSet                           (OptionalParm, Parm)
@@ -5032,7 +5005,7 @@ void UPComSupportCommands::scLogTickFlags(int nFlags, bool bSet)
 
 
 // Function PlatformCommon.PComSupportCommands.scPerfAlwaysRelevantLimit
-// (Defined, Iterator, Singular, Exec, Native, Event, Operator, HasOptionalParms)
+// (Defined, Iterator, Latent, Singular, NetReliable, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // int                            feet                           (Parm)
 
@@ -5053,7 +5026,7 @@ void UPComSupportCommands::scPerfAlwaysRelevantLimit(int feet)
 
 
 // Function PlatformCommon.PComSupportCommands.scGPerfServerFlags
-// (Final, Singular, Exec, Native, Event, Operator, HasOptionalParms)
+// (Final, Latent, Singular, NetReliable, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // int                            Flags                          (Parm)
 // int                            alternate1                     (Parm)
@@ -5078,7 +5051,7 @@ void UPComSupportCommands::scGPerfServerFlags(int Flags, int alternate1, int alt
 
 
 // Function PlatformCommon.PComSupportCommands.scPerfPhysThreshold
-// (Defined, Latent, Singular, Exec, Native, Event, Operator, HasOptionalParms)
+// (Defined, PreOperator, Singular, NetReliable, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // float                          thresh1                        (Parm)
 // float                          thesh2                         (Parm)
@@ -5101,7 +5074,7 @@ void UPComSupportCommands::scPerfPhysThreshold(float thresh1, float thesh2)
 
 
 // Function PlatformCommon.PComSupportCommands.scPerfTickRate
-// (Final, Defined, Latent, Singular, Exec, Native, Event, Operator, HasOptionalParms)
+// (Final, Defined, PreOperator, Singular, NetReliable, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // int                            tickHz                         (Parm)
 // int                            altTickHz                      (Parm)
@@ -5124,7 +5097,7 @@ void UPComSupportCommands::scPerfTickRate(int tickHz, int altTickHz)
 
 
 // Function PlatformCommon.PComSupportCommands.scPerfDebugRelevMode
-// (Latent, Singular, Exec, Native, Event, Operator, HasOptionalParms)
+// (PreOperator, Singular, NetReliable, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // int                            Mode                           (Parm)
 
@@ -5145,7 +5118,7 @@ void UPComSupportCommands::scPerfDebugRelevMode(int Mode)
 
 
 // Function PlatformCommon.PComSupportCommands.scPerfDebugSkip
-// (Final, Latent, Singular, Exec, Native, Event, Operator, HasOptionalParms)
+// (Final, PreOperator, Singular, NetReliable, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // int                            skips                          (Parm)
 
@@ -5166,7 +5139,7 @@ void UPComSupportCommands::scPerfDebugSkip(int skips)
 
 
 // Function PlatformCommon.PComSupportCommands.scPerfDebugFeet
-// (Final, Defined, Iterator, Singular, Exec, Native, Event, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, Latent, Singular, NetReliable, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // int                            feet                           (Parm)
 
@@ -5187,7 +5160,7 @@ void UPComSupportCommands::scPerfDebugFeet(int feet)
 
 
 // Function PlatformCommon.PComSupportCommands.scDemoStop
-// (Final, Defined, Iterator, Latent, PreOperator, Exec, Native, Event, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, Singular, NetReliable, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 
 void UPComSupportCommands::scDemoStop()
 {
@@ -5205,7 +5178,7 @@ void UPComSupportCommands::scDemoStop()
 
 
 // Function PlatformCommon.PComSupportCommands.scDemoRec
-// (Defined, Iterator, Latent, PreOperator, Exec, Native, Event, Operator, HasOptionalParms)
+// (Defined, Iterator, Singular, NetReliable, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FString                 sCommand                       (Parm, NeedCtorLink)
 
@@ -5226,7 +5199,7 @@ void UPComSupportCommands::scDemoRec(const struct FString& sCommand)
 
 
 // Function PlatformCommon.PComSupportCommands.scTimer
-// (Final, Defined, Iterator, Latent, Singular, Exec, Native, Event, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, PreOperator, Singular, NetReliable, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FString                 sCommand                       (Parm, NeedCtorLink)
 
@@ -5247,7 +5220,7 @@ void UPComSupportCommands::scTimer(const struct FString& sCommand)
 
 
 // Function PlatformCommon.PComSupportCommands.scTime
-// (Defined, Iterator, Latent, Singular, Exec, Native, Event, Operator, HasOptionalParms)
+// (Defined, Iterator, PreOperator, Singular, NetReliable, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // int                            nSeconds                       (Parm)
 
@@ -5268,7 +5241,7 @@ void UPComSupportCommands::scTime(int nSeconds)
 
 
 // Function PlatformCommon.PComSupportCommands.scScore
-// (Iterator, Latent, Singular, Exec, Native, Event, Operator, HasOptionalParms)
+// (Iterator, PreOperator, Singular, NetReliable, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // int                            nTeam                          (Parm)
 // int                            nCount                         (OptionalParm, Parm)
@@ -5291,7 +5264,7 @@ void UPComSupportCommands::scScore(int nTeam, int nCount)
 
 
 // Function PlatformCommon.PComSupportCommands.scEndGame
-// (Singular, Exec, Native, Event, Operator, HasOptionalParms)
+// (Latent, Singular, NetReliable, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FString                 Reason                         (OptionalParm, Parm, NeedCtorLink)
 
@@ -5312,7 +5285,7 @@ void UPComSupportCommands::scEndGame(const struct FString& Reason)
 
 
 // Function PlatformCommon.PComSupportCommands.scStartGame
-// (Final, Iterator, Latent, Singular, Exec, Native, Event, Operator, HasOptionalParms)
+// (Final, Iterator, PreOperator, Singular, NetReliable, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FString                 Reason                         (OptionalParm, Parm, NeedCtorLink)
 
@@ -5333,7 +5306,7 @@ void UPComSupportCommands::scStartGame(const struct FString& Reason)
 
 
 // Function PlatformCommon.PComSupportCommands.scLogMark
-// (Final, Defined, Singular, Exec, Native, Event, Operator, HasOptionalParms)
+// (Final, Defined, Latent, Singular, NetReliable, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FString                 Comment                        (Parm, NeedCtorLink)
 
@@ -5354,7 +5327,7 @@ void UPComSupportCommands::scLogMark(const struct FString& Comment)
 
 
 // Function PlatformCommon.PComSupportCommands.scLog
-// (Defined, Singular, Exec, Native, Event, Operator, HasOptionalParms)
+// (Defined, Latent, Singular, NetReliable, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FString                 LogName                        (Parm, NeedCtorLink)
 // bool                           bEnabled                       (OptionalParm, Parm)
@@ -5377,7 +5350,7 @@ void UPComSupportCommands::scLog(const struct FString& LogName, bool bEnabled)
 
 
 // Function PlatformCommon.PComSupportCommands.gmmf
-// (Defined, Latent, Singular, Simulated, Native, Event, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, PreOperator, Singular, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
 
 void UPComSupportCommands::gmmf()
 {
@@ -5395,7 +5368,7 @@ void UPComSupportCommands::gmmf()
 
 
 // Function PlatformCommon.PComSupportCommands.SetLogServerTickStatsFlags
-// (Defined, Latent, Net, Exec, Native, Event, Operator, HasOptionalParms)
+// (Defined, PreOperator, Net, NetReliable, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // int                            Flags                          (Parm)
 // bool                           bSet                           (Parm)
@@ -5418,7 +5391,7 @@ void UPComSupportCommands::SetLogServerTickStatsFlags(int Flags, bool bSet)
 
 
 // Function PlatformCommon.PComSupportCommands.GPerfDebugPhysicsThreshold
-// (Final, Iterator, Latent, Singular, Simulated, Native, Event, Operator, HasOptionalParms)
+// (Defined, Latent, PreOperator, Singular, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // float                          fThresh1                       (Parm)
 // float                          fThresh2                       (Parm)
@@ -5441,7 +5414,7 @@ void UPComSupportCommands::GPerfDebugPhysicsThreshold(float fThresh1, float fThr
 
 
 // Function PlatformCommon.PComSupportCommands.GPerfDebugTickRate
-// (PreOperator, Singular, Simulated, Native, Event, Operator, HasOptionalParms)
+// (Final, Iterator, Latent, PreOperator, Singular, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // int                            tickHz                         (Parm)
 // int                            altTickHz                      (Parm)
@@ -5464,7 +5437,7 @@ void UPComSupportCommands::GPerfDebugTickRate(int tickHz, int altTickHz)
 
 
 // Function PlatformCommon.PComSupportCommands.GPerfAllRelevantLimit
-// (Final, Defined, Latent, Singular, Simulated, Native, Event, Operator, HasOptionalParms)
+// (Latent, PreOperator, Singular, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // int                            feet                           (Parm)
 
@@ -5485,7 +5458,7 @@ void UPComSupportCommands::GPerfAllRelevantLimit(int feet)
 
 
 // Function PlatformCommon.PComSupportCommands.GPerfServerFlags
-// (Final, PreOperator, Singular, Simulated, Native, Event, Operator, HasOptionalParms)
+// (Defined, Iterator, Latent, PreOperator, Singular, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // int                            Flags                          (Parm)
 // int                            alternate1                     (Parm)
@@ -5510,7 +5483,7 @@ void UPComSupportCommands::GPerfServerFlags(int Flags, int alternate1, int alter
 
 
 // Function PlatformCommon.PComSupportCommands.GPerfDebugRelevMode
-// (Defined, Iterator, Latent, Singular, Simulated, Native, Event, Operator, HasOptionalParms)
+// (Final, Defined, Latent, PreOperator, Singular, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // int                            Mode                           (Parm)
 
@@ -5531,7 +5504,7 @@ void UPComSupportCommands::GPerfDebugRelevMode(int Mode)
 
 
 // Function PlatformCommon.PComSupportCommands.GPerfDebugSkips
-// (Final, Defined, Iterator, Latent, Singular, Simulated, Native, Event, Operator, HasOptionalParms)
+// (Iterator, Latent, PreOperator, Singular, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // int                            skips                          (Parm)
 
@@ -5552,7 +5525,7 @@ void UPComSupportCommands::GPerfDebugSkips(int skips)
 
 
 // Function PlatformCommon.PComSupportCommands.GPerfDebugFeet
-// (Iterator, Latent, Singular, Simulated, Native, Event, Operator, HasOptionalParms)
+// (Final, Latent, PreOperator, Singular, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // int                            feet                           (Parm)
 
@@ -5573,7 +5546,7 @@ void UPComSupportCommands::GPerfDebugFeet(int feet)
 
 
 // Function PlatformCommon.PComSupportCommands.gmDiag
-// (Final, Iterator, Singular, Simulated, Native, Event, Operator, HasOptionalParms)
+// (Defined, PreOperator, Singular, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // int                            Code                           (Parm)
 // int                            Route                          (Parm)
@@ -5596,7 +5569,7 @@ void UPComSupportCommands::gmDiag(int Code, int Route)
 
 
 // Function PlatformCommon.PComSupportCommands.gmC
-// (Final, Defined, Singular, Simulated, Native, Event, Operator, HasOptionalParms)
+// (PreOperator, Singular, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FString                 sCommand                       (Parm, NeedCtorLink)
 
@@ -5617,7 +5590,7 @@ void UPComSupportCommands::gmC(const struct FString& sCommand)
 
 
 // Function PlatformCommon.PComSupportCommands.gmCommand
-// (Iterator, Singular, Simulated, Native, Event, Operator, HasOptionalParms)
+// (Final, PreOperator, Singular, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FString                 sCommand                       (Parm, NeedCtorLink)
 
@@ -5638,7 +5611,7 @@ void UPComSupportCommands::gmCommand(const struct FString& sCommand)
 
 
 // Function PlatformCommon.PComSupportCommands.gmMatchLobbyResume
-// (Latent, Singular, Simulated, Native, Event, Operator, HasOptionalParms)
+// (Final, Iterator, PreOperator, Singular, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
 
 void UPComSupportCommands::gmMatchLobbyResume()
 {
@@ -5656,7 +5629,7 @@ void UPComSupportCommands::gmMatchLobbyResume()
 
 
 // Function PlatformCommon.PComSupportCommands.gmMatchLobbyPause
-// (Final, Defined, Iterator, Singular, Simulated, Native, Event, Operator, HasOptionalParms)
+// (Iterator, PreOperator, Singular, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
 
 void UPComSupportCommands::gmMatchLobbyPause()
 {
@@ -5674,7 +5647,7 @@ void UPComSupportCommands::gmMatchLobbyPause()
 
 
 // Function PlatformCommon.PComSupportCommands.gmMatchNext
-// (Final, Latent, Singular, Simulated, Native, Event, Operator, HasOptionalParms)
+// (Defined, Iterator, PreOperator, Singular, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // int                            nMapId                         (Parm)
 
@@ -5695,7 +5668,7 @@ void UPComSupportCommands::gmMatchNext(int nMapId)
 
 
 // Function PlatformCommon.PComSupportCommands.gmMatchForce
-// (Defined, Iterator, Singular, Simulated, Native, Event, Operator, HasOptionalParms)
+// (Final, Defined, PreOperator, Singular, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // int                            nQueueId                       (OptionalParm, Parm)
 
@@ -5716,7 +5689,7 @@ void UPComSupportCommands::gmMatchForce(int nQueueId)
 
 
 // Function PlatformCommon.PComUIManagerBase.DebugDraw
-// (Final, Defined, Singular, Simulated, Exec, Native, HasOptionalParms)
+// (Final, Iterator, Latent, PreOperator, Net, Simulated, Exec, Native, HasOptionalParms)
 // Parameters:
 // class UCanvas*                 Canvas                         (Parm)
 
@@ -5737,7 +5710,7 @@ void UPComUIManagerBase::DebugDraw(class UCanvas* Canvas)
 
 
 // Function PlatformCommon.PComUtilityFunctions.GetGDeltaTime
-// (Final, Latent, PreOperator, Simulated, Native, Event, Operator, HasOptionalParms)
+// (Defined, Iterator, Singular, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // float                          ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -5759,7 +5732,7 @@ float UPComUtilityFunctions::GetGDeltaTime()
 
 
 // Function PlatformCommon.PComUtilityFunctions.IsAWithStop
-// (Final, Iterator, Latent, Net, Simulated, Native, Event, Operator, HasOptionalParms)
+// (Defined, Latent, PreOperator, Net, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // class UObject*                 InObject                       (Parm)
 // class UClass*                  SomeBase                       (Const, Parm)
@@ -5787,7 +5760,7 @@ bool UPComUtilityFunctions::IsAWithStop(class UObject* InObject, class UClass* S
 
 
 // Function PlatformCommon.PComUtilityFunctions.FakeNetSerialize
-// (Iterator, Latent, Net, NetReliable, Native, Event, Operator, HasOptionalParms)
+// (Final, Latent, PreOperator, Net, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FVector                 InVector                       (Const, Parm, OutParm)
 // struct FVector                 ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -5813,7 +5786,7 @@ struct FVector UPComUtilityFunctions::FakeNetSerialize(struct FVector* InVector)
 
 
 // Function PlatformCommon.PComVideoPlayer.DestroyMe
-// (Final, PreOperator, Singular, NetReliable, Native, Event, Operator, HasOptionalParms)
+// (Defined, Iterator, Latent, PreOperator, Singular, Exec, Native, Event, Operator, HasOptionalParms)
 
 void APComVideoPlayer::DestroyMe()
 {
@@ -5831,12 +5804,12 @@ void APComVideoPlayer::DestroyMe()
 
 
 // Function PlatformCommon.PComVideoPlayer.TestOnVideoError
-// (Latent, PreOperator, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
+// (Singular, Static, HasOptionalParms)
 // Parameters:
 // class APComVideoPlayer*        VideoPlayer                    (Parm)
 // TEnumAsByte<EPComVideoPlayerError> ErrorCode                      (Parm)
 
-void APComVideoPlayer::TestOnVideoError(class APComVideoPlayer* VideoPlayer, TEnumAsByte<EPComVideoPlayerError> ErrorCode)
+void APComVideoPlayer::STATIC_TestOnVideoError(class APComVideoPlayer* VideoPlayer, TEnumAsByte<EPComVideoPlayerError> ErrorCode)
 {
 	static auto fn = UObject::FindObject<UFunction>("Function PlatformCommon.PComVideoPlayer.TestOnVideoError");
 
@@ -5845,7 +5818,6 @@ void APComVideoPlayer::TestOnVideoError(class APComVideoPlayer* VideoPlayer, TEn
 	params.ErrorCode = ErrorCode;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -5854,12 +5826,12 @@ void APComVideoPlayer::TestOnVideoError(class APComVideoPlayer* VideoPlayer, TEn
 
 
 // Function PlatformCommon.PComVideoPlayer.TestVideoPlayer
-// (Defined, Latent, PreOperator, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
+// (Defined, Singular, Static, HasOptionalParms)
 // Parameters:
 // class AActor*                  SpawningActor                  (Parm)
 // struct FString                 InURL                          (OptionalParm, Parm, NeedCtorLink)
 
-void APComVideoPlayer::TestVideoPlayer(class AActor* SpawningActor, const struct FString& InURL)
+void APComVideoPlayer::STATIC_TestVideoPlayer(class AActor* SpawningActor, const struct FString& InURL)
 {
 	static auto fn = UObject::FindObject<UFunction>("Function PlatformCommon.PComVideoPlayer.TestVideoPlayer");
 
@@ -5868,7 +5840,6 @@ void APComVideoPlayer::TestVideoPlayer(class AActor* SpawningActor, const struct
 	params.InURL = InURL;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -5877,16 +5848,15 @@ void APComVideoPlayer::TestVideoPlayer(class AActor* SpawningActor, const struct
 
 
 // Function PlatformCommon.PComVideoPlayer.StopVideoSession
-// (Final, Latent, Net, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
+// (Final, PreOperator, Net, Static, HasOptionalParms)
 
-void APComVideoPlayer::StopVideoSession()
+void APComVideoPlayer::STATIC_StopVideoSession()
 {
 	static auto fn = UObject::FindObject<UFunction>("Function PlatformCommon.PComVideoPlayer.StopVideoSession");
 
 	APComVideoPlayer_StopVideoSession_Params params;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -5895,7 +5865,7 @@ void APComVideoPlayer::StopVideoSession()
 
 
 // Function PlatformCommon.PComVideoPlayer.Initialize
-// (Final, Defined, Latent, Exec, Native, Event, Static)
+// (Latent, PreOperator, NetReliable, Simulated, Exec, Native, Event, Static)
 
 void APComVideoPlayer::STATIC_Initialize()
 {
@@ -5913,7 +5883,7 @@ void APComVideoPlayer::STATIC_Initialize()
 
 
 // Function PlatformCommon.PComVideoPlayer.NativePostRenderFor
-// (Final, Defined, Iterator, Singular, Exec, Native, Operator, Static)
+// (Iterator, PreOperator, Singular, NetReliable, Simulated, Exec, Native, Operator, Static)
 // Parameters:
 // class APlayerController*       PC                             (Parm)
 // class UCanvas*                 Canvas                         (Parm)
@@ -5940,7 +5910,7 @@ void APComVideoPlayer::STATIC_NativePostRenderFor(class APlayerController* PC, c
 
 
 // Function PlatformCommon.PComVideoPlayer.OnVideoError
-// (Final, Iterator, PreOperator, Singular, Simulated, Exec, Native, HasOptionalParms)
+// (Final, Defined, Iterator, Latent, Singular, Net, Simulated, Exec, Native, HasOptionalParms)
 // Parameters:
 // class APComVideoPlayer*        VideoPlayer                    (Parm)
 // TEnumAsByte<EPComVideoPlayerError> ErrorCode                      (Parm)
@@ -5963,7 +5933,7 @@ void APComVideoPlayer::OnVideoError(class APComVideoPlayer* VideoPlayer, TEnumAs
 
 
 // Function PlatformCommon.PComVideoPlayer.OnVideoFinished
-// (Defined, Iterator, PreOperator, Singular, Simulated, Exec, Native, HasOptionalParms)
+// (PreOperator, Singular, Net, Simulated, Exec, Native, HasOptionalParms)
 
 void APComVideoPlayer::OnVideoFinished()
 {
@@ -5981,11 +5951,11 @@ void APComVideoPlayer::OnVideoFinished()
 
 
 // Function PlatformCommon.PComMusicThemePlayer.UpdateReplicatedMusicEvent
-// (Defined, Iterator, PreOperator, Singular, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
+// (Defined, Iterator, Latent, PreOperator, Singular, Static, HasOptionalParms)
 // Parameters:
 // struct FName                   EventName                      (Const, Parm)
 
-void UPComMusicThemePlayer::UpdateReplicatedMusicEvent(const struct FName& EventName)
+void UPComMusicThemePlayer::STATIC_UpdateReplicatedMusicEvent(const struct FName& EventName)
 {
 	static auto fn = UObject::FindObject<UFunction>("Function PlatformCommon.PComMusicThemePlayer.UpdateReplicatedMusicEvent");
 
@@ -5993,7 +5963,6 @@ void UPComMusicThemePlayer::UpdateReplicatedMusicEvent(const struct FName& Event
 	params.EventName = EventName;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -6002,7 +5971,7 @@ void UPComMusicThemePlayer::UpdateReplicatedMusicEvent(const struct FName& Event
 
 
 // Function PlatformCommon.PComMusicThemePlayer.UpdateMusicTrack
-// (Final, Iterator, Latent, Native, Event, HasOptionalParms)
+// (Defined, Latent, PreOperator, NetReliable, Simulated, Native, Event, HasOptionalParms)
 // Parameters:
 // struct FMusicTrackStruct       NewMusicTrack                  (Const, Parm, NeedCtorLink)
 // float                          fDuration                      (Const, OptionalParm, Parm)
@@ -6025,16 +5994,15 @@ void UPComMusicThemePlayer::UpdateMusicTrack(const struct FMusicTrackStruct& New
 
 
 // Function PlatformCommon.PComMusicThemePlayer.StopMusic
-// (Iterator, Latent, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
+// (Iterator, PreOperator, Static, HasOptionalParms)
 
-void UPComMusicThemePlayer::StopMusic()
+void UPComMusicThemePlayer::STATIC_StopMusic()
 {
 	static auto fn = UObject::FindObject<UFunction>("Function PlatformCommon.PComMusicThemePlayer.StopMusic");
 
 	UPComMusicThemePlayer_StopMusic_Params params;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -6043,7 +6011,7 @@ void UPComMusicThemePlayer::StopMusic()
 
 
 // Function PlatformCommon.PComMusicThemePlayer.PlayMusicEvent
-// (Final, Latent, Singular, Net, NetReliable, Simulated, Native, Event, Operator, HasOptionalParms)
+// (Final, PreOperator, Singular, Net, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FName                   EventName                      (Const, Parm)
 
@@ -6064,7 +6032,7 @@ void UPComMusicThemePlayer::PlayMusicEvent(const struct FName& EventName)
 
 
 // Function PlatformCommon.PComMusicThemePlayer.PlayDefaultMusic
-// (Iterator, Singular, Net, NetReliable, Simulated, Native, Event, Operator, HasOptionalParms)
+// (Iterator, Latent, Singular, Net, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 
 void UPComMusicThemePlayer::PlayDefaultMusic()
 {
@@ -6082,7 +6050,7 @@ void UPComMusicThemePlayer::PlayDefaultMusic()
 
 
 // Function PlatformCommon.PComMusicThemePlayer.OnThemeLoaded
-// (Final, Latent, Net, NetReliable, Simulated, Native, Event, Operator, HasOptionalParms)
+// (Final, PreOperator, Net, Simulated, Exec, Native, Event, Operator, HasOptionalParms)
 
 void UPComMusicThemePlayer::OnThemeLoaded()
 {
@@ -6100,7 +6068,7 @@ void UPComMusicThemePlayer::OnThemeLoaded()
 
 
 // Function PlatformCommon.PComMusicThemePlayer.LoadTheme
-// (Final, Defined, Iterator, Latent, PreOperator, Net, Simulated, Native, Event, Operator, HasOptionalParms)
+// (Iterator, Latent, Singular, Net, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FString                 themepath                      (Const, Parm, NeedCtorLink)
 
@@ -6121,7 +6089,7 @@ void UPComMusicThemePlayer::LoadTheme(const struct FString& themepath)
 
 
 // Function PlatformCommon.PComMusicThemePlayer.GetDefaultThemePath
-// (Latent, PreOperator, Simulated, Native, Event, Operator, HasOptionalParms)
+// (Final, Iterator, Singular, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FString                 ReturnValue                    (Parm, OutParm, ReturnParm, NeedCtorLink)
 
@@ -6143,7 +6111,7 @@ struct FString UPComMusicThemePlayer::GetDefaultThemePath()
 
 
 // Function PlatformCommon.PComMusicThemePlayer.LoadDefaultTheme
-// (Defined, Iterator, Latent, PreOperator, Net, Simulated, Native, Event, Operator, HasOptionalParms)
+// (Final, Defined, Latent, Singular, Net, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
 
 void UPComMusicThemePlayer::LoadDefaultTheme()
 {
@@ -6178,7 +6146,7 @@ void UPComMusicThemePlayer::Init()
 
 
 // Function PlatformCommon.PComMusicThemeSyncActor.ReplicatedEvent
-// (Final, Latent, PreOperator, Net, NetReliable, Simulated, Native, HasOptionalParms)
+// (Final, Defined, PreOperator, Exec, Native, HasOptionalParms)
 // Parameters:
 // struct FName                   VarName                        (Parm)
 
@@ -6199,11 +6167,11 @@ void APComMusicThemeSyncActor::ReplicatedEvent(const struct FName& VarName)
 
 
 // Function PlatformCommon.PComMusicThemeSyncActor.UpdateMusicEventClient
-// (Iterator, PreOperator, Singular, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
+// (Iterator, Latent, PreOperator, Singular, Static, HasOptionalParms)
 // Parameters:
 // struct FName                   EventName                      (Parm)
 
-void APComMusicThemeSyncActor::UpdateMusicEventClient(const struct FName& EventName)
+void APComMusicThemeSyncActor::STATIC_UpdateMusicEventClient(const struct FName& EventName)
 {
 	static auto fn = UObject::FindObject<UFunction>("Function PlatformCommon.PComMusicThemeSyncActor.UpdateMusicEventClient");
 
@@ -6211,7 +6179,6 @@ void APComMusicThemeSyncActor::UpdateMusicEventClient(const struct FName& EventN
 	params.EventName = EventName;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -6220,11 +6187,11 @@ void APComMusicThemeSyncActor::UpdateMusicEventClient(const struct FName& EventN
 
 
 // Function PlatformCommon.PComMusicThemeSyncActor.UpdateMusicEvent
-// (Final, Defined, PreOperator, Singular, NetReliable, Exec, Native, Event, Operator, HasOptionalParms)
+// (Final, Defined, Latent, PreOperator, Singular, Static, HasOptionalParms)
 // Parameters:
 // struct FName                   EventName                      (Parm)
 
-void APComMusicThemeSyncActor::UpdateMusicEvent(const struct FName& EventName)
+void APComMusicThemeSyncActor::STATIC_UpdateMusicEvent(const struct FName& EventName)
 {
 	static auto fn = UObject::FindObject<UFunction>("Function PlatformCommon.PComMusicThemeSyncActor.UpdateMusicEvent");
 
@@ -6232,7 +6199,6 @@ void APComMusicThemeSyncActor::UpdateMusicEvent(const struct FName& EventName)
 	params.EventName = EventName;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 

@@ -1,6 +1,6 @@
 #pragma once
 
-// Paladins (3.05) SDK
+// Paladins (5.5) SDK
 
 #ifdef _MSC_VER
 	#pragma pack(push, 0x8)
@@ -221,8 +221,8 @@ public:
 	}
 
 
-	void usc_Unsubscribe();
-	void usc_Subscribe();
+	void STATIC_usc_Unsubscribe();
+	void STATIC_usc_Subscribe();
 	void usc_Unsubscribe_Delegate();
 	void usc_Subscribe_Delegate();
 	class ATgPlayerController* GetPlayerController();
@@ -412,33 +412,33 @@ public:
 	void ASC_Reinit();
 	void ErrorFeedback(const struct FString& ErrMsg);
 	void ASC_ErrorFeedback(const struct FString& ErrMsg);
-	void USC_Resize(class UGFxObject* pObj);
-	void USC_ToggleDND();
-	void USC_UpdateStatusMessage(const struct FString& sStatus);
-	void USC_InviteToClan(const struct FString& sPlayerName);
-	void USC_BlockByString(const struct FString& sPlayerName);
-	void USC_InviteFriendByString(const struct FString& sPlayerName);
-	void USC_AddPlayerNote(int nPlayerId, const struct FString& sPlayerNote);
-	void USC_RemoveBlocked(int nPlayerId);
-	void USC_PartyKick(int nPlayerId);
-	void USC_PartyInvite(int nPlayerId);
-	void USC_WatchFriend(int nPlayerId);
-	void USC_SpectatePlayer(int nPlayerId);
-	void USC_ViewPlayerClan();
-	void USC_ViewPlayerProfile(const struct FString& sPlayerName);
-	void USC_CancelAllFriendRequests();
-	void USC_CancelFriendRequest(int nPlayerId);
-	void USC_AcceptAllFriendRequests();
-	void USC_AcceptFriendRequest(int nPlayerId);
-	void USC_CancelClanInvite(int nClanId);
-	void USC_AcceptClanInvite(int nClanId);
-	void USC_CancelInvite(int nPlayerId);
-	void USC_InviteFriend(int nPlayerId);
-	void USC_GetListData(int nId);
-	void USC_SearchByString(const struct FString& PlayerName);
-	void USC_MessageFriend(int nPlayerId, const struct FString& sPlayerName);
-	void USC_RemoveFriend(int nPlayerId);
-	void USC_GetFriendsData();
+	void STATIC_USC_Resize(class UGFxObject* pObj);
+	void STATIC_USC_ToggleDND();
+	void STATIC_USC_UpdateStatusMessage(const struct FString& sStatus);
+	void STATIC_USC_InviteToClan(const struct FString& sPlayerName);
+	void STATIC_USC_BlockByString(const struct FString& sPlayerName);
+	void STATIC_USC_InviteFriendByString(const struct FString& sPlayerName);
+	void STATIC_USC_AddPlayerNote(int nPlayerId, const struct FString& sPlayerNote);
+	void STATIC_USC_RemoveBlocked(int nPlayerId);
+	void STATIC_USC_PartyKick(int nPlayerId);
+	void STATIC_USC_PartyInvite(int nPlayerId);
+	void STATIC_USC_WatchFriend(int nPlayerId);
+	void STATIC_USC_SpectatePlayer(int nPlayerId);
+	void STATIC_USC_ViewPlayerClan();
+	void STATIC_USC_ViewPlayerProfile(const struct FString& sPlayerName);
+	void STATIC_USC_CancelAllFriendRequests();
+	void STATIC_USC_CancelFriendRequest(int nPlayerId);
+	void STATIC_USC_AcceptAllFriendRequests();
+	void STATIC_USC_AcceptFriendRequest(int nPlayerId);
+	void STATIC_USC_CancelClanInvite(int nClanId);
+	void STATIC_USC_AcceptClanInvite(int nClanId);
+	void STATIC_USC_CancelInvite(int nPlayerId);
+	void STATIC_USC_InviteFriend(int nPlayerId);
+	void STATIC_USC_GetListData(int nId);
+	void STATIC_USC_SearchByString(const struct FString& PlayerName);
+	void STATIC_USC_MessageFriend(int nPlayerId, const struct FString& sPlayerName);
+	void STATIC_USC_RemoveFriend(int nPlayerId);
+	void STATIC_USC_GetFriendsData();
 	void USC_Resize_Delegate(class UGFxObject* pObj);
 	void USC_ToggleDND_Delegate();
 	void USC_UpdateStatusMessage_Delegate(const struct FString& sStatus);
@@ -561,7 +561,7 @@ public:
 	bool IsRunning();
 	void EventCallback(int nTimerId, TEnumAsByte<ETGT_EVENT> eEvent);
 	void ExpireTimer(bool bFromCallback);
-	void UpdateTimer(float fElapsed, float fTotal, bool bPaused, bool bFromCallback);
+	void STATIC_UpdateTimer(float fElapsed, float fTotal, bool bPaused, bool bFromCallback);
 	void StartTimer(float fSeconds);
 };
 
@@ -623,7 +623,7 @@ public:
 
 
 	void SendGraphData(class UGFxObject* Obj);
-	void UpdateGraph();
+	void STATIC_UpdateGraph();
 	void STATIC_Initialize(class UUIGameMoviePlayer* pParentMovie);
 };
 
@@ -680,24 +680,24 @@ public:
 
 
 	void SetMarketplaceVisibility(bool Visible, unsigned char IconPosition);
-	void usc_ClipboardCopy(const struct FString& Str);
-	struct FString usc_ClipboardPaste();
+	void STATIC_usc_ClipboardCopy(const struct FString& Str);
+	struct FString STATIC_usc_ClipboardPaste();
 	void InitOSSRef();
 	void Init(class ULocalPlayer* LocPlay);
-	bool usc_IME_Exists();
-	bool usc_IME_SetEnabled(bool bEnabled);
-	struct FString usc_TranslateMsg(const struct FString& Identifier, const struct FString& SectionName);
-	struct FString usc_TranslateMsgId(int nId);
+	bool STATIC_usc_IME_Exists();
+	bool STATIC_usc_IME_SetEnabled(bool bEnabled);
+	struct FString STATIC_usc_TranslateMsg(const struct FString& Identifier, const struct FString& SectionName);
+	struct FString STATIC_usc_TranslateMsgId(int nId);
 	void ShowTransitionScene(bool bShow);
-	void usc_toggle_key_capture(bool bCapture);
-	void usc_toggle_cursor(bool bShow);
-	void usc_Console_Command(const struct FString& Cmd);
-	void usc_Data_Handler_Created();
+	void STATIC_usc_toggle_key_capture(bool bCapture);
+	void STATIC_usc_toggle_cursor(bool bShow);
+	void STATIC_usc_Console_Command(const struct FString& Cmd);
+	void STATIC_usc_Data_Handler_Created();
 	void QuitGame();
 	void STATIC_UnregisterEngineCallbacks();
 	void STATIC_RegisterEngineCallbacks();
 	struct FString GetTranslatedKeyBind(const struct FString& Command, int nAlternate, bool bLocalizeKB, bool bLocalizeMouse, bool bLocalizeGamepad);
-	void UpdateViewportForSafeAreas();
+	void STATIC_UpdateViewportForSafeAreas();
 	void NativeTick(float DeltaTime);
 	void InitializeDataHandler();
 	void PostInit();
@@ -724,7 +724,7 @@ public:
 	bool FilterButtonInput(int ControllerId, const struct FName& ButtonName, TEnumAsByte<EInputEvent> Event);
 	void OnClose();
 	void PostInit();
-	void usc_FillCommands(const struct FString& MenuName);
+	void STATIC_usc_FillCommands(const struct FString& MenuName);
 	void AddSubMenu(const struct FString& Section, const struct FString& submenuname, const struct FString& DisplayName);
 	void AddCommand(const struct FString& Section, const struct FString& Command, const struct FString& DisplayName);
 	void FillSubMenuCommands(const struct FString& submenuname);
@@ -751,7 +751,7 @@ public:
 
 	void OnClose();
 	void PostInit();
-	void UpdateViewportForSafeAreas();
+	void STATIC_UpdateViewportForSafeAreas();
 };
 
 
@@ -1998,8 +1998,9 @@ class UUIData_Notification : public UUIData
 {
 public:
 	TEnumAsByte<ENotificationType>                     eType;                                                    // 0x0064(0x0001)
-	TEnumAsByte<EIconStackType>                        eIconStackType;                                           // 0x0065(0x0001)
-	unsigned char                                      UnknownData00[0x2];                                       // 0x0066(0x0002) MISSED OFFSET
+	unsigned char                                      eQuestOrigin;                                             // 0x0065(0x0001)
+	TEnumAsByte<EIconStackType>                        eIconStackType;                                           // 0x0066(0x0001)
+	unsigned char                                      UnknownData00[0x1];                                       // 0x0067(0x0001) MISSED OFFSET
 	struct FString                                     sTitle;                                                   // 0x0068(0x0010) (AlwaysInit, NeedCtorLink)
 	struct FString                                     sDescription;                                             // 0x0078(0x0010) (AlwaysInit, NeedCtorLink)
 	struct Fdword                                      dwIconIndex;                                              // 0x0088(0x0004)
@@ -2180,7 +2181,7 @@ public:
 
 
 // Class TgClient.UIData_Quest
-// 0x0038 (0x009C - 0x0064)
+// 0x003C (0x00A0 - 0x0064)
 class UUIData_Quest : public UUIData
 {
 public:
@@ -2197,9 +2198,10 @@ public:
 	unsigned long                                      m_bCompletionAck : 1;                                     // 0x0084(0x0004)
 	unsigned long                                      m_bGoalsInitialized : 1;                                  // 0x0084(0x0004)
 	unsigned long                                      m_bShowLastComplete : 1;                                  // 0x0084(0x0004)
-	TEnumAsByte<EQuestType>                            m_eQuestType;                                             // 0x0088(0x0001)
-	unsigned char                                      UnknownData00[0x3];                                       // 0x0089(0x0003) MISSED OFFSET
-	TArray<class UUIData_Goal*>                        m_Goals;                                                  // 0x008C(0x0010) (NeedCtorLink)
+	struct Fdword                                      m_dwLastSeenCount;                                        // 0x0088(0x0004)
+	TEnumAsByte<EQuestType>                            m_eQuestType;                                             // 0x008C(0x0001)
+	unsigned char                                      UnknownData00[0x3];                                       // 0x008D(0x0003) MISSED OFFSET
+	TArray<class UUIData_Goal*>                        m_Goals;                                                  // 0x0090(0x0010) (NeedCtorLink)
 
 	static UClass* StaticClass()
 	{
@@ -2211,19 +2213,19 @@ public:
 
 
 // Class TgClient.UIData_SpecialEvent
-// 0x0024 (0x00C0 - 0x009C)
+// 0x0024 (0x00C4 - 0x00A0)
 class UUIData_SpecialEvent : public UUIData_Quest
 {
 public:
-	struct Fdword                                      m_dwCount;                                                // 0x009C(0x0004)
-	struct Fdword                                      m_dwCompleteCount;                                        // 0x00A0(0x0004)
-	struct Fdword                                      m_dwLootTableItemId;                                      // 0x00A4(0x0004)
-	struct Fdword                                      m_dwEndSeconds;                                           // 0x00A8(0x0004)
-	struct Fdword                                      m_dwNameMsgId;                                            // 0x00AC(0x0004)
-	struct Fdword                                      m_dwDescMsgId;                                            // 0x00B0(0x0004)
-	struct Fdword                                      m_dwIconId;                                               // 0x00B4(0x0004)
-	struct Fdword                                      m_dwGoalId;                                               // 0x00B8(0x0004)
-	struct Fdword                                      m_dwGoalActivityType;                                     // 0x00BC(0x0004)
+	struct Fdword                                      m_dwCount;                                                // 0x00A0(0x0004)
+	struct Fdword                                      m_dwCompleteCount;                                        // 0x00A4(0x0004)
+	struct Fdword                                      m_dwLootTableItemId;                                      // 0x00A8(0x0004)
+	struct Fdword                                      m_dwEndSeconds;                                           // 0x00AC(0x0004)
+	struct Fdword                                      m_dwNameMsgId;                                            // 0x00B0(0x0004)
+	struct Fdword                                      m_dwDescMsgId;                                            // 0x00B4(0x0004)
+	struct Fdword                                      m_dwIconId;                                               // 0x00B8(0x0004)
+	struct Fdword                                      m_dwGoalId;                                               // 0x00BC(0x0004)
+	struct Fdword                                      m_dwGoalActivityType;                                     // 0x00C0(0x0004)
 
 	static UClass* StaticClass()
 	{
@@ -2235,11 +2237,11 @@ public:
 
 
 // Class TgClient.UIData_ItemQuest
-// 0x0004 (0x00C4 - 0x00C0)
+// 0x0004 (0x00C8 - 0x00C4)
 class UUIData_ItemQuest : public UUIData_SpecialEvent
 {
 public:
-	struct Fdword                                      m_dwPurchasePortion;                                      // 0x00C0(0x0004)
+	struct Fdword                                      m_dwPurchasePortion;                                      // 0x00C4(0x0004)
 
 	static UClass* StaticClass()
 	{
@@ -3146,7 +3148,7 @@ public:
 
 
 // Class TgClient.UIDataGoals
-// 0x01F0 (0x0264 - 0x0074)
+// 0x0204 (0x0278 - 0x0074)
 class UUIDataGoals : public UUIDataObject
 {
 public:
@@ -3169,24 +3171,26 @@ public:
 	class UUIData_Quest*                               m_DailyLoginsQuest;                                       // 0x0218(0x0008)
 	class UUIData_Quest*                               m_LoreQuest;                                              // 0x0220(0x0008)
 	TArray<class UUIData_Quest*>                       m_QuestsCompleted;                                        // 0x0228(0x0010) (NeedCtorLink)
-	unsigned long                                      m_bQuestsSeenToday : 1;                                   // 0x0238(0x0004)
-	unsigned long                                      m_bPlayerLoggedIn : 1;                                    // 0x0238(0x0004)
-	unsigned long                                      m_bRewardClaimedToday : 1;                                // 0x0238(0x0004)
-	unsigned long                                      m_bDayHasRolledOver : 1;                                  // 0x0238(0x0004)
-	unsigned long                                      m_bHasQuestProgress : 1;                                  // 0x0238(0x0004)
-	unsigned long                                      m_bHasQuestActivities : 1;                                // 0x0238(0x0004)
-	unsigned long                                      m_bHasQuestRewards : 1;                                   // 0x0238(0x0004)
-	unsigned long                                      m_bFirstSpecialEventUpdate : 1;                           // 0x0238(0x0004)
-	unsigned long                                      m_bFirstItemQuestUpdate : 1;                              // 0x0238(0x0004)
-	int                                                m_nConsecutiveRewardDays;                                 // 0x023C(0x0004)
-	struct Fdword                                      m_dwDailyRewardClaimsRemaining;                           // 0x0240(0x0004)
-	int                                                m_nLengthOfDay;                                           // 0x0244(0x0004)
-	float                                              m_fTimeTillNextDay;                                       // 0x0248(0x0004)
-	float                                              m_fTimeTillNextMonth;                                     // 0x024C(0x0004)
-	struct Fdword                                      m_dwLastLoreQuestGoal;                                    // 0x0250(0x0004)
-	int                                                m_nPlayerLevel;                                           // 0x0254(0x0004)
-	int                                                m_nDailyRewardPopupPresentationsRemaining;                // 0x0258(0x0004)
-	class UUIData_EventChallengeSystem*                m_pChallengeSystemData;                                   // 0x025C(0x0008)
+	TArray<class UUIData_Quest*>                       m_CachedPrevQuests;                                       // 0x0238(0x0010) (NeedCtorLink)
+	unsigned long                                      m_bQuestsSeenToday : 1;                                   // 0x0248(0x0004)
+	unsigned long                                      m_bPlayerLoggedIn : 1;                                    // 0x0248(0x0004)
+	unsigned long                                      m_bRewardClaimedToday : 1;                                // 0x0248(0x0004)
+	unsigned long                                      m_bDayHasRolledOver : 1;                                  // 0x0248(0x0004)
+	unsigned long                                      m_bHasQuestProgress : 1;                                  // 0x0248(0x0004)
+	unsigned long                                      m_bHasQuestActivities : 1;                                // 0x0248(0x0004)
+	unsigned long                                      m_bHasQuestRewards : 1;                                   // 0x0248(0x0004)
+	unsigned long                                      m_bFirstSpecialEventUpdate : 1;                           // 0x0248(0x0004)
+	unsigned long                                      m_bFirstItemQuestUpdate : 1;                              // 0x0248(0x0004)
+	struct Fdword                                      m_dwCurrentDailyQuestStreak;                              // 0x024C(0x0004)
+	int                                                m_nConsecutiveRewardDays;                                 // 0x0250(0x0004)
+	struct Fdword                                      m_dwDailyRewardClaimsRemaining;                           // 0x0254(0x0004)
+	int                                                m_nLengthOfDay;                                           // 0x0258(0x0004)
+	float                                              m_fTimeTillNextDay;                                       // 0x025C(0x0004)
+	float                                              m_fTimeTillNextMonth;                                     // 0x0260(0x0004)
+	struct Fdword                                      m_dwLastLoreQuestGoal;                                    // 0x0264(0x0004)
+	int                                                m_nPlayerLevel;                                           // 0x0268(0x0004)
+	int                                                m_nDailyRewardPopupPresentationsRemaining;                // 0x026C(0x0004)
+	class UUIData_EventChallengeSystem*                m_pChallengeSystemData;                                   // 0x0270(0x0008)
 
 	static UClass* StaticClass()
 	{
@@ -3197,6 +3201,7 @@ public:
 
 	struct Fdword GetLoreCompleteCount();
 	struct Fdword GetLoreProgress();
+	struct Fdword STATIC_GetDailyQuestStreakCount();
 	int GetDailyLoginBonusDay();
 	int STATIC_GetDailyLoginBonusClaimsAvailable();
 	int GetDailyLoginsCount();
@@ -3674,7 +3679,7 @@ public:
 	void HoverMap(float X, float Y, const struct FString& MapName);
 	void PingMap(float X, float Y, const struct FString& Type, const struct FString& MapName);
 	class UTgMiniMap* GetMapByName(const struct FString& MapName);
-	void UpdateMMTimer(float fNew);
+	void STATIC_UpdateMMTimer(float fNew);
 	void SetCosmeticWheelVarsMouse(float fSelectionDelay, bool bAllowInnerSelection, float fDeselectionDelay);
 	void SetCosmeticWheelVarsGamepad(float fSelectionDelay, bool bAllowInnerSelection, float fDeselectionDelay);
 	void DrawMiniMap(class UCanvas* theCanvas);
@@ -3692,7 +3697,7 @@ public:
 	void ChangePotGClassModel(int nIndex, int nClassId, int nSkinId, int nDeviceId, int nDeviceSkinId, TEnumAsByte<ELobbyAnimPose> pose, bool bAsync);
 	void ToggleDeathRecap();
 	void ToggleScoreBoard(bool bAcceptsInput);
-	void ViewScoreboard(bool bShow, bool bAcceptsInput, class UTgGfxScene* pScene);
+	void STATIC_ViewScoreboard(bool bShow, bool bAcceptsInput, class UTgGfxScene* pScene);
 	void ToggleMinimap();
 	void ToggleVGS();
 	void PurchaseCard(int nId);
@@ -3707,8 +3712,8 @@ public:
 	void STATIC_UpdateReleaseTimeRemaining(float fTimeRemaining);
 	void STATIC_UpdatePlayerReady(class ATgRepInfo_Player* PRI);
 	bool STATIC_UpdatePlayerStatUI(class ATgPawn* changedPawn);
-	void UpdateHoverTarget();
-	void UpdateDebugDraws();
+	void STATIC_UpdateHoverTarget();
+	void STATIC_UpdateDebugDraws();
 	void STATIC_UpdateOverlay();
 	void InitOverlayMoviePlayer();
 	void PostRenderDebugDraws();
@@ -3736,7 +3741,7 @@ public:
 
 
 	void ToggleCursor(bool bEnabled);
-	bool ValidateSceneForSpectate(const struct FString& SceneName);
+	bool STATIC_ValidateSceneForSpectate(const struct FString& SceneName);
 	void ToggleHUD();
 	void Tick(float DeltaTime);
 	void SetVisibilityMode(unsigned char Mode);
@@ -3747,8 +3752,8 @@ public:
 	void SetSpectatorSkillsMode(int nNum);
 	void ToggleBans();
 	void STATIC_EndMission(bool bPlayerAttacker, TEnumAsByte<EGAME_WIN_STATE> finalWinState);
-	void UpdateSpectatorViewMode(unsigned char Mode);
-	void UpdateSpectatorViewTarget(class AActor* Target);
+	void STATIC_UpdateSpectatorViewMode(unsigned char Mode);
+	void STATIC_UpdateSpectatorViewTarget(class AActor* Target);
 };
 
 
@@ -3797,18 +3802,18 @@ public:
 	}
 
 
-	void usc_set_cast_mode(int nCastMode);
+	void STATIC_usc_set_cast_mode(int nCastMode);
 	void usc_set_cast_mode_delegate();
-	void usc_get_mode_tooltip(int nRank);
+	void STATIC_usc_get_mode_tooltip(int nRank);
 	void usc_get_mode_tooltip_delegate();
 	void NotifyMapChange();
-	void UpdateCastMode();
-	void UpdateInstanceCount(class ATgDevice* Dev);
-	void UpdatePtsAlloc(class ATgDevice* Dev);
-	void UpdateCooldown(class ATgDevice* Dev);
-	void UpdateCanFire(class ATgDevice* Dev);
-	void UpdateSelected(bool bSelected);
-	void UpdateValues(class ATgDevice* Dev);
+	void STATIC_UpdateCastMode();
+	void STATIC_UpdateInstanceCount(class ATgDevice* Dev);
+	void STATIC_UpdatePtsAlloc(class ATgDevice* Dev);
+	void STATIC_UpdateCooldown(class ATgDevice* Dev);
+	void STATIC_UpdateCanFire(class ATgDevice* Dev);
+	void STATIC_UpdateSelected(bool bSelected);
+	void STATIC_UpdateValues(class ATgDevice* Dev);
 	void STATIC_DeviceChangeEvent(class ATgDevice* Dev, TEnumAsByte<EDeviceChangeEvent> Event);
 	void InitializeData(class UTgDataHandler* Handler, class UTgDataChunk* parentChunk);
 };
@@ -3829,9 +3834,9 @@ public:
 
 
 	void SetEmpty(TEnumAsByte<ETG_EQUIP_POINT> eSlot);
-	void UpdatePtsAlloc(class ATgDevice* Dev);
-	void UpdateSelected(class ATgDevice* Dev);
-	void UpdateDevice(class ATgDevice* Dev);
+	void STATIC_UpdatePtsAlloc(class ATgDevice* Dev);
+	void STATIC_UpdateSelected(class ATgDevice* Dev);
+	void STATIC_UpdateDevice(class ATgDevice* Dev);
 	void STATIC_DeviceChangeEvent(class ATgDevice* Dev, TEnumAsByte<EDeviceChangeEvent> Event);
 	class UTgGameDC_Device* GetDeviceChunk(class ATgDevice* Dev);
 	void InitializeData(class UTgDataHandler* Handler, class UTgDataChunk* parentChunk);
@@ -3880,7 +3885,7 @@ public:
 	}
 
 
-	void UpdateEffects(class ATgEffectManager* effectManager, int indexChanged);
+	void STATIC_UpdateEffects(class ATgEffectManager* effectManager, int indexChanged);
 	void InitializeData(class UTgDataHandler* Handler, class UTgDataChunk* parentChunk);
 };
 
@@ -3903,8 +3908,8 @@ public:
 	}
 
 
-	void UpdateGameCapturePoint(int Index, int Taskforce);
-	void UpdateGameClock();
+	void STATIC_UpdateGameCapturePoint(int Index, int Taskforce);
+	void STATIC_UpdateGameClock();
 	void NotifyMapChange();
 	void InitializeData(class UTgDataHandler* Handler, class UTgDataChunk* parentChunk);
 };
@@ -3925,8 +3930,8 @@ public:
 
 
 	void NotifyMapChange();
-	void UpdateMapPosition(const struct FVector& Location, const struct FRotator& Rotation);
-	void UpdateActorMapPosition(class AActor* gameActor);
+	void STATIC_UpdateMapPosition(const struct FVector& Location, const struct FRotator& Rotation);
+	void STATIC_UpdateActorMapPosition(class AActor* gameActor);
 	void InitializeData(class UTgDataHandler* Handler, class UTgDataChunk* parentChunk);
 };
 
@@ -3969,12 +3974,12 @@ public:
 	}
 
 
-	void USC_ForceStatsUpdate();
+	void STATIC_USC_ForceStatsUpdate();
 	void USC_ForceStatsUpdate_Delegate();
 	void NotifyMapChange();
 	void STATIC_UpdateItemStoreItems(class ATgRepInfo_Player* PRI);
-	void UpdateStats(class ATgPawn* changedPawn);
-	void UpdatePlayer(class ATgRepInfo_Player* PRI);
+	void STATIC_UpdateStats(class ATgPawn* changedPawn);
+	void STATIC_UpdatePlayer(class ATgRepInfo_Player* PRI);
 	void SetDirty();
 	void InitializeData(class UTgDataHandler* Handler, class UTgDataChunk* parentChunk);
 };
@@ -3993,7 +3998,7 @@ public:
 	}
 
 
-	void UpdateSpectatorViewTarget(class UTgGameDC_MapEntity* entity);
+	void STATIC_UpdateSpectatorViewTarget(class UTgGameDC_MapEntity* entity);
 	void SetVendorItemList(TArray<int> nItemIds);
 	void InitializeData(class UTgDataHandler* Handler, class UTgDataChunk* parentChunk);
 };
@@ -4059,8 +4064,8 @@ public:
 	}
 
 
-	void UpdateCoreStats();
-	void UpdateDamageDone();
+	void STATIC_UpdateCoreStats();
+	void STATIC_UpdateDamageDone();
 	void NotifyMapChange();
 	void InitializeData(class UTgDataHandler* Handler, class UTgDataChunk* parentChunk);
 };
@@ -4135,10 +4140,10 @@ public:
 	}
 
 
-	bool UpdatePlayerSurrender(class ATgRepInfo_Player* PRI);
-	bool UpdatePlayerItemStoreItems(class ATgRepInfo_Player* PRI);
-	void UpdatePlayerStat(class ATgPawn* changedPawn);
-	void UpdateMembers(class ATgRepInfo_TaskForce* tfri);
+	bool STATIC_UpdatePlayerSurrender(class ATgRepInfo_Player* PRI);
+	bool STATIC_UpdatePlayerItemStoreItems(class ATgRepInfo_Player* PRI);
+	void STATIC_UpdatePlayerStat(class ATgPawn* changedPawn);
+	void STATIC_UpdateMembers(class ATgRepInfo_TaskForce* tfri);
 	void NotifyMapChange();
 	void InitializeData(class UTgDataHandler* Handler, class UTgDataChunk* parentChunk);
 };
@@ -4192,7 +4197,7 @@ public:
 	void PlayVGSSound(int nMsgId, const struct Fdword& ePref, const struct Fdword& dwBotId, const struct Fdword& dwSkinId, const struct FString& customSuffix, int nSourcePlayerId);
 	void PlayMessageSound(int nMsgId, TEnumAsByte<ETG_CHAT_PRIORITY> ePriority);
 	void AddAlert(const struct FString& Message);
-	void UpdateMessageSoundQueue();
+	void STATIC_UpdateMessageSoundQueue();
 	void Update(float DeltaTime, bool bSkipCallback);
 	void AddPopupMsg(const struct FString& msg);
 	void AddCombatMsg(const struct FString& msg);
@@ -4269,14 +4274,14 @@ public:
 
 
 	bool CheckSpectatorState();
-	void UpdateMapSize(int newX);
-	void UpdateMiniMapTexture();
+	void STATIC_UpdateMapSize(int newX);
+	void STATIC_UpdateMiniMapTexture();
 	void CreateMiniMapTexture();
 	void Clear();
 	void STATIC_RemoveAllEntities();
-	bool VerifyMapLocation(float X, float Y);
+	bool STATIC_VerifyMapLocation(float X, float Y);
 	void GetRepInfosForLocation(const struct FVector& mapLoc, TArray<class AReplicationInfo*>* repInfos);
-	struct FVector WorldToMap(const struct FVector& Loc);
+	struct FVector STATIC_WorldToMap(const struct FVector& Loc);
 	struct FVector MapToWorld(const struct FVector& Loc);
 	void ClearHover();
 	void HoverMap(float X, float Y);
@@ -4314,6 +4319,7 @@ public:
 	int                                                m_nResizeTicks;                                           // 0x02AC(0x0004)
 	int                                                m_nChosenQueue;                                           // 0x02B0(0x0004)
 	int                                                m_nClearTransitionTicks;                                  // 0x02B4(0x0004)
+	unsigned long                                      m_bPendingReturnToLobby : 1;                              // 0x02B8(0x0004)
 	unsigned long                                      m_bGamepad : 1;                                           // 0x02B8(0x0004)
 	unsigned long                                      m_bHandheld : 1;                                          // 0x02B8(0x0004)
 	unsigned long                                      m_bDirectionalNav : 1;                                    // 0x02B8(0x0004)
@@ -4401,7 +4407,7 @@ public:
 	void usc_ShowGameDetailsUI();
 	void usc_ShowContentMarketPlaceUIForProduct(int ParentProductType, int RequestedProductTypes, const struct FString& ProductID);
 	void usc_ShowContentMarketPlaceUI(int ParentProductType, int RequestedProductTypes);
-	void updatePlayerMute(bool bWasSuccessful);
+	void STATIC_updatePlayerMute(bool bWasSuccessful);
 	void ShowGamercard(const struct FUniqueNetId& PlayerID);
 	void ShowGamerCardByUserName(const struct FString& UserName, const struct FUniqueNetId& PlayerID);
 	bool IsPlayerMuted(const struct FUniqueNetId& ConsoleId);
@@ -4454,25 +4460,25 @@ public:
 	void SetSpecTeamName(bool bEnemy, const struct FString& TeamName);
 	struct FString GetHUDTeamName(bool bEnemy);
 	void SetLoginReady();
-	void UpdateGamepadIcons();
+	void STATIC_UpdateGamepadIcons();
 	void CheckControllerDisconnected();
 	void AddInitialChatMessages();
 	void CloseChatTab(int nChannel, const struct FString& sSender);
 	void OpenChatTab(int nChannel, const struct FString& sName, bool bOpenWindow);
 	void AttemptAutoReplayDemoRecording();
-	void UpdateViewportForSafeAreas();
+	void STATIC_UpdateViewportForSafeAreas();
 	void AttemptAutoLogin();
 	void QuitGame();
 	void PromptToQuit(bool bAllowLogout);
 	bool SetRenderTargetEnabled(bool bEnabled, int surfaceId);
-	bool usc_resize_browser(int surfaceId, float X, float Y, float Width, float Height, float widthReal, float heightReal);
-	void usc_enable_browser_input(bool bEnable);
-	void usc_chat_close_tab(int nChannel, const struct FString& Sender);
-	void usc_resend_private_messages();
-	void usc_vgs_command(int nId, bool bSubMenu);
-	void usc_toggle_player_mute(const struct FString& sPlayerName);
-	void ViewStatsOnline(const struct FString& sInstanceId);
-	void WatchReplay(const struct FString& sInstanceId, const struct FString& sSpectatePassword);
+	bool STATIC_usc_resize_browser(int surfaceId, float X, float Y, float Width, float Height, float widthReal, float heightReal);
+	void STATIC_usc_enable_browser_input(bool bEnable);
+	void STATIC_usc_chat_close_tab(int nChannel, const struct FString& Sender);
+	void STATIC_usc_resend_private_messages();
+	void STATIC_usc_vgs_command(int nId, bool bSubMenu);
+	void STATIC_usc_toggle_player_mute(const struct FString& sPlayerName);
+	void STATIC_ViewStatsOnline(const struct FString& sInstanceId);
+	void STATIC_WatchReplay(const struct FString& sInstanceId, const struct FString& sSpectatePassword);
 	void Replay(int nInstanceId, const struct FString& sSpectatePassword);
 	void ToggleSkillScreen(bool bShow, int nBotIdOverride);
 	void EndLobbyPlayback();
@@ -5403,6 +5409,24 @@ public:
 	static UClass* StaticClass()
 	{
 		static auto ptr = UObject::FindClass("Class TgClient.UIComponent_CaspianPassiveStacks");
+		return ptr;
+	}
+
+};
+
+
+// Class TgClient.UIComponent_CaspianQAbilityStacks
+// 0x0010 (0x0134 - 0x0124)
+class UUIComponent_CaspianQAbilityStacks : public UUIComponent_Display
+{
+public:
+	unsigned long                                      m_bEnabled : 1;                                           // 0x0124(0x0004)
+	int                                                m_nPreviousStackCount;                                    // 0x0128(0x0004)
+	class ATgPawn_Caspian*                             m_CachedCaspian;                                          // 0x012C(0x0008)
+
+	static UClass* StaticClass()
+	{
+		static auto ptr = UObject::FindClass("Class TgClient.UIComponent_CaspianQAbilityStacks");
 		return ptr;
 	}
 
@@ -6421,8 +6445,29 @@ public:
 
 
 // Class TgClient.UIComponent_EndOfMatchLobbyQuests
-// 0x0018 (0x013C - 0x0124)
+// 0x0030 (0x0154 - 0x0124)
 class UUIComponent_EndOfMatchLobbyQuests : public UUIComponent_Display
+{
+public:
+	class UGFxObject*                                  m_mcQuestCount;                                           // 0x0124(0x0008)
+	class UGFxObject*                                  m_QuestsTitleTF;                                          // 0x012C(0x0008)
+	class UUIComponent_List*                           m_pQuestPanels;                                           // 0x0134(0x0008)
+	class UInputGroup*                                 m_grQuests;                                               // 0x013C(0x0008)
+	class UInputAction*                                m_ToggleStreakInput;                                      // 0x0144(0x0008)
+	class UUIComponent_QuestStreakProgress*            m_QuestStreak;                                            // 0x014C(0x0008)
+
+	static UClass* StaticClass()
+	{
+		static auto ptr = UObject::FindClass("Class TgClient.UIComponent_EndOfMatchLobbyQuests");
+		return ptr;
+	}
+
+};
+
+
+// Class TgClient.UIComponent_EndOfMatchLobbyQuestsOld
+// 0x0018 (0x013C - 0x0124)
+class UUIComponent_EndOfMatchLobbyQuestsOld : public UUIComponent_Display
 {
 public:
 	class UGFxObject*                                  m_mcQuestCount;                                           // 0x0124(0x0008)
@@ -6431,7 +6476,7 @@ public:
 
 	static UClass* StaticClass()
 	{
-		static auto ptr = UObject::FindClass("Class TgClient.UIComponent_EndOfMatchLobbyQuests");
+		static auto ptr = UObject::FindClass("Class TgClient.UIComponent_EndOfMatchLobbyQuestsOld");
 		return ptr;
 	}
 
@@ -7002,7 +7047,7 @@ public:
 
 
 // Class TgClient.UIComponent_ExpandedCustomsCreate
-// 0x00CC (0x01F0 - 0x0124)
+// 0x00DC (0x0200 - 0x0124)
 class UUIComponent_ExpandedCustomsCreate : public UUIComponent_Display
 {
 public:
@@ -7024,18 +7069,18 @@ public:
 	class UUIComponent_OptionEntryText*                m_pCreateGameName;                                        // 0x0188(0x0008)
 	class UUIComponent_OptionEntryText*                m_pCreatePassword;                                        // 0x0190(0x0008)
 	class UUIComponent_OptionEntryText*                m_pCreateSpectatorPassword;                               // 0x0198(0x0008)
-	class UUIComponent_CustomCreateMenuSetting*        m_OptionTeamSize;                                         // 0x01A0(0x0008)
-	class UUIComponent_CustomCreateMenuSetting*        m_OptionRegion;                                           // 0x01A8(0x0008)
-	class UUIComponent_CustomCreateMenuSetting*        m_OptionDraft;                                            // 0x01B0(0x0008)
-	unsigned long                                      m_bSpectateSetting : 1;                                   // 0x01B8(0x0004)
-	unsigned long                                      m_bCrossplaySetting : 1;                                  // 0x01B8(0x0004)
-	unsigned long                                      m_bAcknowledgedGameNameFocus : 1;                         // 0x01B8(0x0004)
-	unsigned long                                      m_bAcknowledgedGamePasswordFocus : 1;                     // 0x01B8(0x0004)
-	unsigned long                                      m_bAcknowledgedSpectatorPasswordFocus : 1;                // 0x01B8(0x0004)
-	struct Fdword                                      m_dwDefaultRegion;                                        // 0x01BC(0x0004)
-	struct FString                                     m_sDefaultName;                                           // 0x01C0(0x0010) (AlwaysInit, NeedCtorLink)
-	struct FString                                     m_sDefaultPassword;                                       // 0x01D0(0x0010) (AlwaysInit, NeedCtorLink)
-	struct FString                                     m_sDefaultSpectatorPassword;                              // 0x01E0(0x0010) (AlwaysInit, NeedCtorLink)
+	class UGFxObject*                                  m_pPasswordLabel;                                         // 0x01A0(0x0008)
+	class UGFxObject*                                  m_pSpectatorPasswordLabel;                                // 0x01A8(0x0008)
+	class UUIComponent_CustomCreateMenuSetting*        m_OptionTeamSize;                                         // 0x01B0(0x0008)
+	class UUIComponent_CustomCreateMenuSetting*        m_OptionRegion;                                           // 0x01B8(0x0008)
+	class UUIComponent_CustomCreateMenuSetting*        m_OptionDraft;                                            // 0x01C0(0x0008)
+	unsigned long                                      m_bSpectateSetting : 1;                                   // 0x01C8(0x0004)
+	unsigned long                                      m_bCrossplaySetting : 1;                                  // 0x01C8(0x0004)
+	unsigned long                                      m_bAcknowledgedGameNameFocus : 1;                         // 0x01C8(0x0004)
+	struct Fdword                                      m_dwDefaultRegion;                                        // 0x01CC(0x0004)
+	struct FString                                     m_sDefaultName;                                           // 0x01D0(0x0010) (AlwaysInit, NeedCtorLink)
+	struct FString                                     m_sDefaultPassword;                                       // 0x01E0(0x0010) (AlwaysInit, NeedCtorLink)
+	struct FString                                     m_sDefaultSpectatorPassword;                              // 0x01F0(0x0010) (AlwaysInit, NeedCtorLink)
 
 	static UClass* StaticClass()
 	{
@@ -9330,6 +9375,33 @@ public:
 };
 
 
+// Class TgClient.UIComponent_QuestStreakProgress
+// 0x004C (0x0170 - 0x0124)
+class UUIComponent_QuestStreakProgress : public UUIComponent_Display
+{
+public:
+	class UGFxObject*                                  m_mcStreakTF;                                             // 0x0124(0x0008)
+	class UGFxObject*                                  m_mcCountTF;                                              // 0x012C(0x0008)
+	class UUIComponent_List*                           m_StreakRewardList;                                       // 0x0134(0x0008)
+	class UUIComponent_QuestRewards*                   m_QuestRewards;                                           // 0x013C(0x0008)
+	class UUIComponent_DiscreteProgressBarHorizontal*  m_RewardProgress;                                         // 0x0144(0x0008)
+	class UUIComponent_StreakRewardTooltip*            m_RewardTooltip;                                          // 0x014C(0x0008)
+	int                                                m_nGamepadRolloverIndex;                                  // 0x0154(0x0004)
+	int                                                m_nQuestStreakIntervals;                                  // 0x0158(0x0004)
+	int                                                m_nRewardIconUpcomingFrame;                               // 0x015C(0x0004)
+	int                                                m_nRewardIconReceivedFrame;                               // 0x0160(0x0004)
+	int                                                m_nNumProgressBarFrames;                                  // 0x0164(0x0004)
+	class UUIData_Vendor*                              m_CachedStreakVendor;                                     // 0x0168(0x0008)
+
+	static UClass* StaticClass()
+	{
+		static auto ptr = UObject::FindClass("Class TgClient.UIComponent_QuestStreakProgress");
+		return ptr;
+	}
+
+};
+
+
 // Class TgClient.UIComponent_RadialEquipMenu
 // 0x0070 (0x0194 - 0x0124)
 class UUIComponent_RadialEquipMenu : public UUIComponent_Display
@@ -9635,6 +9707,21 @@ public:
 	static UClass* StaticClass()
 	{
 		static auto ptr = UObject::FindClass("Class TgClient.UIComponent_VanguardShieldBar");
+		return ptr;
+	}
+
+};
+
+
+// Class TgClient.UIComponent_Simple
+// 0x0000 (0x0124 - 0x0124)
+class UUIComponent_Simple : public UUIComponent_Display
+{
+public:
+
+	static UClass* StaticClass()
+	{
+		static auto ptr = UObject::FindClass("Class TgClient.UIComponent_Simple");
 		return ptr;
 	}
 
@@ -10708,6 +10795,26 @@ public:
 };
 
 
+// Class TgClient.UIComponent_StreakRewardTooltip
+// 0x0028 (0x0178 - 0x0150)
+class UUIComponent_StreakRewardTooltip : public UUIComponent_Tooltip
+{
+public:
+	class UGFxObject*                                  m_mcItemName;                                             // 0x0150(0x0008)
+	class UGFxObject*                                  m_mcRarityText;                                           // 0x0158(0x0008)
+	class UGFxObject*                                  m_mcRewardItem;                                           // 0x0160(0x0008)
+	class UGFxObject*                                  m_mcChestIcon;                                            // 0x0168(0x0008)
+	class UUIComponent_List*                           m_Currencies;                                             // 0x0170(0x0008)
+
+	static UClass* StaticClass()
+	{
+		static auto ptr = UObject::FindClass("Class TgClient.UIComponent_StreakRewardTooltip");
+		return ptr;
+	}
+
+};
+
+
 // Class TgClient.UIComponent_TorvaldShieldText
 // 0x0024 (0x0148 - 0x0124)
 class UUIComponent_TorvaldShieldText : public UUIComponent_Display
@@ -11456,7 +11563,7 @@ public:
 
 
 // Class TgClient.UIScene_UIEndOfMatchLobby
-// 0x0064 (0x0230 - 0x01CC)
+// 0x006C (0x0238 - 0x01CC)
 class UUIScene_UIEndOfMatchLobby : public UUIScene
 {
 public:
@@ -11468,12 +11575,13 @@ public:
 	class UUIComponent_EndOfMatchLobbyChallenges*      m_pChallenges;                                            // 0x01F4(0x0008)
 	class UUIComponent_EndOfMatchLobbyTrials*          m_pTrials;                                                // 0x01FC(0x0008)
 	class UUIComponent_EndOfMatchLobbyQuests*          m_pQuests;                                                // 0x0204(0x0008)
-	class UUIComponent_EndOfMatchLobbyBestClass*       m_pBestClass;                                             // 0x020C(0x0008)
-	class UUIComponent_EndOfMatchLobbyScoreboard*      m_pScoreboard;                                            // 0x0214(0x0008)
-	class UInputAction*                                m_pPlayAgainAction;                                       // 0x021C(0x0008)
-	float                                              m_fRejoinQueueTimer;                                      // 0x0224(0x0004)
-	int                                                m_nRejoinQueueTimerCBHandle;                              // 0x0228(0x0004)
-	float                                              m_fRejoinQueueTime;                                       // 0x022C(0x0004) (Config)
+	class UUIComponent_EndOfMatchLobbyQuestsOld*       m_pQuestsOld;                                             // 0x020C(0x0008)
+	class UUIComponent_EndOfMatchLobbyBestClass*       m_pBestClass;                                             // 0x0214(0x0008)
+	class UUIComponent_EndOfMatchLobbyScoreboard*      m_pScoreboard;                                            // 0x021C(0x0008)
+	class UInputAction*                                m_pPlayAgainAction;                                       // 0x0224(0x0008)
+	float                                              m_fRejoinQueueTimer;                                      // 0x022C(0x0004)
+	int                                                m_nRejoinQueueTimerCBHandle;                              // 0x0230(0x0004)
+	float                                              m_fRejoinQueueTime;                                       // 0x0234(0x0004) (Config)
 
 	static UClass* StaticClass()
 	{
@@ -11909,6 +12017,29 @@ public:
 };
 
 
+// Class TgClient.UIScene_UIHudCaspian
+// 0x0044 (0x0210 - 0x01CC)
+class UUIScene_UIHudCaspian : public UUIScene
+{
+public:
+	unsigned long                                      m_bViewTargetCaspian : 1;                                 // 0x01CC(0x0004)
+	unsigned long                                      m_bHudVisible : 1;                                        // 0x01CC(0x0004)
+	unsigned long                                      m_bIsUltActive : 1;                                       // 0x01CC(0x0004)
+	float                                              m_fDelayFadeCounter;                                      // 0x01D0(0x0004)
+	class ATgPawn_Caspian*                             m_CachedCaspian;                                          // 0x01D4(0x0008)
+	int                                                m_nAmmoRemaining;                                         // 0x01DC(0x0004)
+	class UGFxObject*                                  m_mcGroupSwords;                                          // 0x01E0(0x0008)
+	class UGFxObject*                                  m_Swords[0x5];                                            // 0x01E8(0x0008)
+
+	static UClass* StaticClass()
+	{
+		static auto ptr = UObject::FindClass("Class TgClient.UIScene_UIHudCaspian");
+		return ptr;
+	}
+
+};
+
+
 // Class TgClient.UIScene_UIHudCenter
 // 0x0008 (0x01D4 - 0x01CC)
 class UUIScene_UIHudCenter : public UUIScene
@@ -12205,7 +12336,7 @@ public:
 
 
 // Class TgClient.UIScene_UIHudSkills
-// 0x0128 (0x02F4 - 0x01CC)
+// 0x0130 (0x02FC - 0x01CC)
 class UUIScene_UIHudSkills : public UUIScene
 {
 public:
@@ -12225,11 +12356,12 @@ public:
 	class UUIComponent_RaumSoulCharges*                m_RaumShards;                                             // 0x02B8(0x0008)
 	class UUIComponent_CaspianPassiveStacks*           m_CaspianInhandStacks;                                    // 0x02C0(0x0008)
 	class UUIComponent_CaspianPassiveStacks*           m_CaspianAltfireStacks;                                   // 0x02C8(0x0008)
-	TEnumAsByte<EHudSkillsMarkTypes>                   m_HudSkillsMarkTypesOrder[0x4];                           // 0x02D0(0x0001)
-	class UGFxObject*                                  m_HudSkillsMarksMC[0x3];                                  // 0x02D4(0x0008)
-	int                                                m_nSpectatorMode;                                         // 0x02EC(0x0004)
-	unsigned long                                      m_bUltimateReady : 1;                                     // 0x02F0(0x0004)
-	unsigned long                                      m_bThirdPersonMode : 1;                                   // 0x02F0(0x0004)
+	class UUIComponent_CaspianQAbilityStacks*          m_CaspianQStacks;                                         // 0x02D0(0x0008)
+	TEnumAsByte<EHudSkillsMarkTypes>                   m_HudSkillsMarkTypesOrder[0x4];                           // 0x02D8(0x0001)
+	class UGFxObject*                                  m_HudSkillsMarksMC[0x3];                                  // 0x02DC(0x0008)
+	int                                                m_nSpectatorMode;                                         // 0x02F4(0x0004)
+	unsigned long                                      m_bUltimateReady : 1;                                     // 0x02F8(0x0004)
+	unsigned long                                      m_bThirdPersonMode : 1;                                   // 0x02F8(0x0004)
 
 	static UClass* StaticClass()
 	{
@@ -12241,7 +12373,7 @@ public:
 
 
 // Class TgClient.UIScene_UIHudSkills3P
-// 0x00EC (0x02B8 - 0x01CC)
+// 0x00F4 (0x02C0 - 0x01CC)
 class UUIScene_UIHudSkills3P : public UUIScene
 {
 public:
@@ -12256,14 +12388,15 @@ public:
 	class UUIComponent_RaumSoulCharges*                m_RaumShards;                                             // 0x026C(0x0008)
 	class UUIComponent_CaspianPassiveStacks*           m_CaspianInhandStacks;                                    // 0x0274(0x0008)
 	class UUIComponent_CaspianPassiveStacks*           m_CaspianAltfireStacks;                                   // 0x027C(0x0008)
-	TEnumAsByte<EHudSkills3PMarkTypes>                 m_HudSkills3PMarkTypesOrder[0x4];                         // 0x0284(0x0001)
-	class UGFxObject*                                  m_HudSkills3PMarksMC[0x3];                                // 0x0288(0x0008)
-	class UGFxObject*                                  m_mcCredits;                                              // 0x02A0(0x0008)
-	class UGFxObject*                                  m_mcGroup;                                                // 0x02A8(0x0008)
-	unsigned long                                      m_bUseAlternates : 1;                                     // 0x02B0(0x0004)
-	unsigned long                                      m_bUltimateReady : 1;                                     // 0x02B0(0x0004)
-	unsigned long                                      m_bThirdPersonMode : 1;                                   // 0x02B0(0x0004)
-	int                                                m_nCredits;                                               // 0x02B4(0x0004)
+	class UUIComponent_CaspianQAbilityStacks*          m_CaspianQStacks;                                         // 0x0284(0x0008)
+	TEnumAsByte<EHudSkills3PMarkTypes>                 m_HudSkills3PMarkTypesOrder[0x4];                         // 0x028C(0x0001)
+	class UGFxObject*                                  m_HudSkills3PMarksMC[0x3];                                // 0x0290(0x0008)
+	class UGFxObject*                                  m_mcCredits;                                              // 0x02A8(0x0008)
+	class UGFxObject*                                  m_mcGroup;                                                // 0x02B0(0x0008)
+	unsigned long                                      m_bUseAlternates : 1;                                     // 0x02B8(0x0004)
+	unsigned long                                      m_bUltimateReady : 1;                                     // 0x02B8(0x0004)
+	unsigned long                                      m_bThirdPersonMode : 1;                                   // 0x02B8(0x0004)
+	int                                                m_nCredits;                                               // 0x02BC(0x0004)
 
 	static UClass* StaticClass()
 	{
@@ -12998,6 +13131,71 @@ public:
 };
 
 
+// Class TgClient.UIScene_UIQuestsPopup
+// 0x0174 (0x0340 - 0x01CC)
+class UUIScene_UIQuestsPopup : public UUIScene
+{
+public:
+	class UGFxObject*                                  m_mcDailyQuests;                                          // 0x01CC(0x0008)
+	class UGFxObject*                                  m_mcActiveDailyQuests;                                    // 0x01D4(0x0008)
+	class UInputGroup*                                 m_DailyQuestsGroup;                                       // 0x01DC(0x0008)
+	class UUIComponent_List*                           m_DailyQuestList;                                         // 0x01E4(0x0008)
+	class UGFxObject*                                  m_mcDailyLoginsResetTF;                                   // 0x01EC(0x0008)
+	class UGFxObject*                                  m_QuestsTitleTF;                                          // 0x01F4(0x0008)
+	class UGFxObject*                                  m_RerollTF;                                               // 0x01FC(0x0008)
+	class UUIInteractable_Button*                      m_CloseButton;                                            // 0x0204(0x0008)
+	TArray<struct FEmptyPanel>                         m_EmptyPanels;                                            // 0x020C(0x0010) (NeedCtorLink)
+	class UUIComponent_QuestRow*                       m_ChampionQuest;                                          // 0x021C(0x0008)
+	class UUIData_Quest*                               m_DailyLoginsQuest;                                       // 0x0224(0x0008)
+	class UGFxObject*                                  m_mcSpecialQuests;                                        // 0x022C(0x0008)
+	class UGFxObject*                                  m_mcActiveSpecialQuests;                                  // 0x0234(0x0008)
+	class UInputGroup*                                 m_SpecialQuestsGroup;                                     // 0x023C(0x0008)
+	class UUIComponent_List*                           m_SpecialQuestList;                                       // 0x0244(0x0008)
+	class UUIInteractable_Button*                      m_SpecialQuestsArrowNext;                                 // 0x024C(0x0008)
+	class UUIInteractable_Button*                      m_SpecialQuestsArrowPrev;                                 // 0x0254(0x0008)
+	class UGFxObject*                                  m_mcLoreQuests;                                           // 0x025C(0x0008)
+	class UInputGroup*                                 m_LoreQuestsGroup;                                        // 0x0264(0x0008)
+	class UUIComponent_QuestRow*                       m_LoreQuest;                                              // 0x026C(0x0008)
+	class UGFxObject*                                  m_mcLoreQuestTFNext;                                      // 0x0274(0x0008)
+	class UGFxObject*                                  m_mcLoreQuestProgress;                                    // 0x027C(0x0008)
+	class UGFxObject*                                  m_mcLoreQuestProgressChest;                               // 0x0284(0x0008)
+	class UGFxObject*                                  m_mcLoreQuestProgressTF0;                                 // 0x028C(0x0008)
+	class UGFxObject*                                  m_mcLoreQuestProgressTF1;                                 // 0x0294(0x0008)
+	class UGFxObject*                                  m_mcLoreQuestProgressTF2;                                 // 0x029C(0x0008)
+	class UGFxObject*                                  m_mcLoreQuestProgressTF3;                                 // 0x02A4(0x0008)
+	class UUIComponent_ProgressBarHorizontal*          m_LoreQuestProgressBar;                                   // 0x02AC(0x0008)
+	int                                                m_nLoreSeekerGoalAck;                                     // 0x02B4(0x0004)
+	int                                                m_nLoreSeekerGoalCurrent;                                 // 0x02B8(0x0004)
+	class UUIComponent_TwitchPrime*                    m_pPrimeQuest;                                            // 0x02BC(0x0008)
+	class UInputGroup*                                 m_PrimeQuestGroup;                                        // 0x02C4(0x0008)
+	class UGFxObject*                                  m_mcDailyLogins;                                          // 0x02CC(0x0008)
+	class UUIComponent_ProgressBarHorizontal*          m_DailyLoginsProgress;                                    // 0x02D4(0x0008)
+	class UGFxObject*                                  m_mcDailyLoginsTF0;                                       // 0x02DC(0x0008)
+	class UGFxObject*                                  m_mcDailyLoginsTF1;                                       // 0x02E4(0x0008)
+	TEnumAsByte<EQuestPanel>                           m_eCurrentPanel;                                          // 0x02EC(0x0001)
+	unsigned char                                      UnknownData00[0x3];                                       // 0x02ED(0x0003) MISSED OFFSET
+	class UUIComponent_QuestStreakProgress*            m_QuestStreak;                                            // 0x02F0(0x0008)
+	int                                                m_nNumDailyQuests;                                        // 0x02F8(0x0004)
+	int                                                m_nNumSpecialQuests;                                      // 0x02FC(0x0004)
+	int                                                m_nQuestsUpdatedHandle;                                   // 0x0300(0x0004)
+	int                                                m_nActivitiesUpdatedHandle;                               // 0x0304(0x0004)
+	class UInputAction*                                m_DiscardAction;                                          // 0x0308(0x0008)
+	class UInputAction*                                m_DiscardConfirmAction;                                   // 0x0310(0x0008)
+	class UInputAction*                                m_ClaimRewardAction;                                      // 0x0318(0x0008)
+	class UInputAction*                                m_LinkAccountAction;                                      // 0x0320(0x0008)
+	class UInputAction*                                m_BackAction;                                             // 0x0328(0x0008)
+	class UInputAction*                                m_ToggleStreakInput;                                      // 0x0330(0x0008)
+	class UUIData_Quest*                               m_pSelectedQuest;                                         // 0x0338(0x0008)
+
+	static UClass* StaticClass()
+	{
+		static auto ptr = UObject::FindClass("Class TgClient.UIScene_UIQuestsPopup");
+		return ptr;
+	}
+
+};
+
+
 // Class TgClient.UIScene_UIRadialMenu
 // 0x00B0 (0x027C - 0x01CC)
 class UUIScene_UIRadialMenu : public UUIScene
@@ -13243,7 +13441,7 @@ public:
 	void OnVideoError(class APComVideoPlayer* VideoPlayer, TEnumAsByte<EPComVideoPlayerError> ErrorCode);
 	void DestroyVideoPlayer();
 	void SpawnVideoPlayer(class AActor* SpawningActor);
-	void AbortAd();
+	void STATIC_AbortAd();
 	void STATIC_CompleteAd();
 };
 
@@ -14603,6 +14801,24 @@ public:
 };
 
 
+// Class TgClient.UIComponent_DiscreteProgressBarHorizontal
+// 0x0010 (0x0134 - 0x0124)
+class UUIComponent_DiscreteProgressBarHorizontal : public UUIComponent_Display
+{
+public:
+	int                                                m_nNumFrames;                                             // 0x0124(0x0004)
+	unsigned long                                      m_bHideOnFrameZero : 1;                                   // 0x0128(0x0004)
+	class UGFxObject*                                  m_mcFill;                                                 // 0x012C(0x0008)
+
+	static UClass* StaticClass()
+	{
+		static auto ptr = UObject::FindClass("Class TgClient.UIComponent_DiscreteProgressBarHorizontal");
+		return ptr;
+	}
+
+};
+
+
 // Class TgClient.UIComponent_Dropdown
 // 0x0080 (0x01A4 - 0x0124)
 class UUIComponent_Dropdown : public UUIComponent_Display
@@ -15268,7 +15484,7 @@ public:
 
 
 // Class TgClient.UIComponent_NotificationEntry
-// 0x0078 (0x019C - 0x0124)
+// 0x0080 (0x01A4 - 0x0124)
 class UUIComponent_NotificationEntry : public UUIComponent_Display
 {
 public:
@@ -15282,11 +15498,12 @@ public:
 	class UGFxObject*                                  m_mcDefaultIcon;                                          // 0x015C(0x0008)
 	class UGFxObject*                                  m_mcLoadingFrame;                                         // 0x0164(0x0008)
 	class UGFxObject*                                  m_mcDeathCard;                                            // 0x016C(0x0008)
-	class UUIComponent_Avatar*                         m_pAvatar;                                                // 0x0174(0x0008)
-	class UUIComponent_CTA*                            m_pCTA;                                                   // 0x017C(0x0008)
-	class UUIInteractable_Button*                      m_pGoToButton;                                            // 0x0184(0x0008)
-	class UUIComponent_Interactable*                   m_pClearButton;                                           // 0x018C(0x0008)
-	class UUIComponent_Interactable*                   m_pFrameButton;                                           // 0x0194(0x0008)
+	class UGFxObject*                                  m_mcOrigin;                                               // 0x0174(0x0008)
+	class UUIComponent_Avatar*                         m_pAvatar;                                                // 0x017C(0x0008)
+	class UUIComponent_CTA*                            m_pCTA;                                                   // 0x0184(0x0008)
+	class UUIInteractable_Button*                      m_pGoToButton;                                            // 0x018C(0x0008)
+	class UUIComponent_Interactable*                   m_pClearButton;                                           // 0x0194(0x0008)
+	class UUIComponent_Interactable*                   m_pFrameButton;                                           // 0x019C(0x0008)
 
 	static UClass* StaticClass()
 	{
@@ -15465,7 +15682,7 @@ public:
 
 
 // Class TgClient.UIComponent_ProgressBarHorizontal
-// 0x0030 (0x0154 - 0x0124)
+// 0x0034 (0x0158 - 0x0124)
 class UUIComponent_ProgressBarHorizontal : public UUIComponent_Display
 {
 public:
@@ -15480,6 +15697,7 @@ public:
 	float                                              m_fCurrentPercent;                                        // 0x0148(0x0004)
 	float                                              m_fTargetPercent;                                         // 0x014C(0x0004)
 	float                                              m_fDeltaPercent;                                          // 0x0150(0x0004)
+	int                                                m_nOnTickCallbackHandle;                                  // 0x0154(0x0004)
 
 	static UClass* StaticClass()
 	{
@@ -15493,7 +15711,7 @@ public:
 
 
 // Class TgClient.UIComponent_ProgressBarVertical
-// 0x0000 (0x0154 - 0x0154)
+// 0x0000 (0x0158 - 0x0158)
 class UUIComponent_ProgressBarVertical : public UUIComponent_ProgressBarHorizontal
 {
 public:
@@ -15508,12 +15726,12 @@ public:
 
 
 // Class TgClient.UIComponent_ShadowUltBar
-// 0x000C (0x0160 - 0x0154)
+// 0x000C (0x0164 - 0x0158)
 class UUIComponent_ShadowUltBar : public UUIComponent_ProgressBarHorizontal
 {
 public:
-	class UGFxObject*                                  m_mcOverfill;                                             // 0x0154(0x0008)
-	unsigned long                                      m_bOverfillVisible : 1;                                   // 0x015C(0x0004)
+	class UGFxObject*                                  m_mcOverfill;                                             // 0x0158(0x0008)
+	unsigned long                                      m_bOverfillVisible : 1;                                   // 0x0160(0x0004)
 
 	static UClass* StaticClass()
 	{
@@ -15667,7 +15885,7 @@ public:
 
 
 // Class TgClient.UIComponent_Quest
-// 0x011C (0x0240 - 0x0124)
+// 0x0124 (0x0248 - 0x0124)
 class UUIComponent_Quest : public UUIComponent_Display
 {
 public:
@@ -15702,10 +15920,73 @@ public:
 	float                                              m_fSequenceOrigX;                                         // 0x0234(0x0004)
 	float                                              m_fSequenceOrigY;                                         // 0x0238(0x0004)
 	float                                              m_fSequenceOrigWidth;                                     // 0x023C(0x0004)
+	int                                                m_nProgressCurrentFrame;                                  // 0x0240(0x0004)
+	int                                                m_nProgressTargetFrame;                                   // 0x0244(0x0004)
 
 	static UClass* StaticClass()
 	{
 		static auto ptr = UObject::FindClass("Class TgClient.UIComponent_Quest");
+		return ptr;
+	}
+
+};
+
+
+// Class TgClient.UIComponent_QuestRewards
+// 0x0048 (0x016C - 0x0124)
+class UUIComponent_QuestRewards : public UUIComponent_Display
+{
+public:
+	class UGFxObject*                                  m_mcQuestChestIcon;                                       // 0x0124(0x0008)
+	class UGFxObject*                                  m_mcRewardItem;                                           // 0x012C(0x0008)
+	class UGFxObject*                                  m_mcRewardItemRarity;                                     // 0x0134(0x0008)
+	class UGFxObject*                                  m_mcRewardItemIcon;                                       // 0x013C(0x0008)
+	class UGFxObject*                                  m_mcRewardItemImageStack;                                 // 0x0144(0x0008)
+	class UGFxObject*                                  m_mcRewardItemTexture;                                    // 0x014C(0x0008)
+	class UGFxObject*                                  m_mcRewardItemName;                                       // 0x0154(0x0008)
+	class UGFxObject*                                  m_mcRewardSubtitle;                                       // 0x015C(0x0008)
+	class UUIComponent_List*                           m_pCurrencyRewards;                                       // 0x0164(0x0008)
+
+	static UClass* StaticClass()
+	{
+		static auto ptr = UObject::FindClass("Class TgClient.UIComponent_QuestRewards");
+		return ptr;
+	}
+
+};
+
+
+// Class TgClient.UIComponent_QuestRow
+// 0x0090 (0x01B4 - 0x0124)
+class UUIComponent_QuestRow : public UUIComponent_Display
+{
+public:
+	class UUIComponent_Interactable*                   m_mcInteractableArea;                                     // 0x0124(0x0008)
+	class UUIComponent_Interactable*                   m_pQuestDiscardButton;                                    // 0x012C(0x0008)
+	class UGFxObject*                                  m_mcDiscardToolTip;                                       // 0x0134(0x0008)
+	class UGFxObject*                                  m_mcDiscardStateBG;                                       // 0x013C(0x0008)
+	class UUIComponent_ProgressBarHorizontal*          m_pQuestProgress;                                         // 0x0144(0x0008)
+	class UGFxObject*                                  m_mcQuestProgressBar;                                     // 0x014C(0x0008)
+	class UGFxObject*                                  m_mcQuestProgressMask;                                    // 0x0154(0x0008)
+	class UGFxObject*                                  m_mcQuestTitle;                                           // 0x015C(0x0008)
+	class UGFxObject*                                  m_mcSpecialFlag;                                          // 0x0164(0x0008)
+	class UGFxObject*                                  m_mcQuestType;                                            // 0x016C(0x0008)
+	class UGFxObject*                                  m_mcRolloverGlow;                                         // 0x0174(0x0008)
+	class UGFxObject*                                  m_mcNew;                                                  // 0x017C(0x0008)
+	class UGFxObject*                                  m_mcCompleted;                                            // 0x0184(0x0008)
+	class UGFxObject*                                  m_mcTimer;                                                // 0x018C(0x0008)
+	class UGFxObject*                                  m_mcQuestProgressText;                                    // 0x0194(0x0008)
+	class UGFxObject*                                  m_mcQuestDescription;                                     // 0x019C(0x0008)
+	class UUIComponent_QuestRewards*                   m_pQuestRewards;                                          // 0x01A4(0x0008)
+	unsigned long                                      m_bPendingSetSeenCurrentCount : 1;                        // 0x01AC(0x0004)
+	unsigned long                                      m_bEnableProgressAnimation : 1;                           // 0x01AC(0x0004)
+	unsigned long                                      m_bEnableDiscardButton : 1;                               // 0x01AC(0x0004)
+	unsigned long                                      m_bDiscardPendingConfirm : 1;                             // 0x01AC(0x0004)
+	int                                                m_nProgressMaxCount;                                      // 0x01B0(0x0004)
+
+	static UClass* StaticClass()
+	{
+		static auto ptr = UObject::FindClass("Class TgClient.UIComponent_QuestRow");
 		return ptr;
 	}
 
@@ -17686,6 +17967,21 @@ public:
 	static UClass* StaticClass()
 	{
 		static auto ptr = UObject::FindClass("Class TgClient.UIHudCards");
+		return ptr;
+	}
+
+};
+
+
+// Class TgClient.UIHudCaspian
+// 0x0000 (0x01EC - 0x01EC)
+class UUIHudCaspian : public UTgGfxScene
+{
+public:
+
+	static UClass* StaticClass()
+	{
+		static auto ptr = UObject::FindClass("Class TgClient.UIHudCaspian");
 		return ptr;
 	}
 
@@ -19691,6 +19987,21 @@ public:
 };
 
 
+// Class TgClient.UIQuestsPopup
+// 0x0000 (0x01EC - 0x01EC)
+class UUIQuestsPopup : public UTgGfxScene
+{
+public:
+
+	static UClass* StaticClass()
+	{
+		static auto ptr = UObject::FindClass("Class TgClient.UIQuestsPopup");
+		return ptr;
+	}
+
+};
+
+
 // Class TgClient.UIRadialMenu
 // 0x0000 (0x01EC - 0x01EC)
 class UUIRadialMenu : public UTgGfxScene
@@ -20199,13 +20510,13 @@ public:
 
 
 // Class TgClient.UIComponent_ProgressBarHorizontal_Flagball
-// 0x0014 (0x0168 - 0x0154)
+// 0x0014 (0x016C - 0x0158)
 class UUIComponent_ProgressBarHorizontal_Flagball : public UUIComponent_ProgressBarHorizontal
 {
 public:
-	class UGFxObject*                                  m_mcTipTF;                                                // 0x0154(0x0008)
-	class UGFxObject*                                  m_mcIcon;                                                 // 0x015C(0x0008)
-	unsigned long                                      m_bChangeRootFrameWithPercent : 1;                        // 0x0164(0x0004)
+	class UGFxObject*                                  m_mcTipTF;                                                // 0x0158(0x0008)
+	class UGFxObject*                                  m_mcIcon;                                                 // 0x0160(0x0008)
+	unsigned long                                      m_bChangeRootFrameWithPercent : 1;                        // 0x0168(0x0004)
 
 	static UClass* StaticClass()
 	{

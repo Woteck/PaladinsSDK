@@ -1,4 +1,4 @@
-// Paladins (3.05) SDK
+// Paladins (5.5) SDK
 
 #ifdef _MSC_VER
 	#pragma pack(push, 0x8)
@@ -13,7 +13,7 @@ namespace SDK
 //---------------------------------------------------------------------------
 
 // Function BattleGame.BattlePlayerController.BattlePlayerControllerFunction
-// (Latent, PreOperator, Net, Operator, Static, HasOptionalParms, Const)
+// (Latent, Singular, Net, Exec, Operator, Static, HasOptionalParms, Const)
 
 void ABattlePlayerController::STATIC_BattlePlayerControllerFunction()
 {

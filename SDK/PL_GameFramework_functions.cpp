@@ -1,4 +1,4 @@
-// Paladins (3.05) SDK
+// Paladins (5.5) SDK
 
 #ifdef _MSC_VER
 	#pragma pack(push, 0x8)
@@ -13,7 +13,7 @@ namespace SDK
 //---------------------------------------------------------------------------
 
 // Function GameFramework.FrameworkGame.TgGetSpectators
-// (Defined, Iterator, PreOperator, Singular, NetReliable, Exec, Native, HasOptionalParms)
+// (PreOperator, Singular, Net, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // TArray<struct FString>         List                           (Parm, OutParm, NeedCtorLink)
 
@@ -36,7 +36,7 @@ void AFrameworkGame::TgGetSpectators(TArray<struct FString>* List)
 
 
 // Function GameFramework.FrameworkGame.TgChangeTime
-// (Iterator, PreOperator, Singular, NetReliable, Exec, Native, HasOptionalParms)
+// (Defined, Iterator, Latent, Singular, Net, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // int                            nSeconds                       (Parm)
 
@@ -57,7 +57,7 @@ void AFrameworkGame::TgChangeTime(int nSeconds)
 
 
 // Function GameFramework.FrameworkGame.TgChangeScore
-// (Final, Defined, PreOperator, Singular, NetReliable, Exec, Native, HasOptionalParms)
+// (Final, Iterator, Latent, Singular, Net, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // int                            nTeam                          (Parm)
 // int                            nCount                         (OptionalParm, Parm)
@@ -80,7 +80,7 @@ void AFrameworkGame::TgChangeScore(int nTeam, int nCount)
 
 
 // Function GameFramework.FrameworkGame.TgTimer
-// (Latent, PreOperator, Singular, NetReliable, Exec, Native, HasOptionalParms)
+// (Defined, PreOperator, Singular, Net, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // struct FString                 sTimerCommand                  (Parm, OutParm, NeedCtorLink)
 
@@ -103,7 +103,7 @@ void AFrameworkGame::TgTimer(struct FString* sTimerCommand)
 
 
 // Function GameFramework.FrameworkGame.TgEndGame
-// (Final, Iterator, PreOperator, Singular, NetReliable, Exec, Native, HasOptionalParms)
+// (Final, Defined, Iterator, Latent, Singular, Net, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // struct FString                 Reason                         (Parm, OutParm, NeedCtorLink)
 
@@ -126,7 +126,7 @@ void AFrameworkGame::TgEndGame(struct FString* Reason)
 
 
 // Function GameFramework.FrameworkGame.TgStartGame
-// (Final, Defined, Iterator, PreOperator, Singular, NetReliable, Exec, Native, HasOptionalParms)
+// (Final, PreOperator, Singular, Net, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // struct FString                 Reason                         (Parm, OutParm, NeedCtorLink)
 
@@ -149,7 +149,7 @@ void AFrameworkGame::TgStartGame(struct FString* Reason)
 
 
 // Function GameFramework.GameAIController.GetActionString
-// (Final, Iterator, NetReliable, Exec, Native, HasOptionalParms)
+// (Final, Defined, Iterator, Latent, PreOperator, Singular, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // struct FString                 ReturnValue                    (Parm, OutParm, ReturnParm, NeedCtorLink)
 
@@ -171,7 +171,7 @@ struct FString AGameAIController::GetActionString()
 
 
 // Function GameFramework.GameAIController.SetDesiredRotation
-// (Latent, PreOperator, Net, Native, HasOptionalParms)
+// (Final, Iterator, Singular, Net, NetReliable, Simulated, Native, HasOptionalParms)
 // Parameters:
 // struct FRotator                TargetDesiredRotation          (Parm)
 // bool                           InLockDesiredRotation          (OptionalParm, Parm)
@@ -198,7 +198,7 @@ void AGameAIController::SetDesiredRotation(const struct FRotator& TargetDesiredR
 
 
 // Function GameFramework.GameAIController.AILog_Internal
-// (Final, Iterator, PreOperator, Singular, Net, Exec, Native, HasOptionalParms)
+// (Final, Defined, Iterator, Latent, Singular, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // struct FString                 LogText                        (Parm, CoerceParm, NeedCtorLink)
 // struct FName                   LogCategory                    (OptionalParm, Parm)
@@ -223,7 +223,7 @@ void AGameAIController::AILog_Internal(const struct FString& LogText, const stru
 
 
 // Function GameFramework.GameAIController.RecordDemoAILog
-// (Final, Defined, PreOperator, Net, NetReliable, Exec, Event, Operator, HasOptionalParms)
+// (Singular, Net, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FString                 LogText                        (Parm, CoerceParm, NeedCtorLink)
 
@@ -235,6 +235,7 @@ void AGameAIController::RecordDemoAILog(const struct FString& LogText)
 	params.LogText = LogText;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -260,7 +261,7 @@ void AGameAIController::Destroyed()
 
 
 // Function GameFramework.GameAIController.ReachedIntermediateMoveGoal
-// (Final, Defined, Iterator, Net, NetReliable, Exec, Event, Operator, HasOptionalParms)
+// (Iterator, PreOperator, Net, Native, Event, Operator, HasOptionalParms)
 
 void AGameAIController::ReachedIntermediateMoveGoal()
 {
@@ -269,6 +270,7 @@ void AGameAIController::ReachedIntermediateMoveGoal()
 	AGameAIController_ReachedIntermediateMoveGoal_Params params;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -277,7 +279,7 @@ void AGameAIController::ReachedIntermediateMoveGoal()
 
 
 // Function GameFramework.GameAIController.ReachedMoveGoal
-// (Latent, Net, NetReliable, Exec, Event, Operator, HasOptionalParms)
+// (Final, Iterator, PreOperator, Net, Native, Event, Operator, HasOptionalParms)
 
 void AGameAIController::ReachedMoveGoal()
 {
@@ -286,6 +288,7 @@ void AGameAIController::ReachedMoveGoal()
 	AGameAIController_ReachedMoveGoal_Params params;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -294,7 +297,7 @@ void AGameAIController::ReachedMoveGoal()
 
 
 // Function GameFramework.GameAIController.GetDestinationOffset
-// (Defined, Iterator, Latent, PreOperator, Singular, NetReliable, Event, Operator, HasOptionalParms)
+// (Final, Defined, Latent, Net, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // float                          ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -315,7 +318,7 @@ float AGameAIController::GetDestinationOffset()
 
 
 // Function GameFramework.GameAIController.GetAICommandInStack
-// (Final, Iterator, PreOperator, Singular, NetReliable, Event, Operator, HasOptionalParms)
+// (Defined, Net, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // class UClass*                  InClass                        (Const, Parm)
 // class UGameAICommand*          ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -338,7 +341,7 @@ class UGameAICommand* AGameAIController::GetAICommandInStack(class UClass* InCla
 
 
 // Function GameFramework.GameAIController.FindCommandOfClass
-// (Final, Latent, PreOperator, Net, Event, Operator, HasOptionalParms)
+// (Defined, Iterator, Singular, Net, NetReliable, Simulated, Event, Operator, HasOptionalParms)
 // Parameters:
 // class UClass*                  SearchClass                    (Parm)
 // class UGameAICommand*          ReturnValue                    (Parm, OutParm, ReturnParm, CoerceParm)
@@ -361,7 +364,7 @@ class UGameAICommand* AGameAIController::FindCommandOfClass(class UClass* Search
 
 
 // Function GameFramework.GameAIController.DumpCommandStack
-// (Defined, Iterator, PreOperator, Event, Operator, HasOptionalParms)
+// (Final, Defined, Singular, NetReliable, Simulated, Event, Operator, HasOptionalParms)
 
 void AGameAIController::DumpCommandStack()
 {
@@ -378,7 +381,7 @@ void AGameAIController::DumpCommandStack()
 
 
 // Function GameFramework.GameAIController.CheckCommandCount
-// (Final, Iterator, PreOperator, Net, Simulated, Exec, Native, Operator, HasOptionalParms)
+// (Defined, Singular, Net, NetReliable, Event, Operator, HasOptionalParms)
 
 void AGameAIController::CheckCommandCount()
 {
@@ -387,7 +390,6 @@ void AGameAIController::CheckCommandCount()
 	AGameAIController_CheckCommandCount_Params params;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -396,7 +398,7 @@ void AGameAIController::CheckCommandCount()
 
 
 // Function GameFramework.GameAIController.GetActiveCommand
-// (Defined, PreOperator, Singular, NetReliable, Event, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, Latent, PreOperator, Singular, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // class UGameAICommand*          ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -417,7 +419,7 @@ class UGameAICommand* AGameAIController::GetActiveCommand()
 
 
 // Function GameFramework.GameAIController.AbortCommand
-// (Final, Latent, PreOperator, NetReliable, Simulated, Native, Operator, HasOptionalParms)
+// (Defined, Iterator, Singular, Simulated, Exec, Native, Operator, HasOptionalParms)
 // Parameters:
 // class UGameAICommand*          AbortCmd                       (Parm)
 // class UClass*                  AbortClass                     (OptionalParm, Parm)
@@ -443,7 +445,7 @@ bool AGameAIController::AbortCommand(class UGameAICommand* AbortCmd, class UClas
 
 
 // Function GameFramework.GameAIController.PopCommand
-// (NetReliable, Exec, Event, Operator, HasOptionalParms)
+// (Final, Iterator, Latent, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // class UGameAICommand*          ToBePoppedCommand              (Parm)
 
@@ -455,6 +457,7 @@ void AGameAIController::PopCommand(class UGameAICommand* ToBePoppedCommand)
 	params.ToBePoppedCommand = ToBePoppedCommand;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -463,7 +466,7 @@ void AGameAIController::PopCommand(class UGameAICommand* ToBePoppedCommand)
 
 
 // Function GameFramework.GameAIController.PushCommand
-// (Final, Latent, Singular, NetReliable, Exec, Event, Operator, HasOptionalParms)
+// (Defined, Iterator, PreOperator, Singular, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // class UGameAICommand*          NewCommand                     (Parm)
 
@@ -475,6 +478,7 @@ void AGameAIController::PushCommand(class UGameAICommand* NewCommand)
 	params.NewCommand = NewCommand;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -483,7 +487,7 @@ void AGameAIController::PushCommand(class UGameAICommand* NewCommand)
 
 
 // Function GameFramework.GameAIController.AllCommands
-// (Latent, PreOperator, Net, NetReliable, Simulated, Native, Operator, HasOptionalParms)
+// (Final, Iterator, Singular, Net, Simulated, Exec, Native, Operator, HasOptionalParms)
 // Parameters:
 // class UClass*                  BaseClass                      (Parm)
 // class UGameAICommand*          Cmd                            (Parm, OutParm)
@@ -508,7 +512,7 @@ void AGameAIController::AllCommands(class UClass* BaseClass, class UGameAIComman
 
 
 // Function GameFramework.GameAICommand.HandlePathObstruction
-// (PreOperator, Simulated, Native, HasOptionalParms)
+// (Defined, Latent, Net, Simulated, Native, HasOptionalParms)
 // Parameters:
 // class AActor*                  BlockedBy                      (Parm)
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -532,7 +536,7 @@ bool UGameAICommand::HandlePathObstruction(class AActor* BlockedBy)
 
 
 // Function GameFramework.GameAICommand.MoveUnreachable
-// (Final, Defined, Latent, Net, Simulated, Native, HasOptionalParms)
+// (Final, Iterator, NetReliable, Simulated, Native, HasOptionalParms)
 // Parameters:
 // struct FVector                 AttemptedDest                  (Parm)
 // class AActor*                  AttemptedTarget                (Parm)
@@ -558,7 +562,7 @@ bool UGameAICommand::MoveUnreachable(const struct FVector& AttemptedDest, class 
 
 
 // Function GameFramework.GameAICommand.NotifyNeedRepath
-// (Final, Defined, Latent, PreOperator, Exec, Event, Operator, HasOptionalParms)
+// (Latent, Singular, NetReliable, Simulated, Exec, Event, Operator, HasOptionalParms)
 
 void UGameAICommand::NotifyNeedRepath()
 {
@@ -575,7 +579,7 @@ void UGameAICommand::NotifyNeedRepath()
 
 
 // Function GameFramework.GameAICommand.GetDebugVerboseText
-// (Final, Defined, Iterator, NetReliable, Exec, Native, HasOptionalParms)
+// (Final, Net, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // struct FString                 ReturnValue                    (Parm, OutParm, ReturnParm, NeedCtorLink)
 
@@ -597,7 +601,7 @@ struct FString UGameAICommand::GetDebugVerboseText()
 
 
 // Function GameFramework.GameAICommand.GetDebugOverheadText
-// (Iterator, Latent, PreOperator, Singular, NetReliable, Event, Operator, HasOptionalParms)
+// (Final, Latent, Net, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // class APlayerController*       PC                             (Parm)
 // TArray<struct FString>         OutText                        (Parm, OutParm, NeedCtorLink)
@@ -621,7 +625,7 @@ void UGameAICommand::GetDebugOverheadText(class APlayerController* PC, TArray<st
 
 
 // Function GameFramework.GameAICommand.DrawDebug
-// (Final, Defined, Iterator, Latent, PreOperator, Singular, Net, Exec, Native, HasOptionalParms)
+// (Final, Latent, PreOperator, Singular, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // class AHUD*                    H                              (Parm)
 // struct FName                   Category                       (Parm)
@@ -644,7 +648,7 @@ void UGameAICommand::DrawDebug(class AHUD* H, const struct FName& Category)
 
 
 // Function GameFramework.GameAICommand.GetDumpString
-// (Iterator, Latent, Singular, Net, NetReliable, Native, HasOptionalParms)
+// (Defined, Iterator, Singular, Simulated, Native, HasOptionalParms)
 // Parameters:
 // struct FString                 ReturnValue                    (Parm, OutParm, ReturnParm, NeedCtorLink)
 
@@ -666,7 +670,7 @@ struct FString UGameAICommand::GetDumpString()
 
 
 // Function GameFramework.GameAICommand.Resumed
-// (Final, Defined, Iterator, Latent, Singular, Net, NetReliable, Exec, Event, Operator, HasOptionalParms)
+// (Iterator, Latent, PreOperator, Singular, Net, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FName                   OldCommandName                 (Parm)
 
@@ -678,6 +682,7 @@ void UGameAICommand::Resumed(const struct FName& OldCommandName)
 	params.OldCommandName = OldCommandName;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -686,7 +691,7 @@ void UGameAICommand::Resumed(const struct FName& OldCommandName)
 
 
 // Function GameFramework.GameAICommand.Paused
-// (Final, Singular, NetReliable, Simulated, Exec, Event, Operator, Static)
+// (Defined, Iterator, Latent, Singular, Simulated, Native, Event, Operator, Static)
 // Parameters:
 // class UGameAICommand*          NewCommand                     (Parm)
 
@@ -698,6 +703,7 @@ void UGameAICommand::STATIC_Paused(class UGameAICommand* NewCommand)
 	params.NewCommand = NewCommand;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -706,7 +712,7 @@ void UGameAICommand::STATIC_Paused(class UGameAICommand* NewCommand)
 
 
 // Function GameFramework.GameAICommand.Popped
-// (Final, Defined, NetReliable, Exec, Event, Operator, HasOptionalParms)
+// (PreOperator, Native, Event, Operator, HasOptionalParms)
 
 void UGameAICommand::Popped()
 {
@@ -715,6 +721,7 @@ void UGameAICommand::Popped()
 	UGameAICommand_Popped_Params params;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -723,7 +730,7 @@ void UGameAICommand::Popped()
 
 
 // Function GameFramework.GameAICommand.Pushed
-// (Defined, Latent, Singular, NetReliable, Exec, Event, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, PreOperator, Singular, Native, Event, Operator, HasOptionalParms)
 
 void UGameAICommand::Pushed()
 {
@@ -732,6 +739,7 @@ void UGameAICommand::Pushed()
 	UGameAICommand_Pushed_Params params;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -740,7 +748,7 @@ void UGameAICommand::Pushed()
 
 
 // Function GameFramework.GameAICommand.PostPopped
-// (Defined, Iterator, NetReliable, Exec, Event, Operator, HasOptionalParms)
+// (Final, Defined, PreOperator, Native, Event, Operator, HasOptionalParms)
 
 void UGameAICommand::PostPopped()
 {
@@ -749,6 +757,7 @@ void UGameAICommand::PostPopped()
 	UGameAICommand_PostPopped_Params params;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -757,7 +766,7 @@ void UGameAICommand::PostPopped()
 
 
 // Function GameFramework.GameAICommand.PrePushed
-// (PreOperator, NetReliable, Exec, Event, Operator, HasOptionalParms)
+// (Final, Iterator, Latent, PreOperator, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // class AGameAIController*       AI                             (Parm)
 
@@ -769,6 +778,7 @@ void UGameAICommand::PrePushed(class AGameAIController* AI)
 	params.AI = AI;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -777,7 +787,7 @@ void UGameAICommand::PrePushed(class AGameAIController* AI)
 
 
 // Function GameFramework.GameAICommand.AllowStateTransitionTo
-// (Iterator, Latent, PreOperator, Net, NetReliable, Simulated, Native, Operator, HasOptionalParms)
+// (Final, Latent, Singular, Net, Simulated, Exec, Native, Operator, HasOptionalParms)
 // Parameters:
 // struct FName                   StateName                      (Parm)
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -801,7 +811,7 @@ bool UGameAICommand::AllowStateTransitionTo(const struct FName& StateName)
 
 
 // Function GameFramework.GameAICommand.AllowTransitionTo
-// (Defined, Iterator, Latent, PreOperator, Net, NetReliable, Simulated, Native, Operator, HasOptionalParms)
+// (Final, Defined, Latent, Singular, Net, Simulated, Exec, Native, Operator, HasOptionalParms)
 // Parameters:
 // class UClass*                  AttemptCommand                 (Parm)
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -845,7 +855,7 @@ void UGameAICommand::Tick(float DeltaTime)
 
 
 // Function GameFramework.GameAICommand.ShouldIgnoreNotifies
-// (Iterator, Latent, PreOperator, Singular, Simulated, Exec, Event, Operator, HasOptionalParms)
+// (Final, Latent, Net, NetReliable, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -856,6 +866,7 @@ bool UGameAICommand::ShouldIgnoreNotifies()
 	UGameAICommand_ShouldIgnoreNotifies_Params params;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -866,7 +877,7 @@ bool UGameAICommand::ShouldIgnoreNotifies()
 
 
 // Function GameFramework.GameAICommand.InternalTick
-// (Iterator, PreOperator, NetReliable, Exec, Native, HasOptionalParms)
+// (Defined, Iterator, Latent, Net, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // float                          DeltaTime                      (Parm)
 
@@ -887,7 +898,7 @@ void UGameAICommand::InternalTick(float DeltaTime)
 
 
 // Function GameFramework.GameAICommand.InternalResumed
-// (Final, Defined, PreOperator, NetReliable, Exec, Native, HasOptionalParms)
+// (Final, Iterator, Latent, Net, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // struct FName                   OldCommandName                 (Parm)
 
@@ -908,7 +919,7 @@ void UGameAICommand::InternalResumed(const struct FName& OldCommandName)
 
 
 // Function GameFramework.GameAICommand.InternalPaused
-// (Final, Defined, Iterator, Latent, NetReliable, Exec, Native, HasOptionalParms)
+// (Final, Latent, Net, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // class UGameAICommand*          NewCommand                     (Parm)
 
@@ -929,7 +940,7 @@ void UGameAICommand::InternalPaused(class UGameAICommand* NewCommand)
 
 
 // Function GameFramework.GameAICommand.InternalPopped
-// (PreOperator, NetReliable, Exec, Native, HasOptionalParms)
+// (Defined, Latent, Net, NetReliable, Exec, Native, HasOptionalParms)
 
 void UGameAICommand::InternalPopped()
 {
@@ -947,7 +958,7 @@ void UGameAICommand::InternalPopped()
 
 
 // Function GameFramework.GameAICommand.InternalPushed
-// (Defined, PreOperator, NetReliable, Exec, Native, HasOptionalParms)
+// (Iterator, Latent, Net, NetReliable, Exec, Native, HasOptionalParms)
 
 void UGameAICommand::InternalPushed()
 {
@@ -965,7 +976,7 @@ void UGameAICommand::InternalPushed()
 
 
 // Function GameFramework.GameAICommand.InternalPrePushed
-// (Final, PreOperator, NetReliable, Exec, Native, HasOptionalParms)
+// (Final, Defined, Latent, Net, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // class AGameAIController*       AI                             (Parm)
 
@@ -986,7 +997,7 @@ void UGameAICommand::InternalPrePushed(class AGameAIController* AI)
 
 
 // Function GameFramework.GameAICommand.InitCommand
-// (Final, Iterator, Latent, Simulated, Event, Operator, HasOptionalParms)
+// (Defined, Latent, PreOperator, NetReliable, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // class AGameAIController*       AI                             (Parm)
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -1009,7 +1020,7 @@ bool UGameAICommand::InitCommand(class AGameAIController* AI)
 
 
 // Function GameFramework.GameAICommand.InitCommandUserActor
-// (Defined, Iterator, Latent, Simulated, Event, Operator, HasOptionalParms)
+// (Final, Defined, Latent, PreOperator, NetReliable, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // class AGameAIController*       AI                             (Parm)
 // class AActor*                  UserActor                      (Parm)
@@ -1034,7 +1045,7 @@ bool UGameAICommand::InitCommandUserActor(class AGameAIController* AI, class AAc
 
 
 // Function GameFramework.GamePlayerController.ClientColorFade
-// (Defined, Singular, Net, Simulated, Exec, Native, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, Latent, Singular, Net, NetReliable, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FColor                  FadeColor                      (Parm)
 // unsigned char                  FromAlpha                      (Parm)
@@ -1052,7 +1063,6 @@ void AGamePlayerController::ClientColorFade(const struct FColor& FadeColor, unsi
 	params.FadeTime = FadeTime;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -1061,13 +1071,30 @@ void AGamePlayerController::ClientColorFade(const struct FColor& FadeColor, unsi
 
 
 // Function GameFramework.GamePlayerController.CallMemLeakCheck
-// (Final, Singular, Simulated, Exec, Native, Operator, HasOptionalParms)
+// (Defined, Iterator, Latent, Singular, NetReliable, Event, Operator, HasOptionalParms)
 
 void AGamePlayerController::CallMemLeakCheck()
 {
 	static auto fn = UObject::FindObject<UFunction>("Function GameFramework.GamePlayerController.CallMemLeakCheck");
 
 	AGamePlayerController_CallMemLeakCheck_Params params;
+
+	auto flags = fn->FunctionFlags;
+
+	UObject::ProcessEvent(fn, &params);
+
+	fn->FunctionFlags = flags;
+}
+
+
+// Function GameFramework.GamePlayerController.StopMemLeakChecking
+// (Latent, Simulated, Native, Event, Operator, HasOptionalParms)
+
+void AGamePlayerController::StopMemLeakChecking()
+{
+	static auto fn = UObject::FindObject<UFunction>("Function GameFramework.GamePlayerController.StopMemLeakChecking");
+
+	AGamePlayerController_StopMemLeakChecking_Params params;
 
 	auto flags = fn->FunctionFlags;
 	fn->FunctionFlags |= 0x400;
@@ -1078,25 +1105,8 @@ void AGamePlayerController::CallMemLeakCheck()
 }
 
 
-// Function GameFramework.GamePlayerController.StopMemLeakChecking
-// (Final, Defined, Latent, PreOperator, Singular, Net, Simulated, Exec, Event, Operator, HasOptionalParms)
-
-void AGamePlayerController::StopMemLeakChecking()
-{
-	static auto fn = UObject::FindObject<UFunction>("Function GameFramework.GamePlayerController.StopMemLeakChecking");
-
-	AGamePlayerController_StopMemLeakChecking_Params params;
-
-	auto flags = fn->FunctionFlags;
-
-	UObject::ProcessEvent(fn, &params);
-
-	fn->FunctionFlags = flags;
-}
-
-
 // Function GameFramework.GamePlayerController.DoMemLeakChecking
-// (Final, Defined, Iterator, Event, Operator, HasOptionalParms)
+// (Iterator, PreOperator, NetReliable, Simulated, Event, Operator, HasOptionalParms)
 // Parameters:
 // float                          InTimeBetweenMemLeakChecks     (Parm)
 
@@ -1116,7 +1126,7 @@ void AGamePlayerController::DoMemLeakChecking(float InTimeBetweenMemLeakChecks)
 
 
 // Function GameFramework.GamePlayerController.WarmupPause
-// (Defined, Iterator, Latent, PreOperator, Singular, NetReliable, Exec, Native, HasOptionalParms)
+// (Latent, PreOperator, Singular, Net, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // bool                           bDesiredPauseState             (Parm)
 
@@ -1137,7 +1147,7 @@ void AGamePlayerController::WarmupPause(bool bDesiredPauseState)
 
 
 // Function GameFramework.GamePlayerController.CanUnpauseWarmup
-// (Iterator, Latent, PreOperator, Singular, Simulated, Exec, Native, Operator, HasOptionalParms)
+// (Final, Latent, Net, NetReliable, Event, Operator, HasOptionalParms)
 // Parameters:
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -1148,7 +1158,6 @@ bool AGamePlayerController::CanUnpauseWarmup()
 	AGamePlayerController_CanUnpauseWarmup_Params params;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -1159,7 +1168,7 @@ bool AGamePlayerController::CanUnpauseWarmup()
 
 
 // Function GameFramework.GamePlayerController.GetCurrentMovie
-// (Defined, Latent, PreOperator, Singular, NetReliable, Event, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, Net, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FString                 MovieName                      (Parm, OutParm, NeedCtorLink)
 
@@ -1181,7 +1190,7 @@ void AGamePlayerController::GetCurrentMovie(struct FString* MovieName)
 
 
 // Function GameFramework.GamePlayerController.ClientStopMovie
-// (Final, Latent, PreOperator, Singular, Net, Exec, Native, HasOptionalParms)
+// (Final, Defined, PreOperator, Singular, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // float                          DelayInSeconds                 (Parm)
 // bool                           bAllowMovieToFinish            (Parm)
@@ -1208,7 +1217,7 @@ void AGamePlayerController::ClientStopMovie(float DelayInSeconds, bool bAllowMov
 
 
 // Function GameFramework.GamePlayerController.ClientPlayMovie
-// (Latent, PreOperator, Singular, Net, Exec, Native, HasOptionalParms)
+// (Defined, PreOperator, Singular, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // struct FString                 MovieName                      (Parm, NeedCtorLink)
 // int                            InStartOfRenderingMovieFrame   (Parm)
@@ -1239,7 +1248,7 @@ void AGamePlayerController::ClientPlayMovie(const struct FString& MovieName, int
 
 
 // Function GameFramework.GamePlayerController.KeepPlayingLoadingMovie
-// (Final, Defined, Iterator, Net, Simulated, Event, Operator, HasOptionalParms)
+// (Iterator, PreOperator, Net, NetReliable, Exec, Event, Operator, HasOptionalParms)
 
 void AGamePlayerController::KeepPlayingLoadingMovie()
 {
@@ -1256,7 +1265,7 @@ void AGamePlayerController::KeepPlayingLoadingMovie()
 
 
 // Function GameFramework.GamePlayerController.ShowLoadingMovie
-// (Net, Simulated, Exec, Event, Operator, HasOptionalParms)
+// (Final, Iterator, Latent, Net, NetReliable, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // bool                           bShowMovie                     (Parm)
 // bool                           bPauseAfterHide                (OptionalParm, Parm)
@@ -1276,6 +1285,7 @@ void AGamePlayerController::ShowLoadingMovie(bool bShowMovie, bool bPauseAfterHi
 	params.bOverridePreviousDelays = bOverridePreviousDelays;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -1284,7 +1294,7 @@ void AGamePlayerController::ShowLoadingMovie(bool bShowMovie, bool bPauseAfterHi
 
 
 // Function GameFramework.GamePlayerController.SetSoundMode
-// (Defined, Iterator, Singular, Simulated, Native, HasOptionalParms)
+// (Final, Defined, PreOperator, Singular, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // struct FName                   InSoundModeName                (Parm)
 
@@ -1305,7 +1315,7 @@ void AGamePlayerController::SetSoundMode(const struct FName& InSoundModeName)
 
 
 // Function GameFramework.GamePlayerController.DoForceFeedbackForScreenShake
-// (Defined, PreOperator, NetReliable, Exec, Static)
+// (Final, Defined, Iterator, Latent, PreOperator, Native, Static)
 // Parameters:
 // class UCameraShake*            ShakeData                      (Parm)
 // float                          Scale                          (Parm)
@@ -1319,6 +1329,7 @@ void AGamePlayerController::STATIC_DoForceFeedbackForScreenShake(class UCameraSh
 	params.Scale = Scale;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -1327,7 +1338,7 @@ void AGamePlayerController::STATIC_DoForceFeedbackForScreenShake(class UCameraSh
 
 
 // Function GameFramework.GamePlayerController.NotifyCrowdAgentInRadius
-// (Final, Defined, Iterator, PreOperator, NetReliable, Exec, Native, HasOptionalParms)
+// (Final, PreOperator, Net, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // class AGameCrowdAgent*         Agent                          (Parm)
 
@@ -1348,7 +1359,7 @@ void AGamePlayerController::NotifyCrowdAgentInRadius(class AGameCrowdAgent* Agen
 
 
 // Function GameFramework.GamePlayerController.NotifyCrowdAgentRefresh
-// (Latent, PreOperator, NetReliable, Exec, Native, HasOptionalParms)
+// (Defined, PreOperator, Net, NetReliable, Exec, Native, HasOptionalParms)
 
 void AGamePlayerController::NotifyCrowdAgentRefresh()
 {
@@ -1366,7 +1377,7 @@ void AGamePlayerController::NotifyCrowdAgentRefresh()
 
 
 // Function GameFramework.GamePlayerController.CrowdDebug
-// (Final, Latent, PreOperator, Singular, Net, Simulated, Exec, Native, Operator, HasOptionalParms)
+// (Defined, Iterator, Simulated, Event, Operator, HasOptionalParms)
 // Parameters:
 // bool                           bEnabled                       (Parm)
 
@@ -1378,7 +1389,6 @@ void AGamePlayerController::CrowdDebug(bool bEnabled)
 	params.bEnabled = bEnabled;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -1387,7 +1397,7 @@ void AGamePlayerController::CrowdDebug(bool bEnabled)
 
 
 // Function GameFramework.GamePlayerController.GetUIPlayerIndex
-// (Final, PreOperator, Net, NetReliable, Event, Operator, HasOptionalParms)
+// (Defined, Iterator, Latent, PreOperator, Net, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // int                            ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -1408,7 +1418,7 @@ int AGamePlayerController::GetUIPlayerIndex()
 
 
 // Function GameFramework.GamePlayerController.OnToggleMouseCursor
-// (Iterator, Latent, PreOperator, Singular, Exec, Event, Operator, HasOptionalParms)
+// (Final, Latent, Net, NetReliable, Simulated, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // class USeqAct_ToggleMouseCursor* inAction                       (Parm)
 
@@ -1428,7 +1438,7 @@ void AGamePlayerController::OnToggleMouseCursor(class USeqAct_ToggleMouseCursor*
 
 
 // Function GameFramework.GameCheatManager.OnRequestComplete
-// (Final, Iterator, Latent, PreOperator, NetReliable, Simulated, Event, Operator, Static)
+// (Defined, Latent, Singular, Simulated, Exec, Event, Operator, Static)
 // Parameters:
 // class UHttpRequestInterface*   OriginalRequest                (Parm)
 // class UHttpResponseInterface*  Response                       (Parm)
@@ -1452,7 +1462,7 @@ void UGameCheatManager::STATIC_OnRequestComplete(class UHttpRequestInterface* Or
 
 
 // Function GameFramework.GameCheatManager.TestHttp
-// (Final, Net, NetReliable, Simulated, Event, HasOptionalParms)
+// (Defined, Iterator, Latent, Net, Simulated, Exec, Event, HasOptionalParms)
 // Parameters:
 // struct FString                 Verb                           (Parm, NeedCtorLink)
 // struct FString                 Payload                        (Parm, NeedCtorLink)
@@ -1478,7 +1488,7 @@ void UGameCheatManager::TestHttp(const struct FString& Verb, const struct FStrin
 
 
 // Function GameFramework.GameCheatManager.EnableDebugCamera
-// (Defined, Singular, Event, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, Latent, Singular, NetReliable, Simulated, Event, Operator, HasOptionalParms)
 // Parameters:
 // bool                           bEnableDebugText               (Parm)
 
@@ -1498,7 +1508,7 @@ void UGameCheatManager::EnableDebugCamera(bool bEnableDebugText)
 
 
 // Function GameFramework.GameCheatManager.TeleportPawnToCamera
-// (Final, Defined, Iterator, PreOperator, NetReliable, Simulated, Exec, Event, Operator, HasOptionalParms)
+// (Iterator, Singular, Simulated, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // bool                           bToggleDebugCameraOff          (OptionalParm, Parm)
 
@@ -1510,6 +1520,7 @@ void UGameCheatManager::TeleportPawnToCamera(bool bToggleDebugCameraOff)
 	params.bToggleDebugCameraOff = bToggleDebugCameraOff;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -1518,7 +1529,7 @@ void UGameCheatManager::TeleportPawnToCamera(bool bToggleDebugCameraOff)
 
 
 // Function GameFramework.GameCheatManager.ToggleDebugCamera
-// (Defined, PreOperator, Singular, NetReliable, Simulated, Exec, Event, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, Latent, PreOperator, Singular, Simulated, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // bool                           bDrawDebugText                 (OptionalParm, Parm)
 
@@ -1530,6 +1541,7 @@ void UGameCheatManager::ToggleDebugCamera(bool bDrawDebugText)
 	params.bDrawDebugText = bDrawDebugText;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -1538,7 +1550,7 @@ void UGameCheatManager::ToggleDebugCamera(bool bDrawDebugText)
 
 
 // Function GameFramework.GameCheatManager.PatchDebugCameraController
-// (Final, Defined, Iterator, Latent, PreOperator, Net, Exec, Event, Operator, HasOptionalParms)
+// (Iterator, Latent, Singular, Net, NetReliable, Simulated, Exec, Event, Operator, HasOptionalParms)
 
 void UGameCheatManager::PatchDebugCameraController()
 {
@@ -1555,7 +1567,7 @@ void UGameCheatManager::PatchDebugCameraController()
 
 
 // Function GameFramework.GameCrowdAgent.InitDebugColor
-// (Final, Defined, Iterator, Latent, Simulated, Event, Operator, HasOptionalParms)
+// (Iterator, Latent, PreOperator, NetReliable, Exec, Event, Operator, HasOptionalParms)
 
 void AGameCrowdAgent::InitDebugColor()
 {
@@ -1572,7 +1584,7 @@ void AGameCrowdAgent::InitDebugColor()
 
 
 // Function GameFramework.GameCrowdAgent.GetBehaviorString
-// (Final, Latent, PreOperator, Singular, NetReliable, Event, Operator, HasOptionalParms)
+// (Defined, Iterator, Net, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FString                 ReturnValue                    (Parm, OutParm, ReturnParm, NeedCtorLink)
 
@@ -1593,7 +1605,7 @@ struct FString AGameCrowdAgent::GetBehaviorString()
 
 
 // Function GameFramework.GameCrowdAgent.GetDestString
-// (Net, NetReliable, Event, Operator, HasOptionalParms)
+// (Final, Iterator, Latent, Net, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FString                 ReturnValue                    (Parm, OutParm, ReturnParm, NeedCtorLink)
 
@@ -1614,7 +1626,7 @@ struct FString AGameCrowdAgent::GetDestString()
 
 
 // Function GameFramework.GameCrowdAgent.PostRenderFor
-// (Final, Iterator, Latent, Singular, NetReliable, Simulated, Native, HasOptionalParms)
+// (Final, Defined, Iterator, Singular, Net, NetReliable, Simulated, Native, HasOptionalParms)
 // Parameters:
 // class APlayerController*       PC                             (Parm)
 // class UCanvas*                 Canvas                         (Parm)
@@ -1641,7 +1653,7 @@ void AGameCrowdAgent::PostRenderFor(class APlayerController* PC, class UCanvas* 
 
 
 // Function GameFramework.GameCrowdAgent.NativePostRenderFor
-// (Final, Defined, Iterator, Singular, Exec, Native, Operator, Static)
+// (Iterator, PreOperator, Singular, NetReliable, Simulated, Exec, Native, Operator, Static)
 // Parameters:
 // class APlayerController*       PC                             (Parm)
 // class UCanvas*                 Canvas                         (Parm)
@@ -1668,7 +1680,7 @@ void AGameCrowdAgent::STATIC_NativePostRenderFor(class APlayerController* PC, cl
 
 
 // Function GameFramework.GameCrowdAgent.GeneratePathToActor
-// (Iterator, PreOperator, Net, NetReliable, Native, HasOptionalParms)
+// (Defined, Iterator, Latent, Simulated, Native, HasOptionalParms)
 // Parameters:
 // class AActor*                  Goal                           (Parm)
 // float                          WithinDistance                 (OptionalParm, Parm)
@@ -1696,7 +1708,7 @@ struct FVector AGameCrowdAgent::GeneratePathToActor(class AActor* Goal, float Wi
 
 
 // Function GameFramework.GameCrowdAgent.InitNavigationHandle
-// (Defined, Iterator, Latent, NetReliable, Exec, Native, HasOptionalParms)
+// (Latent, Net, NetReliable, Exec, Native, HasOptionalParms)
 
 void AGameCrowdAgent::InitNavigationHandle()
 {
@@ -1714,7 +1726,7 @@ void AGameCrowdAgent::InitNavigationHandle()
 
 
 // Function GameFramework.GameCrowdAgent.OverlappedActorEvent
-// (Defined, Iterator, Singular, NetReliable, Exec, Native, HasOptionalParms)
+// (Singular, Net, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // class AActor*                  A                              (Parm)
 
@@ -1735,7 +1747,7 @@ void AGameCrowdAgent::OverlappedActorEvent(class AActor* A)
 
 
 // Function GameFramework.GameCrowdAgent.TakeDamage
-// (Defined, Iterator, PreOperator, Net, Exec, Native, HasOptionalParms)
+// (PreOperator, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // int                            DamageAmount                   (Parm)
 // class AController*             EventInstigator                (Parm)
@@ -1768,7 +1780,7 @@ void AGameCrowdAgent::TakeDamage(int DamageAmount, class AController* EventInsti
 
 
 // Function GameFramework.GameCrowdAgent.FireDeathEvent
-// (Defined, NetReliable, Exec, Native, HasOptionalParms)
+// (Iterator, Latent, PreOperator, Singular, NetReliable, Exec, Native, HasOptionalParms)
 
 void AGameCrowdAgent::FireDeathEvent()
 {
@@ -1786,7 +1798,7 @@ void AGameCrowdAgent::FireDeathEvent()
 
 
 // Function GameFramework.GameCrowdAgent.PlayDeath
-// (Final, Iterator, PreOperator, Singular, Net, Exec, Event, Operator, HasOptionalParms)
+// (Defined, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FVector                 KillMomentum                   (Parm)
 
@@ -1798,6 +1810,7 @@ void AGameCrowdAgent::PlayDeath(const struct FVector& KillMomentum)
 	params.KillMomentum = KillMomentum;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -1806,7 +1819,7 @@ void AGameCrowdAgent::PlayDeath(const struct FVector& KillMomentum)
 
 
 // Function GameFramework.GameCrowdAgent.UpdateIntermediatePoint
-// (Defined, Latent, PreOperator, Singular, NetReliable, Exec, Native, HasOptionalParms)
+// (Iterator, PreOperator, Singular, Net, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // class AActor*                  DestinationActor               (OptionalParm, Parm)
 
@@ -1827,7 +1840,7 @@ void AGameCrowdAgent::UpdateIntermediatePoint(class AActor* DestinationActor)
 
 
 // Function GameFramework.GameCrowdAgent.CalcCamera
-// (Defined, Singular, NetReliable, Exec, Event, Operator)
+// (Final, Defined, Iterator, Latent, Singular, Native, Event, Operator)
 // Parameters:
 // float                          fDeltaTime                     (Parm)
 // struct FVector                 out_CamLoc                     (Parm, OutParm)
@@ -1843,6 +1856,7 @@ bool AGameCrowdAgent::CalcCamera(float fDeltaTime, struct FVector* out_CamLoc, s
 	params.fDeltaTime = fDeltaTime;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -1860,7 +1874,7 @@ bool AGameCrowdAgent::CalcCamera(float fDeltaTime, struct FVector* out_CamLoc, s
 
 
 // Function GameFramework.GameCrowdAgent.IsIdle
-// (Defined, Iterator, Latent, PreOperator, Singular, Simulated, Event, Operator, HasOptionalParms)
+// (Final, Defined, Latent, Net, NetReliable, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -1881,7 +1895,7 @@ bool AGameCrowdAgent::IsIdle()
 
 
 // Function GameFramework.GameCrowdAgent.SetCurrentBehavior
-// (Defined, Iterator, Singular, Simulated, Exec, Event, Operator, HasOptionalParms)
+// (Final, Defined, PreOperator, Singular, NetReliable, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // class UGameCrowdAgentBehavior* BehaviorArchetype              (Parm)
 
@@ -1893,6 +1907,7 @@ void AGameCrowdAgent::SetCurrentBehavior(class UGameCrowdAgentBehavior* Behavior
 	params.BehaviorArchetype = BehaviorArchetype;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -1901,7 +1916,7 @@ void AGameCrowdAgent::SetCurrentBehavior(class UGameCrowdAgentBehavior* Behavior
 
 
 // Function GameFramework.GameCrowdAgent.StopBehavior
-// (Final, PreOperator, Singular, NetReliable, Exec, Native, HasOptionalParms)
+// (Final, Defined, Latent, Singular, Net, NetReliable, Exec, Native, HasOptionalParms)
 
 void AGameCrowdAgent::StopBehavior()
 {
@@ -1919,7 +1934,7 @@ void AGameCrowdAgent::StopBehavior()
 
 
 // Function GameFramework.GameCrowdAgent.HandleBehaviorEvent
-// (Defined, Latent, NetReliable, Exec, Native, HasOptionalParms)
+// (Iterator, Net, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // TEnumAsByte<ECrowdBehaviorEvent> EventType                      (Parm)
 // class AActor*                  InInstigator                   (Parm)
@@ -1946,7 +1961,7 @@ void AGameCrowdAgent::HandleBehaviorEvent(TEnumAsByte<ECrowdBehaviorEvent> Event
 
 
 // Function GameFramework.GameCrowdAgent.ActivateInstancedBehavior
-// (Final, Singular, NetReliable, Simulated, Native, Operator, HasOptionalParms)
+// (Defined, Iterator, Latent, Singular, Simulated, Exec, Native, Operator, HasOptionalParms)
 // Parameters:
 // class UGameCrowdAgentBehavior* NewBehaviorObject              (Parm)
 
@@ -1967,7 +1982,7 @@ void AGameCrowdAgent::ActivateInstancedBehavior(class UGameCrowdAgentBehavior* N
 
 
 // Function GameFramework.GameCrowdAgent.ActivateBehavior
-// (Defined, PreOperator, Singular, Net, Exec, Native, HasOptionalParms)
+// (Iterator, Latent, Singular, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // class UGameCrowdAgentBehavior* NewBehaviorArchetype           (Parm)
 // class AActor*                  LookAtActor                    (OptionalParm, Parm)
@@ -1990,7 +2005,7 @@ void AGameCrowdAgent::ActivateBehavior(class UGameCrowdAgentBehavior* NewBehavio
 
 
 // Function GameFramework.GameCrowdAgent.ResetSeePlayer
-// (Final, Defined, Latent, Singular, Net, NetReliable, Exec, Event, Operator, HasOptionalParms)
+// (Latent, PreOperator, Singular, Net, Native, Event, Operator, HasOptionalParms)
 
 void AGameCrowdAgent::ResetSeePlayer()
 {
@@ -1999,6 +2014,7 @@ void AGameCrowdAgent::ResetSeePlayer()
 	AGameCrowdAgent_ResetSeePlayer_Params params;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -2007,7 +2023,7 @@ void AGameCrowdAgent::ResetSeePlayer()
 
 
 // Function GameFramework.GameCrowdAgent.TryRandomBehavior
-// (Defined, Iterator, PreOperator, Net, NetReliable, Simulated, Exec, Event, Operator, HasOptionalParms)
+// (Final, Defined, Singular, Net, Simulated, Native, Event, Operator, HasOptionalParms)
 
 void AGameCrowdAgent::TryRandomBehavior()
 {
@@ -2016,6 +2032,7 @@ void AGameCrowdAgent::TryRandomBehavior()
 	AGameCrowdAgent_TryRandomBehavior_Params params;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -2024,7 +2041,7 @@ void AGameCrowdAgent::TryRandomBehavior()
 
 
 // Function GameFramework.GameCrowdAgent.NotifySeePlayer
-// (Final, Latent, PreOperator, NetReliable, Exec, Native, HasOptionalParms)
+// (Final, Defined, PreOperator, Net, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // class APlayerController*       PC                             (Parm)
 
@@ -2045,7 +2062,7 @@ void AGameCrowdAgent::NotifySeePlayer(class APlayerController* PC)
 
 
 // Function GameFramework.GameCrowdAgent.PlaySpawnBehavior
-// (Defined, Iterator, Latent, PreOperator, Singular, Net, Exec, Event, Operator, HasOptionalParms)
+// (Final, Defined, Latent, Native, Event, Operator, HasOptionalParms)
 
 void AGameCrowdAgent::PlaySpawnBehavior()
 {
@@ -2054,6 +2071,7 @@ void AGameCrowdAgent::PlaySpawnBehavior()
 	AGameCrowdAgent_PlaySpawnBehavior_Params params;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -2062,7 +2080,7 @@ void AGameCrowdAgent::PlaySpawnBehavior()
 
 
 // Function GameFramework.GameCrowdAgent.HandlePotentialAgentEncounter
-// (Final, Defined, Latent, NetReliable, Exec, Native, HasOptionalParms)
+// (Final, Iterator, Net, NetReliable, Exec, Native, HasOptionalParms)
 
 void AGameCrowdAgent::HandlePotentialAgentEncounter()
 {
@@ -2080,7 +2098,7 @@ void AGameCrowdAgent::HandlePotentialAgentEncounter()
 
 
 // Function GameFramework.GameCrowdAgent.StopIdleAnimation
-// (Defined, PreOperator, Singular, NetReliable, Exec, Native, HasOptionalParms)
+// (Iterator, Latent, Singular, Net, NetReliable, Exec, Native, HasOptionalParms)
 
 void AGameCrowdAgent::StopIdleAnimation()
 {
@@ -2098,7 +2116,7 @@ void AGameCrowdAgent::StopIdleAnimation()
 
 
 // Function GameFramework.GameCrowdAgent.PlayIdleAnimation
-// (Latent, Singular, NetReliable, Exec, Native, HasOptionalParms)
+// (Defined, Singular, Net, NetReliable, Exec, Native, HasOptionalParms)
 
 void AGameCrowdAgent::PlayIdleAnimation()
 {
@@ -2116,7 +2134,7 @@ void AGameCrowdAgent::PlayIdleAnimation()
 
 
 // Function GameFramework.GameCrowdAgent.OnPlayAgentAnimation
-// (Defined, Latent, PreOperator, Singular, Exec, Event, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, Net, NetReliable, Simulated, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // class USeqAct_PlayAgentAnimation* Action                         (Parm)
 
@@ -2136,7 +2154,7 @@ void AGameCrowdAgent::OnPlayAgentAnimation(class USeqAct_PlayAgentAnimation* Act
 
 
 // Function GameFramework.GameCrowdAgent.InitializeAgent
-// (Latent, PreOperator, Simulated, Event, Operator, HasOptionalParms)
+// (Final, Iterator, Singular, NetReliable, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // class AActor*                  SpawnLoc                       (Parm)
 // TArray<struct FCrowdSpawnerPlayerInfo> PlayerInfo                     (Const, Parm, OutParm, NeedCtorLink)
@@ -2170,7 +2188,7 @@ void AGameCrowdAgent::InitializeAgent(class AActor* SpawnLoc, class AGameCrowdAg
 
 
 // Function GameFramework.GameCrowdAgent.GetAttemptedSpawnLocation
-// (Final, Defined, Iterator, PreOperator, Singular, NetReliable, Event, Operator, HasOptionalParms)
+// (Iterator, Net, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // float                          Pct                            (Parm)
 // struct FVector                 CurPos                         (Parm)
@@ -2201,7 +2219,7 @@ struct FVector AGameCrowdAgent::GetAttemptedSpawnLocation(float Pct, const struc
 
 
 // Function GameFramework.GameCrowdAgent.SetLighting
-// (Final, Iterator, Latent, Singular, Simulated, Exec, Event, Operator, HasOptionalParms)
+// (Defined, Latent, PreOperator, Singular, NetReliable, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // bool                           bEnableLightEnvironment        (Parm)
 // struct FLightingChannelContainer AgentLightingChannel           (Parm)
@@ -2217,6 +2235,7 @@ void AGameCrowdAgent::SetLighting(bool bEnableLightEnvironment, const struct FLi
 	params.bCastShadows = bCastShadows;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -2225,7 +2244,7 @@ void AGameCrowdAgent::SetLighting(bool bEnableLightEnvironment, const struct FLi
 
 
 // Function GameFramework.GameCrowdAgent.DisplayDebug
-// (Final, Latent, Net, NetReliable, Simulated, Static)
+// (Defined, Iterator, PreOperator, Net, Simulated, Exec, Static)
 // Parameters:
 // class AHUD*                    HUD                            (Parm)
 // float                          out_YL                         (Parm, OutParm)
@@ -2269,7 +2288,7 @@ void AGameCrowdAgent::Destroyed()
 
 
 // Function GameFramework.GameCrowdAgent.ResetPooledAgent
-// (Defined, Latent, Singular, Net, NetReliable, Exec, Event, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, PreOperator, Singular, Net, Native, Event, Operator, HasOptionalParms)
 
 void AGameCrowdAgent::ResetPooledAgent()
 {
@@ -2278,6 +2297,7 @@ void AGameCrowdAgent::ResetPooledAgent()
 	AGameCrowdAgent_ResetPooledAgent_Params params;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -2286,7 +2306,7 @@ void AGameCrowdAgent::ResetPooledAgent()
 
 
 // Function GameFramework.GameCrowdAgent.KillAgent
-// (Final, Iterator, PreOperator, NetReliable, Exec, Native, HasOptionalParms)
+// (Final, Defined, Iterator, Latent, Net, NetReliable, Exec, Native, HasOptionalParms)
 
 void AGameCrowdAgent::KillAgent()
 {
@@ -2321,7 +2341,7 @@ void AGameCrowdAgent::PostBeginPlay()
 
 
 // Function GameFramework.GameCrowdAgent.SetMaxSpeed
-// (Defined, Iterator, Latent, Singular, Simulated, Exec, Event, Operator, HasOptionalParms)
+// (Final, Defined, Latent, PreOperator, Singular, NetReliable, Native, Event, Operator, HasOptionalParms)
 
 void AGameCrowdAgent::SetMaxSpeed()
 {
@@ -2330,6 +2350,7 @@ void AGameCrowdAgent::SetMaxSpeed()
 	AGameCrowdAgent_SetMaxSpeed_Params params;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -2338,7 +2359,7 @@ void AGameCrowdAgent::SetMaxSpeed()
 
 
 // Function GameFramework.GameCrowdAgent.SetCurrentDestination
-// (Final, Defined, Iterator, Latent, Singular, NetReliable, Exec, Native, HasOptionalParms)
+// (Final, Latent, Singular, Net, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // class AGameCrowdDestination*   NewDest                        (Parm)
 
@@ -2359,7 +2380,7 @@ void AGameCrowdAgent::SetCurrentDestination(class AGameCrowdDestination* NewDest
 
 
 // Function GameFramework.GameCrowdAgent.WaitForGroupMembers
-// (Final, Iterator, Latent, PreOperator, Singular, NetReliable, Exec, Native, HasOptionalParms)
+// (Final, Defined, Iterator, PreOperator, Singular, Net, NetReliable, Exec, Native, HasOptionalParms)
 
 void AGameCrowdAgent::WaitForGroupMembers()
 {
@@ -2377,7 +2398,7 @@ void AGameCrowdAgent::WaitForGroupMembers()
 
 
 // Function GameFramework.GameCrowdAgent.PickBehaviorFrom
-// (PreOperator, Singular, Net, Exec, Event, Operator, HasOptionalParms)
+// (Final, Iterator, Latent, PreOperator, Singular, Net, NetReliable, Simulated, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // TArray<struct FBehaviorEntry>  BehaviorList                   (Parm, NeedCtorLink)
 // struct FVector                 BestCameraLoc                  (OptionalParm, Parm)
@@ -2402,7 +2423,7 @@ bool AGameCrowdAgent::PickBehaviorFrom(TArray<struct FBehaviorEntry> BehaviorLis
 
 
 // Function GameFramework.GameCrowdAgent.IsPanicked
-// (Final, Defined, Iterator, Latent, PreOperator, Singular, Simulated, Event, Operator, HasOptionalParms)
+// (Iterator, Latent, Net, NetReliable, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -2423,7 +2444,7 @@ bool AGameCrowdAgent::IsPanicked()
 
 
 // Function GameFramework.GameCrowdAgent.FellOutOfWorld
-// (Final, Defined, Iterator, Net, NetReliable, Native, HasOptionalParms)
+// (Final, Simulated, Native, HasOptionalParms)
 // Parameters:
 // class UClass*                  dmgType                        (Parm)
 
@@ -2444,7 +2465,7 @@ void AGameCrowdAgent::FellOutOfWorld(class UClass* dmgType)
 
 
 // Function GameFramework.GameCrowdAgent.GetCollisionExtent
-// (Iterator, Latent, PreOperator, Singular, Exec, Event, Static)
+// (Final, Latent, Net, NetReliable, Simulated, Exec, Event, Static)
 // Parameters:
 // struct FVector                 ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -2465,7 +2486,7 @@ struct FVector AGameCrowdAgent::STATIC_GetCollisionExtent()
 
 
 // Function GameFramework.GameCrowdAgentSkeletal.CreateAttachments
-// (Defined, PreOperator, Singular, Net, Simulated, Exec, Native, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, Latent, PreOperator, Singular, Net, NetReliable, Event, Operator, HasOptionalParms)
 
 void AGameCrowdAgentSkeletal::CreateAttachments()
 {
@@ -2474,7 +2495,6 @@ void AGameCrowdAgentSkeletal::CreateAttachments()
 	AGameCrowdAgentSkeletal_CreateAttachments_Params params;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -2483,7 +2503,7 @@ void AGameCrowdAgentSkeletal::CreateAttachments()
 
 
 // Function GameFramework.GameCrowdAgentSkeletal.OnAnimEnd
-// (Final, Singular, Net, Simulated, Native, HasOptionalParms)
+// (Final, Defined, Latent, PreOperator, NetReliable, Simulated, Native, HasOptionalParms)
 // Parameters:
 // class UAnimNodeSequence*       SeqNode                        (Parm)
 // float                          PlayedTime                     (Parm)
@@ -2508,7 +2528,7 @@ void AGameCrowdAgentSkeletal::OnAnimEnd(class UAnimNodeSequence* SeqNode, float 
 
 
 // Function GameFramework.GameCrowdAgentSkeletal.StopIdleAnimation
-// (Defined, PreOperator, Singular, NetReliable, Exec, Native, HasOptionalParms)
+// (Iterator, Latent, Singular, Net, NetReliable, Exec, Native, HasOptionalParms)
 
 void AGameCrowdAgentSkeletal::StopIdleAnimation()
 {
@@ -2526,7 +2546,7 @@ void AGameCrowdAgentSkeletal::StopIdleAnimation()
 
 
 // Function GameFramework.GameCrowdAgentSkeletal.PlayIdleAnimation
-// (Latent, Singular, NetReliable, Exec, Native, HasOptionalParms)
+// (Defined, Singular, Net, NetReliable, Exec, Native, HasOptionalParms)
 
 void AGameCrowdAgentSkeletal::PlayIdleAnimation()
 {
@@ -2544,7 +2564,7 @@ void AGameCrowdAgentSkeletal::PlayIdleAnimation()
 
 
 // Function GameFramework.GameCrowdAgentSkeletal.ClearLatentAnimation
-// (Final, Defined, Iterator, PreOperator, Singular, Net, Exec, Native, HasOptionalParms)
+// (Final, PreOperator, Singular, NetReliable, Exec, Native, HasOptionalParms)
 
 void AGameCrowdAgentSkeletal::ClearLatentAnimation()
 {
@@ -2562,7 +2582,7 @@ void AGameCrowdAgentSkeletal::ClearLatentAnimation()
 
 
 // Function GameFramework.GameCrowdAgentSkeletal.OnPlayAgentAnimation
-// (Defined, Latent, PreOperator, Singular, Exec, Event, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, Net, NetReliable, Simulated, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // class USeqAct_PlayAgentAnimation* Action                         (Parm)
 
@@ -2582,7 +2602,7 @@ void AGameCrowdAgentSkeletal::OnPlayAgentAnimation(class USeqAct_PlayAgentAnimat
 
 
 // Function GameFramework.GameCrowdAgentSkeletal.SetRootMotion
-// (Final, PreOperator, Singular, Simulated, Exec, Event, Operator, HasOptionalParms)
+// (Defined, Iterator, Latent, PreOperator, Singular, NetReliable, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // bool                           bRootMotionEnabled             (Parm)
 
@@ -2594,6 +2614,7 @@ void AGameCrowdAgentSkeletal::SetRootMotion(bool bRootMotionEnabled)
 	params.bRootMotionEnabled = bRootMotionEnabled;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -2602,7 +2623,7 @@ void AGameCrowdAgentSkeletal::SetRootMotion(bool bRootMotionEnabled)
 
 
 // Function GameFramework.GameCrowdAgentSkeletal.PlayDeath
-// (Final, Iterator, PreOperator, Singular, Net, Exec, Event, Operator, HasOptionalParms)
+// (Defined, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FVector                 KillMomentum                   (Parm)
 
@@ -2614,6 +2635,7 @@ void AGameCrowdAgentSkeletal::PlayDeath(const struct FVector& KillMomentum)
 	params.KillMomentum = KillMomentum;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -2622,7 +2644,7 @@ void AGameCrowdAgentSkeletal::PlayDeath(const struct FVector& KillMomentum)
 
 
 // Function GameFramework.GameCrowdAgentSkeletal.SetLighting
-// (Final, Iterator, Latent, Singular, Simulated, Exec, Event, Operator, HasOptionalParms)
+// (Defined, Latent, PreOperator, Singular, NetReliable, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // bool                           bEnableLightEnvironment        (Parm)
 // struct FLightingChannelContainer AgentLightingChannel           (Parm)
@@ -2638,6 +2660,7 @@ void AGameCrowdAgentSkeletal::SetLighting(bool bEnableLightEnvironment, const st
 	params.bCastShadows = bCastShadows;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -2663,7 +2686,7 @@ void AGameCrowdAgentSkeletal::PostBeginPlay()
 
 
 // Function GameFramework.GameCrowdAgentSM.StopBehavior
-// (Final, PreOperator, Singular, NetReliable, Exec, Native, HasOptionalParms)
+// (Final, Defined, Latent, Singular, Net, NetReliable, Exec, Native, HasOptionalParms)
 
 void AGameCrowdAgentSM::StopBehavior()
 {
@@ -2681,7 +2704,7 @@ void AGameCrowdAgentSM::StopBehavior()
 
 
 // Function GameFramework.GameCrowdAgentSM.ActivateBehavior
-// (Defined, PreOperator, Singular, Net, Exec, Native, HasOptionalParms)
+// (Iterator, Latent, Singular, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // class UGameCrowdAgentBehavior* NewBehaviorArchetype           (Parm)
 // class AActor*                  LookAtActor                    (OptionalParm, Parm)
@@ -2704,7 +2727,7 @@ void AGameCrowdAgentSM::ActivateBehavior(class UGameCrowdAgentBehavior* NewBehav
 
 
 // Function GameFramework.GameCrowdAgentSM.ChangeDebugColor
-// (Defined, PreOperator, Net, Simulated, Exec, Native, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, Latent, PreOperator, Net, NetReliable, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FColor                  InC                            (Parm)
 
@@ -2716,7 +2739,6 @@ void AGameCrowdAgentSM::ChangeDebugColor(const struct FColor& InC)
 	params.InC = InC;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -2725,7 +2747,7 @@ void AGameCrowdAgentSM::ChangeDebugColor(const struct FColor& InC)
 
 
 // Function GameFramework.GameCrowdAgentSM.InitDebugColor
-// (Final, Defined, Iterator, Latent, Simulated, Event, Operator, HasOptionalParms)
+// (Iterator, Latent, PreOperator, NetReliable, Exec, Event, Operator, HasOptionalParms)
 
 void AGameCrowdAgentSM::InitDebugColor()
 {
@@ -2759,7 +2781,7 @@ void AGameCrowdAgentSM::PostBeginPlay()
 
 
 // Function GameFramework.GameCrowdAgentBehavior.AllowBehaviorAt
-// (Final, Defined, Latent, PreOperator, Net, NetReliable, Simulated, Native, Operator, HasOptionalParms)
+// (Latent, Singular, Net, Simulated, Exec, Native, Operator, HasOptionalParms)
 // Parameters:
 // class AGameCrowdDestination*   Destination                    (Parm)
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -2783,7 +2805,7 @@ bool UGameCrowdAgentBehavior::AllowBehaviorAt(class AGameCrowdDestination* Desti
 
 
 // Function GameFramework.GameCrowdAgentBehavior.AllowThisDestination
-// (Final, Iterator, Latent, PreOperator, Net, NetReliable, Simulated, Native, Operator, HasOptionalParms)
+// (Defined, Latent, Singular, Net, Simulated, Exec, Native, Operator, HasOptionalParms)
 // Parameters:
 // class AGameCrowdDestination*   Destination                    (Parm)
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -2807,7 +2829,7 @@ bool UGameCrowdAgentBehavior::AllowThisDestination(class AGameCrowdDestination* 
 
 
 // Function GameFramework.GameCrowdAgentBehavior.PropagateViralBehaviorTo
-// (Defined, Latent, Singular, NetReliable, Exec, Native, HasOptionalParms)
+// (Iterator, Singular, Net, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // class AGameCrowdAgent*         OtherAgent                     (Parm)
 
@@ -2828,7 +2850,7 @@ void UGameCrowdAgentBehavior::PropagateViralBehaviorTo(class AGameCrowdAgent* Ot
 
 
 // Function GameFramework.GameCrowdAgentBehavior.GetBehaviorInstigator
-// (Latent, PreOperator, Singular, NetReliable, Event, Operator, HasOptionalParms)
+// (Final, Iterator, Net, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // class AActor*                  ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -2849,7 +2871,7 @@ class AActor* UGameCrowdAgentBehavior::GetBehaviorInstigator()
 
 
 // Function GameFramework.GameCrowdAgentBehavior.ActivatedBy
-// (Final, Defined, Iterator, Latent, PreOperator, NetReliable, Simulated, Native, Operator, HasOptionalParms)
+// (Iterator, Latent, Singular, Simulated, Exec, Native, Operator, HasOptionalParms)
 // Parameters:
 // class AActor*                  NewActionTarget                (Parm)
 
@@ -2870,7 +2892,7 @@ void UGameCrowdAgentBehavior::ActivatedBy(class AActor* NewActionTarget)
 
 
 // Function GameFramework.GameCrowdAgentBehavior.GetDestinationActor
-// (Final, Iterator, Latent, PreOperator, Singular, NetReliable, Event, Operator, HasOptionalParms)
+// (Defined, Latent, Net, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // class AActor*                  ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -2891,7 +2913,7 @@ class AActor* UGameCrowdAgentBehavior::GetDestinationActor()
 
 
 // Function GameFramework.GameCrowdAgentBehavior.ChangingDestination
-// (Final, Defined, PreOperator, Net, Simulated, Exec, Native, Operator, HasOptionalParms)
+// (Singular, Net, NetReliable, Event, Operator, HasOptionalParms)
 // Parameters:
 // class AGameCrowdDestination*   NewDest                        (Parm)
 
@@ -2903,7 +2925,6 @@ void UGameCrowdAgentBehavior::ChangingDestination(class AGameCrowdDestination* N
 	params.NewDest = NewDest;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -2912,7 +2933,7 @@ void UGameCrowdAgentBehavior::ChangingDestination(class AGameCrowdDestination* N
 
 
 // Function GameFramework.GameCrowdAgentBehavior.GetBehaviorString
-// (Final, Latent, PreOperator, Singular, NetReliable, Event, Operator, HasOptionalParms)
+// (Defined, Iterator, Net, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FString                 ReturnValue                    (Parm, OutParm, ReturnParm, NeedCtorLink)
 
@@ -2933,7 +2954,7 @@ struct FString UGameCrowdAgentBehavior::GetBehaviorString()
 
 
 // Function GameFramework.GameCrowdAgentBehavior.OnAnimEnd
-// (Final, Singular, Net, Simulated, Native, HasOptionalParms)
+// (Final, Defined, Latent, PreOperator, NetReliable, Simulated, Native, HasOptionalParms)
 // Parameters:
 // class UAnimNodeSequence*       SeqNode                        (Parm)
 // float                          PlayedTime                     (Parm)
@@ -2958,7 +2979,7 @@ void UGameCrowdAgentBehavior::OnAnimEnd(class UAnimNodeSequence* SeqNode, float 
 
 
 // Function GameFramework.GameCrowdAgentBehavior.StopBehavior
-// (Final, PreOperator, Singular, NetReliable, Exec, Native, HasOptionalParms)
+// (Final, Defined, Latent, Singular, Net, NetReliable, Exec, Native, HasOptionalParms)
 
 void UGameCrowdAgentBehavior::StopBehavior()
 {
@@ -2976,7 +2997,7 @@ void UGameCrowdAgentBehavior::StopBehavior()
 
 
 // Function GameFramework.GameCrowdAgentBehavior.InitBehavior
-// (Iterator, Latent, Simulated, Event, Operator, HasOptionalParms)
+// (Final, Latent, PreOperator, NetReliable, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // class AGameCrowdAgent*         Agent                          (Parm)
 
@@ -2996,7 +3017,7 @@ void UGameCrowdAgentBehavior::InitBehavior(class AGameCrowdAgent* Agent)
 
 
 // Function GameFramework.GameCrowdAgentBehavior.HandleMovement
-// (Final, Iterator, Singular, Net, NetReliable, Event, Operator, HasOptionalParms)
+// (Defined, PreOperator, Singular, Net, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -3017,7 +3038,7 @@ bool UGameCrowdAgentBehavior::HandleMovement()
 
 
 // Function GameFramework.GameCrowdAgentBehavior.FinishedTargetRotation
-// (Final, NetReliable, Exec, Native, HasOptionalParms)
+// (Final, Defined, Latent, PreOperator, Singular, NetReliable, Exec, Native, HasOptionalParms)
 
 void UGameCrowdAgentBehavior::FinishedTargetRotation()
 {
@@ -3035,7 +3056,7 @@ void UGameCrowdAgentBehavior::FinishedTargetRotation()
 
 
 // Function GameFramework.GameCrowdAgentBehavior.CanBeUsedBy
-// (Final, Iterator, PreOperator, Singular, Simulated, Exec, Native, Operator, HasOptionalParms)
+// (Defined, Net, NetReliable, Event, Operator, HasOptionalParms)
 // Parameters:
 // class AGameCrowdAgent*         Agent                          (Parm)
 // struct FVector                 CameraLoc                      (Parm)
@@ -3050,7 +3071,6 @@ bool UGameCrowdAgentBehavior::CanBeUsedBy(class AGameCrowdAgent* Agent, const st
 	params.CameraLoc = CameraLoc;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -3081,7 +3101,7 @@ void UGameCrowdAgentBehavior::Tick(float DeltaTime)
 
 
 // Function GameFramework.GameCrowdAgentBehavior.ShouldEndIdle
-// (Final, Defined, Latent, PreOperator, Singular, Simulated, Exec, Event, Operator, HasOptionalParms)
+// (Latent, Net, NetReliable, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -3092,6 +3112,7 @@ bool UGameCrowdAgentBehavior::ShouldEndIdle()
 	UGameCrowdAgentBehavior_ShouldEndIdle_Params params;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -3102,7 +3123,7 @@ bool UGameCrowdAgentBehavior::ShouldEndIdle()
 
 
 // Function GameFramework.GameCrowdAgentBehavior.TriggerCrowdBehavior
-// (Defined, PreOperator, Net, NetReliable, Simulated, Exec, Event, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, Latent, PreOperator, Net, Simulated, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // TEnumAsByte<ECrowdBehaviorEvent> EventType                      (Parm)
 // class AActor*                  Instigator                     (Parm)
@@ -3127,6 +3148,7 @@ class AGameCrowdBehaviorPoint* UGameCrowdAgentBehavior::TriggerCrowdBehavior(TEn
 	params.bRequireLOS = bRequireLOS;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -3137,7 +3159,7 @@ class AGameCrowdBehaviorPoint* UGameCrowdAgentBehavior::TriggerCrowdBehavior(TEn
 
 
 // Function GameFramework.GameCrowdBehavior_PlayAnimation.GetBehaviorString
-// (Final, Latent, PreOperator, Singular, NetReliable, Event, Operator, HasOptionalParms)
+// (Defined, Iterator, Net, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FString                 ReturnValue                    (Parm, OutParm, ReturnParm, NeedCtorLink)
 
@@ -3158,7 +3180,7 @@ struct FString UGameCrowdBehavior_PlayAnimation::GetBehaviorString()
 
 
 // Function GameFramework.GameCrowdBehavior_PlayAnimation.StopBehavior
-// (Final, PreOperator, Singular, NetReliable, Exec, Native, HasOptionalParms)
+// (Final, Defined, Latent, Singular, Net, NetReliable, Exec, Native, HasOptionalParms)
 
 void UGameCrowdBehavior_PlayAnimation::StopBehavior()
 {
@@ -3176,7 +3198,7 @@ void UGameCrowdBehavior_PlayAnimation::StopBehavior()
 
 
 // Function GameFramework.GameCrowdBehavior_PlayAnimation.PlayAgentAnimationNow
-// (Iterator, PreOperator, Singular, Net, Exec, Event, Operator, HasOptionalParms)
+// (Final, Native, Event, Operator, HasOptionalParms)
 
 void UGameCrowdBehavior_PlayAnimation::PlayAgentAnimationNow()
 {
@@ -3185,6 +3207,7 @@ void UGameCrowdBehavior_PlayAnimation::PlayAgentAnimationNow()
 	UGameCrowdBehavior_PlayAnimation_PlayAgentAnimationNow_Params params;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -3193,7 +3216,7 @@ void UGameCrowdBehavior_PlayAnimation::PlayAgentAnimationNow()
 
 
 // Function GameFramework.GameCrowdBehavior_PlayAnimation.OnAnimEnd
-// (Final, Singular, Net, Simulated, Native, HasOptionalParms)
+// (Final, Defined, Latent, PreOperator, NetReliable, Simulated, Native, HasOptionalParms)
 // Parameters:
 // class UAnimNodeSequence*       SeqNode                        (Parm)
 // float                          PlayedTime                     (Parm)
@@ -3218,7 +3241,7 @@ void UGameCrowdBehavior_PlayAnimation::OnAnimEnd(class UAnimNodeSequence* SeqNod
 
 
 // Function GameFramework.GameCrowdBehavior_PlayAnimation.SetSequenceOutput
-// (Iterator, PreOperator, Singular, Simulated, Exec, Event, Operator, HasOptionalParms)
+// (Final, Net, NetReliable, Native, Event, Operator, HasOptionalParms)
 
 void UGameCrowdBehavior_PlayAnimation::SetSequenceOutput()
 {
@@ -3227,6 +3250,7 @@ void UGameCrowdBehavior_PlayAnimation::SetSequenceOutput()
 	UGameCrowdBehavior_PlayAnimation_SetSequenceOutput_Params params;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -3235,7 +3259,7 @@ void UGameCrowdBehavior_PlayAnimation::SetSequenceOutput()
 
 
 // Function GameFramework.GameCrowdBehavior_PlayAnimation.FinishedTargetRotation
-// (Final, NetReliable, Exec, Native, HasOptionalParms)
+// (Final, Defined, Latent, PreOperator, Singular, NetReliable, Exec, Native, HasOptionalParms)
 
 void UGameCrowdBehavior_PlayAnimation::FinishedTargetRotation()
 {
@@ -3253,7 +3277,7 @@ void UGameCrowdBehavior_PlayAnimation::FinishedTargetRotation()
 
 
 // Function GameFramework.GameCrowdBehavior_PlayAnimation.InitBehavior
-// (Iterator, Latent, Simulated, Event, Operator, HasOptionalParms)
+// (Final, Latent, PreOperator, NetReliable, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // class AGameCrowdAgent*         Agent                          (Parm)
 
@@ -3273,7 +3297,7 @@ void UGameCrowdBehavior_PlayAnimation::InitBehavior(class AGameCrowdAgent* Agent
 
 
 // Function GameFramework.GameCrowdBehavior_RunFromPanic.GetBehaviorString
-// (Final, Latent, PreOperator, Singular, NetReliable, Event, Operator, HasOptionalParms)
+// (Defined, Iterator, Net, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FString                 ReturnValue                    (Parm, OutParm, ReturnParm, NeedCtorLink)
 
@@ -3294,7 +3318,7 @@ struct FString UGameCrowdBehavior_RunFromPanic::GetBehaviorString()
 
 
 // Function GameFramework.GameCrowdBehavior_RunFromPanic.AllowBehaviorAt
-// (Final, Defined, Latent, PreOperator, Net, NetReliable, Simulated, Native, Operator, HasOptionalParms)
+// (Latent, Singular, Net, Simulated, Exec, Native, Operator, HasOptionalParms)
 // Parameters:
 // class AGameCrowdDestination*   Destination                    (Parm)
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -3318,7 +3342,7 @@ bool UGameCrowdBehavior_RunFromPanic::AllowBehaviorAt(class AGameCrowdDestinatio
 
 
 // Function GameFramework.GameCrowdBehavior_RunFromPanic.AllowThisDestination
-// (Final, Iterator, Latent, PreOperator, Net, NetReliable, Simulated, Native, Operator, HasOptionalParms)
+// (Defined, Latent, Singular, Net, Simulated, Exec, Native, Operator, HasOptionalParms)
 // Parameters:
 // class AGameCrowdDestination*   Destination                    (Parm)
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -3342,7 +3366,7 @@ bool UGameCrowdBehavior_RunFromPanic::AllowThisDestination(class AGameCrowdDesti
 
 
 // Function GameFramework.GameCrowdBehavior_RunFromPanic.GetBehaviorInstigator
-// (Latent, PreOperator, Singular, NetReliable, Event, Operator, HasOptionalParms)
+// (Final, Iterator, Net, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // class AActor*                  ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -3363,7 +3387,7 @@ class AActor* UGameCrowdBehavior_RunFromPanic::GetBehaviorInstigator()
 
 
 // Function GameFramework.GameCrowdBehavior_RunFromPanic.StopBehavior
-// (Final, PreOperator, Singular, NetReliable, Exec, Native, HasOptionalParms)
+// (Final, Defined, Latent, Singular, Net, NetReliable, Exec, Native, HasOptionalParms)
 
 void UGameCrowdBehavior_RunFromPanic::StopBehavior()
 {
@@ -3381,7 +3405,7 @@ void UGameCrowdBehavior_RunFromPanic::StopBehavior()
 
 
 // Function GameFramework.GameCrowdBehavior_RunFromPanic.InitBehavior
-// (Iterator, Latent, Simulated, Event, Operator, HasOptionalParms)
+// (Final, Latent, PreOperator, NetReliable, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // class AGameCrowdAgent*         Agent                          (Parm)
 
@@ -3401,7 +3425,7 @@ void UGameCrowdBehavior_RunFromPanic::InitBehavior(class AGameCrowdAgent* Agent)
 
 
 // Function GameFramework.GameCrowdBehavior_RunFromPanic.ActivatedBy
-// (Final, Defined, Iterator, Latent, PreOperator, NetReliable, Simulated, Native, Operator, HasOptionalParms)
+// (Iterator, Latent, Singular, Simulated, Exec, Native, Operator, HasOptionalParms)
 // Parameters:
 // class AActor*                  NewActionTarget                (Parm)
 
@@ -3422,7 +3446,7 @@ void UGameCrowdBehavior_RunFromPanic::ActivatedBy(class AActor* NewActionTarget)
 
 
 // Function GameFramework.GameCrowdBehavior_WaitForGroup.StopBehavior
-// (Final, PreOperator, Singular, NetReliable, Exec, Native, HasOptionalParms)
+// (Final, Defined, Latent, Singular, Net, NetReliable, Exec, Native, HasOptionalParms)
 
 void UGameCrowdBehavior_WaitForGroup::StopBehavior()
 {
@@ -3440,7 +3464,7 @@ void UGameCrowdBehavior_WaitForGroup::StopBehavior()
 
 
 // Function GameFramework.GameCrowdBehavior_WaitForGroup.ShouldEndIdle
-// (Final, Defined, Latent, PreOperator, Singular, Simulated, Exec, Event, Operator, HasOptionalParms)
+// (Latent, Net, NetReliable, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -3451,6 +3475,7 @@ bool UGameCrowdBehavior_WaitForGroup::ShouldEndIdle()
 	UGameCrowdBehavior_WaitForGroup_ShouldEndIdle_Params params;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -3461,7 +3486,7 @@ bool UGameCrowdBehavior_WaitForGroup::ShouldEndIdle()
 
 
 // Function GameFramework.GameCrowdBehavior_WaitForGroup.GetBehaviorString
-// (Final, Latent, PreOperator, Singular, NetReliable, Event, Operator, HasOptionalParms)
+// (Defined, Iterator, Net, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FString                 ReturnValue                    (Parm, OutParm, ReturnParm, NeedCtorLink)
 
@@ -3482,7 +3507,7 @@ struct FString UGameCrowdBehavior_WaitForGroup::GetBehaviorString()
 
 
 // Function GameFramework.GameCrowdBehavior_WaitForGroup.InitBehavior
-// (Iterator, Latent, Simulated, Event, Operator, HasOptionalParms)
+// (Final, Latent, PreOperator, NetReliable, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // class AGameCrowdAgent*         Agent                          (Parm)
 
@@ -3502,7 +3527,7 @@ void UGameCrowdBehavior_WaitForGroup::InitBehavior(class AGameCrowdAgent* Agent)
 
 
 // Function GameFramework.GameCrowdBehavior_WaitInQueue.StopBehavior
-// (Final, PreOperator, Singular, NetReliable, Exec, Native, HasOptionalParms)
+// (Final, Defined, Latent, Singular, Net, NetReliable, Exec, Native, HasOptionalParms)
 
 void UGameCrowdBehavior_WaitInQueue::StopBehavior()
 {
@@ -3520,7 +3545,7 @@ void UGameCrowdBehavior_WaitInQueue::StopBehavior()
 
 
 // Function GameFramework.GameCrowdBehavior_WaitInQueue.ShouldEndIdle
-// (Final, Defined, Latent, PreOperator, Singular, Simulated, Exec, Event, Operator, HasOptionalParms)
+// (Latent, Net, NetReliable, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -3531,6 +3556,7 @@ bool UGameCrowdBehavior_WaitInQueue::ShouldEndIdle()
 	UGameCrowdBehavior_WaitInQueue_ShouldEndIdle_Params params;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -3541,7 +3567,7 @@ bool UGameCrowdBehavior_WaitInQueue::ShouldEndIdle()
 
 
 // Function GameFramework.GameCrowdBehavior_WaitInQueue.GetBehaviorString
-// (Final, Latent, PreOperator, Singular, NetReliable, Event, Operator, HasOptionalParms)
+// (Defined, Iterator, Net, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FString                 ReturnValue                    (Parm, OutParm, ReturnParm, NeedCtorLink)
 
@@ -3562,7 +3588,7 @@ struct FString UGameCrowdBehavior_WaitInQueue::GetBehaviorString()
 
 
 // Function GameFramework.GameCrowdBehavior_WaitInQueue.GetDestinationActor
-// (Final, Iterator, Latent, PreOperator, Singular, NetReliable, Event, Operator, HasOptionalParms)
+// (Defined, Latent, Net, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // class AActor*                  ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -3583,7 +3609,7 @@ class AActor* UGameCrowdBehavior_WaitInQueue::GetDestinationActor()
 
 
 // Function GameFramework.GameCrowdBehavior_WaitInQueue.ChangingDestination
-// (Final, Defined, PreOperator, Net, Simulated, Exec, Native, Operator, HasOptionalParms)
+// (Singular, Net, NetReliable, Event, Operator, HasOptionalParms)
 // Parameters:
 // class AGameCrowdDestination*   NewDest                        (Parm)
 
@@ -3595,7 +3621,6 @@ void UGameCrowdBehavior_WaitInQueue::ChangingDestination(class AGameCrowdDestina
 	params.NewDest = NewDest;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -3604,7 +3629,7 @@ void UGameCrowdBehavior_WaitInQueue::ChangingDestination(class AGameCrowdDestina
 
 
 // Function GameFramework.GameCrowdBehavior_WaitInQueue.HandleMovement
-// (Final, Iterator, Singular, Net, NetReliable, Event, Operator, HasOptionalParms)
+// (Defined, PreOperator, Singular, Net, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -3625,7 +3650,7 @@ bool UGameCrowdBehavior_WaitInQueue::HandleMovement()
 
 
 // Function GameFramework.GameCrowdGroup.UpdateDestinations
-// (Iterator, Latent, Singular, Net, NetReliable, Simulated, Exec, Event, Operator, HasOptionalParms)
+// (Final, Latent, PreOperator, Singular, Net, Simulated, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // class AGameCrowdDestination*   NewDestination                 (Parm)
 
@@ -3637,6 +3662,7 @@ void UGameCrowdGroup::UpdateDestinations(class AGameCrowdDestination* NewDestina
 	params.NewDestination = NewDestination;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -3645,7 +3671,7 @@ void UGameCrowdGroup::UpdateDestinations(class AGameCrowdDestination* NewDestina
 
 
 // Function GameFramework.GameCrowdGroup.RemoveMember
-// (Defined, Latent, PreOperator, Net, NetReliable, Exec, Event, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, Singular, Net, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // class AGameCrowdAgent*         Agent                          (Parm)
 
@@ -3657,6 +3683,7 @@ void UGameCrowdGroup::RemoveMember(class AGameCrowdAgent* Agent)
 	params.Agent = Agent;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -3665,7 +3692,7 @@ void UGameCrowdGroup::RemoveMember(class AGameCrowdAgent* Agent)
 
 
 // Function GameFramework.GameCrowdGroup.AddMember
-// (Final, Defined, PreOperator, Singular, NetReliable, Simulated, Native, Operator, HasOptionalParms)
+// (Net, Simulated, Exec, Native, Operator, HasOptionalParms)
 // Parameters:
 // class AGameCrowdAgent*         Agent                          (Parm)
 
@@ -3732,7 +3759,7 @@ void AGameCrowdInfoVolume::Touch(class AActor* Other, class UPrimitiveComponent*
 
 
 // Function GameFramework.GameCrowdInteractionPoint.OnToggle
-// (Defined, Iterator, PreOperator, Singular, NetReliable, Simulated, Event, Operator, Static)
+// (Final, Defined, Net, Simulated, Exec, Event, Operator, Static)
 // Parameters:
 // class USeqAct_Toggle*          Action                         (Parm)
 
@@ -3778,7 +3805,7 @@ void AGameCrowdBehaviorPoint::Touch(class AActor* Other, class UPrimitiveCompone
 
 
 // Function GameFramework.GameCrowdBehaviorPoint.DestroySelf
-// (Final, Defined, Latent, Singular, Net, NetReliable, Simulated, Exec, Native, Operator, HasOptionalParms)
+// (Latent, PreOperator, Singular, Net, Simulated, Event, Operator, HasOptionalParms)
 
 void AGameCrowdBehaviorPoint::DestroySelf()
 {
@@ -3787,7 +3814,6 @@ void AGameCrowdBehaviorPoint::DestroySelf()
 	AGameCrowdBehaviorPoint_DestroySelf_Params params;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -3813,7 +3839,7 @@ void AGameCrowdBehaviorPoint::PostBeginPlay()
 
 
 // Function GameFramework.GameCrowdDestination.DrawDebug
-// (Final, Defined, Iterator, Latent, PreOperator, Singular, Net, Exec, Native, HasOptionalParms)
+// (Final, Latent, PreOperator, Singular, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // TArray<struct FCrowdSpawnerPlayerInfo> PlayerInfo                     (Const, Parm, OutParm, NeedCtorLink)
 // bool                           bPresistent                    (OptionalParm, Parm)
@@ -3838,7 +3864,7 @@ void AGameCrowdDestination::DrawDebug(bool bPresistent, TArray<struct FCrowdSpaw
 
 
 // Function GameFramework.GameCrowdDestination.GetDestinationRadius
-// (Final, Defined, Iterator, Latent, PreOperator, Singular, NetReliable, Event, Operator, HasOptionalParms)
+// (Iterator, Latent, Net, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // float                          ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -3859,7 +3885,7 @@ float AGameCrowdDestination::GetDestinationRadius()
 
 
 // Function GameFramework.GameCrowdDestination.PrioritizeSpawnPoint
-// (Final, Singular, NetReliable, Exec, Event, Operator, HasOptionalParms)
+// (Defined, Iterator, Latent, Singular, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // TArray<struct FCrowdSpawnerPlayerInfo> PlayerInfo                     (Const, Parm, OutParm, NeedCtorLink)
 // float                          MaxSpawnDist                   (Parm)
@@ -3872,6 +3898,7 @@ void AGameCrowdDestination::PrioritizeSpawnPoint(float MaxSpawnDist, TArray<stru
 	params.MaxSpawnDist = MaxSpawnDist;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -3883,7 +3910,7 @@ void AGameCrowdDestination::PrioritizeSpawnPoint(float MaxSpawnDist, TArray<stru
 
 
 // Function GameFramework.GameCrowdDestination.AnalyzeSpawnPoint
-// (Iterator, Singular, Net, NetReliable, Simulated, Native, Operator, HasOptionalParms)
+// (Final, PreOperator, Singular, Net, Simulated, Exec, Native, Operator, HasOptionalParms)
 // Parameters:
 // TArray<struct FCrowdSpawnerPlayerInfo> PlayerInfo                     (Const, Parm, OutParm, NeedCtorLink)
 // float                          MaxSpawnDistSq                 (Parm)
@@ -3915,7 +3942,7 @@ bool AGameCrowdDestination::AnalyzeSpawnPoint(float MaxSpawnDistSq, bool bForceN
 
 
 // Function GameFramework.GameCrowdDestination.GetSpawnPosition
-// (Final, Defined, Iterator, Latent, Net, NetReliable, Event, Operator, HasOptionalParms)
+// (Iterator, Latent, PreOperator, Net, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // class USeqAct_GameCrowdSpawner* Spawner                        (Parm)
 // struct FVector                 SpawnPos                       (Parm, OutParm)
@@ -3942,7 +3969,7 @@ void AGameCrowdDestination::GetSpawnPosition(class USeqAct_GameCrowdSpawner* Spa
 
 
 // Function GameFramework.GameCrowdDestination.GetSpawnRadius
-// (PreOperator, Net, NetReliable, Event, Operator, HasOptionalParms)
+// (Final, Iterator, Latent, PreOperator, Net, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // float                          ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -3963,7 +3990,7 @@ float AGameCrowdDestination::GetSpawnRadius()
 
 
 // Function GameFramework.GameCrowdDestination.AllowableDestinationFor
-// (Defined, Iterator, PreOperator, Singular, Net, Exec, Native, HasOptionalParms)
+// (PreOperator, Singular, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // class AGameCrowdAgent*         Agent                          (Parm)
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -3987,7 +4014,7 @@ bool AGameCrowdDestination::AllowableDestinationFor(class AGameCrowdAgent* Agent
 
 
 // Function GameFramework.GameCrowdDestination.AtCapacity
-// (Iterator, Singular, NetReliable, Exec, Native, Event)
+// (Defined, PreOperator, Singular, Operator)
 // Parameters:
 // unsigned char                  CheckCnt                       (OptionalParm, Parm)
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -4000,7 +4027,6 @@ bool AGameCrowdDestination::AtCapacity(unsigned char CheckCnt)
 	params.CheckCnt = CheckCnt;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -4011,7 +4037,7 @@ bool AGameCrowdDestination::AtCapacity(unsigned char CheckCnt)
 
 
 // Function GameFramework.GameCrowdDestination.IncrementCustomerCount
-// (Iterator, Latent, NetReliable, Exec, Native, HasOptionalParms)
+// (Defined, Iterator, Net, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // class AGameCrowdAgent*         ArrivingAgent                  (Parm)
 
@@ -4032,7 +4058,7 @@ void AGameCrowdDestination::IncrementCustomerCount(class AGameCrowdAgent* Arrivi
 
 
 // Function GameFramework.GameCrowdDestination.DecrementCustomerCount
-// (Defined, Iterator, Latent, PreOperator, Singular, Net, Exec, Native, HasOptionalParms)
+// (Latent, PreOperator, Singular, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // class AGameCrowdAgent*         DepartingAgent                 (Parm)
 
@@ -4053,7 +4079,7 @@ void AGameCrowdDestination::DecrementCustomerCount(class AGameCrowdAgent* Depart
 
 
 // Function GameFramework.GameCrowdDestination.PickNewDestinationFor
-// (Final, Defined, PreOperator, Singular, Net, Exec, Event, Operator, HasOptionalParms)
+// (Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // class AGameCrowdAgent*         Agent                          (Parm)
 // bool                           bIgnoreRestrictions            (Parm)
@@ -4067,6 +4093,7 @@ void AGameCrowdDestination::PickNewDestinationFor(class AGameCrowdAgent* Agent, 
 	params.bIgnoreRestrictions = bIgnoreRestrictions;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -4075,7 +4102,7 @@ void AGameCrowdDestination::PickNewDestinationFor(class AGameCrowdAgent* Agent, 
 
 
 // Function GameFramework.GameCrowdDestination.ReachedDestination
-// (Final, Defined, Latent, Singular, NetReliable, Exec, Native, HasOptionalParms)
+// (Final, Iterator, Singular, Net, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // class AGameCrowdAgent*         Agent                          (Parm)
 
@@ -4130,7 +4157,7 @@ void AGameCrowdDestination::PostBeginPlay()
 
 
 // Function GameFramework.GameCrowdDestination.ReachedByAgent
-// (Final, Defined, Net, NetReliable, Exec, Event, Operator, HasOptionalParms)
+// (PreOperator, Net, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // class AGameCrowdAgent*         Agent                          (Parm)
 // struct FVector                 TestPosition                   (Parm)
@@ -4147,6 +4174,7 @@ bool AGameCrowdDestination::ReachedByAgent(class AGameCrowdAgent* Agent, const s
 	params.bTestExactly = bTestExactly;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -4157,7 +4185,7 @@ bool AGameCrowdDestination::ReachedByAgent(class AGameCrowdAgent* Agent, const s
 
 
 // Function GameFramework.GameCrowdDestinationQueuePoint.HasCustomer
-// (Defined, Iterator, Singular, Net, NetReliable, Event, Operator, HasOptionalParms)
+// (Final, Defined, PreOperator, Singular, Net, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -4178,7 +4206,7 @@ bool AGameCrowdDestinationQueuePoint::HasCustomer()
 
 
 // Function GameFramework.GameCrowdDestinationQueuePoint.ClearQueue
-// (Final, Singular, Net, Simulated, Exec, Native, Operator, HasOptionalParms)
+// (Defined, Iterator, Latent, Singular, Net, NetReliable, Event, Operator, HasOptionalParms)
 // Parameters:
 // class AGameCrowdAgent*         OldCustomer                    (Parm)
 
@@ -4190,7 +4218,6 @@ void AGameCrowdDestinationQueuePoint::ClearQueue(class AGameCrowdAgent* OldCusto
 	params.OldCustomer = OldCustomer;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -4199,7 +4226,7 @@ void AGameCrowdDestinationQueuePoint::ClearQueue(class AGameCrowdAgent* OldCusto
 
 
 // Function GameFramework.GameCrowdDestinationQueuePoint.AddCustomer
-// (Defined, Iterator, Latent, Singular, NetReliable, Simulated, Native, Operator, HasOptionalParms)
+// (Final, Defined, Latent, PreOperator, Singular, Simulated, Exec, Native, Operator, HasOptionalParms)
 // Parameters:
 // class AGameCrowdAgent*         NewCustomer                    (Parm)
 // class AGameCrowdInteractionPoint* PreviousPosition               (Parm)
@@ -4222,7 +4249,7 @@ void AGameCrowdDestinationQueuePoint::AddCustomer(class AGameCrowdAgent* NewCust
 
 
 // Function GameFramework.GameCrowdDestinationQueuePoint.ActuallyAdvance
-// (Final, Iterator, Latent, Singular, NetReliable, Simulated, Native, Operator, HasOptionalParms)
+// (Defined, Latent, PreOperator, Singular, Simulated, Exec, Native, Operator, HasOptionalParms)
 
 void AGameCrowdDestinationQueuePoint::ActuallyAdvance()
 {
@@ -4240,7 +4267,7 @@ void AGameCrowdDestinationQueuePoint::ActuallyAdvance()
 
 
 // Function GameFramework.GameCrowdDestinationQueuePoint.AdvanceCustomerTo
-// (Iterator, Latent, PreOperator, Singular, NetReliable, Simulated, Native, Operator, HasOptionalParms)
+// (Final, Latent, Net, Simulated, Exec, Native, Operator, HasOptionalParms)
 // Parameters:
 // class AGameCrowdInteractionPoint* FrontPosition                  (Parm)
 
@@ -4261,7 +4288,7 @@ void AGameCrowdDestinationQueuePoint::AdvanceCustomerTo(class AGameCrowdInteract
 
 
 // Function GameFramework.GameCrowdDestinationQueuePoint.ReachedDestination
-// (Final, Defined, Latent, Singular, NetReliable, Exec, Native, HasOptionalParms)
+// (Final, Iterator, Singular, Net, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // class AGameCrowdAgent*         Agent                          (Parm)
 
@@ -4282,7 +4309,7 @@ void AGameCrowdDestinationQueuePoint::ReachedDestination(class AGameCrowdAgent* 
 
 
 // Function GameFramework.GameCrowdDestinationQueuePoint.HasSpace
-// (Latent, Singular, Net, NetReliable, Event, Operator, HasOptionalParms)
+// (Final, Iterator, PreOperator, Singular, Net, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -4303,7 +4330,7 @@ bool AGameCrowdDestinationQueuePoint::HasSpace()
 
 
 // Function GameFramework.GameCrowdDestinationQueuePoint.QueueReachedBy
-// (Iterator, PreOperator, Singular, NetReliable, Exec, Event, Operator, HasOptionalParms)
+// (Final, Net, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // class AGameCrowdAgent*         Agent                          (Parm)
 // struct FVector                 TestPosition                   (Parm)
@@ -4318,6 +4345,7 @@ bool AGameCrowdDestinationQueuePoint::QueueReachedBy(class AGameCrowdAgent* Agen
 	params.TestPosition = TestPosition;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -4328,7 +4356,7 @@ bool AGameCrowdDestinationQueuePoint::QueueReachedBy(class AGameCrowdAgent* Agen
 
 
 // Function GameFramework.GameCrowdPopulationManager.CreateNewAgent
-// (Iterator, Latent, PreOperator, Singular, Net, Exec, Native, HasOptionalParms)
+// (Defined, Iterator, PreOperator, Singular, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // struct FCrowdSpawnInfoItem     Item                           (Parm, OutParm, NeedCtorLink)
 // class AGameCrowdDestination*   SpawnLoc                       (Parm)
@@ -4360,7 +4388,7 @@ class AGameCrowdAgent* AGameCrowdPopulationManager::CreateNewAgent(class AGameCr
 
 
 // Function GameFramework.GameCrowdPopulationManager.Warmup
-// (Final, Latent, PreOperator, Native, Event, Operator, HasOptionalParms)
+// (Defined, Iterator, Singular, NetReliable, Simulated, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FCrowdSpawnInfoItem     Item                           (Parm, OutParm, NeedCtorLink)
 // int                            WarmupNum                      (Parm)
@@ -4388,7 +4416,7 @@ bool AGameCrowdPopulationManager::Warmup(int WarmupNum, struct FCrowdSpawnInfoIt
 
 
 // Function GameFramework.GameCrowdPopulationManager.SpawnAgent
-// (Final, Iterator, Latent, Net, Simulated, Exec, Event, Operator, HasOptionalParms)
+// (Defined, Latent, PreOperator, Net, NetReliable, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FCrowdSpawnInfoItem     Item                           (Parm, OutParm, NeedCtorLink)
 // class AGameCrowdDestination*   SpawnLoc                       (Parm)
@@ -4402,6 +4430,7 @@ class AGameCrowdAgent* AGameCrowdPopulationManager::SpawnAgent(class AGameCrowdD
 	params.SpawnLoc = SpawnLoc;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -4415,7 +4444,7 @@ class AGameCrowdAgent* AGameCrowdPopulationManager::SpawnAgent(class AGameCrowdD
 
 
 // Function GameFramework.GameCrowdPopulationManager.SpawnAgentByIdx
-// (Defined, Iterator, Latent, Net, Simulated, Exec, Event, Operator, HasOptionalParms)
+// (Final, Defined, Latent, PreOperator, Net, NetReliable, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // int                            SpawnerIdx                     (Parm)
 // class AGameCrowdDestination*   SpawnLoc                       (Parm)
@@ -4430,6 +4459,7 @@ class AGameCrowdAgent* AGameCrowdPopulationManager::SpawnAgentByIdx(int SpawnerI
 	params.SpawnLoc = SpawnLoc;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -4440,7 +4470,7 @@ class AGameCrowdAgent* AGameCrowdPopulationManager::SpawnAgentByIdx(int SpawnerI
 
 
 // Function GameFramework.GameCrowdPopulationManager.ValidateSpawnAt
-// (Final, Defined, Iterator, Latent, PreOperator, Singular, Net, NetReliable, Simulated, Exec, Event, Operator, HasOptionalParms)
+// (Iterator, Latent, NetReliable, Simulated, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FCrowdSpawnInfoItem     Item                           (Parm, OutParm, NeedCtorLink)
 // class AGameCrowdDestination*   Candidate                      (Parm)
@@ -4454,6 +4484,7 @@ bool AGameCrowdPopulationManager::ValidateSpawnAt(class AGameCrowdDestination* C
 	params.Candidate = Candidate;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -4467,7 +4498,7 @@ bool AGameCrowdPopulationManager::ValidateSpawnAt(class AGameCrowdDestination* C
 
 
 // Function GameFramework.GameCrowdPopulationManager.AddPrioritizedSpawnPoint
-// (Iterator, PreOperator, Singular, NetReliable, Simulated, Native, Operator, HasOptionalParms)
+// (Final, Net, Simulated, Exec, Native, Operator, HasOptionalParms)
 // Parameters:
 // struct FCrowdSpawnInfoItem     Item                           (Parm, OutParm, NeedCtorLink)
 // class AGameCrowdDestination*   GCD                            (Parm)
@@ -4492,7 +4523,7 @@ void AGameCrowdPopulationManager::AddPrioritizedSpawnPoint(class AGameCrowdDesti
 
 
 // Function GameFramework.GameCrowdPopulationManager.AnalyzeSpawnPoints
-// (Final, Iterator, Singular, Net, NetReliable, Simulated, Native, Operator, HasOptionalParms)
+// (Defined, PreOperator, Singular, Net, Simulated, Exec, Native, Operator, HasOptionalParms)
 // Parameters:
 // struct FCrowdSpawnInfoItem     Item                           (Parm, OutParm, NeedCtorLink)
 // int                            StartIndex                     (Parm)
@@ -4519,7 +4550,7 @@ void AGameCrowdPopulationManager::AnalyzeSpawnPoints(int StartIndex, int NumToUp
 
 
 // Function GameFramework.GameCrowdPopulationManager.PrioritizeSpawnPoints
-// (Final, Latent, Singular, NetReliable, Exec, Native, HasOptionalParms)
+// (Final, Defined, Singular, Net, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // struct FCrowdSpawnInfoItem     Item                           (Parm, OutParm, NeedCtorLink)
 // float                          DeltaTime                      (Parm)
@@ -4544,7 +4575,7 @@ void AGameCrowdPopulationManager::PrioritizeSpawnPoints(float DeltaTime, struct 
 
 
 // Function GameFramework.GameCrowdPopulationManager.StaticGetPlayerInfo
-// (Final, Iterator, PreOperator, Singular, Net, Simulated, Exec, Event, Operator, HasOptionalParms)
+// (Defined, Simulated, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // TArray<struct FCrowdSpawnerPlayerInfo> out_PlayerInfo                 (Parm, OutParm, NeedCtorLink)
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -4556,6 +4587,7 @@ bool AGameCrowdPopulationManager::StaticGetPlayerInfo(TArray<struct FCrowdSpawne
 	AGameCrowdPopulationManager_StaticGetPlayerInfo_Params params;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -4569,7 +4601,7 @@ bool AGameCrowdPopulationManager::StaticGetPlayerInfo(TArray<struct FCrowdSpawne
 
 
 // Function GameFramework.GameCrowdPopulationManager.GetPlayerInfo
-// (Iterator, Latent, Net, NetReliable, Event, Operator, HasOptionalParms)
+// (Final, Latent, PreOperator, Net, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -4590,7 +4622,7 @@ bool AGameCrowdPopulationManager::GetPlayerInfo()
 
 
 // Function GameFramework.GameCrowdPopulationManager.PickSpawnPoint
-// (Final, Defined, Iterator, Singular, NetReliable, Exec, Native, HasOptionalParms)
+// (Final, Singular, Net, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // struct FCrowdSpawnInfoItem     Item                           (Parm, OutParm, NeedCtorLink)
 // class AGameCrowdDestination*   ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -4616,7 +4648,7 @@ class AGameCrowdDestination* AGameCrowdPopulationManager::PickSpawnPoint(struct 
 
 
 // Function GameFramework.GameCrowdPopulationManager.UpdateSpawner
-// (Iterator, Latent, PreOperator, Singular, NetReliable, Exec, Native, HasOptionalParms)
+// (Defined, Iterator, PreOperator, Singular, Net, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // struct FCrowdSpawnInfoItem     Item                           (Parm, OutParm, NeedCtorLink)
 // float                          DeltaTime                      (Parm)
@@ -4644,7 +4676,7 @@ bool AGameCrowdPopulationManager::UpdateSpawner(float DeltaTime, struct FCrowdSp
 
 
 // Function GameFramework.GameCrowdPopulationManager.UpdateAllSpawners
-// (Final, Latent, Singular, Net, NetReliable, Simulated, Exec, Event, Operator, HasOptionalParms)
+// (Defined, Iterator, PreOperator, Singular, Net, Simulated, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // float                          DeltaTime                      (Parm)
 
@@ -4656,6 +4688,7 @@ void AGameCrowdPopulationManager::UpdateAllSpawners(float DeltaTime)
 	params.DeltaTime = DeltaTime;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -4684,7 +4717,7 @@ void AGameCrowdPopulationManager::Tick(float DeltaTime)
 
 
 // Function GameFramework.GameCrowdPopulationManager.ShouldDebugDestinations
-// (Defined, Latent, PreOperator, Singular, Simulated, Exec, Event, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, Net, NetReliable, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -4695,6 +4728,7 @@ bool AGameCrowdPopulationManager::ShouldDebugDestinations()
 	AGameCrowdPopulationManager_ShouldDebugDestinations_Params params;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -4705,7 +4739,7 @@ bool AGameCrowdPopulationManager::ShouldDebugDestinations()
 
 
 // Function GameFramework.GameCrowdPopulationManager.IsSpawningActive
-// (Net, Simulated, Event, Operator, HasOptionalParms)
+// (Final, Iterator, Latent, Net, NetReliable, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -4726,7 +4760,7 @@ bool AGameCrowdPopulationManager::IsSpawningActive()
 
 
 // Function GameFramework.GameCrowdPopulationManager.DisplayDebug
-// (Final, Latent, Net, NetReliable, Simulated, Static)
+// (Defined, Iterator, PreOperator, Net, Simulated, Exec, Static)
 // Parameters:
 // class AHUD*                    HUD                            (Parm)
 // float                          out_YL                         (Parm, OutParm)
@@ -4753,7 +4787,7 @@ void AGameCrowdPopulationManager::STATIC_DisplayDebug(class AHUD* HUD, float* ou
 
 
 // Function GameFramework.GameCrowdPopulationManager.AgentDestroyed
-// (Iterator, Net, NetReliable, Simulated, Native, Operator, HasOptionalParms)
+// (Final, PreOperator, Net, Simulated, Exec, Native, Operator, HasOptionalParms)
 // Parameters:
 // class AGameCrowdAgent*         Agent                          (Parm)
 
@@ -4774,7 +4808,7 @@ void AGameCrowdPopulationManager::AgentDestroyed(class AGameCrowdAgent* Agent)
 
 
 // Function GameFramework.GameCrowdPopulationManager.FlushAllAgents
-// (Iterator, NetReliable, Exec, Native, HasOptionalParms)
+// (Defined, Iterator, Latent, PreOperator, Singular, NetReliable, Exec, Native, HasOptionalParms)
 
 void AGameCrowdPopulationManager::FlushAllAgents()
 {
@@ -4792,7 +4826,7 @@ void AGameCrowdPopulationManager::FlushAllAgents()
 
 
 // Function GameFramework.GameCrowdPopulationManager.FlushAgents
-// (Final, Defined, NetReliable, Exec, Native, HasOptionalParms)
+// (Final, Iterator, Latent, PreOperator, Singular, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // struct FCrowdSpawnInfoItem     Item                           (Parm, NeedCtorLink)
 
@@ -4813,7 +4847,7 @@ void AGameCrowdPopulationManager::FlushAgents(const struct FCrowdSpawnInfoItem& 
 
 
 // Function GameFramework.GameCrowdPopulationManager.CreateSpawner
-// (Final, Iterator, Latent, PreOperator, Singular, Net, Exec, Native, HasOptionalParms)
+// (Final, Defined, Iterator, PreOperator, Singular, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // class USeqAct_GameCrowdPopulationManagerToggle* inAction                       (Parm)
 // int                            ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -4837,7 +4871,7 @@ int AGameCrowdPopulationManager::CreateSpawner(class USeqAct_GameCrowdPopulation
 
 
 // Function GameFramework.GameCrowdPopulationManager.SetCrowdInfoVolume
-// (Iterator, Singular, Simulated, Exec, Event, Operator, HasOptionalParms)
+// (Final, PreOperator, Singular, NetReliable, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // class AGameCrowdInfoVolume*    Vol                            (Parm)
 
@@ -4849,6 +4883,7 @@ void AGameCrowdPopulationManager::SetCrowdInfoVolume(class AGameCrowdInfoVolume*
 	params.Vol = Vol;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -4857,7 +4892,7 @@ void AGameCrowdPopulationManager::SetCrowdInfoVolume(class AGameCrowdInfoVolume*
 
 
 // Function GameFramework.GameCrowdPopulationManager.RemoveSpawnPoint
-// (Final, Defined, Latent, PreOperator, Net, NetReliable, Exec, Event, Operator, HasOptionalParms)
+// (Latent, Singular, Net, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // class AGameCrowdDestination*   GCD                            (Parm)
 
@@ -4869,6 +4904,7 @@ void AGameCrowdPopulationManager::RemoveSpawnPoint(class AGameCrowdDestination* 
 	params.GCD = GCD;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -4877,7 +4913,7 @@ void AGameCrowdPopulationManager::RemoveSpawnPoint(class AGameCrowdDestination* 
 
 
 // Function GameFramework.GameCrowdPopulationManager.AddSpawnPoint
-// (Defined, Iterator, PreOperator, Singular, NetReliable, Simulated, Native, Operator, HasOptionalParms)
+// (Final, Defined, Net, Simulated, Exec, Native, Operator, HasOptionalParms)
 // Parameters:
 // class AGameCrowdDestination*   GCD                            (Parm)
 
@@ -4898,7 +4934,7 @@ void AGameCrowdPopulationManager::AddSpawnPoint(class AGameCrowdDestination* GCD
 
 
 // Function GameFramework.GameCrowdPopulationManager.NotifyPathChanged
-// (Latent, PreOperator, Net, Simulated, Native, HasOptionalParms)
+// (Defined, PreOperator, NetReliable, Simulated, Native, HasOptionalParms)
 
 void AGameCrowdPopulationManager::NotifyPathChanged()
 {
@@ -4933,7 +4969,7 @@ void AGameCrowdPopulationManager::PostBeginPlay()
 
 
 // Function GameFramework.GameCrowdReplicationActor.ReplicatedEvent
-// (Final, Latent, PreOperator, Net, NetReliable, Simulated, Native, HasOptionalParms)
+// (Final, Defined, PreOperator, Exec, Native, HasOptionalParms)
 // Parameters:
 // struct FName                   VarName                        (Parm)
 
@@ -4954,7 +4990,7 @@ void AGameCrowdReplicationActor::ReplicatedEvent(const struct FName& VarName)
 
 
 // Function GameFramework.GameExplosionActor.ChooseCameraShake
-// (Defined, Latent, PreOperator, Net, Simulated, Exec, Native, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, Singular, Net, NetReliable, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FVector                 Epicenter                      (Parm)
 // class APlayerController*       PC                             (Parm)
@@ -4969,7 +5005,6 @@ class UCameraShake* AGameExplosionActor::ChooseCameraShake(const struct FVector&
 	params.PC = PC;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -4980,30 +5015,13 @@ class UCameraShake* AGameExplosionActor::ChooseCameraShake(const struct FVector&
 
 
 // Function GameFramework.GameExplosionActor.SpawnCameraLensEffects
-// (PreOperator, Net, Simulated, Exec, Event, Operator, HasOptionalParms)
+// (Final, Iterator, Latent, PreOperator, Net, NetReliable, Native, Event, Operator, HasOptionalParms)
 
 void AGameExplosionActor::SpawnCameraLensEffects()
 {
 	static auto fn = UObject::FindObject<UFunction>("Function GameFramework.GameExplosionActor.SpawnCameraLensEffects");
 
 	AGameExplosionActor_SpawnCameraLensEffects_Params params;
-
-	auto flags = fn->FunctionFlags;
-
-	UObject::ProcessEvent(fn, &params);
-
-	fn->FunctionFlags = flags;
-}
-
-
-// Function GameFramework.GameExplosionActor.DoExplosionCameraEffects
-// (Defined, Iterator, Latent, PreOperator, Singular, Net, NetReliable, Simulated, Exec, Native, Operator, HasOptionalParms)
-
-void AGameExplosionActor::DoExplosionCameraEffects()
-{
-	static auto fn = UObject::FindObject<UFunction>("Function GameFramework.GameExplosionActor.DoExplosionCameraEffects");
-
-	AGameExplosionActor_DoExplosionCameraEffects_Params params;
 
 	auto flags = fn->FunctionFlags;
 	fn->FunctionFlags |= 0x400;
@@ -5014,8 +5032,25 @@ void AGameExplosionActor::DoExplosionCameraEffects()
 }
 
 
+// Function GameFramework.GameExplosionActor.DoExplosionCameraEffects
+// (Final, Defined, Latent, NetReliable, Simulated, Event, Operator, HasOptionalParms)
+
+void AGameExplosionActor::DoExplosionCameraEffects()
+{
+	static auto fn = UObject::FindObject<UFunction>("Function GameFramework.GameExplosionActor.DoExplosionCameraEffects");
+
+	AGameExplosionActor_DoExplosionCameraEffects_Params params;
+
+	auto flags = fn->FunctionFlags;
+
+	UObject::ProcessEvent(fn, &params);
+
+	fn->FunctionFlags = flags;
+}
+
+
 // Function GameFramework.GameExplosionActor.DrawDebug
-// (Final, Defined, Iterator, Latent, PreOperator, Singular, Net, Exec, Native, HasOptionalParms)
+// (Final, Latent, PreOperator, Singular, NetReliable, Exec, Native, HasOptionalParms)
 
 void AGameExplosionActor::DrawDebug()
 {
@@ -5033,7 +5068,7 @@ void AGameExplosionActor::DrawDebug()
 
 
 // Function GameFramework.GameExplosionActor.DelayedExplosionDamage
-// (Iterator, PreOperator, Net, NetReliable, Simulated, Exec, Native, Operator, HasOptionalParms)
+// (Final, Singular, Net, Simulated, Event, Operator, HasOptionalParms)
 
 void AGameExplosionActor::DelayedExplosionDamage()
 {
@@ -5042,7 +5077,6 @@ void AGameExplosionActor::DelayedExplosionDamage()
 	AGameExplosionActor_DelayedExplosionDamage_Params params;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -5051,7 +5085,7 @@ void AGameExplosionActor::DelayedExplosionDamage()
 
 
 // Function GameFramework.GameExplosionActor.Explode
-// (Iterator, Net, NetReliable, Native, HasOptionalParms)
+// (Defined, Iterator, Latent, PreOperator, Singular, Net, NetReliable, Native, HasOptionalParms)
 // Parameters:
 // class UGameExplosion*          NewExplosionTemplate           (Parm)
 // struct FVector                 Direction                      (OptionalParm, Parm)
@@ -5074,7 +5108,7 @@ void AGameExplosionActor::Explode(class UGameExplosion* NewExplosionTemplate, co
 
 
 // Function GameFramework.GameExplosionActor.SpawnExplosionFogVolume
-// (Defined, Iterator, PreOperator, Net, Simulated, Exec, Event, Operator, HasOptionalParms)
+// (Final, Defined, Singular, Net, NetReliable, Native, Event, Operator, HasOptionalParms)
 
 void AGameExplosionActor::SpawnExplosionFogVolume()
 {
@@ -5083,6 +5117,7 @@ void AGameExplosionActor::SpawnExplosionFogVolume()
 	AGameExplosionActor_SpawnExplosionFogVolume_Params params;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -5091,7 +5126,7 @@ void AGameExplosionActor::SpawnExplosionFogVolume()
 
 
 // Function GameFramework.GameExplosionActor.SpawnExplosionDecal
-// (Final, Iterator, PreOperator, Net, Simulated, Exec, Event, Operator, HasOptionalParms)
+// (Defined, Singular, Net, NetReliable, Native, Event, Operator, HasOptionalParms)
 
 void AGameExplosionActor::SpawnExplosionDecal()
 {
@@ -5100,6 +5135,7 @@ void AGameExplosionActor::SpawnExplosionDecal()
 	AGameExplosionActor_SpawnExplosionDecal_Params params;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -5108,7 +5144,7 @@ void AGameExplosionActor::SpawnExplosionDecal()
 
 
 // Function GameFramework.GameExplosionActor.SpawnExplosionParticleSystem
-// (Final, Defined, Iterator, PreOperator, Net, Simulated, Exec, Event, Operator, HasOptionalParms)
+// (Iterator, Singular, Net, NetReliable, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // class UParticleSystem*         Template                       (Parm)
 
@@ -5120,6 +5156,7 @@ void AGameExplosionActor::SpawnExplosionParticleSystem(class UParticleSystem* Te
 	params.Template = Template;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -5128,7 +5165,7 @@ void AGameExplosionActor::SpawnExplosionParticleSystem(class UParticleSystem* Te
 
 
 // Function GameFramework.GameExplosionActor.UpdateExplosionTemplateWithPerMaterialFX
-// (Final, Iterator, Latent, Singular, Net, NetReliable, Simulated, Exec, Event, Operator, HasOptionalParms)
+// (Defined, Latent, PreOperator, Singular, Net, Simulated, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // class UPhysicalMaterial*       PhysMaterial                   (Parm)
 
@@ -5140,6 +5177,7 @@ void AGameExplosionActor::UpdateExplosionTemplateWithPerMaterialFX(class UPhysic
 	params.PhysMaterial = PhysMaterial;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -5148,7 +5186,7 @@ void AGameExplosionActor::UpdateExplosionTemplateWithPerMaterialFX(class UPhysic
 
 
 // Function GameFramework.GameExplosionActor.SpecialCringeEffectsFor
-// (Final, Singular, Net, Simulated, Exec, Event, Operator, HasOptionalParms)
+// (Defined, Iterator, Latent, Singular, Net, NetReliable, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // class AActor*                  Victim                         (Parm)
 // float                          VictimDist                     (Parm)
@@ -5162,6 +5200,7 @@ void AGameExplosionActor::SpecialCringeEffectsFor(class AActor* Victim, float Vi
 	params.VictimDist = VictimDist;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -5170,7 +5209,7 @@ void AGameExplosionActor::SpecialCringeEffectsFor(class AActor* Victim, float Vi
 
 
 // Function GameFramework.GameExplosionActor.SpecialPawnEffectsFor
-// (Final, Latent, Singular, Net, Simulated, Exec, Event, Operator, HasOptionalParms)
+// (Defined, Iterator, PreOperator, Singular, Net, NetReliable, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // class AGamePawn*               VictimPawn                     (Parm)
 // float                          VictimDist                     (Parm)
@@ -5184,6 +5223,7 @@ void AGameExplosionActor::SpecialPawnEffectsFor(class AGamePawn* VictimPawn, flo
 	params.VictimDist = VictimDist;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -5192,7 +5232,7 @@ void AGameExplosionActor::SpecialPawnEffectsFor(class AGamePawn* VictimPawn, flo
 
 
 // Function GameFramework.GameExplosionActor.GetEffectCheckRadius
-// (Defined, Net, NetReliable, Event, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, Latent, Net, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // bool                           bCauseDamage                   (Parm)
 // bool                           bCauseFractureEffects          (Parm)
@@ -5219,7 +5259,7 @@ float AGameExplosionActor::GetEffectCheckRadius(bool bCauseDamage, bool bCauseFr
 
 
 // Function GameFramework.GameExplosionActor.DoExplosionDamage
-// (Final, Defined, Iterator, Latent, PreOperator, Singular, Net, NetReliable, Simulated, Exec, Native, Operator, HasOptionalParms)
+// (Iterator, Latent, NetReliable, Simulated, Event, Operator, HasOptionalParms)
 // Parameters:
 // bool                           bCauseDamage                   (Parm)
 // bool                           bCauseEffects                  (Parm)
@@ -5234,7 +5274,6 @@ bool AGameExplosionActor::DoExplosionDamage(bool bCauseDamage, bool bCauseEffect
 	params.bCauseEffects = bCauseEffects;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -5245,7 +5284,7 @@ bool AGameExplosionActor::DoExplosionDamage(bool bCauseDamage, bool bCauseEffect
 
 
 // Function GameFramework.GameExplosionActor.BoxDistanceToPoint
-// (Iterator, Net, NetReliable, Exec, Native, Operator, HasOptionalParms)
+// (Final, PreOperator, Net, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FVector                 Start                          (Parm)
 // struct FBox                    BBox                           (Parm)
@@ -5260,7 +5299,6 @@ float AGameExplosionActor::BoxDistanceToPoint(const struct FVector& Start, const
 	params.BBox = BBox;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -5271,7 +5309,7 @@ float AGameExplosionActor::BoxDistanceToPoint(const struct FVector& Start, const
 
 
 // Function GameFramework.GameExplosionActor.IsBehindExplosion
-// (Iterator, Latent, PreOperator, Singular, Simulated, Event, Operator, HasOptionalParms)
+// (Final, Latent, Net, NetReliable, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // class AActor*                  A                              (Parm)
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -5294,7 +5332,7 @@ bool AGameExplosionActor::IsBehindExplosion(class AActor* A)
 
 
 // Function GameFramework.GameExplosionActor.DoFullDamageToActor
-// (Defined, Iterator, Event, Operator, HasOptionalParms)
+// (Final, Defined, PreOperator, NetReliable, Simulated, Event, Operator, HasOptionalParms)
 // Parameters:
 // class AActor*                  Victim                         (Parm)
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -5317,7 +5355,7 @@ bool AGameExplosionActor::DoFullDamageToActor(class AActor* Victim)
 
 
 // Function GameFramework.GameExplosionActor.GetPhysicalMaterial
-// (Final, Iterator, Singular, Simulated, Exec, Event, Static)
+// (Defined, PreOperator, Singular, NetReliable, Native, Event, Static)
 // Parameters:
 // class UPhysicalMaterial*       ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -5328,6 +5366,7 @@ class UPhysicalMaterial* AGameExplosionActor::STATIC_GetPhysicalMaterial()
 	AGameExplosionActor_GetPhysicalMaterial_Params params;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -5355,7 +5394,7 @@ void AGameExplosionActor::PreBeginPlay()
 
 
 // Function GameFramework.GamePawn.ReattachMeshWithoutBeingSeen
-// (Iterator, Latent, Net, NetReliable, Exec, Event, Operator, HasOptionalParms)
+// (Final, Latent, PreOperator, Net, Native, Event, Operator, HasOptionalParms)
 
 void AGamePawn::ReattachMeshWithoutBeingSeen()
 {
@@ -5364,6 +5403,7 @@ void AGamePawn::ReattachMeshWithoutBeingSeen()
 	AGamePawn_ReattachMeshWithoutBeingSeen_Params params;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -5372,7 +5412,7 @@ void AGamePawn::ReattachMeshWithoutBeingSeen()
 
 
 // Function GameFramework.GamePawn.ReattachMesh
-// (Final, Defined, Latent, Net, NetReliable, Exec, Event, Operator, HasOptionalParms)
+// (Latent, PreOperator, Net, Native, Event, Operator, HasOptionalParms)
 
 void AGamePawn::ReattachMesh()
 {
@@ -5381,6 +5421,7 @@ void AGamePawn::ReattachMesh()
 	AGamePawn_ReattachMesh_Params params;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -5389,7 +5430,7 @@ void AGamePawn::ReattachMesh()
 
 
 // Function GameFramework.GamePawn.UpdateShadowSettings
-// (Final, Defined, Latent, PreOperator, Singular, NetReliable, Exec, Native, HasOptionalParms)
+// (Final, Iterator, PreOperator, Singular, Net, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // bool                           bInWantShadow                  (Parm)
 
@@ -5410,7 +5451,7 @@ void AGamePawn::UpdateShadowSettings(bool bInWantShadow)
 
 
 // Function GameFramework.DebugCameraController.ConsoleCommand
-// (Defined, Latent, PreOperator, Exec, Native, Event, Operator)
+// (Final, Defined, Iterator, Singular, NetReliable, Simulated, Exec, Native, Event, Operator)
 // Parameters:
 // struct FString                 Command                        (Parm, NeedCtorLink)
 // bool                           bWriteToLog                    (OptionalParm, Parm)
@@ -5436,7 +5477,7 @@ struct FString ADebugCameraController::ConsoleCommand(const struct FString& Comm
 
 
 // Function GameFramework.DebugCameraController.ShowDebugSelectedInfo
-// (Final, Defined, Iterator, Latent, PreOperator, Singular, Simulated, Exec, Event, Operator, HasOptionalParms)
+// (Iterator, Latent, Net, NetReliable, Native, Event, Operator, HasOptionalParms)
 
 void ADebugCameraController::ShowDebugSelectedInfo()
 {
@@ -5445,6 +5486,7 @@ void ADebugCameraController::ShowDebugSelectedInfo()
 	ADebugCameraController_ShowDebugSelectedInfo_Params params;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -5453,7 +5495,7 @@ void ADebugCameraController::ShowDebugSelectedInfo()
 
 
 // Function GameFramework.DebugCameraController.NativeInputKey
-// (Defined, Iterator, Latent, PreOperator, Singular, Net, NetReliable, Simulated, Event, Operator, HasOptionalParms)
+// (Final, Defined, Latent, NetReliable, Simulated, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // int                            ControllerId                   (Parm)
 // struct FName                   Key                            (Parm)
@@ -5484,7 +5526,7 @@ bool ADebugCameraController::NativeInputKey(int ControllerId, const struct FName
 
 
 // Function GameFramework.DebugCameraController.InitDebugInputSystem
-// (PreOperator, Simulated, Event, Operator, HasOptionalParms)
+// (Final, Iterator, Latent, PreOperator, NetReliable, Exec, Event, Operator, HasOptionalParms)
 
 void ADebugCameraController::InitDebugInputSystem()
 {
@@ -5501,7 +5543,7 @@ void ADebugCameraController::InitDebugInputSystem()
 
 
 // Function GameFramework.DebugCameraController.DisableDebugCamera
-// (Final, Defined, PreOperator, Singular, Net, NetReliable, Simulated, Exec, Native, Operator, HasOptionalParms)
+// (NetReliable, Simulated, Event, Operator, HasOptionalParms)
 
 void ADebugCameraController::DisableDebugCamera()
 {
@@ -5510,7 +5552,6 @@ void ADebugCameraController::DisableDebugCamera()
 	ADebugCameraController_DisableDebugCamera_Params params;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -5519,7 +5560,7 @@ void ADebugCameraController::DisableDebugCamera()
 
 
 // Function GameFramework.DebugCameraController.NormalSpeed
-// (Defined, Latent, PreOperator, Exec, Event, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, Singular, NetReliable, Simulated, Exec, Event, Operator, HasOptionalParms)
 
 void ADebugCameraController::NormalSpeed()
 {
@@ -5536,7 +5577,7 @@ void ADebugCameraController::NormalSpeed()
 
 
 // Function GameFramework.DebugCameraController.MoreSpeed
-// (Final, Defined, Iterator, Singular, Net, NetReliable, Simulated, Event, Operator, HasOptionalParms)
+// (Iterator, PreOperator, Singular, Net, Simulated, Exec, Event, Operator, HasOptionalParms)
 
 void ADebugCameraController::MoreSpeed()
 {
@@ -5553,7 +5594,7 @@ void ADebugCameraController::MoreSpeed()
 
 
 // Function GameFramework.DebugCameraController.SetFreezeRendering
-// (Iterator, Latent, Singular, Simulated, Exec, Event, Operator, HasOptionalParms)
+// (Final, Latent, PreOperator, Singular, NetReliable, Native, Event, Operator, HasOptionalParms)
 
 void ADebugCameraController::SetFreezeRendering()
 {
@@ -5562,6 +5603,7 @@ void ADebugCameraController::SetFreezeRendering()
 	ADebugCameraController_SetFreezeRendering_Params params;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -5570,7 +5612,7 @@ void ADebugCameraController::SetFreezeRendering()
 
 
 // Function GameFramework.DebugCameraController.OnDeactivate
-// (Final, Latent, PreOperator, Singular, Exec, Event, Operator, HasOptionalParms)
+// (Defined, Iterator, Net, NetReliable, Simulated, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // class APlayerController*       PC                             (Parm)
 
@@ -5590,7 +5632,7 @@ void ADebugCameraController::OnDeactivate(class APlayerController* PC)
 
 
 // Function GameFramework.DebugCameraController.OnActivate
-// (Defined, Iterator, PreOperator, Singular, Exec, Event, Operator, HasOptionalParms)
+// (Final, Defined, Net, NetReliable, Simulated, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // class APlayerController*       PC                             (Parm)
 
@@ -5627,7 +5669,7 @@ void ADebugCameraController::PostBeginPlay()
 
 
 // Function GameFramework.DebugCameraController.Unselect
-// (Latent, Singular, Net, NetReliable, Simulated, Exec, Event, Operator, HasOptionalParms)
+// (Final, Iterator, PreOperator, Singular, Net, Simulated, Native, Event, Operator, HasOptionalParms)
 
 void ADebugCameraController::Unselect()
 {
@@ -5636,6 +5678,7 @@ void ADebugCameraController::Unselect()
 	ADebugCameraController_Unselect_Params params;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -5644,7 +5687,7 @@ void ADebugCameraController::Unselect()
 
 
 // Function GameFramework.DebugCameraController.SecondarySelect
-// (PreOperator, Simulated, Exec, Event, Operator, HasOptionalParms)
+// (Final, Iterator, Latent, PreOperator, NetReliable, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FVector                 HitLoc                         (Parm)
 // struct FVector                 HitNormal                      (Parm)
@@ -5660,6 +5703,7 @@ void ADebugCameraController::SecondarySelect(const struct FVector& HitLoc, const
 	params.HitInfo = HitInfo;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -5668,7 +5712,7 @@ void ADebugCameraController::SecondarySelect(const struct FVector& HitLoc, const
 
 
 // Function GameFramework.DebugCameraController.PrimarySelect
-// (Final, Iterator, Latent, PreOperator, NetReliable, Exec, Event, Operator, HasOptionalParms)
+// (Defined, Latent, Singular, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FVector                 HitLoc                         (Parm)
 // struct FVector                 HitNormal                      (Parm)
@@ -5684,6 +5728,7 @@ void ADebugCameraController::PrimarySelect(const struct FVector& HitLoc, const s
 	params.HitInfo = HitInfo;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -5692,7 +5737,7 @@ void ADebugCameraController::PrimarySelect(const struct FVector& HitLoc, const s
 
 
 // Function GameFramework.MobileHUD.RenderKismetHud
-// (Defined, Singular, Net, NetReliable, Exec, Event, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, Latent, Singular, Net, Native, Event, Operator, HasOptionalParms)
 
 void AMobileHUD::RenderKismetHud()
 {
@@ -5701,6 +5746,7 @@ void AMobileHUD::RenderKismetHud()
 	AMobileHUD_RenderKismetHud_Params params;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -5709,7 +5755,7 @@ void AMobileHUD::RenderKismetHud()
 
 
 // Function GameFramework.MobileHUD.AddKismetRenderEvent
-// (Defined, PreOperator, Singular, NetReliable, Simulated, Native, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, Latent, PreOperator, Singular, Simulated, Exec, Native, Operator, HasOptionalParms)
 // Parameters:
 // class USeqEvent_HudRender*     NewEvent                       (Parm)
 
@@ -5730,7 +5776,7 @@ void AMobileHUD::AddKismetRenderEvent(class USeqEvent_HudRender* NewEvent)
 
 
 // Function GameFramework.MobileHUD.RefreshKismetLinks
-// (Final, Iterator, Latent, Singular, NetReliable, Exec, Native, HasOptionalParms)
+// (Final, Defined, Iterator, Singular, Net, NetReliable, Exec, Native, HasOptionalParms)
 
 void AMobileHUD::RefreshKismetLinks()
 {
@@ -5748,7 +5794,7 @@ void AMobileHUD::RefreshKismetLinks()
 
 
 // Function GameFramework.MobileHUD.DrawMobileZone_Slider
-// (Iterator, PreOperator, Event, Operator, HasOptionalParms)
+// (Final, Singular, NetReliable, Simulated, Event, Operator, HasOptionalParms)
 // Parameters:
 // class UMobileInputZone*        Zone                           (Parm)
 
@@ -5768,7 +5814,7 @@ void AMobileHUD::DrawMobileZone_Slider(class UMobileInputZone* Zone)
 
 
 // Function GameFramework.MobileHUD.DrawMobileTilt
-// (Final, PreOperator, Event, Operator, HasOptionalParms)
+// (Defined, Iterator, Latent, PreOperator, NetReliable, Simulated, Event, Operator, HasOptionalParms)
 // Parameters:
 // class UMobilePlayerInput*      MobileInput                    (Parm)
 
@@ -5788,7 +5834,7 @@ void AMobileHUD::DrawMobileTilt(class UMobilePlayerInput* MobileInput)
 
 
 // Function GameFramework.MobileHUD.DrawMobileZone_Trackball
-// (Final, Iterator, PreOperator, Event, Operator, HasOptionalParms)
+// (Defined, Singular, NetReliable, Simulated, Event, Operator, HasOptionalParms)
 // Parameters:
 // class UMobileInputZone*        Zone                           (Parm)
 
@@ -5808,7 +5854,7 @@ void AMobileHUD::DrawMobileZone_Trackball(class UMobileInputZone* Zone)
 
 
 // Function GameFramework.MobileHUD.DrawMobileZone_Joystick
-// (Final, Defined, PreOperator, Event, Operator, HasOptionalParms)
+// (Singular, NetReliable, Simulated, Event, Operator, HasOptionalParms)
 // Parameters:
 // class UMobileInputZone*        Zone                           (Parm)
 
@@ -5828,7 +5874,7 @@ void AMobileHUD::DrawMobileZone_Joystick(class UMobileInputZone* Zone)
 
 
 // Function GameFramework.MobileHUD.DrawMobileZone_Button
-// (Defined, PreOperator, Event, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, Latent, PreOperator, NetReliable, Simulated, Event, Operator, HasOptionalParms)
 // Parameters:
 // class UMobileInputZone*        Zone                           (Parm)
 
@@ -5848,7 +5894,7 @@ void AMobileHUD::DrawMobileZone_Button(class UMobileInputZone* Zone)
 
 
 // Function GameFramework.MobileHUD.DrawInputZoneOverlays
-// (Final, Defined, Iterator, Latent, Event, Operator, HasOptionalParms)
+// (Iterator, Latent, PreOperator, NetReliable, Simulated, Event, Operator, HasOptionalParms)
 
 void AMobileHUD::DrawInputZoneOverlays()
 {
@@ -5865,7 +5911,7 @@ void AMobileHUD::DrawInputZoneOverlays()
 
 
 // Function GameFramework.MobileHUD.RenderMobileMenu
-// (Final, Defined, Singular, Net, NetReliable, Exec, Event, Operator, HasOptionalParms)
+// (PreOperator, Singular, Net, Native, Event, Operator, HasOptionalParms)
 
 void AMobileHUD::RenderMobileMenu()
 {
@@ -5874,6 +5920,7 @@ void AMobileHUD::RenderMobileMenu()
 	AMobileHUD_RenderMobileMenu_Params params;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -5882,7 +5929,7 @@ void AMobileHUD::RenderMobileMenu()
 
 
 // Function GameFramework.MobileHUD.ShowMobileHud
-// (Final, Net, Simulated, Exec, Event, Operator, HasOptionalParms)
+// (Defined, Iterator, Latent, Net, NetReliable, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -5893,6 +5940,7 @@ bool AMobileHUD::ShowMobileHud()
 	AMobileHUD_ShowMobileHud_Params params;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -5903,7 +5951,7 @@ bool AMobileHUD::ShowMobileHud()
 
 
 // Function GameFramework.MobileHUD.DrawMobileDebugString
-// (PreOperator, Event, Operator, HasOptionalParms)
+// (Final, Iterator, Latent, PreOperator, NetReliable, Simulated, Event, Operator, HasOptionalParms)
 // Parameters:
 // float                          XPos                           (Parm)
 // float                          YPos                           (Parm)
@@ -5927,7 +5975,7 @@ void AMobileHUD::DrawMobileDebugString(float XPos, float YPos, const struct FStr
 
 
 // Function GameFramework.MobileHUD.PostRender
-// (Iterator, Latent, Singular, NetReliable, Simulated, Native, HasOptionalParms)
+// (Defined, Iterator, Singular, Net, NetReliable, Simulated, Native, HasOptionalParms)
 
 void AMobileHUD::PostRender()
 {
@@ -5962,7 +6010,7 @@ void AMobileHUD::PostBeginPlay()
 
 
 // Function GameFramework.MobileInputZone.AddKismetEventHandler
-// (PreOperator, Singular, NetReliable, Simulated, Native, Operator, HasOptionalParms)
+// (Final, Iterator, Latent, PreOperator, Singular, Simulated, Exec, Native, Operator, HasOptionalParms)
 // Parameters:
 // class USeqEvent_MobileZoneBase* NewHandler                     (Parm)
 
@@ -5983,7 +6031,7 @@ void UMobileInputZone::AddKismetEventHandler(class USeqEvent_MobileZoneBase* New
 
 
 // Function GameFramework.MobileInputZone.OnPostDrawZone
-// (Iterator, Latent, PreOperator, NetReliable, Exec, Native, HasOptionalParms)
+// (Defined, Iterator, PreOperator, Net, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // class UMobileInputZone*        Zone                           (Parm)
 // class UCanvas*                 Canvas                         (Parm)
@@ -6006,7 +6054,7 @@ void UMobileInputZone::OnPostDrawZone(class UMobileInputZone* Zone, class UCanva
 
 
 // Function GameFramework.MobileInputZone.OnPreDrawZone
-// (Final, Iterator, Latent, PreOperator, NetReliable, Exec, Native, HasOptionalParms)
+// (Final, Defined, Iterator, PreOperator, Net, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // class UMobileInputZone*        Zone                           (Parm)
 // class UCanvas*                 Canvas                         (Parm)
@@ -6032,7 +6080,7 @@ bool UMobileInputZone::OnPreDrawZone(class UMobileInputZone* Zone, class UCanvas
 
 
 // Function GameFramework.MobileInputZone.OnProcessSlide
-// (Singular, NetReliable, Exec, Native, HasOptionalParms)
+// (Defined, Latent, PreOperator, Net, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // class UMobileInputZone*        Zone                           (Parm)
 // TEnumAsByte<ETouchType>        EventType                      (Parm)
@@ -6062,7 +6110,7 @@ bool UMobileInputZone::OnProcessSlide(class UMobileInputZone* Zone, TEnumAsByte<
 
 
 // Function GameFramework.MobileInputZone.OnDoubleTapDelegate
-// (Defined, Latent, PreOperator, NetReliable, Exec, Native, HasOptionalParms)
+// (Iterator, PreOperator, Net, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // class UMobileInputZone*        Zone                           (Parm)
 // TEnumAsByte<ETouchType>        EventType                      (Parm)
@@ -6090,7 +6138,7 @@ bool UMobileInputZone::OnDoubleTapDelegate(class UMobileInputZone* Zone, TEnumAs
 
 
 // Function GameFramework.MobileInputZone.OnTapDelegate
-// (Defined, Singular, NetReliable, Exec, Native, HasOptionalParms)
+// (Iterator, Latent, PreOperator, Net, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // class UMobileInputZone*        Zone                           (Parm)
 // TEnumAsByte<ETouchType>        EventType                      (Parm)
@@ -6118,7 +6166,7 @@ bool UMobileInputZone::OnTapDelegate(class UMobileInputZone* Zone, TEnumAsByte<E
 
 
 // Function GameFramework.MobileInputZone.OnProcessInputDelegate
-// (Final, Defined, Iterator, Latent, PreOperator, NetReliable, Exec, Native, HasOptionalParms)
+// (Final, Latent, PreOperator, Net, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // class UMobileInputZone*        Zone                           (Parm)
 // float                          DeltaTime                      (Parm)
@@ -6150,7 +6198,7 @@ bool UMobileInputZone::OnProcessInputDelegate(class UMobileInputZone* Zone, floa
 
 
 // Function GameFramework.MobileInputZone.DeactivateZone
-// (Iterator, Singular, NetReliable, Simulated, Exec, Native, Operator, HasOptionalParms)
+// (Final, PreOperator, Singular, Simulated, Event, Operator, HasOptionalParms)
 
 void UMobileInputZone::DeactivateZone()
 {
@@ -6159,7 +6207,6 @@ void UMobileInputZone::DeactivateZone()
 	UMobileInputZone_DeactivateZone_Params params;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -6168,7 +6215,7 @@ void UMobileInputZone::DeactivateZone()
 
 
 // Function GameFramework.MobileInputZone.ActivateZone
-// (Defined, Singular, NetReliable, Simulated, Native, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, Latent, Singular, Simulated, Exec, Native, Operator, HasOptionalParms)
 
 void UMobileInputZone::ActivateZone()
 {
@@ -6186,7 +6233,7 @@ void UMobileInputZone::ActivateZone()
 
 
 // Function GameFramework.MobileMenuObject.RenderObject
-// (Iterator, Singular, Net, NetReliable, Exec, Event, Operator, HasOptionalParms)
+// (Final, PreOperator, Singular, Net, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // class UCanvas*                 Canvas                         (Parm)
 // float                          DeltaTime                      (Parm)
@@ -6200,6 +6247,7 @@ void UMobileMenuObject::RenderObject(class UCanvas* Canvas, float DeltaTime)
 	params.DeltaTime = DeltaTime;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -6208,7 +6256,7 @@ void UMobileMenuObject::RenderObject(class UCanvas* Canvas, float DeltaTime)
 
 
 // Function GameFramework.MobileMenuObject.SetCanvasPos
-// (Defined, Singular, Simulated, Exec, Event, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, Latent, Singular, NetReliable, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // class UCanvas*                 Canvas                         (Parm)
 // float                          OffsetX                        (OptionalParm, Parm)
@@ -6224,6 +6272,7 @@ void UMobileMenuObject::SetCanvasPos(class UCanvas* Canvas, float OffsetX, float
 	params.OffsetY = OffsetY;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -6232,7 +6281,7 @@ void UMobileMenuObject::SetCanvasPos(class UCanvas* Canvas, float OffsetX, float
 
 
 // Function GameFramework.MobileMenuObject.InitMenuObject
-// (Final, Iterator, Singular, Simulated, Event, Operator, HasOptionalParms)
+// (Defined, PreOperator, Singular, NetReliable, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // class UMobilePlayerInput*      PlayerInput                    (Parm)
 // class UMobileMenuScene*        Scene                          (Parm)
@@ -6260,7 +6309,7 @@ void UMobileMenuObject::InitMenuObject(class UMobilePlayerInput* PlayerInput, cl
 
 
 // Function GameFramework.MobileMenuObject.GetRealPosition
-// (Final, Latent, NetReliable, Exec, Native, HasOptionalParms)
+// (Final, Defined, Net, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // float                          PosX                           (Parm, OutParm)
 // float                          PosY                           (Parm, OutParm)
@@ -6286,7 +6335,7 @@ void UMobileMenuObject::GetRealPosition(float* PosX, float* PosY)
 
 
 // Function GameFramework.MobileMenuObject.OnTouch
-// (Final, Defined, Singular, NetReliable, Exec, Native, HasOptionalParms)
+// (Final, Iterator, Latent, PreOperator, Net, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // TEnumAsByte<ETouchType>        EventType                      (Parm)
 // float                          TouchX                         (Parm)
@@ -6318,7 +6367,7 @@ bool UMobileMenuObject::OnTouch(TEnumAsByte<ETouchType> EventType, float TouchX,
 
 
 // Function GameFramework.MobileMenuImage.RenderObject
-// (Iterator, Singular, Net, NetReliable, Exec, Event, Operator, HasOptionalParms)
+// (Final, PreOperator, Singular, Net, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // class UCanvas*                 Canvas                         (Parm)
 // float                          DeltaTime                      (Parm)
@@ -6332,6 +6381,7 @@ void UMobileMenuImage::RenderObject(class UCanvas* Canvas, float DeltaTime)
 	params.DeltaTime = DeltaTime;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -6340,7 +6390,7 @@ void UMobileMenuImage::RenderObject(class UCanvas* Canvas, float DeltaTime)
 
 
 // Function GameFramework.MobileMenuScene.MobileMenuCommand
-// (Final, Defined, Iterator, Net, NetReliable, Simulated, Event, Operator, HasOptionalParms)
+// (Iterator, PreOperator, Net, Simulated, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FString                 Command                        (Parm, NeedCtorLink)
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -6363,7 +6413,7 @@ bool UMobileMenuScene::MobileMenuCommand(const struct FString& Command)
 
 
 // Function GameFramework.MobileMenuScene.FindMenuObject
-// (Defined, Latent, PreOperator, Net, Event, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, Singular, Net, NetReliable, Simulated, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FString                 Tag                            (Parm, NeedCtorLink)
 // class UMobileMenuObject*       ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -6386,7 +6436,7 @@ class UMobileMenuObject* UMobileMenuScene::FindMenuObject(const struct FString& 
 
 
 // Function GameFramework.MobileMenuScene.CleanUpScene
-// (Final, Defined, Iterator, Latent, PreOperator, Net, Simulated, Exec, Native, Operator, HasOptionalParms)
+// (Iterator, Latent, Singular, Net, NetReliable, Event, Operator, HasOptionalParms)
 
 void UMobileMenuScene::CleanUpScene()
 {
@@ -6395,7 +6445,6 @@ void UMobileMenuScene::CleanUpScene()
 	UMobileMenuScene_CleanUpScene_Params params;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -6404,7 +6453,7 @@ void UMobileMenuScene::CleanUpScene()
 
 
 // Function GameFramework.MobileMenuScene.Closed
-// (PreOperator, Net, NetReliable, Exec, Native, HasOptionalParms)
+// (Defined, Latent, Simulated, Exec, Native, HasOptionalParms)
 
 void UMobileMenuScene::Closed()
 {
@@ -6422,7 +6471,7 @@ void UMobileMenuScene::Closed()
 
 
 // Function GameFramework.MobileMenuScene.Closing
-// (Final, Iterator, Singular, Net, Simulated, Exec, Native, Operator, HasOptionalParms)
+// (Defined, PreOperator, Singular, Net, NetReliable, Event, Operator, HasOptionalParms)
 // Parameters:
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -6433,7 +6482,6 @@ bool UMobileMenuScene::Closing()
 	UMobileMenuScene_Closing_Params params;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -6444,7 +6492,7 @@ bool UMobileMenuScene::Closing()
 
 
 // Function GameFramework.MobileMenuScene.MadeTopMenu
-// (Iterator, Latent, NetReliable, Simulated, Event, Operator, HasOptionalParms)
+// (Final, Latent, PreOperator, Simulated, Exec, Event, Operator, HasOptionalParms)
 
 void UMobileMenuScene::MadeTopMenu()
 {
@@ -6461,7 +6509,7 @@ void UMobileMenuScene::MadeTopMenu()
 
 
 // Function GameFramework.MobileMenuScene.Opened
-// (Final, Defined, Iterator, Latent, Simulated, Exec, Native, HasOptionalParms)
+// (Final, Latent, Net, Simulated, Exec, Native, HasOptionalParms)
 // Parameters:
 // struct FString                 Mode                           (Parm, NeedCtorLink)
 
@@ -6482,7 +6530,7 @@ void UMobileMenuScene::Opened(const struct FString& Mode)
 
 
 // Function GameFramework.MobileMenuScene.OnSceneTouch
-// (Final, Singular, NetReliable, Exec, Native, HasOptionalParms)
+// (Final, Defined, Latent, PreOperator, Net, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // TEnumAsByte<ETouchType>        EventType                      (Parm)
 // float                          TouchX                         (Parm)
@@ -6512,7 +6560,7 @@ bool UMobileMenuScene::OnSceneTouch(TEnumAsByte<ETouchType> EventType, float Tou
 
 
 // Function GameFramework.MobileMenuScene.OnTouch
-// (Final, Defined, Singular, NetReliable, Exec, Native, HasOptionalParms)
+// (Final, Iterator, Latent, PreOperator, Net, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // class UMobileMenuObject*       Sender                         (Parm)
 // TEnumAsByte<ETouchType>        EventType                      (Parm)
@@ -6539,7 +6587,7 @@ void UMobileMenuScene::OnTouch(class UMobileMenuObject* Sender, TEnumAsByte<ETou
 
 
 // Function GameFramework.MobileMenuScene.PreRenderMenuObject
-// (Final, PreOperator, NetReliable, Exec, Event, Operator, HasOptionalParms)
+// (Defined, Iterator, Latent, PreOperator, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // class UMobileMenuObject*       MenuObject                     (Parm)
 // class UCanvas*                 Canvas                         (Parm)
@@ -6555,6 +6603,7 @@ void UMobileMenuScene::PreRenderMenuObject(class UMobileMenuObject* MenuObject, 
 	params.RenderDelta = RenderDelta;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -6563,7 +6612,7 @@ void UMobileMenuScene::PreRenderMenuObject(class UMobileMenuObject* MenuObject, 
 
 
 // Function GameFramework.MobileMenuScene.RenderScene
-// (Final, Iterator, Singular, Net, NetReliable, Exec, Event, Operator, HasOptionalParms)
+// (Defined, PreOperator, Singular, Net, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // class UCanvas*                 Canvas                         (Parm)
 // float                          RenderDelta                    (Parm)
@@ -6577,6 +6626,7 @@ void UMobileMenuScene::RenderScene(class UCanvas* Canvas, float RenderDelta)
 	params.RenderDelta = RenderDelta;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -6585,7 +6635,7 @@ void UMobileMenuScene::RenderScene(class UCanvas* Canvas, float RenderDelta)
 
 
 // Function GameFramework.MobileMenuScene.GetSceneFont
-// (Final, Iterator, Latent, Net, NetReliable, Event, Operator, HasOptionalParms)
+// (Defined, Latent, PreOperator, Net, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // class UFont*                   ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -6606,7 +6656,7 @@ class UFont* UMobileMenuScene::GetSceneFont()
 
 
 // Function GameFramework.MobileMenuScene.InitMenuScene
-// (Final, Iterator, Latent, NetReliable, Exec, Native, HasOptionalParms)
+// (Final, Defined, Iterator, Net, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // class UMobilePlayerInput*      PlayerInput                    (Parm)
 // int                            ScreenWidth                    (Parm)
@@ -6633,7 +6683,7 @@ void UMobileMenuScene::InitMenuScene(class UMobilePlayerInput* PlayerInput, int 
 
 
 // Function GameFramework.MobileMenuScene.GetGlobalScaleY
-// (Final, Iterator, Net, NetReliable, Event, Operator, HasOptionalParms)
+// (Defined, PreOperator, Net, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // float                          ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -6654,7 +6704,7 @@ float UMobileMenuScene::GetGlobalScaleY()
 
 
 // Function GameFramework.MobileMenuScene.GetGlobalScaleX
-// (Iterator, Net, NetReliable, Event, Operator, HasOptionalParms)
+// (Final, PreOperator, Net, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // float                          ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -6675,7 +6725,7 @@ float UMobileMenuScene::GetGlobalScaleX()
 
 
 // Function GameFramework.MobilePlayerInput.OpenMobileMenuMode
-// (Final, Net, Exec, Event, Operator, HasOptionalParms)
+// (Defined, Iterator, Latent, Net, NetReliable, Simulated, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FString                 MenuClassName                  (Parm, NeedCtorLink)
 // struct FString                 Mode                           (Parm, NeedCtorLink)
@@ -6700,7 +6750,7 @@ class UMobileMenuScene* UMobilePlayerInput::OpenMobileMenuMode(const struct FStr
 
 
 // Function GameFramework.MobilePlayerInput.OpenMobileMenu
-// (Net, Exec, Event, Operator, HasOptionalParms)
+// (Final, Iterator, Latent, Net, NetReliable, Simulated, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FString                 MenuClassName                  (Parm, NeedCtorLink)
 // class UMobileMenuScene*        ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -6723,7 +6773,7 @@ class UMobileMenuScene* UMobilePlayerInput::OpenMobileMenu(const struct FString&
 
 
 // Function GameFramework.MobilePlayerInput.MobileMenuCommand
-// (Final, Defined, Iterator, Net, NetReliable, Simulated, Event, Operator, HasOptionalParms)
+// (Iterator, PreOperator, Net, Simulated, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FString                 MenuCommand                    (Parm, NeedCtorLink)
 
@@ -6743,7 +6793,7 @@ void UMobilePlayerInput::MobileMenuCommand(const struct FString& MenuCommand)
 
 
 // Function GameFramework.MobilePlayerInput.SceneRenderToggle
-// (Latent, Simulated, Exec, Event, Operator, HasOptionalParms)
+// (Final, Iterator, PreOperator, NetReliable, Native, Event, Operator, HasOptionalParms)
 
 void UMobilePlayerInput::SceneRenderToggle()
 {
@@ -6752,6 +6802,7 @@ void UMobilePlayerInput::SceneRenderToggle()
 	UMobilePlayerInput_SceneRenderToggle_Params params;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -6760,7 +6811,7 @@ void UMobilePlayerInput::SceneRenderToggle()
 
 
 // Function GameFramework.MobilePlayerInput.PreClientTravel
-// (Final, PreOperator, Singular, NetReliable, Simulated, Native, HasOptionalParms)
+// (Final, Defined, Latent, Singular, Net, NetReliable, Simulated, Native, HasOptionalParms)
 // Parameters:
 // struct FString                 PendingURL                     (Parm, NeedCtorLink)
 // TEnumAsByte<ETravelType>       TravelType                     (Parm)
@@ -6785,7 +6836,7 @@ void UMobilePlayerInput::PreClientTravel(const struct FString& PendingURL, TEnum
 
 
 // Function GameFramework.MobilePlayerInput.RenderMenus
-// (Defined, Iterator, Latent, Singular, NetReliable, Exec, Native, HasOptionalParms)
+// (Latent, Singular, Net, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // class UCanvas*                 Canvas                         (Parm)
 // float                          RenderDelta                    (Parm)
@@ -6808,7 +6859,7 @@ void UMobilePlayerInput::RenderMenus(class UCanvas* Canvas, float RenderDelta)
 
 
 // Function GameFramework.MobilePlayerInput.CloseAllMenus
-// (Defined, Latent, PreOperator, Singular, Net, Exec, Native, HasOptionalParms)
+// (Iterator, PreOperator, Singular, NetReliable, Exec, Native, HasOptionalParms)
 
 void UMobilePlayerInput::CloseAllMenus()
 {
@@ -6826,7 +6877,7 @@ void UMobilePlayerInput::CloseAllMenus()
 
 
 // Function GameFramework.MobilePlayerInput.CloseMenuScene
-// (Final, Defined, Latent, PreOperator, Singular, Net, Exec, Native, HasOptionalParms)
+// (Final, Iterator, PreOperator, Singular, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // class UMobileMenuScene*        SceneToClose                   (Parm)
 
@@ -6847,7 +6898,7 @@ void UMobilePlayerInput::CloseMenuScene(class UMobileMenuScene* SceneToClose)
 
 
 // Function GameFramework.MobilePlayerInput.OpenMenuScene
-// (Final, Iterator, Singular, NetReliable, Exec, Native, HasOptionalParms)
+// (Final, Defined, Iterator, Latent, PreOperator, Net, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // class UClass*                  SceneClass                     (Parm)
 // struct FString                 Mode                           (OptionalParm, Parm, NeedCtorLink)
@@ -6873,7 +6924,7 @@ class UMobileMenuScene* UMobilePlayerInput::OpenMenuScene(class UClass* SceneCla
 
 
 // Function GameFramework.MobilePlayerInput.SetMobileInputConfig
-// (Final, Defined, Iterator, Latent, Singular, Simulated, Exec, Event, Operator, HasOptionalParms)
+// (Iterator, Latent, PreOperator, Singular, NetReliable, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FString                 GroupName                      (Parm, NeedCtorLink)
 
@@ -6885,6 +6936,7 @@ void UMobilePlayerInput::SetMobileInputConfig(const struct FString& GroupName)
 	params.GroupName = GroupName;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -6893,7 +6945,7 @@ void UMobilePlayerInput::SetMobileInputConfig(const struct FString& GroupName)
 
 
 // Function GameFramework.MobilePlayerInput.ActivateInputGroup
-// (Singular, NetReliable, Simulated, Native, Operator, HasOptionalParms)
+// (Final, Iterator, Latent, Singular, Simulated, Exec, Native, Operator, HasOptionalParms)
 // Parameters:
 // struct FString                 GroupName                      (Parm, NeedCtorLink)
 
@@ -6914,7 +6966,7 @@ void UMobilePlayerInput::ActivateInputGroup(const struct FString& GroupName)
 
 
 // Function GameFramework.MobilePlayerInput.GetCurrentZones
-// (Final, Defined, Latent, PreOperator, Singular, NetReliable, Event, Operator, HasOptionalParms)
+// (Latent, Net, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // TArray<class UMobileInputZone*> ReturnValue                    (Parm, OutParm, ReturnParm, NeedCtorLink)
 
@@ -6935,7 +6987,7 @@ TArray<class UMobileInputZone*> UMobilePlayerInput::GetCurrentZones()
 
 
 // Function GameFramework.MobilePlayerInput.HasZones
-// (Final, Latent, Singular, Net, NetReliable, Event, Operator, HasOptionalParms)
+// (Defined, Iterator, PreOperator, Singular, Net, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -6956,7 +7008,7 @@ bool UMobilePlayerInput::HasZones()
 
 
 // Function GameFramework.MobilePlayerInput.FindorAddZone
-// (Final, Defined, Latent, PreOperator, Net, Event, Operator, HasOptionalParms)
+// (Latent, Singular, Net, NetReliable, Simulated, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FString                 ZoneName                       (Parm, NeedCtorLink)
 // class UMobileInputZone*        ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -6979,7 +7031,7 @@ class UMobileInputZone* UMobilePlayerInput::FindorAddZone(const struct FString& 
 
 
 // Function GameFramework.MobilePlayerInput.FindZone
-// (Final, Iterator, Latent, PreOperator, Net, Event, Operator, HasOptionalParms)
+// (Defined, Latent, Singular, Net, NetReliable, Simulated, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FString                 ZoneName                       (Parm, NeedCtorLink)
 // class UMobileInputZone*        ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -7002,7 +7054,7 @@ class UMobileInputZone* UMobilePlayerInput::FindZone(const struct FString& ZoneN
 
 
 // Function GameFramework.MobilePlayerInput.AddKismetRawInputEventHandler
-// (Final, PreOperator, Singular, NetReliable, Simulated, Native, Operator, HasOptionalParms)
+// (Defined, Iterator, Latent, PreOperator, Singular, Simulated, Exec, Native, Operator, HasOptionalParms)
 // Parameters:
 // class USeqEvent_MobileRawInput* NewHandler                     (Parm)
 
@@ -7023,7 +7075,7 @@ void UMobilePlayerInput::AddKismetRawInputEventHandler(class USeqEvent_MobileRaw
 
 
 // Function GameFramework.MobilePlayerInput.AddKismetEventHandler
-// (PreOperator, Singular, NetReliable, Simulated, Native, Operator, HasOptionalParms)
+// (Final, Iterator, Latent, PreOperator, Singular, Simulated, Exec, Native, Operator, HasOptionalParms)
 // Parameters:
 // class USeqEvent_MobileBase*    NewHandler                     (Parm)
 
@@ -7044,7 +7096,7 @@ void UMobilePlayerInput::AddKismetEventHandler(class USeqEvent_MobileBase* NewHa
 
 
 // Function GameFramework.MobilePlayerInput.RefreshKismetLinks
-// (Final, Iterator, Latent, Singular, NetReliable, Exec, Native, HasOptionalParms)
+// (Final, Defined, Iterator, Singular, Net, NetReliable, Exec, Native, HasOptionalParms)
 
 void UMobilePlayerInput::RefreshKismetLinks()
 {
@@ -7062,7 +7114,7 @@ void UMobilePlayerInput::RefreshKismetLinks()
 
 
 // Function GameFramework.MobilePlayerInput.SwapZoneOwners
-// (Defined, Iterator, NetReliable, Simulated, Exec, Event, Operator, HasOptionalParms)
+// (Final, Defined, PreOperator, Simulated, Native, Event, Operator, HasOptionalParms)
 
 void UMobilePlayerInput::SwapZoneOwners()
 {
@@ -7071,6 +7123,7 @@ void UMobilePlayerInput::SwapZoneOwners()
 	UMobilePlayerInput_SwapZoneOwners_Params params;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -7079,7 +7132,7 @@ void UMobilePlayerInput::SwapZoneOwners()
 
 
 // Function GameFramework.MobilePlayerInput.InitializeInputZones
-// (Final, Latent, PreOperator, Simulated, Event, Operator, HasOptionalParms)
+// (Defined, Iterator, Singular, NetReliable, Exec, Event, Operator, HasOptionalParms)
 
 void UMobilePlayerInput::InitializeInputZones()
 {
@@ -7096,7 +7149,7 @@ void UMobilePlayerInput::InitializeInputZones()
 
 
 // Function GameFramework.MobilePlayerInput.InitTouchSystem
-// (Latent, Singular, Simulated, Event, Operator, HasOptionalParms)
+// (Final, Iterator, PreOperator, Singular, NetReliable, Exec, Event, Operator, HasOptionalParms)
 
 void UMobilePlayerInput::InitTouchSystem()
 {
@@ -7113,7 +7166,7 @@ void UMobilePlayerInput::InitTouchSystem()
 
 
 // Function GameFramework.MobilePlayerInput.ClientInitInputSystem
-// (Defined, Latent, PreOperator, Singular, NetReliable, Native, Event, Operator)
+// (Final, Defined, Iterator, Net, Exec, Native, Event, Operator)
 
 void UMobilePlayerInput::ClientInitInputSystem()
 {
@@ -7131,7 +7184,7 @@ void UMobilePlayerInput::ClientInitInputSystem()
 
 
 // Function GameFramework.MobilePlayerInput.InitInputSystem
-// (Final, Defined, Latent, PreOperator, Simulated, Native, HasOptionalParms)
+// (Final, Iterator, PreOperator, Net, Simulated, Native, HasOptionalParms)
 
 void UMobilePlayerInput::InitInputSystem()
 {
@@ -7149,7 +7202,7 @@ void UMobilePlayerInput::InitInputSystem()
 
 
 // Function GameFramework.MobilePlayerInput.ProcessWorldTouch
-// (Final, Defined, Singular, NetReliable, Exec, Event, Operator, HasOptionalParms)
+// (PreOperator, Singular, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // class UMobileInputZone*        Zone                           (Parm)
 // TEnumAsByte<ETouchType>        EventType                      (Parm)
@@ -7166,6 +7219,7 @@ bool UMobilePlayerInput::ProcessWorldTouch(class UMobileInputZone* Zone, TEnumAs
 	params.TouchLocation = TouchLocation;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -7176,7 +7230,7 @@ bool UMobilePlayerInput::ProcessWorldTouch(class UMobileInputZone* Zone, TEnumAs
 
 
 // Function GameFramework.MobilePlayerInput.SendInputAxis
-// (Defined, Latent, PreOperator, Simulated, Exec, Event, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, Singular, NetReliable, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FName                   Key                            (Parm)
 // float                          Delta                          (Parm)
@@ -7192,6 +7246,7 @@ void UMobilePlayerInput::SendInputAxis(const struct FName& Key, float Delta, flo
 	params.DeltaTime = DeltaTime;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -7200,7 +7255,7 @@ void UMobilePlayerInput::SendInputAxis(const struct FName& Key, float Delta, flo
 
 
 // Function GameFramework.MobilePlayerInput.SendInputKey
-// (Final, Defined, Latent, PreOperator, Simulated, Exec, Event, Operator, HasOptionalParms)
+// (Latent, Singular, NetReliable, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FName                   Key                            (Parm)
 // TEnumAsByte<EInputEvent>       Event                          (Parm)
@@ -7216,6 +7271,7 @@ void UMobilePlayerInput::SendInputKey(const struct FName& Key, TEnumAsByte<EInpu
 	params.AmountDepressed = AmountDepressed;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -7224,7 +7280,7 @@ void UMobilePlayerInput::SendInputKey(const struct FName& Key, TEnumAsByte<EInpu
 
 
 // Function GameFramework.MobilePlayerInput.ConditionalUpdateInputZones
-// (Iterator, Latent, Singular, Net, Simulated, Exec, Native, Operator, HasOptionalParms)
+// (Final, Latent, PreOperator, Singular, Net, NetReliable, Event, Operator, HasOptionalParms)
 // Parameters:
 // int                            NewViewportX                   (Parm)
 // int                            NewViewportY                   (Parm)
@@ -7242,7 +7298,6 @@ void UMobilePlayerInput::ConditionalUpdateInputZones(int NewViewportX, int NewVi
 	params.NewViewportSizeY = NewViewportSizeY;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -7251,7 +7306,7 @@ void UMobilePlayerInput::ConditionalUpdateInputZones(int NewViewportX, int NewVi
 
 
 // Function GameFramework.MobilePlayerInput.NativeInitializeInputZones
-// (Final, Iterator, Latent, PreOperator, Singular, Net, NetReliable, Simulated, Event, Operator, HasOptionalParms)
+// (Defined, Latent, NetReliable, Simulated, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // bool                           bIsFirstInitialize             (Parm)
 
@@ -7271,7 +7326,7 @@ void UMobilePlayerInput::NativeInitializeInputZones(bool bIsFirstInitialize)
 
 
 // Function GameFramework.MobilePlayerInput.NativeInitializeInputSystem
-// (Iterator, Latent, PreOperator, Singular, Net, NetReliable, Simulated, Event, Operator, HasOptionalParms)
+// (Final, Latent, NetReliable, Simulated, Exec, Event, Operator, HasOptionalParms)
 
 void UMobilePlayerInput::NativeInitializeInputSystem()
 {
@@ -7288,7 +7343,7 @@ void UMobilePlayerInput::NativeInitializeInputSystem()
 
 
 // Function GameFramework.MobilePlayerInput.OnInputTouch
-// (Final, Defined, Latent, PreOperator, NetReliable, Exec, Native, HasOptionalParms)
+// (Final, Iterator, PreOperator, Net, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // int                            Handle                         (Parm)
 // TEnumAsByte<ETouchType>        Type                           (Parm)
@@ -7317,7 +7372,7 @@ void UMobilePlayerInput::OnInputTouch(int Handle, TEnumAsByte<ETouchType> Type, 
 
 
 // Function GameFramework.MobilePlayerInput.OnPreviewTouch
-// (Defined, Iterator, Latent, PreOperator, NetReliable, Exec, Native, HasOptionalParms)
+// (Latent, PreOperator, Net, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // float                          X                              (Parm)
 // float                          Y                              (Parm)
@@ -7345,7 +7400,7 @@ bool UMobilePlayerInput::OnPreviewTouch(float X, float Y, int TouchpadIndex)
 
 
 // Function GameFramework.MobilePlayerInput.OnTouchNotHandledInMenu
-// (Iterator, Singular, NetReliable, Exec, Native, HasOptionalParms)
+// (Defined, Iterator, Latent, PreOperator, Net, NetReliable, Exec, Native, HasOptionalParms)
 
 void UMobilePlayerInput::OnTouchNotHandledInMenu()
 {
@@ -7383,7 +7438,7 @@ void UMobilePlayerInput::PlayerInput(float DeltaTime)
 
 
 // Function GameFramework.MobilePlayerInput.CancelMobileInput
-// (Iterator, Latent, Singular, Net, NetReliable, Exec, Event, Operator)
+// (Final, Latent, PreOperator, Singular, Net, Native, Event, Operator)
 
 void UMobilePlayerInput::CancelMobileInput()
 {
@@ -7392,6 +7447,7 @@ void UMobilePlayerInput::CancelMobileInput()
 	UMobilePlayerInput_CancelMobileInput_Params params;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -7400,7 +7456,7 @@ void UMobilePlayerInput::CancelMobileInput()
 
 
 // Function GameFramework.MobilePlayerInput.ProcessMobileInput
-// (Defined, Singular, NetReliable, Exec, Event, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, Latent, Singular, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // float                          DeltaTime                      (Parm)
 
@@ -7412,6 +7468,7 @@ void UMobilePlayerInput::ProcessMobileInput(float DeltaTime)
 	params.DeltaTime = DeltaTime;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -7420,7 +7477,7 @@ void UMobilePlayerInput::ProcessMobileInput(float DeltaTime)
 
 
 // Function GameFramework.NavMeshGoal_OutOfViewFrom.Recycle
-// (Final, Latent, Net, NetReliable, Simulated, Native, HasOptionalParms)
+// (Final, Defined, Exec, Native, HasOptionalParms)
 
 void UNavMeshGoal_OutOfViewFrom::Recycle()
 {
@@ -7438,7 +7495,7 @@ void UNavMeshGoal_OutOfViewFrom::Recycle()
 
 
 // Function GameFramework.NavMeshGoal_OutOfViewFrom.MustBeHiddenFromThisPoint
-// (Iterator, Latent, Net, NetReliable, Simulated, Native, Operator, Static)
+// (Final, Latent, PreOperator, Net, Simulated, Exec, Native, Operator, Static)
 // Parameters:
 // class UNavigationHandle*       NavHandle                      (Parm)
 // struct FVector                 InOutOfViewLocation            (Parm)
@@ -7464,7 +7521,7 @@ bool UNavMeshGoal_OutOfViewFrom::STATIC_MustBeHiddenFromThisPoint(class UNavigat
 
 
 // Function GameFramework.NavMeshGoal_OutOfViewFrom.RecycleNative
-// (Final, Iterator, Latent, PreOperator, Singular, HasOptionalParms)
+// (Defined, Latent, Net, NetReliable, Simulated, HasOptionalParms)
 
 void UNavMeshGoal_OutOfViewFrom::RecycleNative()
 {
@@ -7481,7 +7538,7 @@ void UNavMeshGoal_OutOfViewFrom::RecycleNative()
 
 
 // Function GameFramework.NavMeshPath_BiasAgainstPolysWithinDistanceOfLocations.Recycle
-// (Final, Latent, Net, NetReliable, Simulated, Native, HasOptionalParms)
+// (Final, Defined, Exec, Native, HasOptionalParms)
 
 void UNavMeshPath_BiasAgainstPolysWithinDistanceOfLocations::Recycle()
 {
@@ -7499,7 +7556,7 @@ void UNavMeshPath_BiasAgainstPolysWithinDistanceOfLocations::Recycle()
 
 
 // Function GameFramework.NavMeshPath_BiasAgainstPolysWithinDistanceOfLocations.BiasAgainstPolysWithinDistanceOfLocations
-// (Latent, NetReliable, Exec, Native, Operator, HasOptionalParms)
+// (Final, Iterator, PreOperator, Event, Operator, HasOptionalParms)
 // Parameters:
 // class UNavigationHandle*       NavHandle                      (Parm)
 // struct FVector                 InLocation                     (Const, Parm)
@@ -7520,7 +7577,6 @@ bool UNavMeshPath_BiasAgainstPolysWithinDistanceOfLocations::BiasAgainstPolysWit
 	params.InLocationsToCheck = InLocationsToCheck;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -7531,7 +7587,7 @@ bool UNavMeshPath_BiasAgainstPolysWithinDistanceOfLocations::BiasAgainstPolysWit
 
 
 // Function GameFramework.SecondaryViewportClient.PostRender
-// (Iterator, Latent, Singular, NetReliable, Simulated, Native, HasOptionalParms)
+// (Defined, Iterator, Singular, Net, NetReliable, Simulated, Native, HasOptionalParms)
 // Parameters:
 // class UCanvas*                 Canvas                         (Parm)
 
@@ -7552,7 +7608,7 @@ void USecondaryViewportClient::PostRender(class UCanvas* Canvas)
 
 
 // Function GameFramework.MobileSecondaryViewportClient.PostRender
-// (Iterator, Latent, Singular, NetReliable, Simulated, Native, HasOptionalParms)
+// (Defined, Iterator, Singular, Net, NetReliable, Simulated, Native, HasOptionalParms)
 // Parameters:
 // class UCanvas*                 Canvas                         (Parm)
 
@@ -7573,7 +7629,7 @@ void UMobileSecondaryViewportClient::PostRender(class UCanvas* Canvas)
 
 
 // Function GameFramework.SeqAct_GameCrowdPopulationManagerToggle.AgentDestroyed
-// (Iterator, Net, NetReliable, Simulated, Native, Operator, HasOptionalParms)
+// (Final, PreOperator, Net, Simulated, Exec, Native, Operator, HasOptionalParms)
 // Parameters:
 // class AGameCrowdAgent*         Agent                          (Parm)
 
@@ -7594,7 +7650,7 @@ void USeqAct_GameCrowdPopulationManagerToggle::AgentDestroyed(class AGameCrowdAg
 
 
 // Function GameFramework.SeqAct_GameCrowdPopulationManagerToggle.GetMaxSpawnDist
-// (Latent, Net, NetReliable, Event, Operator, HasOptionalParms)
+// (Final, Iterator, PreOperator, Net, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // float                          ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -7615,7 +7671,7 @@ float USeqAct_GameCrowdPopulationManagerToggle::GetMaxSpawnDist()
 
 
 // Function GameFramework.SeqAct_GameCrowdPopulationManagerToggle.FillCrowdSpawnInfoItem
-// (NetReliable, Exec, Native, HasOptionalParms)
+// (Defined, Latent, PreOperator, Singular, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // struct FCrowdSpawnInfoItem     out_Item                       (Parm, OutParm, NeedCtorLink)
 // class AGameCrowdPopulationManager* PopMgr                         (Parm)
@@ -7640,7 +7696,7 @@ void USeqAct_GameCrowdPopulationManagerToggle::FillCrowdSpawnInfoItem(class AGam
 
 
 // Function GameFramework.SeqAct_GameCrowdPopulationManagerToggle.GetObjClassVersion
-// (Defined, Latent, PreOperator, Singular, Net, NetReliable, Native, HasOptionalParms)
+// (Iterator, PreOperator, Singular, Simulated, Native, HasOptionalParms)
 // Parameters:
 // int                            ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -7662,7 +7718,7 @@ int USeqAct_GameCrowdPopulationManagerToggle::GetObjClassVersion()
 
 
 // Function GameFramework.SeqAct_GameCrowdSpawner.GetObjClassVersion
-// (Defined, Latent, PreOperator, Singular, Net, NetReliable, Native, HasOptionalParms)
+// (Iterator, PreOperator, Singular, Simulated, Native, HasOptionalParms)
 // Parameters:
 // int                            ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -7684,7 +7740,7 @@ int USeqAct_GameCrowdSpawner::GetObjClassVersion()
 
 
 // Function GameFramework.SeqAct_MobileSaveLoadValue.GetObjClassVersion
-// (Defined, Latent, PreOperator, Singular, Net, NetReliable, Native, HasOptionalParms)
+// (Iterator, PreOperator, Singular, Simulated, Native, HasOptionalParms)
 // Parameters:
 // int                            ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -7706,7 +7762,7 @@ int USeqAct_MobileSaveLoadValue::GetObjClassVersion()
 
 
 // Function GameFramework.SeqAct_PlayAgentAnimation.SetCurrentAnimationActionFor
-// (Final, Iterator, Singular, Simulated, Exec, Event, Operator, HasOptionalParms)
+// (Defined, PreOperator, Singular, NetReliable, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // class AGameCrowdAgentSkeletal* Agent                          (Parm)
 
@@ -7718,6 +7774,7 @@ void USeqAct_PlayAgentAnimation::SetCurrentAnimationActionFor(class AGameCrowdAg
 	params.Agent = Agent;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -7726,7 +7783,7 @@ void USeqAct_PlayAgentAnimation::SetCurrentAnimationActionFor(class AGameCrowdAg
 
 
 // Function GameFramework.SeqAct_PlayAgentAnimation.GetObjClassVersion
-// (Defined, Latent, PreOperator, Singular, Net, NetReliable, Native, HasOptionalParms)
+// (Iterator, PreOperator, Singular, Simulated, Native, HasOptionalParms)
 // Parameters:
 // int                            ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -7771,7 +7828,7 @@ void USeqEvent_HudRender::Render(class UCanvas* TargetCanvas, class AHUD* Target
 
 
 // Function GameFramework.SeqEvent_HudRender.RegisterEvent
-// (Final, PreOperator, Net, NetReliable, Simulated, Native, HasOptionalParms)
+// (Final, Defined, Latent, Exec, Native, HasOptionalParms)
 
 void USeqEvent_HudRender::RegisterEvent()
 {
@@ -7789,7 +7846,7 @@ void USeqEvent_HudRender::RegisterEvent()
 
 
 // Function GameFramework.SeqEvent_MobileBase.AddToMobileInput
-// (Final, Defined, PreOperator, Singular, Net, Exec, Native, HasOptionalParms)
+// (Final, Iterator, Latent, Singular, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // class UMobilePlayerInput*      MPI                            (Parm)
 
@@ -7810,7 +7867,7 @@ void USeqEvent_MobileBase::AddToMobileInput(class UMobilePlayerInput* MPI)
 
 
 // Function GameFramework.SeqEvent_MobileBase.RegisterEvent
-// (Final, PreOperator, Net, NetReliable, Simulated, Native, HasOptionalParms)
+// (Final, Defined, Latent, Exec, Native, HasOptionalParms)
 
 void USeqEvent_MobileBase::RegisterEvent()
 {
@@ -7828,7 +7885,7 @@ void USeqEvent_MobileBase::RegisterEvent()
 
 
 // Function GameFramework.SeqEvent_MobileMotion.GetObjClassVersion
-// (Defined, Latent, PreOperator, Singular, Net, NetReliable, Native, HasOptionalParms)
+// (Iterator, PreOperator, Singular, Simulated, Native, HasOptionalParms)
 // Parameters:
 // int                            ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -7850,7 +7907,7 @@ int USeqEvent_MobileMotion::GetObjClassVersion()
 
 
 // Function GameFramework.SeqEvent_MobileZoneBase.AddToMobileInput
-// (Final, Defined, PreOperator, Singular, Net, Exec, Native, HasOptionalParms)
+// (Final, Iterator, Latent, Singular, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // class UMobilePlayerInput*      MPI                            (Parm)
 
@@ -7871,7 +7928,7 @@ void USeqEvent_MobileZoneBase::AddToMobileInput(class UMobilePlayerInput* MPI)
 
 
 // Function GameFramework.SeqEvent_MobileRawInput.RegisterEvent
-// (Final, PreOperator, Net, NetReliable, Simulated, Native, HasOptionalParms)
+// (Final, Defined, Latent, Exec, Native, HasOptionalParms)
 
 void USeqEvent_MobileRawInput::RegisterEvent()
 {
@@ -7889,7 +7946,7 @@ void USeqEvent_MobileRawInput::RegisterEvent()
 
 
 // Function GameFramework.GameSkelCtrl_Recoil.SetRecoilParam
-// (PreOperator, Singular, NetReliable, Exec, Native, HasOptionalParms)
+// (Defined, Latent, Singular, Net, NetReliable, Exec, Native, HasOptionalParms)
 
 void UGameSkelCtrl_Recoil::SetRecoilParam()
 {
@@ -7907,7 +7964,7 @@ void UGameSkelCtrl_Recoil::SetRecoilParam()
 
 
 // Function GameFramework.GameCameraBase.ModifyPostProcessSettings
-// (Defined, Iterator, PreOperator, NetReliable, Exec, Native, HasOptionalParms)
+// (PreOperator, Net, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // struct FPostProcessSettings    PP                             (Parm, OutParm, NeedCtorLink)
 
@@ -7947,7 +8004,7 @@ void UGameCameraBase::Init()
 
 
 // Function GameFramework.GameCameraBase.DisplayDebug
-// (Final, Latent, Net, NetReliable, Simulated, Static)
+// (Defined, Iterator, PreOperator, Net, Simulated, Exec, Static)
 // Parameters:
 // class AHUD*                    HUD                            (Parm)
 // float                          out_YL                         (Parm, OutParm)
@@ -7974,7 +8031,7 @@ void UGameCameraBase::STATIC_DisplayDebug(class AHUD* HUD, float* out_YL, float*
 
 
 // Function GameFramework.GameCameraBase.UpdateCamera
-// (Final, Defined, Iterator, Singular, Net, Exec, Native, HasOptionalParms)
+// (Final, Singular, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // class APawn*                   P                              (Parm)
 // class AGamePlayerCamera*       CameraActor                    (Parm)
@@ -8003,7 +8060,7 @@ void UGameCameraBase::UpdateCamera(class APawn* P, class AGamePlayerCamera* Came
 
 
 // Function GameFramework.GameCameraBase.ResetInterpolation
-// (Final, Latent, Singular, Net, NetReliable, Exec, Event, Operator, HasOptionalParms)
+// (Defined, Iterator, PreOperator, Singular, Net, Native, Event, Operator, HasOptionalParms)
 
 void UGameCameraBase::ResetInterpolation()
 {
@@ -8012,6 +8069,7 @@ void UGameCameraBase::ResetInterpolation()
 	UGameCameraBase_ResetInterpolation_Params params;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -8020,7 +8078,7 @@ void UGameCameraBase::ResetInterpolation()
 
 
 // Function GameFramework.GameCameraBase.OnBecomeInActive
-// (Latent, PreOperator, Singular, Exec, Event, Operator, HasOptionalParms)
+// (Final, Iterator, Net, NetReliable, Simulated, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // class UGameCameraBase*         NewCamera                      (Parm)
 
@@ -8040,7 +8098,7 @@ void UGameCameraBase::OnBecomeInActive(class UGameCameraBase* NewCamera)
 
 
 // Function GameFramework.GameCameraBase.OnBecomeActive
-// (Final, Defined, Iterator, PreOperator, Singular, Exec, Event, Operator, HasOptionalParms)
+// (Iterator, Net, NetReliable, Simulated, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // class UGameCameraBase*         OldCamera                      (Parm)
 
@@ -8060,7 +8118,7 @@ void UGameCameraBase::OnBecomeActive(class UGameCameraBase* OldCamera)
 
 
 // Function GameFramework.GameThirdPersonCamera.ResetInterpolation
-// (Final, Latent, Singular, Net, NetReliable, Exec, Event, Operator, HasOptionalParms)
+// (Defined, Iterator, PreOperator, Singular, Net, Native, Event, Operator, HasOptionalParms)
 
 void UGameThirdPersonCamera::ResetInterpolation()
 {
@@ -8069,6 +8127,7 @@ void UGameThirdPersonCamera::ResetInterpolation()
 	UGameThirdPersonCamera_ResetInterpolation_Params params;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -8077,7 +8136,7 @@ void UGameThirdPersonCamera::ResetInterpolation()
 
 
 // Function GameFramework.GameThirdPersonCamera.ModifyPostProcessSettings
-// (Defined, Iterator, PreOperator, NetReliable, Exec, Native, HasOptionalParms)
+// (PreOperator, Net, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // struct FPostProcessSettings    PP                             (Parm, OutParm, NeedCtorLink)
 
@@ -8100,7 +8159,7 @@ void UGameThirdPersonCamera::ModifyPostProcessSettings(struct FPostProcessSettin
 
 
 // Function GameFramework.GameThirdPersonCamera.OnBecomeActive
-// (Final, Defined, Iterator, PreOperator, Singular, Exec, Event, Operator, HasOptionalParms)
+// (Iterator, Net, NetReliable, Simulated, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // class UGameCameraBase*         OldCamera                      (Parm)
 
@@ -8120,7 +8179,7 @@ void UGameThirdPersonCamera::OnBecomeActive(class UGameCameraBase* OldCamera)
 
 
 // Function GameFramework.GameThirdPersonCamera.UpdateCameraMode
-// (Final, Defined, Latent, Singular, Net, NetReliable, Simulated, Exec, Event, Operator, HasOptionalParms)
+// (Latent, PreOperator, Singular, Net, Simulated, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // class APawn*                   P                              (Parm)
 
@@ -8132,6 +8191,7 @@ void UGameThirdPersonCamera::UpdateCameraMode(class APawn* P)
 	params.P = P;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -8140,7 +8200,7 @@ void UGameThirdPersonCamera::UpdateCameraMode(class APawn* P)
 
 
 // Function GameFramework.GameThirdPersonCamera.FindBestCameraMode
-// (Final, Defined, Iterator, PreOperator, Net, Event, Operator, HasOptionalParms)
+// (Iterator, Singular, Net, NetReliable, Simulated, Event, Operator, HasOptionalParms)
 // Parameters:
 // class APawn*                   P                              (Parm)
 // class UGameThirdPersonCameraMode* ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -8163,7 +8223,7 @@ class UGameThirdPersonCameraMode* UGameThirdPersonCamera::FindBestCameraMode(cla
 
 
 // Function GameFramework.GameThirdPersonCamera.AdjustFocusPointInterpolation
-// (Final, Defined, Iterator, PreOperator, Singular, NetReliable, Simulated, Native, Operator, HasOptionalParms)
+// (Iterator, Net, Simulated, Exec, Native, Operator, HasOptionalParms)
 // Parameters:
 // struct FRotator                Delta                          (Parm)
 
@@ -8184,7 +8244,7 @@ void UGameThirdPersonCamera::AdjustFocusPointInterpolation(const struct FRotator
 
 
 // Function GameFramework.GameThirdPersonCamera.GetActualFocusLocation
-// (Final, Defined, PreOperator, Singular, NetReliable, Event, Operator, HasOptionalParms)
+// (Net, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FVector                 ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -8205,7 +8265,7 @@ struct FVector UGameThirdPersonCamera::GetActualFocusLocation()
 
 
 // Function GameFramework.GameThirdPersonCamera.UpdateFocusPoint
-// (Final, Latent, PreOperator, Singular, NetReliable, Exec, Native, HasOptionalParms)
+// (Final, Defined, PreOperator, Singular, Net, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // class APawn*                   P                              (Parm)
 
@@ -8226,7 +8286,7 @@ void UGameThirdPersonCamera::UpdateFocusPoint(class APawn* P)
 
 
 // Function GameFramework.GameThirdPersonCamera.ClearFocusPoint
-// (Singular, Net, Simulated, Exec, Native, Operator, HasOptionalParms)
+// (Final, Iterator, Latent, Singular, Net, NetReliable, Event, Operator, HasOptionalParms)
 // Parameters:
 // bool                           bLeaveCameraRotation           (OptionalParm, Parm)
 
@@ -8238,7 +8298,6 @@ void UGameThirdPersonCamera::ClearFocusPoint(bool bLeaveCameraRotation)
 	params.bLeaveCameraRotation = bLeaveCameraRotation;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -8247,7 +8306,7 @@ void UGameThirdPersonCamera::ClearFocusPoint(bool bLeaveCameraRotation)
 
 
 // Function GameFramework.GameThirdPersonCamera.GetFocusActor
-// (Final, Defined, Net, NetReliable, Event, Operator, HasOptionalParms)
+// (PreOperator, Net, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // class AActor*                  ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -8268,7 +8327,7 @@ class AActor* UGameThirdPersonCamera::GetFocusActor()
 
 
 // Function GameFramework.GameThirdPersonCamera.SetFocusOnActor
-// (Final, Latent, Singular, Simulated, Exec, Event, Operator, HasOptionalParms)
+// (Defined, Iterator, PreOperator, Singular, NetReliable, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // class AActor*                  FocusActor                     (Parm)
 // struct FName                   FocusBoneName                  (Parm)
@@ -8296,6 +8355,7 @@ void UGameThirdPersonCamera::SetFocusOnActor(class AActor* FocusActor, const str
 	params.FocusPitchOffsetDeg = FocusPitchOffsetDeg;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -8304,7 +8364,7 @@ void UGameThirdPersonCamera::SetFocusOnActor(class AActor* FocusActor, const str
 
 
 // Function GameFramework.GameThirdPersonCamera.SetFocusOnLoc
-// (Defined, Latent, Singular, Simulated, Exec, Event, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, PreOperator, Singular, NetReliable, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FVector                 FocusWorldLoc                  (Parm)
 // struct FVector2D               InterpSpeedRange               (Parm)
@@ -8330,6 +8390,7 @@ void UGameThirdPersonCamera::SetFocusOnLoc(const struct FVector& FocusWorldLoc, 
 	params.FocusPitchOffsetDeg = FocusPitchOffsetDeg;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -8338,7 +8399,7 @@ void UGameThirdPersonCamera::SetFocusOnLoc(const struct FVector& FocusWorldLoc, 
 
 
 // Function GameFramework.GameThirdPersonCamera.AdjustTurn
-// (Defined, Latent, PreOperator, Singular, NetReliable, Simulated, Native, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, Net, Simulated, Exec, Native, Operator, HasOptionalParms)
 // Parameters:
 // int                            AngleOffset                    (Parm)
 
@@ -8359,7 +8420,7 @@ void UGameThirdPersonCamera::AdjustTurn(int AngleOffset)
 
 
 // Function GameFramework.GameThirdPersonCamera.EndTurn
-// (Final, Defined, Iterator, Singular, Event, Operator, HasOptionalParms)
+// (Iterator, PreOperator, Singular, NetReliable, Simulated, Event, Operator, HasOptionalParms)
 
 void UGameThirdPersonCamera::EndTurn()
 {
@@ -8376,7 +8437,7 @@ void UGameThirdPersonCamera::EndTurn()
 
 
 // Function GameFramework.GameThirdPersonCamera.BeginTurn
-// (PreOperator, Net, Exec, Native, Operator, HasOptionalParms)
+// (Final, Iterator, Latent, PreOperator, Net, NetReliable, Simulated, Exec, Native, Operator, HasOptionalParms)
 // Parameters:
 // int                            StartAngle                     (Parm)
 // int                            EndAngle                       (Parm)
@@ -8405,7 +8466,7 @@ void UGameThirdPersonCamera::BeginTurn(int StartAngle, int EndAngle, float TimeS
 
 
 // Function GameFramework.GameThirdPersonCamera.PlayerUpdateCamera
-// (Final, Iterator, Latent, PreOperator, Singular, Net, Exec, Event, Operator, HasOptionalParms)
+// (Defined, Latent, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // class APawn*                   P                              (Parm)
 // class AGamePlayerCamera*       CameraActor                    (Parm)
@@ -8422,6 +8483,7 @@ void UGameThirdPersonCamera::PlayerUpdateCamera(class APawn* P, class AGamePlaye
 	params.DeltaTime = DeltaTime;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -8433,7 +8495,7 @@ void UGameThirdPersonCamera::PlayerUpdateCamera(class APawn* P, class AGamePlaye
 
 
 // Function GameFramework.GameThirdPersonCamera.UpdateCamera
-// (Final, Defined, Iterator, Singular, Net, Exec, Native, HasOptionalParms)
+// (Final, Singular, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // class APawn*                   P                              (Parm)
 // class AGamePlayerCamera*       CameraActor                    (Parm)
@@ -8462,7 +8524,7 @@ void UGameThirdPersonCamera::UpdateCamera(class APawn* P, class AGamePlayerCamer
 
 
 // Function GameFramework.GameThirdPersonCamera.GetDesiredFOV
-// (Latent, NetReliable, Exec, Native, HasOptionalParms)
+// (Defined, Net, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // class APawn*                   ViewedPawn                     (Parm)
 // float                          ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -8503,7 +8565,7 @@ void UGameThirdPersonCamera::Init()
 
 
 // Function GameFramework.GameThirdPersonCamera.Reset
-// (Final, Defined, Latent, PreOperator, Net, NetReliable, Simulated, Native, HasOptionalParms)
+// (Final, Iterator, PreOperator, Exec, Native, HasOptionalParms)
 
 void UGameThirdPersonCamera::Reset()
 {
@@ -8521,7 +8583,7 @@ void UGameThirdPersonCamera::Reset()
 
 
 // Function GameFramework.GameThirdPersonCamera.CreateCameraMode
-// (Iterator, PreOperator, Singular, Net, Simulated, Exec, Native, Operator, HasOptionalParms)
+// (Final, Simulated, Event, Operator, HasOptionalParms)
 // Parameters:
 // class UClass*                  ModeClass                      (Parm)
 // class UGameThirdPersonCameraMode* ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -8534,7 +8596,6 @@ class UGameThirdPersonCameraMode* UGameThirdPersonCamera::CreateCameraMode(class
 	params.ModeClass = ModeClass;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -8545,7 +8606,7 @@ class UGameThirdPersonCameraMode* UGameThirdPersonCamera::CreateCameraMode(class
 
 
 // Function GameFramework.GamePlayerCamera.AdjustFOVForViewport
-// (Latent, PreOperator, Singular, NetReliable, Simulated, Native, Operator, HasOptionalParms)
+// (Final, Iterator, Net, Simulated, Exec, Native, Operator, HasOptionalParms)
 // Parameters:
 // float                          inHorizFOV                     (Parm)
 // class APawn*                   CameraTargetPawn               (Parm)
@@ -8571,7 +8632,7 @@ float AGamePlayerCamera::AdjustFOVForViewport(float inHorizFOV, class APawn* Cam
 
 
 // Function GameFramework.GamePlayerCamera.ResetInterpolation
-// (Final, Latent, Singular, Net, NetReliable, Exec, Event, Operator, HasOptionalParms)
+// (Defined, Iterator, PreOperator, Singular, Net, Native, Event, Operator, HasOptionalParms)
 
 void AGamePlayerCamera::ResetInterpolation()
 {
@@ -8580,6 +8641,7 @@ void AGamePlayerCamera::ResetInterpolation()
 	AGamePlayerCamera_ResetInterpolation_Params params;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -8588,7 +8650,7 @@ void AGamePlayerCamera::ResetInterpolation()
 
 
 // Function GameFramework.GamePlayerCamera.SetColorScale
-// (Final, Defined, Singular, Simulated, Exec, Event, Operator, HasOptionalParms)
+// (PreOperator, Singular, NetReliable, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FVector                 NewColorScale                  (Parm)
 
@@ -8600,6 +8662,7 @@ void AGamePlayerCamera::SetColorScale(const struct FVector& NewColorScale)
 	params.NewColorScale = NewColorScale;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -8608,7 +8671,7 @@ void AGamePlayerCamera::SetColorScale(const struct FVector& NewColorScale)
 
 
 // Function GameFramework.GamePlayerCamera.DisplayDebug
-// (Final, Latent, Net, NetReliable, Simulated, Static)
+// (Defined, Iterator, PreOperator, Net, Simulated, Exec, Static)
 // Parameters:
 // class AHUD*                    HUD                            (Parm)
 // float                          out_YL                         (Parm, OutParm)
@@ -8635,7 +8698,7 @@ void AGamePlayerCamera::STATIC_DisplayDebug(class AHUD* HUD, float* out_YL, floa
 
 
 // Function GameFramework.GamePlayerCamera.UpdateCameraLensEffects
-// (Defined, Latent, Singular, Net, NetReliable, Simulated, Exec, Event, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, PreOperator, Singular, Net, Simulated, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FTViewTarget            OutVT                          (Const, Parm, OutParm)
 
@@ -8646,6 +8709,7 @@ void AGamePlayerCamera::UpdateCameraLensEffects(struct FTViewTarget* OutVT)
 	AGamePlayerCamera_UpdateCameraLensEffects_Params params;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -8657,7 +8721,7 @@ void AGamePlayerCamera::UpdateCameraLensEffects(struct FTViewTarget* OutVT)
 
 
 // Function GameFramework.GamePlayerCamera.UpdateViewTarget
-// (Latent, Singular, Native, Event, HasOptionalParms)
+// (Final, Iterator, PreOperator, Singular, NetReliable, Simulated, Native, Event, HasOptionalParms)
 // Parameters:
 // struct FTViewTarget            OutVT                          (Parm, OutParm)
 // float                          DeltaTime                      (Parm)
@@ -8682,7 +8746,7 @@ void AGamePlayerCamera::UpdateViewTarget(float DeltaTime, struct FTViewTarget* O
 
 
 // Function GameFramework.GamePlayerCamera.ShouldConstrainAspectRatio
-// (Final, Latent, PreOperator, Singular, Simulated, Exec, Event, Operator, HasOptionalParms)
+// (Defined, Iterator, Net, NetReliable, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -8693,6 +8757,7 @@ bool AGamePlayerCamera::ShouldConstrainAspectRatio()
 	AGamePlayerCamera_ShouldConstrainAspectRatio_Params params;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -8703,7 +8768,7 @@ bool AGamePlayerCamera::ShouldConstrainAspectRatio()
 
 
 // Function GameFramework.GamePlayerCamera.FindBestCameraType
-// (Latent, PreOperator, Net, Event, Operator, HasOptionalParms)
+// (Final, Iterator, Singular, Net, NetReliable, Simulated, Event, Operator, HasOptionalParms)
 // Parameters:
 // class AActor*                  CameraTarget                   (Parm)
 // class UGameCameraBase*         ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -8726,7 +8791,7 @@ class UGameCameraBase* AGamePlayerCamera::FindBestCameraType(class AActor* Camer
 
 
 // Function GameFramework.GamePlayerCamera.Reset
-// (Final, Defined, Latent, PreOperator, Net, NetReliable, Simulated, Native, HasOptionalParms)
+// (Final, Iterator, PreOperator, Exec, Native, HasOptionalParms)
 
 void AGamePlayerCamera::Reset()
 {
@@ -8761,7 +8826,7 @@ void AGamePlayerCamera::PostBeginPlay()
 
 
 // Function GameFramework.GamePlayerCamera.CacheLastTargetBaseInfo
-// (Defined, Iterator, Latent, PreOperator, Simulated, Exec, Native, Operator, HasOptionalParms)
+// (Final, Defined, Latent, Singular, NetReliable, Event, Operator, HasOptionalParms)
 // Parameters:
 // class AActor*                  TargetBase                     (Parm)
 
@@ -8773,7 +8838,6 @@ void AGamePlayerCamera::CacheLastTargetBaseInfo(class AActor* TargetBase)
 	params.TargetBase = TargetBase;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -8782,7 +8846,7 @@ void AGamePlayerCamera::CacheLastTargetBaseInfo(class AActor* TargetBase)
 
 
 // Function GameFramework.GamePlayerCamera.CreateCamera
-// (Final, Defined, PreOperator, Singular, Net, Simulated, Exec, Native, Operator, HasOptionalParms)
+// (Simulated, Event, Operator, HasOptionalParms)
 // Parameters:
 // class UClass*                  CameraClass                    (Parm)
 // class UGameCameraBase*         ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -8795,7 +8859,6 @@ class UGameCameraBase* AGamePlayerCamera::CreateCamera(class UClass* CameraClass
 	params.CameraClass = CameraClass;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -8806,7 +8869,7 @@ class UGameCameraBase* AGamePlayerCamera::CreateCamera(class UClass* CameraClass
 
 
 // Function GameFramework.GameThirdPersonCameraMode.SetViewOffset
-// (Defined, Iterator, PreOperator, Singular, Simulated, Exec, Event, Operator, HasOptionalParms)
+// (Final, Defined, Net, NetReliable, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FViewOffsetData         NewViewOffset                  (Const, Parm, OutParm)
 
@@ -8817,6 +8880,7 @@ void UGameThirdPersonCameraMode::SetViewOffset(struct FViewOffsetData* NewViewOf
 	UGameThirdPersonCameraMode_SetViewOffset_Params params;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -8828,7 +8892,7 @@ void UGameThirdPersonCameraMode::SetViewOffset(struct FViewOffsetData* NewViewOf
 
 
 // Function GameFramework.GameThirdPersonCameraMode.ModifyPostProcessSettings
-// (Defined, Iterator, PreOperator, NetReliable, Exec, Native, HasOptionalParms)
+// (PreOperator, Net, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // struct FPostProcessSettings    PP                             (Parm, OutParm, NeedCtorLink)
 
@@ -8851,7 +8915,7 @@ void UGameThirdPersonCameraMode::ModifyPostProcessSettings(struct FPostProcessSe
 
 
 // Function GameFramework.GameThirdPersonCameraMode.UpdatePostProcess
-// (Final, Defined, PreOperator, Singular, Net, NetReliable, Simulated, Exec, Event, Operator, HasOptionalParms)
+// (NetReliable, Simulated, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FTViewTarget            VT                             (Const, Parm, OutParm)
 // float                          DeltaTime                      (Parm)
@@ -8864,6 +8928,7 @@ void UGameThirdPersonCameraMode::UpdatePostProcess(float DeltaTime, struct FTVie
 	params.DeltaTime = DeltaTime;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -8875,7 +8940,7 @@ void UGameThirdPersonCameraMode::UpdatePostProcess(float DeltaTime, struct FTVie
 
 
 // Function GameFramework.GameThirdPersonCameraMode.DOFTrace
-// (Iterator, Event, Operator, HasOptionalParms)
+// (Final, PreOperator, NetReliable, Simulated, Event, Operator, HasOptionalParms)
 // Parameters:
 // class AActor*                  TraceOwner                     (Parm)
 // struct FVector                 StartTrace                     (Parm)
@@ -8902,7 +8967,7 @@ struct FVector UGameThirdPersonCameraMode::DOFTrace(class AActor* TraceOwner, co
 
 
 // Function GameFramework.GameThirdPersonCameraMode.GetDOFFocusLoc
-// (Final, Net, NetReliable, Event, Operator, HasOptionalParms)
+// (Defined, Iterator, Latent, Net, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // class AActor*                  TraceOwner                     (Parm)
 // struct FVector                 StartTrace                     (Parm)
@@ -8929,7 +8994,7 @@ struct FVector UGameThirdPersonCameraMode::GetDOFFocusLoc(class AActor* TraceOwn
 
 
 // Function GameFramework.GameThirdPersonCameraMode.SetFocusPoint
-// (Final, Defined, Latent, Singular, Simulated, Exec, Event, Operator, HasOptionalParms)
+// (Latent, PreOperator, Singular, NetReliable, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // class APawn*                   ViewedPawn                     (Parm)
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -8942,6 +9007,7 @@ bool UGameThirdPersonCameraMode::SetFocusPoint(class APawn* ViewedPawn)
 	params.ViewedPawn = ViewedPawn;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -8952,7 +9018,7 @@ bool UGameThirdPersonCameraMode::SetFocusPoint(class APawn* ViewedPawn)
 
 
 // Function GameFramework.GameThirdPersonCameraMode.GetCameraWorstCaseLoc
-// (Defined, Iterator, NetReliable, Exec, Native, HasOptionalParms)
+// (Net, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // class APawn*                   TargetPawn                     (Parm)
 // struct FTViewTarget            CurrentViewTarget              (Parm)
@@ -8978,7 +9044,7 @@ struct FVector UGameThirdPersonCameraMode::GetCameraWorstCaseLoc(class APawn* Ta
 
 
 // Function GameFramework.GameThirdPersonCameraMode.GetDesiredFOV
-// (Latent, NetReliable, Exec, Native, HasOptionalParms)
+// (Defined, Net, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // class APawn*                   ViewedPawn                     (Parm)
 // float                          ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -9002,7 +9068,7 @@ float UGameThirdPersonCameraMode::GetDesiredFOV(class APawn* ViewedPawn)
 
 
 // Function GameFramework.GameThirdPersonCameraMode.AdjustViewOffset
-// (Iterator, PreOperator, Singular, Net, Exec, Native, HasOptionalParms)
+// (Defined, Iterator, Latent, Singular, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // class APawn*                   P                              (Parm)
 // struct FVector                 Offset                         (Parm)
@@ -9028,7 +9094,7 @@ struct FVector UGameThirdPersonCameraMode::AdjustViewOffset(class APawn* P, cons
 
 
 // Function GameFramework.GameThirdPersonCameraMode.OnBecomeInActive
-// (Latent, PreOperator, Singular, Exec, Event, Operator, HasOptionalParms)
+// (Final, Iterator, Net, NetReliable, Simulated, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // class APawn*                   TargetPawn                     (Parm)
 // class UGameThirdPersonCameraMode* NewMode                        (Parm)
@@ -9050,7 +9116,7 @@ void UGameThirdPersonCameraMode::OnBecomeInActive(class APawn* TargetPawn, class
 
 
 // Function GameFramework.GameThirdPersonCameraMode.OnBecomeActive
-// (Final, Defined, Iterator, PreOperator, Singular, Exec, Event, Operator, HasOptionalParms)
+// (Iterator, Net, NetReliable, Simulated, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // class APawn*                   TargetPawn                     (Parm)
 // class UGameThirdPersonCameraMode* PrevMode                       (Parm)
@@ -9089,7 +9155,7 @@ void UGameThirdPersonCameraMode::Init()
 
 
 // Function GameFramework.GameSpecialMove.RelativeToWorldOffset
-// (Final, Latent, PreOperator, Net, NetReliable, Exec, Event, Operator, HasOptionalParms)
+// (Defined, Iterator, Singular, Net, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FRotator                InRotation                     (Parm)
 // struct FVector                 RelativeSpaceOffset            (Parm)
@@ -9104,6 +9170,7 @@ struct FVector UGameSpecialMove::RelativeToWorldOffset(const struct FRotator& In
 	params.RelativeSpaceOffset = RelativeSpaceOffset;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -9114,7 +9181,7 @@ struct FVector UGameSpecialMove::RelativeToWorldOffset(const struct FRotator& In
 
 
 // Function GameFramework.GameSpecialMove.WorldToRelativeOffset
-// (Defined, Singular, Native, Event, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, Latent, Singular, NetReliable, Simulated, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FRotator                InRotation                     (Parm)
 // struct FVector                 WorldSpaceOffset               (Parm)
@@ -9140,7 +9207,7 @@ struct FVector UGameSpecialMove::WorldToRelativeOffset(const struct FRotator& In
 
 
 // Function GameFramework.GameSpecialMove.ForcePawnRotation
-// (Defined, Iterator, PreOperator, Singular, Net, Event, Operator, HasOptionalParms)
+// (Final, Defined, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // class APawn*                   P                              (Parm)
 // struct FRotator                NewRotation                    (Parm)
@@ -9162,7 +9229,7 @@ void UGameSpecialMove::ForcePawnRotation(class APawn* P, const struct FRotator& 
 
 
 // Function GameFramework.GameSpecialMove.MessageEvent
-// (Defined, PreOperator, Singular, NetReliable, Simulated, Event, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, Latent, PreOperator, Singular, Simulated, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FName                   EventName                      (Parm)
 // class UObject*                 Sender                         (Parm)
@@ -9187,7 +9254,7 @@ bool UGameSpecialMove::MessageEvent(const struct FName& EventName, class UObject
 
 
 // Function GameFramework.GameSpecialMove.ResetFacePreciseRotation
-// (Latent, Singular, Net, NetReliable, Exec, Event, Operator, HasOptionalParms)
+// (Final, Iterator, PreOperator, Singular, Net, Native, Event, Operator, HasOptionalParms)
 
 void UGameSpecialMove::ResetFacePreciseRotation()
 {
@@ -9196,6 +9263,7 @@ void UGameSpecialMove::ResetFacePreciseRotation()
 	UGameSpecialMove_ResetFacePreciseRotation_Params params;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -9204,7 +9272,7 @@ void UGameSpecialMove::ResetFacePreciseRotation()
 
 
 // Function GameFramework.GameSpecialMove.ReachedPrecisePosition
-// (Iterator, Latent, Singular, NetReliable, Exec, Native, HasOptionalParms)
+// (Defined, Iterator, Singular, Net, NetReliable, Exec, Native, HasOptionalParms)
 
 void UGameSpecialMove::ReachedPrecisePosition()
 {
@@ -9222,7 +9290,7 @@ void UGameSpecialMove::ReachedPrecisePosition()
 
 
 // Function GameFramework.GameSpecialMove.SetFacePreciseRotation
-// (Final, Defined, Iterator, Singular, Simulated, Exec, Event, Operator, HasOptionalParms)
+// (Iterator, PreOperator, Singular, NetReliable, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FRotator                RotationToFace                 (Parm)
 // float                          InterpolationTime              (Parm)
@@ -9236,6 +9304,7 @@ void UGameSpecialMove::SetFacePreciseRotation(const struct FRotator& RotationToF
 	params.InterpolationTime = InterpolationTime;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -9244,7 +9313,7 @@ void UGameSpecialMove::SetFacePreciseRotation(const struct FRotator& RotationToF
 
 
 // Function GameFramework.GameSpecialMove.SetReachPreciseDestination
-// (PreOperator, Singular, Simulated, Exec, Event, Operator, HasOptionalParms)
+// (Final, Iterator, Latent, PreOperator, Singular, NetReliable, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FVector                 DestinationToReach             (Parm)
 // bool                           bCancel                        (OptionalParm, Parm)
@@ -9258,6 +9327,7 @@ void UGameSpecialMove::SetReachPreciseDestination(const struct FVector& Destinat
 	params.bCancel = bCancel;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -9266,7 +9336,7 @@ void UGameSpecialMove::SetReachPreciseDestination(const struct FVector& Destinat
 
 
 // Function GameFramework.GameSpecialMove.ShouldReplicate
-// (Final, Iterator, Latent, PreOperator, Singular, Simulated, Exec, Event, Operator, HasOptionalParms)
+// (Defined, Latent, Net, NetReliable, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -9277,6 +9347,7 @@ bool UGameSpecialMove::ShouldReplicate()
 	UGameSpecialMove_ShouldReplicate_Params params;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -9287,7 +9358,7 @@ bool UGameSpecialMove::ShouldReplicate()
 
 
 // Function GameFramework.GameSpecialMove.SpecialMoveFlagsUpdated
-// (Iterator, Singular, Net, Simulated, Exec, Event, Operator, HasOptionalParms)
+// (Final, PreOperator, Singular, Net, NetReliable, Native, Event, Operator, HasOptionalParms)
 
 void UGameSpecialMove::SpecialMoveFlagsUpdated()
 {
@@ -9296,6 +9367,7 @@ void UGameSpecialMove::SpecialMoveFlagsUpdated()
 	UGameSpecialMove_SpecialMoveFlagsUpdated_Params params;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -9324,7 +9396,7 @@ void UGameSpecialMove::Tick(float DeltaTime)
 
 
 // Function GameFramework.GameSpecialMove.SpecialMoveEnded
-// (Final, Defined, Singular, Net, Simulated, Exec, Event, Operator, HasOptionalParms)
+// (PreOperator, Singular, Net, NetReliable, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FName                   PrevMove                       (Parm)
 // struct FName                   NextMove                       (Parm)
@@ -9338,6 +9410,7 @@ void UGameSpecialMove::SpecialMoveEnded(const struct FName& PrevMove, const stru
 	params.NextMove = NextMove;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -9346,7 +9419,7 @@ void UGameSpecialMove::SpecialMoveEnded(const struct FName& PrevMove, const stru
 
 
 // Function GameFramework.GameSpecialMove.SpecialMoveStarted
-// (Final, Defined, Iterator, Singular, Net, Simulated, Exec, Event, Operator, HasOptionalParms)
+// (Iterator, PreOperator, Singular, Net, NetReliable, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // bool                           bForced                        (Parm)
 // struct FName                   PrevMove                       (Parm)
@@ -9360,6 +9433,7 @@ void UGameSpecialMove::SpecialMoveStarted(bool bForced, const struct FName& Prev
 	params.PrevMove = PrevMove;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -9368,7 +9442,7 @@ void UGameSpecialMove::SpecialMoveStarted(bool bForced, const struct FName& Prev
 
 
 // Function GameFramework.GameSpecialMove.InternalCanDoSpecialMove
-// (Final, Latent, PreOperator, Singular, Simulated, Event, Operator, HasOptionalParms)
+// (Defined, Iterator, Net, NetReliable, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -9389,7 +9463,7 @@ bool UGameSpecialMove::InternalCanDoSpecialMove()
 
 
 // Function GameFramework.GameSpecialMove.CanDoSpecialMove
-// (Latent, PreOperator, Singular, Simulated, Exec, Native, Operator, HasOptionalParms)
+// (Final, Iterator, Net, NetReliable, Event, Operator, HasOptionalParms)
 // Parameters:
 // bool                           bForceCheck                    (OptionalParm, Parm)
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -9402,7 +9476,6 @@ bool UGameSpecialMove::CanDoSpecialMove(bool bForceCheck)
 	params.bForceCheck = bForceCheck;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -9413,7 +9486,7 @@ bool UGameSpecialMove::CanDoSpecialMove(bool bForceCheck)
 
 
 // Function GameFramework.GameSpecialMove.CanOverrideSpecialMove
-// (Defined, Latent, PreOperator, Singular, Simulated, Exec, Native, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, Net, NetReliable, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FName                   InMove                         (Parm)
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -9426,7 +9499,6 @@ bool UGameSpecialMove::CanOverrideSpecialMove(const struct FName& InMove)
 	params.InMove = InMove;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -9437,7 +9509,7 @@ bool UGameSpecialMove::CanOverrideSpecialMove(const struct FName& InMove)
 
 
 // Function GameFramework.GameSpecialMove.CanOverrideMoveWith
-// (Final, Latent, PreOperator, Singular, Simulated, Exec, Native, Operator, HasOptionalParms)
+// (Defined, Iterator, Net, NetReliable, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FName                   NewMove                        (Parm)
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -9450,7 +9522,6 @@ bool UGameSpecialMove::CanOverrideMoveWith(const struct FName& NewMove)
 	params.NewMove = NewMove;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -9461,7 +9532,7 @@ bool UGameSpecialMove::CanOverrideMoveWith(const struct FName& NewMove)
 
 
 // Function GameFramework.GameSpecialMove.CanChainMove
-// (Defined, Iterator, PreOperator, Singular, Simulated, Exec, Native, Operator, HasOptionalParms)
+// (Final, Defined, Net, NetReliable, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FName                   NextMove                       (Parm)
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -9474,7 +9545,6 @@ bool UGameSpecialMove::CanChainMove(const struct FName& NextMove)
 	params.NextMove = NextMove;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -9485,7 +9555,7 @@ bool UGameSpecialMove::CanChainMove(const struct FName& NextMove)
 
 
 // Function GameFramework.GameSpecialMove.ExtractSpecialMoveFlags
-// (Iterator, Net, Event, Operator, HasOptionalParms)
+// (Final, PreOperator, Net, NetReliable, Simulated, Event, Operator, HasOptionalParms)
 // Parameters:
 // int                            Flags                          (Parm)
 
@@ -9505,7 +9575,7 @@ void UGameSpecialMove::ExtractSpecialMoveFlags(int Flags)
 
 
 // Function GameFramework.GameSpecialMove.InitSpecialMoveFlags
-// (Final, Defined, Iterator, Singular, Simulated, Event, Operator, HasOptionalParms)
+// (Iterator, PreOperator, Singular, NetReliable, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // int                            out_Flags                      (Parm, OutParm)
 
@@ -9527,7 +9597,7 @@ void UGameSpecialMove::InitSpecialMoveFlags(int* out_Flags)
 
 
 // Function GameFramework.GameSpecialMove.InitSpecialMove
-// (Defined, Iterator, Singular, Simulated, Event, Operator, HasOptionalParms)
+// (Final, Defined, PreOperator, Singular, NetReliable, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // class AGamePawn*               inPawn                         (Parm)
 // struct FName                   InHandle                       (Parm)
@@ -9549,7 +9619,7 @@ void UGameSpecialMove::InitSpecialMove(class AGamePawn* inPawn, const struct FNa
 
 
 // Function GameFramework.GameStateObject.Reset
-// (Final, Defined, Latent, PreOperator, Net, NetReliable, Simulated, Native, HasOptionalParms)
+// (Final, Iterator, PreOperator, Exec, Native, HasOptionalParms)
 
 void UGameStateObject::Reset()
 {
@@ -9567,7 +9637,7 @@ void UGameStateObject::Reset()
 
 
 // Function GameFramework.GameStateObject.PreProcessStream
-// (Defined, Iterator, PreOperator, Singular, NetReliable, Simulated, Native, HasOptionalParms)
+// (PreOperator, Singular, Net, NetReliable, Simulated, Native, HasOptionalParms)
 
 void UGameStateObject::PreProcessStream()
 {
@@ -9585,7 +9655,7 @@ void UGameStateObject::PreProcessStream()
 
 
 // Function GameFramework.GameStatsAggregator.GetAggregateMappingIDs
-// (Iterator, PreOperator, Singular, NetReliable, Event, Operator, HasOptionalParms)
+// (Final, Net, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // int                            EventID                        (Parm)
 // int                            AggregateID                    (Parm, OutParm)
@@ -9615,7 +9685,7 @@ bool UGameStatsAggregator::GetAggregateMappingIDs(int EventID, int* AggregateID,
 
 
 // Function GameFramework.GameStatsAggregator.Reset
-// (Final, Defined, Latent, PreOperator, Net, NetReliable, Simulated, Native, HasOptionalParms)
+// (Final, Iterator, PreOperator, Exec, Native, HasOptionalParms)
 
 void UGameStatsAggregator::Reset()
 {
@@ -9633,7 +9703,7 @@ void UGameStatsAggregator::Reset()
 
 
 // Function GameFramework.GameStatsAggregator.PostProcessStream
-// (Final, Defined, Latent, Singular, NetReliable, Simulated, Native, HasOptionalParms)
+// (Final, Iterator, Singular, Net, NetReliable, Simulated, Native, HasOptionalParms)
 
 void UGameStatsAggregator::PostProcessStream()
 {
@@ -9651,7 +9721,7 @@ void UGameStatsAggregator::PostProcessStream()
 
 
 // Function GameFramework.GameStatsAggregator.PreProcessStream
-// (Defined, Iterator, PreOperator, Singular, NetReliable, Simulated, Native, HasOptionalParms)
+// (PreOperator, Singular, Net, NetReliable, Simulated, Native, HasOptionalParms)
 
 void UGameStatsAggregator::PreProcessStream()
 {
@@ -9669,7 +9739,7 @@ void UGameStatsAggregator::PreProcessStream()
 
 
 // Function GameFramework.DebugCameraHUD.PostRender
-// (Iterator, Latent, Singular, NetReliable, Simulated, Native, HasOptionalParms)
+// (Defined, Iterator, Singular, Net, NetReliable, Simulated, Native, HasOptionalParms)
 
 void ADebugCameraHUD::PostRender()
 {
@@ -9687,7 +9757,7 @@ void ADebugCameraHUD::PostRender()
 
 
 // Function GameFramework.DebugCameraHUD.DisplayMaterials
-// (Defined, Iterator, PreOperator, Singular, Net, NetReliable, Simulated, Exec, Native, Operator, HasOptionalParms)
+// (Final, Defined, NetReliable, Simulated, Event, Operator, HasOptionalParms)
 // Parameters:
 // float                          X                              (Parm)
 // float                          Y                              (Parm, OutParm)
@@ -9705,7 +9775,6 @@ bool ADebugCameraHUD::DisplayMaterials(float X, float DY, class UMeshComponent* 
 	params.MeshComp = MeshComp;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -9736,7 +9805,7 @@ void ADebugCameraHUD::PostBeginPlay()
 
 
 // Function GameFramework.DebugCameraInput.InputKey
-// (Iterator, Singular, NetReliable, Static)
+// (Defined, Iterator, Latent, PreOperator, NetReliable, Static)
 // Parameters:
 // int                            ControllerId                   (Parm)
 // struct FName                   Key                            (Parm)
@@ -9767,7 +9836,7 @@ bool UDebugCameraInput::STATIC_InputKey(int ControllerId, const struct FName& Ke
 
 
 // Function GameFramework.GameCrowdSpawnerInterface.GetMaxSpawnDist
-// (Latent, Net, NetReliable, Event, Operator, HasOptionalParms)
+// (Final, Iterator, PreOperator, Net, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // float                          ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -9788,7 +9857,7 @@ float UGameCrowdSpawnerInterface::GetMaxSpawnDist()
 
 
 // Function GameFramework.GameCrowdSpawnerInterface.AgentDestroyed
-// (Iterator, Net, NetReliable, Simulated, Native, Operator, HasOptionalParms)
+// (Final, PreOperator, Net, Simulated, Exec, Native, Operator, HasOptionalParms)
 // Parameters:
 // class AGameCrowdAgent*         Agent                          (Parm)
 
@@ -9809,7 +9878,7 @@ void UGameCrowdSpawnerInterface::AgentDestroyed(class AGameCrowdAgent* Agent)
 
 
 // Function GameFramework.GameCrowdSpawnInterface.GetSpawnPosition
-// (Final, Defined, Iterator, Latent, Net, NetReliable, Event, Operator, HasOptionalParms)
+// (Iterator, Latent, PreOperator, Net, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // class USeqAct_GameCrowdSpawner* Spawner                        (Parm)
 // struct FVector                 SpawnPos                       (Parm, OutParm)
@@ -9836,7 +9905,7 @@ void UGameCrowdSpawnInterface::GetSpawnPosition(class USeqAct_GameCrowdSpawner* 
 
 
 // Function GameFramework.GameAICmd_Hover_MoveToGoal.IsEnemyBasedOnInterpActor
-// (Final, Iterator, Latent, PreOperator, Singular, Simulated, Event, Operator, HasOptionalParms)
+// (Defined, Latent, Net, NetReliable, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // class APawn*                   InEnemy                        (Parm)
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -9859,7 +9928,7 @@ bool UGameAICmd_Hover_MoveToGoal::IsEnemyBasedOnInterpActor(class APawn* InEnemy
 
 
 // Function GameFramework.GameAICmd_Hover_MoveToGoal.HandlePathObstruction
-// (PreOperator, Simulated, Native, HasOptionalParms)
+// (Defined, Latent, Net, Simulated, Native, HasOptionalParms)
 // Parameters:
 // class AActor*                  BlockedBy                      (Parm)
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -9883,7 +9952,7 @@ bool UGameAICmd_Hover_MoveToGoal::HandlePathObstruction(class AActor* BlockedBy)
 
 
 // Function GameFramework.GameAICmd_Hover_MoveToGoal.Pushed
-// (Defined, Latent, Singular, NetReliable, Exec, Event, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, PreOperator, Singular, Native, Event, Operator, HasOptionalParms)
 
 void UGameAICmd_Hover_MoveToGoal::Pushed()
 {
@@ -9892,6 +9961,7 @@ void UGameAICmd_Hover_MoveToGoal::Pushed()
 	UGameAICmd_Hover_MoveToGoal_Pushed_Params params;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -9900,7 +9970,7 @@ void UGameAICmd_Hover_MoveToGoal::Pushed()
 
 
 // Function GameFramework.GameAICmd_Hover_MoveToGoal.MoveToGoal
-// (Defined, Iterator, Latent, Singular, Net, NetReliable, Simulated, Event, Operator, HasOptionalParms)
+// (Final, Defined, Latent, PreOperator, Singular, Net, Simulated, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // class AGameAIController*       AI                             (Parm)
 // class AActor*                  InGoal                         (Parm)
@@ -9929,7 +9999,7 @@ bool UGameAICmd_Hover_MoveToGoal::MoveToGoal(class AGameAIController* AI, class 
 
 
 // Function GameFramework.GameAICmd_Hover_MoveToGoal_Mesh.DrawDebug
-// (Final, Defined, Iterator, Latent, PreOperator, Singular, Net, Exec, Native, HasOptionalParms)
+// (Final, Latent, PreOperator, Singular, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // class AHUD*                    H                              (Parm)
 // struct FName                   Category                       (Parm)
@@ -9952,7 +10022,7 @@ void UGameAICmd_Hover_MoveToGoal_Mesh::DrawDebug(class AHUD* H, const struct FNa
 
 
 // Function GameFramework.GameAICmd_Hover_MoveToGoal_Mesh.IsEnemyBasedOnInterpActor
-// (Final, Iterator, Latent, PreOperator, Singular, Simulated, Event, Operator, HasOptionalParms)
+// (Defined, Latent, Net, NetReliable, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // class APawn*                   InEnemy                        (Parm)
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -9975,7 +10045,7 @@ bool UGameAICmd_Hover_MoveToGoal_Mesh::IsEnemyBasedOnInterpActor(class APawn* In
 
 
 // Function GameFramework.GameAICmd_Hover_MoveToGoal_Mesh.ShouldUpdateBreadCrumbs
-// (Defined, Iterator, Latent, PreOperator, Singular, Simulated, Exec, Event, Operator, HasOptionalParms)
+// (Final, Defined, Latent, Net, NetReliable, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -9986,6 +10056,7 @@ bool UGameAICmd_Hover_MoveToGoal_Mesh::ShouldUpdateBreadCrumbs()
 	UGameAICmd_Hover_MoveToGoal_Mesh_ShouldUpdateBreadCrumbs_Params params;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -9996,7 +10067,7 @@ bool UGameAICmd_Hover_MoveToGoal_Mesh::ShouldUpdateBreadCrumbs()
 
 
 // Function GameFramework.GameAICmd_Hover_MoveToGoal_Mesh.HasReachedGoal
-// (Final, Defined, Iterator, Singular, Net, NetReliable, Event, Operator, HasOptionalParms)
+// (Iterator, PreOperator, Singular, Net, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -10017,7 +10088,7 @@ bool UGameAICmd_Hover_MoveToGoal_Mesh::HasReachedGoal()
 
 
 // Function GameFramework.GameAICmd_Hover_MoveToGoal_Mesh.ReEvaluatePath
-// (Iterator, PreOperator, Net, NetReliable, Exec, Event, Operator, HasOptionalParms)
+// (Final, Singular, Net, Native, Event, Operator, HasOptionalParms)
 
 void UGameAICmd_Hover_MoveToGoal_Mesh::ReEvaluatePath()
 {
@@ -10026,6 +10097,7 @@ void UGameAICmd_Hover_MoveToGoal_Mesh::ReEvaluatePath()
 	UGameAICmd_Hover_MoveToGoal_Mesh_ReEvaluatePath_Params params;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -10034,7 +10106,7 @@ void UGameAICmd_Hover_MoveToGoal_Mesh::ReEvaluatePath()
 
 
 // Function GameFramework.GameAICmd_Hover_MoveToGoal_Mesh.HandlePathObstruction
-// (PreOperator, Simulated, Native, HasOptionalParms)
+// (Defined, Latent, Net, Simulated, Native, HasOptionalParms)
 // Parameters:
 // class AActor*                  BlockedBy                      (Parm)
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -10078,7 +10150,7 @@ void UGameAICmd_Hover_MoveToGoal_Mesh::Tick(float DeltaTime)
 
 
 // Function GameFramework.GameAICmd_Hover_MoveToGoal_Mesh.Popped
-// (Final, Defined, NetReliable, Exec, Event, Operator, HasOptionalParms)
+// (PreOperator, Native, Event, Operator, HasOptionalParms)
 
 void UGameAICmd_Hover_MoveToGoal_Mesh::Popped()
 {
@@ -10087,6 +10159,7 @@ void UGameAICmd_Hover_MoveToGoal_Mesh::Popped()
 	UGameAICmd_Hover_MoveToGoal_Mesh_Popped_Params params;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -10095,7 +10168,7 @@ void UGameAICmd_Hover_MoveToGoal_Mesh::Popped()
 
 
 // Function GameFramework.GameAICmd_Hover_MoveToGoal_Mesh.Pushed
-// (Defined, Latent, Singular, NetReliable, Exec, Event, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, PreOperator, Singular, Native, Event, Operator, HasOptionalParms)
 
 void UGameAICmd_Hover_MoveToGoal_Mesh::Pushed()
 {
@@ -10104,6 +10177,7 @@ void UGameAICmd_Hover_MoveToGoal_Mesh::Pushed()
 	UGameAICmd_Hover_MoveToGoal_Mesh_Pushed_Params params;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -10112,7 +10186,7 @@ void UGameAICmd_Hover_MoveToGoal_Mesh::Pushed()
 
 
 // Function GameFramework.GameAICmd_Hover_MoveToGoal_Mesh.HoverBackToMesh
-// (PreOperator, Singular, Net, NetReliable, Event, Operator, HasOptionalParms)
+// (Final, Iterator, Latent, PreOperator, Singular, Net, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // class AGameAIController*       AI                             (Parm)
 // bool                           ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -10135,7 +10209,7 @@ bool UGameAICmd_Hover_MoveToGoal_Mesh::HoverBackToMesh(class AGameAIController* 
 
 
 // Function GameFramework.GameAICmd_Hover_MoveToGoal_Mesh.HoverToPoint
-// (Defined, PreOperator, Singular, Net, NetReliable, Event, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, Latent, PreOperator, Singular, Net, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // class AGameAIController*       AI                             (Parm)
 // struct FVector                 InPoint                        (Parm)
@@ -10164,7 +10238,7 @@ bool UGameAICmd_Hover_MoveToGoal_Mesh::HoverToPoint(class AGameAIController* AI,
 
 
 // Function GameFramework.GameAICmd_Hover_MoveToGoal_Mesh.HoverToGoal
-// (Final, PreOperator, Singular, Net, NetReliable, Event, Operator, HasOptionalParms)
+// (Defined, Iterator, Latent, PreOperator, Singular, Net, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // class AGameAIController*       AI                             (Parm)
 // class AActor*                  InGoal                         (Parm)
@@ -10193,7 +10267,7 @@ bool UGameAICmd_Hover_MoveToGoal_Mesh::HoverToGoal(class AGameAIController* AI, 
 
 
 // Function GameFramework.GameFixedCamera.OnBecomeActive
-// (Final, Defined, Iterator, PreOperator, Singular, Exec, Event, Operator, HasOptionalParms)
+// (Iterator, Net, NetReliable, Simulated, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // class UGameCameraBase*         OldCamera                      (Parm)
 
@@ -10213,7 +10287,7 @@ void UGameFixedCamera::OnBecomeActive(class UGameCameraBase* OldCamera)
 
 
 // Function GameFramework.GameFixedCamera.UpdateCamera
-// (Final, Defined, Iterator, Singular, Net, Exec, Native, HasOptionalParms)
+// (Final, Singular, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // class APawn*                   P                              (Parm)
 // class AGamePlayerCamera*       CameraActor                    (Parm)
@@ -10242,7 +10316,7 @@ void UGameFixedCamera::UpdateCamera(class APawn* P, class AGamePlayerCamera* Cam
 
 
 // Function GameFramework.GameKActorSpawnableEffect.StartScalingDown
-// (Final, Defined, PreOperator, Singular, Net, Simulated, Exec, Event, Operator, HasOptionalParms)
+// (Simulated, Native, Event, Operator, HasOptionalParms)
 
 void AGameKActorSpawnableEffect::StartScalingDown()
 {
@@ -10251,6 +10325,7 @@ void AGameKActorSpawnableEffect::StartScalingDown()
 	AGameKActorSpawnableEffect_StartScalingDown_Params params;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -10259,7 +10334,7 @@ void AGameKActorSpawnableEffect::StartScalingDown()
 
 
 // Function GameFramework.GameKActorSpawnableEffect.FellOutOfWorld
-// (Final, Defined, Iterator, Net, NetReliable, Native, HasOptionalParms)
+// (Final, Simulated, Native, HasOptionalParms)
 // Parameters:
 // class UClass*                  dmgType                        (Parm)
 
@@ -10297,7 +10372,7 @@ void AGameKActorSpawnableEffect::PostBeginPlay()
 
 
 // Function GameFramework.MobileDebugCameraController.SetupDebugZones
-// (Final, Iterator, PreOperator, Singular, Simulated, Exec, Event, Operator, HasOptionalParms)
+// (Defined, Net, NetReliable, Native, Event, Operator, HasOptionalParms)
 
 void AMobileDebugCameraController::SetupDebugZones()
 {
@@ -10306,6 +10381,7 @@ void AMobileDebugCameraController::SetupDebugZones()
 	AMobileDebugCameraController_SetupDebugZones_Params params;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -10314,7 +10390,7 @@ void AMobileDebugCameraController::SetupDebugZones()
 
 
 // Function GameFramework.MobileDebugCameraController.InitInputSystem
-// (Final, Defined, Latent, PreOperator, Simulated, Native, HasOptionalParms)
+// (Final, Iterator, PreOperator, Net, Simulated, Native, HasOptionalParms)
 
 void AMobileDebugCameraController::InitInputSystem()
 {
@@ -10332,7 +10408,7 @@ void AMobileDebugCameraController::InitInputSystem()
 
 
 // Function GameFramework.MobileDebugCameraController.OnDeactivate
-// (Final, Latent, PreOperator, Singular, Exec, Event, Operator, HasOptionalParms)
+// (Defined, Iterator, Net, NetReliable, Simulated, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // class APlayerController*       PC                             (Parm)
 
@@ -10352,7 +10428,7 @@ void AMobileDebugCameraController::OnDeactivate(class APlayerController* PC)
 
 
 // Function GameFramework.MobileDebugCameraController.InitDebugInputSystem
-// (PreOperator, Simulated, Event, Operator, HasOptionalParms)
+// (Final, Iterator, Latent, PreOperator, NetReliable, Exec, Event, Operator, HasOptionalParms)
 
 void AMobileDebugCameraController::InitDebugInputSystem()
 {
@@ -10369,7 +10445,7 @@ void AMobileDebugCameraController::InitDebugInputSystem()
 
 
 // Function GameFramework.MobileDebugCameraController.OnActivate
-// (Defined, Iterator, PreOperator, Singular, Exec, Event, Operator, HasOptionalParms)
+// (Final, Defined, Net, NetReliable, Simulated, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // class APlayerController*       PC                             (Parm)
 
@@ -10389,7 +10465,7 @@ void AMobileDebugCameraController::OnActivate(class APlayerController* PC)
 
 
 // Function GameFramework.MobileDebugCameraInput.InputKey
-// (Iterator, Singular, NetReliable, Static)
+// (Defined, Iterator, Latent, PreOperator, NetReliable, Static)
 // Parameters:
 // int                            ControllerId                   (Parm)
 // struct FName                   Key                            (Parm)
@@ -10420,7 +10496,7 @@ bool UMobileDebugCameraInput::STATIC_InputKey(int ControllerId, const struct FNa
 
 
 // Function GameFramework.MobileDebugCameraHUD.PostRender
-// (Iterator, Latent, Singular, NetReliable, Simulated, Native, HasOptionalParms)
+// (Defined, Iterator, Singular, Net, NetReliable, Simulated, Native, HasOptionalParms)
 
 void AMobileDebugCameraHUD::PostRender()
 {
@@ -10438,7 +10514,7 @@ void AMobileDebugCameraHUD::PostRender()
 
 
 // Function GameFramework.MobileDebugCameraHUD.DisplayMaterials
-// (Defined, Iterator, PreOperator, Singular, Net, NetReliable, Simulated, Exec, Native, Operator, HasOptionalParms)
+// (Final, Defined, NetReliable, Simulated, Event, Operator, HasOptionalParms)
 // Parameters:
 // float                          X                              (Parm)
 // float                          Y                              (Parm, OutParm)
@@ -10456,7 +10532,6 @@ bool AMobileDebugCameraHUD::DisplayMaterials(float X, float DY, class UMeshCompo
 	params.MeshComp = MeshComp;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -10487,7 +10562,7 @@ void AMobileDebugCameraHUD::PostBeginPlay()
 
 
 // Function GameFramework.MobileMenuBar.UpdateItemViewports
-// (Final, PreOperator, Singular, Net, NetReliable, Simulated, Exec, Event, Operator, HasOptionalParms)
+// (Defined, Iterator, Latent, PreOperator, Singular, Net, Simulated, Native, Event, Operator, HasOptionalParms)
 
 void UMobileMenuBar::UpdateItemViewports()
 {
@@ -10496,6 +10571,7 @@ void UMobileMenuBar::UpdateItemViewports()
 	UMobileMenuBar_UpdateItemViewports_Params params;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -10504,7 +10580,7 @@ void UMobileMenuBar::UpdateItemViewports()
 
 
 // Function GameFramework.MobileMenuBar.SetFirstItem
-// (Latent, Singular, Simulated, Exec, Event, Operator, HasOptionalParms)
+// (Final, Iterator, PreOperator, Singular, NetReliable, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // int                            first                          (Parm)
 
@@ -10516,6 +10592,7 @@ void UMobileMenuBar::SetFirstItem(int first)
 	params.first = first;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -10524,7 +10601,7 @@ void UMobileMenuBar::SetFirstItem(int first)
 
 
 // Function GameFramework.MobileMenuBar.RenderItem
-// (Final, Singular, Net, NetReliable, Exec, Event, Operator, HasOptionalParms)
+// (Defined, Iterator, Latent, Singular, Net, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // class UCanvas*                 Canvas                         (Parm)
 // float                          DeltaTime                      (Parm)
@@ -10540,6 +10617,7 @@ void UMobileMenuBar::RenderItem(class UCanvas* Canvas, float DeltaTime, int Item
 	params.ItemIndex = ItemIndex;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -10548,7 +10626,7 @@ void UMobileMenuBar::RenderItem(class UCanvas* Canvas, float DeltaTime, int Item
 
 
 // Function GameFramework.MobileMenuBar.RenderObject
-// (Iterator, Singular, Net, NetReliable, Exec, Event, Operator, HasOptionalParms)
+// (Final, PreOperator, Singular, Net, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // class UCanvas*                 Canvas                         (Parm)
 // float                          DeltaTime                      (Parm)
@@ -10562,6 +10640,7 @@ void UMobileMenuBar::RenderObject(class UCanvas* Canvas, float DeltaTime)
 	params.DeltaTime = DeltaTime;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -10570,7 +10649,7 @@ void UMobileMenuBar::RenderObject(class UCanvas* Canvas, float DeltaTime)
 
 
 // Function GameFramework.MobileMenuBar.OnTouch
-// (Final, Defined, Singular, NetReliable, Exec, Native, HasOptionalParms)
+// (Final, Iterator, Latent, PreOperator, Net, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // TEnumAsByte<ETouchType>        EventType                      (Parm)
 // float                          TouchX                         (Parm)
@@ -10602,7 +10681,7 @@ bool UMobileMenuBar::OnTouch(TEnumAsByte<ETouchType> EventType, float TouchX, fl
 
 
 // Function GameFramework.MobileMenuBar.GetSelected
-// (Defined, Iterator, Latent, Net, NetReliable, Event, Operator, HasOptionalParms)
+// (Final, Defined, Latent, PreOperator, Net, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // class UMobileMenuBarItem*      ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -10623,7 +10702,7 @@ class UMobileMenuBarItem* UMobileMenuBar::GetSelected()
 
 
 // Function GameFramework.MobileMenuBar.Num
-// (Final, Iterator, PreOperator, Event, Operator, Static)
+// (Defined, Singular, NetReliable, Simulated, Event, Operator, Static)
 // Parameters:
 // int                            ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -10667,7 +10746,7 @@ void UMobileMenuBar::AddItem(class UMobileMenuBarItem* Item, int Index)
 
 
 // Function GameFramework.MobileMenuBar.InitMenuObject
-// (Final, Iterator, Singular, Simulated, Event, Operator, HasOptionalParms)
+// (Defined, PreOperator, Singular, NetReliable, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // class UMobilePlayerInput*      PlayerInput                    (Parm)
 // class UMobileMenuScene*        Scene                          (Parm)
@@ -10695,7 +10774,7 @@ void UMobileMenuBar::InitMenuObject(class UMobilePlayerInput* PlayerInput, class
 
 
 // Function GameFramework.MobileMenuBarItem.RenderItem
-// (Final, Singular, Net, NetReliable, Exec, Event, Operator, HasOptionalParms)
+// (Defined, Iterator, Latent, Singular, Net, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // class UMobileMenuBar*          Bar                            (Parm)
 // class UCanvas*                 Canvas                         (Parm)
@@ -10711,6 +10790,7 @@ void UMobileMenuBarItem::RenderItem(class UMobileMenuBar* Bar, class UCanvas* Ca
 	params.DeltaTime = DeltaTime;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -10719,7 +10799,7 @@ void UMobileMenuBarItem::RenderItem(class UMobileMenuBar* Bar, class UCanvas* Ca
 
 
 // Function GameFramework.MobileMenuButton.RenderCaption
-// (Iterator, Latent, PreOperator, Net, NetReliable, Exec, Event, Operator, HasOptionalParms)
+// (Final, Latent, Singular, Net, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // class UCanvas*                 Canvas                         (Parm)
 
@@ -10731,6 +10811,7 @@ void UMobileMenuButton::RenderCaption(class UCanvas* Canvas)
 	params.Canvas = Canvas;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -10739,7 +10820,7 @@ void UMobileMenuButton::RenderCaption(class UCanvas* Canvas)
 
 
 // Function GameFramework.MobileMenuButton.RenderObject
-// (Iterator, Singular, Net, NetReliable, Exec, Event, Operator, HasOptionalParms)
+// (Final, PreOperator, Singular, Net, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // class UCanvas*                 Canvas                         (Parm)
 // float                          DeltaTime                      (Parm)
@@ -10753,6 +10834,7 @@ void UMobileMenuButton::RenderObject(class UCanvas* Canvas, float DeltaTime)
 	params.DeltaTime = DeltaTime;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -10761,7 +10843,7 @@ void UMobileMenuButton::RenderObject(class UCanvas* Canvas, float DeltaTime)
 
 
 // Function GameFramework.MobileMenuButton.InitMenuObject
-// (Final, Iterator, Singular, Simulated, Event, Operator, HasOptionalParms)
+// (Defined, PreOperator, Singular, NetReliable, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // class UMobilePlayerInput*      PlayerInput                    (Parm)
 // class UMobileMenuScene*        Scene                          (Parm)
@@ -10789,7 +10871,7 @@ void UMobileMenuButton::InitMenuObject(class UMobilePlayerInput* PlayerInput, cl
 
 
 // Function GameFramework.MobileMenuElement.RenderElement
-// (Final, Defined, Iterator, Latent, PreOperator, Net, NetReliable, Exec, Event, Operator, HasOptionalParms)
+// (Iterator, Latent, Singular, Net, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // class UMobileMenuObject*       Owner                          (Parm)
 // class UCanvas*                 Canvas                         (Parm)
@@ -10807,6 +10889,7 @@ void UMobileMenuElement::RenderElement(class UMobileMenuObject* Owner, class UCa
 	params.Opacity = Opacity;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -10815,7 +10898,7 @@ void UMobileMenuElement::RenderElement(class UMobileMenuObject* Owner, class UCa
 
 
 // Function GameFramework.MobileMenuElement.OnTouch
-// (Final, Defined, Singular, NetReliable, Exec, Native, HasOptionalParms)
+// (Final, Iterator, Latent, PreOperator, Net, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // TEnumAsByte<ETouchType>        EventType                      (Parm)
 // float                          TouchX                         (Parm)
@@ -10845,7 +10928,7 @@ bool UMobileMenuElement::OnTouch(TEnumAsByte<ETouchType> EventType, float TouchX
 
 
 // Function GameFramework.MobileMenuGame.RestartPlayer
-// (Final, Iterator, Latent, Net, Simulated, HasOptionalParms)
+// (Defined, Latent, PreOperator, Net, NetReliable, Exec, HasOptionalParms)
 // Parameters:
 // class AController*             NewPlayer                      (Parm)
 
@@ -10865,7 +10948,7 @@ void AMobileMenuGame::RestartPlayer(class AController* NewPlayer)
 
 
 // Function GameFramework.MobileMenuGame.StartMatch
-// (Defined, Iterator, Singular, Net, NetReliable, Simulated, Exec, Native, HasOptionalParms)
+// (Final, Defined, PreOperator, Singular, Net, Simulated, Event, HasOptionalParms)
 
 void AMobileMenuGame::StartMatch()
 {
@@ -10874,7 +10957,6 @@ void AMobileMenuGame::StartMatch()
 	AMobileMenuGame_StartMatch_Params params;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -10883,7 +10965,7 @@ void AMobileMenuGame::StartMatch()
 
 
 // Function GameFramework.MobileMenuGame.PostLogin
-// (Defined, Latent, Singular, NetReliable, Simulated, Native, HasOptionalParms)
+// (Iterator, Singular, Net, NetReliable, Simulated, Native, HasOptionalParms)
 // Parameters:
 // class APlayerController*       NewPlayer                      (Parm)
 
@@ -10904,7 +10986,7 @@ void AMobileMenuGame::PostLogin(class APlayerController* NewPlayer)
 
 
 // Function GameFramework.MobileMenuInventory.RenderDragItem
-// (Final, Iterator, Latent, PreOperator, Net, NetReliable, Exec, Event, Operator, HasOptionalParms)
+// (Defined, Latent, Singular, Net, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // class UCanvas*                 Canvas                         (Parm)
 // float                          DeltaTime                      (Parm)
@@ -10918,6 +11000,7 @@ void UMobileMenuInventory::RenderDragItem(class UCanvas* Canvas, float DeltaTime
 	params.DeltaTime = DeltaTime;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -10926,7 +11009,7 @@ void UMobileMenuInventory::RenderDragItem(class UCanvas* Canvas, float DeltaTime
 
 
 // Function GameFramework.MobileMenuInventory.RenderObject
-// (Iterator, Singular, Net, NetReliable, Exec, Event, Operator, HasOptionalParms)
+// (Final, PreOperator, Singular, Net, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // class UCanvas*                 Canvas                         (Parm)
 // float                          DeltaTime                      (Parm)
@@ -10940,6 +11023,7 @@ void UMobileMenuInventory::RenderObject(class UCanvas* Canvas, float DeltaTime)
 	params.DeltaTime = DeltaTime;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -10948,7 +11032,7 @@ void UMobileMenuInventory::RenderObject(class UCanvas* Canvas, float DeltaTime)
 
 
 // Function GameFramework.MobileMenuInventory.GetIndexOfItem
-// (Defined, Iterator, Net, NetReliable, Event, Operator, HasOptionalParms)
+// (Final, Defined, PreOperator, Net, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // class UMobileMenuElement*      Item                           (Parm)
 // int                            ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -10971,7 +11055,7 @@ int UMobileMenuInventory::GetIndexOfItem(class UMobileMenuElement* Item)
 
 
 // Function GameFramework.MobileMenuInventory.FindSlotIndexAt
-// (Iterator, Latent, PreOperator, Net, Event, Operator, HasOptionalParms)
+// (Final, Latent, Singular, Net, NetReliable, Simulated, Event, Operator, HasOptionalParms)
 // Parameters:
 // float                          X                              (Parm)
 // float                          Y                              (Parm)
@@ -10996,7 +11080,7 @@ int UMobileMenuInventory::FindSlotIndexAt(float X, float Y)
 
 
 // Function GameFramework.MobileMenuInventory.InitDragAt
-// (Final, PreOperator, Simulated, Event, Operator, HasOptionalParms)
+// (Defined, Iterator, Latent, PreOperator, NetReliable, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // int                            TouchX                         (Parm)
 // int                            TouchY                         (Parm)
@@ -11018,7 +11102,7 @@ void UMobileMenuInventory::InitDragAt(int TouchX, int TouchY)
 
 
 // Function GameFramework.MobileMenuInventory.UpdateItemInSlot
-// (PreOperator, Singular, Net, NetReliable, Simulated, Exec, Event, Operator, HasOptionalParms)
+// (Final, Iterator, Latent, PreOperator, Singular, Net, Simulated, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // int                            InSlot                         (Parm)
 
@@ -11030,6 +11114,7 @@ void UMobileMenuInventory::UpdateItemInSlot(int InSlot)
 	params.InSlot = InSlot;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -11038,7 +11123,7 @@ void UMobileMenuInventory::UpdateItemInSlot(int InSlot)
 
 
 // Function GameFramework.MobileMenuInventory.AddItemToSlot
-// (Final, Defined, Iterator, Latent, Singular, NetReliable, Simulated, Native, Operator, HasOptionalParms)
+// (Iterator, Latent, PreOperator, Singular, Simulated, Exec, Native, Operator, HasOptionalParms)
 // Parameters:
 // class UMobileMenuElement*      Element                        (Parm)
 // int                            ToSlot                         (Parm)
@@ -11064,7 +11149,7 @@ class UMobileMenuElement* UMobileMenuInventory::AddItemToSlot(class UMobileMenuE
 
 
 // Function GameFramework.MobileMenuInventory.SwapItemsInSlots
-// (Final, Iterator, NetReliable, Simulated, Exec, Event, Operator, HasOptionalParms)
+// (Defined, PreOperator, Simulated, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // int                            Slot0                          (Parm)
 // int                            Slot1                          (Parm)
@@ -11079,6 +11164,7 @@ bool UMobileMenuInventory::SwapItemsInSlots(int Slot0, int Slot1)
 	params.Slot1 = Slot1;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -11089,7 +11175,7 @@ bool UMobileMenuInventory::SwapItemsInSlots(int Slot0, int Slot1)
 
 
 // Function GameFramework.MobileMenuInventory.OnTouch
-// (Final, Defined, Singular, NetReliable, Exec, Native, HasOptionalParms)
+// (Final, Iterator, Latent, PreOperator, Net, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // TEnumAsByte<ETouchType>        EventType                      (Parm)
 // float                          TouchX                         (Parm)
@@ -11121,7 +11207,7 @@ bool UMobileMenuInventory::OnTouch(TEnumAsByte<ETouchType> EventType, float Touc
 
 
 // Function GameFramework.MobileMenuInventory.CanPutItemInSlot
-// (Final, Defined, Latent, PreOperator, Singular, Simulated, Exec, Native, Operator, HasOptionalParms)
+// (Latent, Net, NetReliable, Event, Operator, HasOptionalParms)
 // Parameters:
 // class UMobileMenuElement*      Item                           (Parm)
 // class UMobileMenuElement*      ToSlot                         (Parm)
@@ -11140,7 +11226,6 @@ bool UMobileMenuInventory::CanPutItemInSlot(class UMobileMenuElement* Item, clas
 	params.FromIdx = FromIdx;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -11151,7 +11236,7 @@ bool UMobileMenuInventory::CanPutItemInSlot(class UMobileMenuElement* Item, clas
 
 
 // Function GameFramework.MobileMenuInventory.ScaleSlot
-// (Iterator, Simulated, Exec, Event, Operator, HasOptionalParms)
+// (Final, PreOperator, NetReliable, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // class UMobileMenuElement*      Slot                           (Parm)
 
@@ -11163,6 +11248,7 @@ void UMobileMenuInventory::ScaleSlot(class UMobileMenuElement* Slot)
 	params.Slot = Slot;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -11171,7 +11257,7 @@ void UMobileMenuInventory::ScaleSlot(class UMobileMenuElement* Slot)
 
 
 // Function GameFramework.MobileMenuInventory.AddSlot
-// (Final, Iterator, PreOperator, Singular, NetReliable, Simulated, Native, Operator, HasOptionalParms)
+// (Defined, Net, Simulated, Exec, Native, Operator, HasOptionalParms)
 // Parameters:
 // class UMobileMenuElement*      Slot                           (Parm)
 // int                            ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -11195,7 +11281,7 @@ int UMobileMenuInventory::AddSlot(class UMobileMenuElement* Slot)
 
 
 // Function GameFramework.MobileMenuInventory.InitMenuObject
-// (Final, Iterator, Singular, Simulated, Event, Operator, HasOptionalParms)
+// (Defined, PreOperator, Singular, NetReliable, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // class UMobilePlayerInput*      PlayerInput                    (Parm)
 // class UMobileMenuScene*        Scene                          (Parm)
@@ -11223,7 +11309,7 @@ void UMobileMenuInventory::InitMenuObject(class UMobilePlayerInput* PlayerInput,
 
 
 // Function GameFramework.MobileMenuInventory.OnUpdateDrag
-// (Defined, Iterator, Latent, PreOperator, Singular, Exec, Event, Operator, HasOptionalParms)
+// (Final, Defined, Latent, Net, NetReliable, Simulated, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FDragElementInfo        Before                         (Const, Parm, OutParm)
 // struct FDragElementInfo        After                          (Const, Parm, OutParm)
@@ -11248,7 +11334,7 @@ void UMobileMenuInventory::OnUpdateDrag(struct FDragElementInfo* Before, struct 
 
 
 // Function GameFramework.MobileMenuInventory.DoCanPutItemInSlot
-// (Final, Iterator, Latent, PreOperator, Singular, Net, NetReliable, Simulated, Exec, Native, Operator, HasOptionalParms)
+// (Defined, Latent, NetReliable, Simulated, Event, Operator, HasOptionalParms)
 // Parameters:
 // class UMobileMenuInventory*    FromInv                        (Parm)
 // class UMobileMenuElement*      Item                           (Parm)
@@ -11269,7 +11355,6 @@ bool UMobileMenuInventory::DoCanPutItemInSlot(class UMobileMenuInventory* FromIn
 	params.FromIdx = FromIdx;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -11280,7 +11365,7 @@ bool UMobileMenuInventory::DoCanPutItemInSlot(class UMobileMenuInventory* FromIn
 
 
 // Function GameFramework.MobileMenuInventory.OnUpdateItemInSlot
-// (Final, Defined, Iterator, Latent, PreOperator, Singular, Exec, Event, Operator, HasOptionalParms)
+// (Iterator, Latent, Net, NetReliable, Simulated, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // class UMobileMenuInventory*    FromInv                        (Parm)
 // int                            SlotIndex                      (Parm)
@@ -11302,7 +11387,7 @@ void UMobileMenuInventory::OnUpdateItemInSlot(class UMobileMenuInventory* FromIn
 
 
 // Function GameFramework.MobileMenuLabel.RenderObject
-// (Iterator, Singular, Net, NetReliable, Exec, Event, Operator, HasOptionalParms)
+// (Final, PreOperator, Singular, Net, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // class UCanvas*                 Canvas                         (Parm)
 // float                          DeltaTime                      (Parm)
@@ -11316,6 +11401,7 @@ void UMobileMenuLabel::RenderObject(class UCanvas* Canvas, float DeltaTime)
 	params.DeltaTime = DeltaTime;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -11324,7 +11410,7 @@ void UMobileMenuLabel::RenderObject(class UCanvas* Canvas, float DeltaTime)
 
 
 // Function GameFramework.MobileMenuList.ItemScrollSize
-// (Final, Net, Simulated, Event, Operator, HasOptionalParms)
+// (Defined, Iterator, Latent, Net, NetReliable, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // class UMobileMenuListItem*     Item                           (Parm)
 // int                            ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -11347,7 +11433,7 @@ int UMobileMenuList::ItemScrollSize(class UMobileMenuListItem* Item)
 
 
 // Function GameFramework.MobileMenuList.RenderObject
-// (Iterator, Singular, Net, NetReliable, Exec, Event, Operator, HasOptionalParms)
+// (Final, PreOperator, Singular, Net, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // class UCanvas*                 Canvas                         (Parm)
 // float                          DeltaTime                      (Parm)
@@ -11361,6 +11447,7 @@ void UMobileMenuList::RenderObject(class UCanvas* Canvas, float DeltaTime)
 	params.DeltaTime = DeltaTime;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -11369,7 +11456,7 @@ void UMobileMenuList::RenderObject(class UCanvas* Canvas, float DeltaTime)
 
 
 // Function GameFramework.MobileMenuList.UpdateScroll
-// (Iterator, PreOperator, Singular, Net, NetReliable, Simulated, Exec, Event, Operator, HasOptionalParms)
+// (Final, NetReliable, Simulated, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // float                          DeltaTime                      (Parm)
 
@@ -11381,6 +11468,7 @@ void UMobileMenuList::UpdateScroll(float DeltaTime)
 	params.DeltaTime = DeltaTime;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -11389,7 +11477,7 @@ void UMobileMenuList::UpdateScroll(float DeltaTime)
 
 
 // Function GameFramework.MobileMenuList.CalculateSelectedItem
-// (Singular, Simulated, Exec, Native, Operator, HasOptionalParms)
+// (Final, Iterator, Latent, Singular, NetReliable, Event, Operator, HasOptionalParms)
 // Parameters:
 // struct FSelectedMenuItem       Selected                       (Parm, OutParm)
 // float                          ScrollAmount                   (Parm)
@@ -11405,7 +11493,6 @@ float UMobileMenuList::CalculateSelectedItem(float ScrollAmount, bool bForceZero
 	params.bForceZeroAdjustment = bForceZeroAdjustment;
 
 	auto flags = fn->FunctionFlags;
-	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -11419,7 +11506,7 @@ float UMobileMenuList::CalculateSelectedItem(float ScrollAmount, bool bForceZero
 
 
 // Function GameFramework.MobileMenuList.GetItemClickPosition
-// (Final, Defined, Iterator, Net, NetReliable, Event, Operator, HasOptionalParms)
+// (Iterator, PreOperator, Net, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // float                          MouseX                         (Parm, OutParm)
 // float                          MouseY                         (Parm, OutParm)
@@ -11447,7 +11534,7 @@ class UMobileMenuListItem* UMobileMenuList::GetItemClickPosition(float* MouseX, 
 
 
 // Function GameFramework.MobileMenuList.OnTouch
-// (Final, Defined, Singular, NetReliable, Exec, Native, HasOptionalParms)
+// (Final, Iterator, Latent, PreOperator, Net, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // TEnumAsByte<ETouchType>        EventType                      (Parm)
 // float                          TouchX                         (Parm)
@@ -11479,7 +11566,7 @@ bool UMobileMenuList::OnTouch(TEnumAsByte<ETouchType> EventType, float TouchX, f
 
 
 // Function GameFramework.MobileMenuList.SetSelectedItem
-// (Defined, PreOperator, Singular, Simulated, Exec, Event, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, Latent, PreOperator, Singular, NetReliable, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // int                            ItemIndex                      (Parm)
 // bool                           bForceAll                      (OptionalParm, Parm)
@@ -11494,6 +11581,7 @@ bool UMobileMenuList::SetSelectedItem(int ItemIndex, bool bForceAll)
 	params.bForceAll = bForceAll;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -11504,7 +11592,7 @@ bool UMobileMenuList::SetSelectedItem(int ItemIndex, bool bForceAll)
 
 
 // Function GameFramework.MobileMenuList.GetNumVisible
-// (Final, Defined, Latent, Net, NetReliable, Event, Operator, HasOptionalParms)
+// (Latent, PreOperator, Net, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // int                            ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -11525,7 +11613,7 @@ int UMobileMenuList::GetNumVisible()
 
 
 // Function GameFramework.MobileMenuList.SetSelectedToVisibleIndex
-// (Final, Defined, PreOperator, Singular, Simulated, Exec, Event, Operator, HasOptionalParms)
+// (Net, NetReliable, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // int                            VisibleIndex                   (Parm)
 // int                            ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -11538,6 +11626,7 @@ int UMobileMenuList::SetSelectedToVisibleIndex(int VisibleIndex)
 	params.VisibleIndex = VisibleIndex;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -11548,7 +11637,7 @@ int UMobileMenuList::SetSelectedToVisibleIndex(int VisibleIndex)
 
 
 // Function GameFramework.MobileMenuList.GetVisibleIndexOfSelected
-// (Defined, PreOperator, Net, NetReliable, Event, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, Latent, PreOperator, Net, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // int                            ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -11569,7 +11658,7 @@ int UMobileMenuList::GetVisibleIndexOfSelected()
 
 
 // Function GameFramework.MobileMenuList.GetAmountSelected
-// (Defined, Iterator, PreOperator, Singular, NetReliable, Event, Operator, HasOptionalParms)
+// (Final, Defined, Net, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // class UMobileMenuListItem*     Item                           (Parm)
 // float                          ReturnValue                    (Parm, OutParm, ReturnParm)
@@ -11592,7 +11681,7 @@ float UMobileMenuList::GetAmountSelected(class UMobileMenuListItem* Item)
 
 
 // Function GameFramework.MobileMenuList.GetSelected
-// (Defined, Iterator, Latent, Net, NetReliable, Event, Operator, HasOptionalParms)
+// (Final, Defined, Latent, PreOperator, Net, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // class UMobileMenuListItem*     ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -11613,7 +11702,7 @@ class UMobileMenuListItem* UMobileMenuList::GetSelected()
 
 
 // Function GameFramework.MobileMenuList.Num
-// (Final, Iterator, PreOperator, Event, Operator, Static)
+// (Defined, Singular, NetReliable, Simulated, Event, Operator, Static)
 // Parameters:
 // int                            ReturnValue                    (Parm, OutParm, ReturnParm)
 
@@ -11657,7 +11746,7 @@ void UMobileMenuList::AddItem(class UMobileMenuListItem* Item, int Index)
 
 
 // Function GameFramework.MobileMenuList.InitMenuObject
-// (Final, Iterator, Singular, Simulated, Event, Operator, HasOptionalParms)
+// (Defined, PreOperator, Singular, NetReliable, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // class UMobilePlayerInput*      PlayerInput                    (Parm)
 // class UMobileMenuScene*        Scene                          (Parm)
@@ -11685,7 +11774,7 @@ void UMobileMenuList::InitMenuObject(class UMobilePlayerInput* PlayerInput, clas
 
 
 // Function GameFramework.MobileMenuListItem.RenderItem
-// (Final, Singular, Net, NetReliable, Exec, Event, Operator, HasOptionalParms)
+// (Defined, Iterator, Latent, Singular, Net, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // class UMobileMenuList*         List                           (Parm)
 // class UCanvas*                 Canvas                         (Parm)
@@ -11701,6 +11790,7 @@ void UMobileMenuListItem::RenderItem(class UMobileMenuList* List, class UCanvas*
 	params.DeltaTime = DeltaTime;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -11709,7 +11799,7 @@ void UMobileMenuListItem::RenderItem(class UMobileMenuList* List, class UCanvas*
 
 
 // Function GameFramework.MobileMenuObjectProxy.RenderObject
-// (Iterator, Singular, Net, NetReliable, Exec, Event, Operator, HasOptionalParms)
+// (Final, PreOperator, Singular, Net, Native, Event, Operator, HasOptionalParms)
 // Parameters:
 // class UCanvas*                 Canvas                         (Parm)
 // float                          DeltaTime                      (Parm)
@@ -11723,6 +11813,7 @@ void UMobileMenuObjectProxy::RenderObject(class UCanvas* Canvas, float DeltaTime
 	params.DeltaTime = DeltaTime;
 
 	auto flags = fn->FunctionFlags;
+	fn->FunctionFlags |= 0x400;
 
 	UObject::ProcessEvent(fn, &params);
 
@@ -11731,7 +11822,7 @@ void UMobileMenuObjectProxy::RenderObject(class UCanvas* Canvas, float DeltaTime
 
 
 // Function GameFramework.MobileMenuObjectProxy.OnTouch
-// (Final, Defined, Singular, NetReliable, Exec, Native, HasOptionalParms)
+// (Final, Iterator, Latent, PreOperator, Net, NetReliable, Exec, Native, HasOptionalParms)
 // Parameters:
 // TEnumAsByte<ETouchType>        EventType                      (Parm)
 // float                          TouchX                         (Parm)
@@ -11763,7 +11854,7 @@ bool UMobileMenuObjectProxy::OnTouch(TEnumAsByte<ETouchType> EventType, float To
 
 
 // Function GameFramework.MobileMenuObjectProxy.OnRenderObject
-// (Final, Defined, Latent, PreOperator, Singular, Exec, Event, Operator, HasOptionalParms)
+// (Latent, Net, NetReliable, Simulated, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // class UMobileMenuObjectProxy*  Proxy                          (Parm)
 // class UCanvas*                 Canvas                         (Parm)
@@ -11787,7 +11878,7 @@ void UMobileMenuObjectProxy::OnRenderObject(class UMobileMenuObjectProxy* Proxy,
 
 
 // Function GameFramework.MobileMenuObjectProxy.OnTouchEvent
-// (Final, Iterator, Latent, PreOperator, Singular, Exec, Event, Operator, HasOptionalParms)
+// (Defined, Latent, Net, NetReliable, Simulated, Exec, Event, Operator, HasOptionalParms)
 // Parameters:
 // class UMobileMenuObjectProxy*  Proxy                          (Parm)
 // TEnumAsByte<ETouchType>        EventType                      (Parm)
@@ -11820,7 +11911,7 @@ bool UMobileMenuObjectProxy::OnTouchEvent(class UMobileMenuObjectProxy* Proxy, T
 
 
 // Function GameFramework.MobileTouchInputVolume.HandleDragOver
-// (Iterator, Singular, Net, NetReliable, Event, Operator, HasOptionalParms)
+// (Final, PreOperator, Singular, Net, Exec, Event, Operator, HasOptionalParms)
 
 void AMobileTouchInputVolume::HandleDragOver()
 {
@@ -11837,7 +11928,7 @@ void AMobileTouchInputVolume::HandleDragOver()
 
 
 // Function GameFramework.MobileTouchInputVolume.HandleDoubleClick
-// (Final, Defined, Singular, Net, NetReliable, Event, Operator, HasOptionalParms)
+// (PreOperator, Singular, Net, Exec, Event, Operator, HasOptionalParms)
 
 void AMobileTouchInputVolume::HandleDoubleClick()
 {
@@ -11854,7 +11945,7 @@ void AMobileTouchInputVolume::HandleDoubleClick()
 
 
 // Function GameFramework.MobileTouchInputVolume.HandleClick
-// (Defined, Singular, Net, NetReliable, Event, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, Latent, Singular, Net, Exec, Event, Operator, HasOptionalParms)
 
 void AMobileTouchInputVolume::HandleClick()
 {
@@ -11871,7 +11962,7 @@ void AMobileTouchInputVolume::HandleClick()
 
 
 // Function GameFramework.MobileTouchInputVolume.OnToggle
-// (Defined, Iterator, PreOperator, Singular, NetReliable, Simulated, Event, Operator, Static)
+// (Final, Defined, Net, Simulated, Exec, Event, Operator, Static)
 // Parameters:
 // class USeqAct_Toggle*          inAction                       (Parm)
 
@@ -11891,7 +11982,7 @@ void AMobileTouchInputVolume::STATIC_OnToggle(class USeqAct_Toggle* inAction)
 
 
 // Function GameFramework.TouchableElement3D.HandleDragOver
-// (Iterator, Singular, Net, NetReliable, Event, Operator, HasOptionalParms)
+// (Final, PreOperator, Singular, Net, Exec, Event, Operator, HasOptionalParms)
 
 void UTouchableElement3D::HandleDragOver()
 {
@@ -11908,7 +11999,7 @@ void UTouchableElement3D::HandleDragOver()
 
 
 // Function GameFramework.TouchableElement3D.HandleDoubleClick
-// (Final, Defined, Singular, Net, NetReliable, Event, Operator, HasOptionalParms)
+// (PreOperator, Singular, Net, Exec, Event, Operator, HasOptionalParms)
 
 void UTouchableElement3D::HandleDoubleClick()
 {
@@ -11925,7 +12016,7 @@ void UTouchableElement3D::HandleDoubleClick()
 
 
 // Function GameFramework.TouchableElement3D.HandleClick
-// (Defined, Singular, Net, NetReliable, Event, Operator, HasOptionalParms)
+// (Final, Defined, Iterator, Latent, Singular, Net, Exec, Event, Operator, HasOptionalParms)
 
 void UTouchableElement3D::HandleClick()
 {
@@ -11942,7 +12033,7 @@ void UTouchableElement3D::HandleClick()
 
 
 // Function GameFramework.PlayerCollectorGame.GetSeamlessTravelActorList
-// (Final, Defined, Simulated, Native, HasOptionalParms)
+// (Final, Iterator, Latent, PreOperator, Singular, Simulated, Native, HasOptionalParms)
 // Parameters:
 // bool                           bToEntry                       (Parm)
 // TArray<class AActor*>          ActorList                      (Parm, OutParm, NeedCtorLink)
@@ -11967,7 +12058,7 @@ void APlayerCollectorGame::GetSeamlessTravelActorList(bool bToEntry, TArray<clas
 
 
 // Function GameFramework.PlayerCollectorGame.Login
-// (Latent, PreOperator, Singular, Simulated, Native, HasOptionalParms)
+// (Defined, PreOperator, Singular, Net, Simulated, Native, HasOptionalParms)
 // Parameters:
 // struct FString                 Portal                         (Parm, NeedCtorLink)
 // struct FString                 Options                        (Parm, NeedCtorLink)
@@ -12024,7 +12115,7 @@ void USeqEvent_HudRenderImage::Render(class UCanvas* TargetCanvas, class AHUD* T
 
 
 // Function GameFramework.SeqEvent_HudRenderText.GetObjClassVersion
-// (Defined, Latent, PreOperator, Singular, Net, NetReliable, Native, HasOptionalParms)
+// (Iterator, PreOperator, Singular, Simulated, Native, HasOptionalParms)
 // Parameters:
 // int                            ReturnValue                    (Parm, OutParm, ReturnParm)
 

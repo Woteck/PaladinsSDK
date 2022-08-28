@@ -1,6 +1,6 @@
 #pragma once
 
-// Paladins (3.05) SDK
+// Paladins (5.5) SDK
 
 #ifdef _MSC_VER
 	#pragma pack(push, 0x8)
@@ -59,6 +59,26 @@ public:
 };
 
 
+// Class TgGame.OcclusionBuilderVolume
+// 0x003C (0x02F8 - 0x02BC)
+class AOcclusionBuilderVolume : public AVolume
+{
+public:
+	TArray<struct FOcclusionBuilderSample>             Samples;                                                  // 0x02BC(0x0010) (Transient, NeedCtorLink)
+	int                                                ListenerIndex;                                            // 0x02CC(0x0004) (Transient)
+	TArray<float>                                      CostGrid;                                                 // 0x02D0(0x0010) (Transient, NeedCtorLink)
+	TArray<float>                                      RatioGrid;                                                // 0x02E0(0x0010) (Transient, NeedCtorLink)
+	class UAudioLUT*                                   lut;                                                      // 0x02F0(0x0008)
+
+	static UClass* StaticClass()
+	{
+		static auto ptr = UObject::FindClass("Class TgGame.OcclusionBuilderVolume");
+		return ptr;
+	}
+
+};
+
+
 // Class TgGame.TgAIDirector
 // 0x0258 (0x04D8 - 0x0280)
 class ATgAIDirector : public AActor
@@ -113,7 +133,7 @@ public:
 
 
 	void STATIC_UpdateDebugInfo();
-	void ReallowAdjustment();
+	void STATIC_ReallowAdjustment();
 	void STATIC_UpdateBotDifficultyParameters(class ATgAIController_BehaviorGod* TgAI, TEnumAsByte<EBotDifficultyLevel> NewDifficulty);
 	bool STATIC_AdjustDifficulty();
 	void STATIC_CheckDisparity();
@@ -623,7 +643,7 @@ public:
 	void OnBurnCardPurchased(class ATgDevice* BurnCard, int nEquipSlot, int nFilledCardSlots);
 	void STATIC_SetAllInputAllowed(bool bEnabled);
 	void SendEnergyUpdatedEvent();
-	void STATIC_HideMeshes(bool bHide1PMesh, bool bHide3PMesh);
+	void HideMeshes(bool bHide1PMesh, bool bHide3PMesh);
 	bool IsPlayerDead();
 	void STATIC_BuyBurnCards();
 	void STATIC_ClientStartBuyBurnCardsTimer();
@@ -641,7 +661,7 @@ public:
 	void ClientAdjustPositionNoInterp(float TimeStamp, const struct FName& NewState, TEnumAsByte<EPhysics> newPhysics, float NewLocX, float NewLocY, float NewLocZ, float NewVelX, float NewVelY, float NewVelZ, class AActor* NewBase);
 	void STATIC_LongClientAdjustPosition(float TimeStamp, const struct FName& NewState, TEnumAsByte<EPhysics> newPhysics, float NewLocX, float NewLocY, float NewLocZ, float NewVelX, float NewVelY, float NewVelZ, class AActor* NewBase, float NewFloorX, float NewFloorY, float NewFloorZ);
 	void STATIC_LongClientAdjustPositionNoInterp(float TimeStamp, const struct FName& NewState, TEnumAsByte<EPhysics> newPhysics, float NewLocX, float NewLocY, float NewLocZ, float NewVelX, float NewVelY, float NewVelZ, class AActor* NewBase, float NewFloorX, float NewFloorY, float NewFloorZ);
-	void RecievedServerMovement(float TimeStamp, bool bNoInterp);
+	void STATIC_RecievedServerMovement(float TimeStamp, bool bNoInterp);
 	void ServerAckNoSmoothCorrection(float TimeStamp);
 	void SendClientAdjustment();
 	void SetNoSmoothedMovementCorrection(bool bNoSmoothedCorrections, bool bManaged);
@@ -701,7 +721,7 @@ public:
 	void STATIC_ToggleSprint();
 	void OnJumpHeldAltPressed();
 	void OnJumpRelease();
-	void STATIC_HoldJump();
+	void HoldJump();
 	void DoJump();
 	void ClientPlayRoadkillNotify();
 	void PlayEpicFatality(unsigned char TaskForceNumber, int MeshAsmId);
@@ -716,7 +736,7 @@ public:
 	void STATIC_RemoveAdditionalPostProcess(class UPostProcessChain* PP, class ATgPawn* OtherDepthTarget);
 	void InsertAdditionalPostProcess(class UPostProcessChain* PP, bool bAlterMeshDepth, class ATgPawn* OtherDepthTarget);
 	void ToggleOverlays();
-	void STATIC_IgnoreOverlays(bool bIgnore);
+	void IgnoreOverlays(bool bIgnore);
 	void OnScoreChange(int nTeam);
 	void ArenaCrowdEvent(unsigned char EventType);
 	void STATIC_ServerDropFlag();
@@ -894,7 +914,7 @@ public:
 	void STATIC_ClientEnterStartState();
 	void STATIC_EnterStartState();
 	bool STATIC_AllowVoiceMessage(const struct FName& MessageType);
-	void AddPostRenderActors();
+	void STATIC_AddPostRenderActors();
 	void ClientSetHUD(class UClass* newHUDType);
 	void STATIC_GetPlayerViewPoint(struct FVector* POVLocation, struct FRotator* POVRotation);
 	void GetAimingViewPoint(struct FVector* POVLocation, struct FRotator* POVRotation);
@@ -910,7 +930,7 @@ public:
 	void STATIC_InDeathCam();
 	void STATIC_ReviveTimer();
 	void LiveRespawn(bool bResetHealth, bool bResetDevices);
-	void STATIC_PrepareForLiveRespawn();
+	void PrepareForLiveRespawn();
 	void Revive();
 	void LadderLetGo();
 	void STATIC_ServerLadderLetGo();
@@ -1028,13 +1048,13 @@ public:
 	void STATIC_SetClientAFK(bool bAFK);
 	bool IsForceFeedbackEnabled();
 	void NativeClientSetGameWinState(TEnumAsByte<EGAME_WIN_STATE> gameWinState);
-	void AddNavFailedAlert(bool bAlreadyThere);
+	void STATIC_AddNavFailedAlert(bool bAlreadyThere);
 	void PlayerRetrievedOSSInventory(TArray<struct FMarketplaceInventoryItem>* Items);
 	void OnAllMarketplaceProductDetailsRead();
-	void UpdatePartyUI();
-	void TryOpenPartyUI();
+	void STATIC_UpdatePartyUI();
+	void STATIC_TryOpenPartyUI();
 	void BlockPartySceneInput(bool bBlockInput);
-	bool TryAutoLogin();
+	bool STATIC_TryAutoLogin();
 	bool IsInGame();
 	void ShowCustomGameDisallowedPopup();
 	void ShowPackageNotInstalledForPartyInviteWarning();
@@ -1049,10 +1069,10 @@ public:
 	void STATIC_OnConnectionStatusChange(TEnumAsByte<EOnlineServerConnectionStatus> ConnectionStatus);
 	void STATIC_OnLoginStatusChange(TEnumAsByte<ELoginStatus> NewStatus, const struct FUniqueNetId& NewId);
 	void STATIC_RemoveAlertScript(int nMsgId);
-	void AddAlertScript(TEnumAsByte<EAlertPriority> Priority, TEnumAsByte<EAlertType> Type, float fDuration, int nMsgId, bool bBlockDuplicates);
-	void AddAutoKickAlert();
-	void AddAssistAlert(const struct FString& KilledName, const struct FString& KillerName);
-	void AddKillAlert(const struct FString& KilledName, const struct FString& KillerName, bool KillerWasPlayer);
+	void STATIC_AddAlertScript(TEnumAsByte<EAlertPriority> Priority, TEnumAsByte<EAlertType> Type, float fDuration, int nMsgId, bool bBlockDuplicates);
+	void STATIC_AddAutoKickAlert();
+	void STATIC_AddAssistAlert(const struct FString& KilledName, const struct FString& KillerName);
+	void STATIC_AddKillAlert(const struct FString& KilledName, const struct FString& KillerName, bool KillerWasPlayer);
 	void STATIC_ClientShowAlert(int nMessageId);
 	void ServerMove(float TimeStamp, const struct FVector& InAccel, const struct FVector& ClientLoc, unsigned char MoveFlags, unsigned char ClientRoll, int View);
 	void UpdateRotation(float DeltaTime);
@@ -1061,10 +1081,10 @@ public:
 	void STATIC_SetPlayerWard(int nWardSkinId);
 	void STATIC_SetPlayerProfile(int nProfileId, int nSkinId, int nWeaponSkinId, int nVoicePackId);
 	void STATIC_SetLevel(int nLevel);
-	void AchievementOnPhysicsStateChange();
-	void AchievementOnSiegeObjectiveCaptured();
-	void AchievementOnSpray();
-	void AchievementOnEmote();
+	void STATIC_AchievementOnPhysicsStateChange();
+	void STATIC_AchievementOnSiegeObjectiveCaptured();
+	void STATIC_AchievementOnSpray();
+	void STATIC_AchievementOnEmote();
 	bool OnRespawnRuleChanged();
 	float STATIC_StartReviveTimer(bool bDoNotUpdateStatsTracker);
 	void STATIC_SetNWCondition(int nPktLoss, int nPktLag);
@@ -1074,7 +1094,7 @@ public:
 	float STATIC_GetSetDefaultFOV();
 	float GetFOVAngle();
 	class UTgCameraModule* STATIC_GetCurrentCameraModule();
-	void STATIC_NativePlayerTick(float DeltaTime);
+	void NativePlayerTick(float DeltaTime);
 	void SetOnlineStatus(unsigned char LocalUserNum, const struct FString& StatusString);
 	void OnAbilityModified(int nDeviceId);
 	void STATIC_ShowLoadoutMenu();
@@ -1098,18 +1118,18 @@ public:
 	void OnScoredPoints(int nValue, TEnumAsByte<ERewardValueType> eType, int nPlayerId);
 	void STATIC_UIFadeEndOfRound(bool bFade, float fTime, float fDelay, float FailSafeTime);
 	void UIFade(bool bFade, float fTime, float fDelay, float FailSafeTime);
-	void STATIC_OnRequestDeckAndTalent(int nTalentId, int nDeckId, bool bIsTemplate);
+	void OnRequestDeckAndTalent(int nTalentId, int nDeckId, bool bIsTemplate);
 	bool OnRequestCard(int nDeviceId, int nRank);
-	bool STATIC_OnRequestPassive(int nPassiveId);
+	bool OnRequestPassive(int nPassiveId);
 	void STATIC_SetRewardValues(int XP, int nCredits, class AActor* Source, TEnumAsByte<ERewardValueType> RewardType, bool bFlankKill);
 	void STATIC_SetSelectedDeck(int nBotId, int nDeckId);
 	void STATIC_SetSelectedTalent(int nBotId, int nDeviceIndex);
 	void SetSelectedPassive(int nBotId, int nDeviceId);
 	void STATIC_LogAntiCheatPlayerState();
-	void AchievementModifiedHealthProp(int nHealth, int nMaxHealth);
-	void AchievementAchievedById(int nActivityId);
-	void STATIC_NativeUnPossess();
-	void STATIC_NativePossess(class APawn* aPawn);
+	void STATIC_AchievementModifiedHealthProp(int nHealth, int nMaxHealth);
+	void STATIC_AchievementAchievedById(int nActivityId);
+	void NativeUnPossess();
+	void NativePossess(class APawn* aPawn);
 	void STATIC_ServerRequestGraphData();
 	void STATIC_ServerGiveCard(int nDeviceId);
 	void ClientAddCheats();
@@ -1140,9 +1160,9 @@ public:
 	void STATIC_ToggleMiniMapPing(bool bStart);
 	void OnSceneLoadChange(const struct FString& SceneName, bool bLoaded);
 	bool IsTutorialBlockingAction(TEnumAsByte<EeTutorialForceableElements> Action);
-	bool STATIC_HandleTutorialActionOnServer(class UTgSeqAct_ForceClientTutorialAction* inAction);
-	void STATIC_HandleTutorialHighlighter(bool bShow, int highlightedElement);
-	void STATIC_HandleForcedClientTutorialAction(int nAction, int nActionElement);
+	bool HandleTutorialActionOnServer(class UTgSeqAct_ForceClientTutorialAction* inAction);
+	void HandleTutorialHighlighter(bool bShow, int highlightedElement);
+	void HandleForcedClientTutorialAction(int nAction, int nActionElement);
 	void STATIC_TriggerTutorialEvent(int nTutEvent, int nInfoData);
 	void LogTutorialAction(int nPlayerAction, int nEventData);
 	void STATIC_ClientLogoff(bool bForced);
@@ -1152,13 +1172,13 @@ public:
 	void STATIC_ServerSellItem(int nInventoryId);
 	void STATIC_ServerUpgradeItem(int nLootTableId, int nLootTableItemId, int nUpgradeInvId);
 	void STATIC_ServerPurchaseItem(int nLootTableId, int nLootTableItemId, int nItemCount);
-	void STATIC_NeedsHealingOff();
+	void NeedsHealingOff();
 	bool IsFiringUlt();
 	int STATIC_GetTaskForceNumber();
 	void STATIC_ClientUpdateTutorialBlockingActions();
 	bool STATIC_ClientUpdateUIDeviceState();
 	void STATIC_ServerAllocateDevicePoint(int nDeviceId);
-	bool STATIC_HaveBasicAbilitiesBeenActivated();
+	bool HaveBasicAbilitiesBeenActivated();
 	int STATIC_GetDevicePointsSpent();
 	int STATIC_GetDevicePointsAvailable();
 	bool STATIC_CanAllocateDevicePoint(int nDeviceId, class ATgDevice* aDevice, bool ignorePause);
@@ -1166,7 +1186,7 @@ public:
 	int STATIC_GetPerkPointsAvailable();
 	TEnumAsByte<EGiveGoldResult> STATIC_ServerTransferGoldBetweenFriendlyPlayers(int ReceivingPlayerID, int GoldCount);
 	TEnumAsByte<EGiveGoldResult> STATIC_GiveGoldToFriendlyPlayer(int PlayerID, int GoldCount);
-	void PlayerReceivedTokenForLogin(bool bSuccess);
+	void STATIC_PlayerReceivedTokenForLogin(bool bSuccess);
 	void STATIC_SetToggleZoomFlag(bool bOn, bool bForce);
 	void STATIC_SetAutoSkillUpFlag(bool bOn, bool bForce);
 	void STATIC_SetAutoPurchaseFlag(bool bOn, bool bForce);
@@ -1179,8 +1199,8 @@ public:
 	void SetCurrencyMultiplier(float fMult);
 	void STATIC_SendUICurrencyChange();
 	void STATIC_SendUIXpChange();
-	void STATIC_HandleSimulatedProjectile();
-	bool STATIC_PeekSimProjFlashEventsForExplosion(int nProjInstanceId);
+	void HandleSimulatedProjectile();
+	bool PeekSimProjFlashEventsForExplosion(int nProjInstanceId);
 	void STATIC_DumpLevelStatus();
 	void STATIC_DebugGetLangMsg(int nMsgId);
 	void SetSoundMode(const struct FName& NewSoundMode);
@@ -1214,7 +1234,7 @@ public:
 	void STATIC_ToggleInHandTargeting(bool bHide);
 	void STATIC_StopLogTo();
 	void LogTo(const struct FString& fsHost, int nPort);
-	void _Crash();
+	void STATIC__Crash();
 	void STATIC_Bug();
 	class UTgClientSettings* STATIC_GetClientSettings();
 	void MatchAccept(bool bAccepted);
@@ -1224,13 +1244,13 @@ public:
 	bool STATIC_CanCameraSeeActorCenter(class AActor* Other, float ZOffset);
 	bool STATIC_CanCameraSeePawnCenter(class ATgPawn* Other);
 	class UClass* STATIC_GetHudClass(class UClass* pNewHudType);
-	bool STATIC_HasInfiniteCharacterEnergy();
+	bool HasInfiniteCharacterEnergy();
 	void STATIC_StoreOfflineData();
 	void STATIC_TestVGSPOTG(int nPackId, int nBotId, int nSkinId);
 	void LogPerfLeakData();
 	void NativeAnnounceEOM(bool bVictory);
 	bool STATIC_SeesInViewFrustum(class AActor* aOther, float fViewDist);
-	void STATIC_PlayNotifyRevive();
+	void PlayNotifyRevive();
 	void PlayNotifySound(TEnumAsByte<ENotifySound> eSound);
 	void PlayNotifySound_Internal(TEnumAsByte<ENotifySound> eSound);
 	void STATIC_AnnouncerPlayFogLine();
@@ -1246,7 +1266,7 @@ public:
 	bool IsReadyForStart();
 	void STATIC_CanDoFullSellback();
 	void SetViewTarget(class AActor* NewViewTarget, const struct FViewTargetTransitionParams& TransitionParams);
-	void STATIC_PrepareForEndMission();
+	void PrepareForEndMission();
 };
 
 
@@ -1273,7 +1293,7 @@ public:
 	void STATIC_SetGuaranteedTickDistance(float fDistance);
 	void STATIC_ToggleTickThrottling();
 	void StartAutofire(float fTime, bool bStart);
-	void STATIC_Query(const struct FString& sType);
+	void Query(const struct FString& sType);
 	void TestWaveform(class UForceFeedbackWaveform* FFWaveform, float fScale, float fScaleDuration);
 	void KillAbyssalEcho();
 	void STATIC_ClearPayloadTimer();
@@ -1297,7 +1317,7 @@ public:
 	void STATIC_DisableEffectLagCompensation();
 	void STATIC_EnableEffectLagCompensation();
 	void STATIC_SetVoicePreference(const struct FString& sPreference);
-	void _SetMountSkin(int nSkinId);
+	void STATIC__SetMountSkin(int nSkinId);
 	void STATIC_SetMountSkin(int nSkinId);
 	void PlayIntroAnim();
 	void SetFogDistance(int Distance);
@@ -1337,7 +1357,7 @@ public:
 	void LiveRespawn(bool bResetHealth, bool bResetDevices);
 	void STATIC_AllowHeadShots(bool bEnable);
 	void STATIC_CaptureDone();
-	void ReadyCapture();
+	void STATIC_ReadyCapture();
 	void STATIC_DBGKoga();
 	void STATIC_AllNoah(const struct FString& ChannelName);
 	void STATIC_ShowThreats(bool bEnabled, const struct FString& ChannelName);
@@ -1382,7 +1402,7 @@ public:
 	void STATIC_ReinforceSiege(int healthAmt);
 	void STATIC_ReinforceDoors(int healthAmt);
 	void QuickSiege();
-	void STATIC_HelpMe();
+	void HelpMe();
 	void STATIC_EndGame();
 	void STATIC_SetScore(int tf1Score, int tf2Score);
 	void STATIC_DisableScoring();
@@ -1394,10 +1414,10 @@ public:
 	void STATIC_SkipSetup();
 	void STATIC_StopHP5();
 	void STATIC_ShieldTarget(int Amount);
-	void STATIC_HealTarget(int HealAmount);
+	void HealTarget(int HealAmount);
 	void STATIC_DamageTarget(int DamageAmount);
 	void PossessTarget();
-	void STATIC_Heal(int HealAmount);
+	void Heal(int HealAmount);
 	void STATIC_DamageHealth(int DamageAmount);
 	void STATIC_SetMana(int mana);
 	void STATIC_SetHealth(int Health);
@@ -1426,7 +1446,7 @@ public:
 	void STATIC_SL(int nLevel);
 	void STATIC_SetMeLevel(int nLevel);
 	void Obama(int nCurrency);
-	void AddGold(int nCurrency);
+	void STATIC_AddGold(int nCurrency);
 	void STATIC_RemoveAllItems();
 	void STATIC_RemoveAllCards();
 	void STATIC_RemoveDeviceAt(int nDeviceId);
@@ -1448,9 +1468,9 @@ public:
 	void STATIC_ct(unsigned char nTaskForce);
 	void STATIC_ChangeTaskForce(unsigned char nTaskForce);
 	void STATIC_SetMaxAmmo(int MaxAmmo);
-	void RefillAmmo();
+	void STATIC_RefillAmmo();
 	void STATIC_ResetAimAssistKeyframes(const struct FString& keyframeType);
-	void AddAimAssistKeyframe(const struct FString& keyframeType, const struct FString& KeyframeName, float Distance);
+	void STATIC_AddAimAssistKeyframe(const struct FString& keyframeType, const struct FString& KeyframeName, float Distance);
 	void STATIC_SetAimAssistValues(float MagnetScaleX, float MagnetScaleY, float FrictionScaleX, float FrictionScaleY, float TrackingScaleX, float TrackingScaleY);
 	void STATIC_ResetAimAssistValues();
 	void STATIC_SetAimAssistTargetWeightVars(float CurrentTargetBonus, float NotCurrentTargetPenalty, float MinAccuracyBonus, float MaxAccuracyBonus, float MinInaccuracyPenalty, float MaxInaccuracyPenalty, float MaxWeight);
@@ -1470,7 +1490,7 @@ public:
 	void KillAllPawnsByClass(const struct FString& PawnClassName);
 	void KillAllPawnsHelper(class UClass* PawnClass);
 	void KillAllMinions();
-	void _SpawnTemplatePlayer(int nProfileId, int nSkinId, int nWeaponSkinId);
+	void STATIC__SpawnTemplatePlayer(int nProfileId, int nSkinId, int nWeaponSkinId);
 	void STATIC_DebugProjectileLagCompensationClient();
 	void STATIC_DebugProjectileLagCompensationServer();
 	void STATIC_DebugClientProjectileImpactVerification();
@@ -1478,7 +1498,7 @@ public:
 	void STATIC_SetStealth(bool bOn);
 	void STATIC_SetGroundspeed(float val);
 	void STATIC_GiveRecommendedItems();
-	void STATIC_HookMeUp();
+	void HookMeUp();
 	void MaxPower();
 	void STATIC_ForceToggleMount();
 	void Cooldown();
@@ -1497,7 +1517,7 @@ public:
 	void STATIC_ServerSpawnEcho(int nBotId);
 	void STATIC_SpawnEcho(const struct FString& sName);
 	void SpawnBot(const struct FString& sName, int nTaskForce, int nCount, int BotDifficulty, const struct FString& BehaviorTreeName, int nSkinId, int nWeaponId);
-	void _SpawnBot(const struct FString& sName, int nTaskForce, int nCount);
+	void STATIC__SpawnBot(const struct FString& sName, int nTaskForce, int nCount);
 	void STATIC_stb(const struct FString& sName, const struct FString& sDeviceName, int nFireMode, int nTaskForce, int nCount);
 	void STATIC_SpawnEmoteTestBot(const struct FString& sName, int nTaskForce, int nCount);
 	void STATIC_SpawnStillBot(const struct FString& sName, int nTaskForce, int nCount, int nSkinId, int nWeaponId);
@@ -1511,6 +1531,8 @@ public:
 	void Slomo(float T);
 	void TestServerRequestCard(int nDeviceId, int nLevel);
 	void STATIC_separator();
+	void ResetQuestsAnimation(int nReduce);
+	void STATIC_AddNotification(int nQuantity, unsigned char eQuestOrigin, unsigned char eType, int dwLootId);
 	void STATIC_ToggleTransitionManifest();
 	void STATIC_CrashGame();
 	void STATIC_ClearAllIconReferences();
@@ -1526,7 +1548,7 @@ public:
 	void STATIC_TestDj();
 	void ListTickableActors(TEnumAsByte<ETickingGroup> checkgroup);
 	void JoinMatchQueue(int nQueueId, int god1, int god2, int god3, int god4, int god5);
-	void AddBotsToCustomMatch();
+	void STATIC_AddBotsToCustomMatch();
 	void PurchaseGod(const struct FString& godName);
 	void STATIC_SwitchWard(const struct FString& wardSkinName);
 	void STATIC_sc(const struct FString& godName, const struct FString& SkinName, const struct FString& weaponSkinName);
@@ -1832,7 +1854,7 @@ public:
 
 
 	void PostDemoRewind();
-	bool STATIC_HasMixedTaskforcePlayersNearby();
+	bool HasMixedTaskforcePlayersNearby();
 	void STATIC_ForwardDeviceOnStartFire(class ATgPawn* FiringPawn, int nEquipSlot);
 	void ProxyDeviceOnStartFire(class ATgPawn* FiringPawn, int nEquipSlot);
 };
@@ -2255,7 +2277,7 @@ public:
 	void PostTouch(class AActor* Other);
 	class AActor* STATIC_GetNextPendingTeleport();
 	bool STATIC_RemovePendingTeleport(class AActor* Other);
-	bool AddPendingTeleport(class AActor* Other);
+	bool STATIC_AddPendingTeleport(class AActor* Other);
 	bool STATIC_VerifyCanTeleport(class ATgPawn* Other);
 	void Touch(class AActor* Other, class UPrimitiveComponent* OtherComp, const struct FVector& HitLocation, const struct FVector& HitNormal);
 	void OnBeaconEntranceSetActive(class UTgSeqAct_BeaconEntranceSetActive* inAction);
@@ -2331,10 +2353,10 @@ public:
 	bool AcceptTeleport(class ATgPawn* Incoming, class ATgRespawnBeaconEntrance* Source);
 	void PostBeginPlay();
 	void STATIC_RemoveVisibilityVolume(class ATgVisibilityVolume* Vol);
-	void AddVisibilityVolume(class ATgVisibilityVolume* Vol);
+	void STATIC_AddVisibilityVolume(class ATgVisibilityVolume* Vol);
 	void OnBeaconExitSetRespawn(class UTgSeqAct_BeaconExitSetRespawn* inAction);
 	void ReplicatedEvent(const struct FName& VarName);
-	bool STATIC_HasAnyEnabledEntrances();
+	bool HasAnyEnabledEntrances();
 	void OnBeaconReset();
 	void BeaconStateChanged();
 };
@@ -2546,7 +2568,7 @@ public:
 	void STATIC_ShowHit(class AActor* Target, float fDamageAmount, bool bIsShieldHit, struct FExtraDamageInfo* ExtraInfo);
 	void STATIC_ShowCursor(bool bShow);
 	void TutorialMessage(int msgId, bool bTips);
-	void STATIC_HideGameTip(bool bNoSound);
+	void HideGameTip(bool bNoSound);
 	void STATIC_ShowGameTip(int nTipId, bool bNoSound, bool bPopup);
 	void PingWorldLocation(const struct FVector& PingLocation, TEnumAsByte<EPING_TYPE> Type);
 	void OnPingInfoUpdate(class ATgRepInfo_Player* updatedPri);
@@ -2584,7 +2606,7 @@ public:
 	void PlayDimensionalLinkFX();
 	void Shatter();
 	void STATIC_TriggerShatter(float fDelay);
-	void AddOnDestroyDelegate(const struct FScriptDelegate& delDestroy);
+	void STATIC_AddOnDestroyDelegate(const struct FScriptDelegate& delDestroy);
 	void DestroyedEvent(class AActor* destroyedActor);
 };
 
@@ -2819,7 +2841,7 @@ public:
 	void STATIC_RemoveAllMarksByIndex(int nIndex);
 	void STATIC_RemoveMarkByActor(class AActor* Target);
 	void STATIC_RemoveAllMarksByActor(class AActor* Target);
-	void AddMark(class AActor* Target);
+	void STATIC_AddMark(class AActor* Target);
 };
 
 
@@ -2862,7 +2884,7 @@ public:
 
 	void PreloadTextures(float ForceDuration);
 	bool IsFullyConfigured();
-	void AddFxAttachments(class UTgSkeletalMeshComponent* SkelComp);
+	void STATIC_AddFxAttachments(class UTgSkeletalMeshComponent* SkelComp);
 	void STATIC_SetupMeshFromMeshInfo(class UTgSkeletalMeshComponent* SkelComp, class UTgSkeletalMeshComponent* Parent);
 	void STATIC_ConfigureMesh(class ATgSkeletalMeshActor_Loader* lobbyOwner, class UTgSkeletalMeshComponent* Parent);
 };
@@ -2888,7 +2910,7 @@ public:
 	}
 
 
-	void STATIC_PlaySoundNotify(TEnumAsByte<ENotifySound> eNotity);
+	void PlaySoundNotify(TEnumAsByte<ENotifySound> eNotity);
 	void PlayOutro();
 	void STATIC_StopLoop();
 	void PlayLoop();
@@ -2915,7 +2937,7 @@ public:
 
 	void STATIC_NotifyLocalPlayerTeamReceived();
 	void PostBeginPlay();
-	void RecalculateTeamColor();
+	void STATIC_RecalculateTeamColor();
 	void LoadMesh();
 };
 
@@ -3803,12 +3825,12 @@ public:
 	void PlayCharSpecificAnim(int nSlot, float fActivationTime);
 	void PlayMeshTransitionAnimation(const struct FWeaponMeshSwapStrategy& SwapStrategy, TEnumAsByte<ETG_EQUIP_POINT> eqp, class ATgDevice* PreviousTargetingDevice, class ATgDevice* NextTargetingDevice);
 	void STATIC_Unhide3PWeaponMesh();
-	void STATIC_Hide3PWeaponMesh();
+	void Hide3PWeaponMesh();
 	void PlayHitReaction(TEnumAsByte<ERecoilHitDir> Dir, float DamageAmount);
 	void STATIC_CacheHitReactionSkelControls();
 	void STATIC_NotifyLocalPlayerTeamReceived();
 	void OnPolymorphChanged(bool bDead);
-	void AddWeaponLeading(const struct FRotator& NewRotation, const struct FRotator& OldRotation, float DeltaTime);
+	void STATIC_AddWeaponLeading(const struct FRotator& NewRotation, const struct FRotator& OldRotation, float DeltaTime);
 	void STATIC_ResetFireLoopDisplayGroup();
 	void STATIC_SetFireLoopDisplayGroup(const struct FName& FireLoop, const struct FName& FireLoopTailSound);
 	void STATIC_SetFOVZoomed(bool bEnabled);
@@ -4455,7 +4477,7 @@ public:
 	}
 
 
-	void AddHit(const struct FVector2D& vHitDir, int nDamage);
+	void STATIC_AddHit(const struct FVector2D& vHitDir, int nDamage);
 };
 
 
@@ -4959,7 +4981,7 @@ public:
 
 
 	void OnRetrieve();
-	bool STATIC_HasCachedBarrierTankPawn();
+	bool HasCachedBarrierTankPawn();
 	void SetActiveChild(int ChildIndex, float BlendTime);
 	void STATIC_UpdateAmmoSkelControls();
 };
@@ -4999,7 +5021,7 @@ public:
 
 
 	void OnRetrieve();
-	bool STATIC_HasCachedDrogozPawn();
+	bool HasCachedDrogozPawn();
 	void SetActiveChild(int ChildIndex, float BlendTime);
 	void STATIC_UpdateAmmoSkelControls();
 };
@@ -5019,7 +5041,7 @@ public:
 	}
 
 
-	bool STATIC_HasCachedFlakPawn();
+	bool HasCachedFlakPawn();
 	void OnRetrieve();
 };
 
@@ -5295,14 +5317,14 @@ public:
 	}
 
 
-	void STATIC_HookCloseRangeEnd();
-	void STATIC_HookEndMissInvalid();
-	void STATIC_HookMissInvalid();
-	void STATIC_HookEndMissNoHit();
-	void STATIC_HookMissNotHit();
-	void STATIC_HookEnd();
-	void STATIC_HookPull();
-	void STATIC_HookHit();
+	void HookCloseRangeEnd();
+	void HookEndMissInvalid();
+	void HookMissInvalid();
+	void HookEndMissNoHit();
+	void HookMissNotHit();
+	void HookEnd();
+	void HookPull();
+	void HookHit();
 	void STATIC_ThrowHook();
 };
 
@@ -7480,7 +7502,7 @@ public:
 
 	void STATIC_EnableTangents();
 	void SetVisible(bool bVisible);
-	void Deactivate(bool bForceDeactivate);
+	void STATIC_Deactivate(bool bForceDeactivate);
 	void Activate();
 	void STATIC_AttachToTarget(class AActor* pTarget);
 	void STATIC_AttachToMesh(class UMeshComponent* pMesh, const struct FName& nmSocket);
@@ -7808,7 +7830,7 @@ public:
 	void PostReloadTimer();
 	void PreReloadTimer();
 	void STATIC_FullReloadTimer();
-	void STATIC_PrepReload();
+	void PrepReload();
 	bool StartReload(bool bIgnoreCurrentAmmo);
 	void STATIC_ClientForceReload();
 	void STATIC_ServerStartReload();
@@ -7849,14 +7871,14 @@ public:
 	bool ApplyGlobalOffhandCooldown();
 	void Destroyed();
 	void STATIC_UpdateIndex();
-	void STATIC_HandleDeviceFormStartFire(int nDeviceModeNum, float fRefireTime, struct FAimData* Aim);
+	void HandleDeviceFormStartFire(int nDeviceModeNum, float fRefireTime, struct FAimData* Aim);
 	bool STATIC_ShouldRefire(class UTgDeviceFire* FireMode, struct FAimData* Aim);
 	void OutroLockoutTime();
 	void STATIC_DeviceBuildupTimer();
 	void HandDeviceLockout();
 	void FirePostHitDelay();
 	void FirePreHitDelay();
-	void RefireCheckTimer();
+	void STATIC_RefireCheckTimer();
 	void OnServerQueuedRefire();
 	void LockRotation(bool bShouldLock);
 	void LockCamera(bool bShouldLock);
@@ -7886,7 +7908,7 @@ public:
 	float STATIC_GetMinAccuracy();
 	void STATIC_TriggerAccuracyOnFire();
 	void STATIC_FireAmmunition();
-	void STATIC_PerProjectileFired(class ATgProjectile* Proj);
+	void PerProjectileFired(class ATgProjectile* Proj);
 	void STATIC_ConsumeAmmoFromFiring(int nAmmoConsumptionOverride, int nFireRequestIDOverride);
 	bool STATIC_ShouldConsumeAmmo(int nFireRequestId, TArray<struct FImpactToValidate> Impacts);
 	int STATIC_GetAmmoToConsume();
@@ -7895,7 +7917,7 @@ public:
 	struct FVector STATIC_GetPhysicalFireStartLoc(const struct FVector& AimDir);
 	int STATIC_GetProjectileIDOverride(int ProjectileIndex);
 	class AProjectile* ProjectileFire(int ProjectileIndex);
-	bool STATIC_OverrideProjectileAim(struct FAimData* Aim);
+	bool OverrideProjectileAim(struct FAimData* Aim);
 	void STATIC_ServerProjectileFire(float MovementTimeStamp, const struct FVector& MovementInAccel, const struct FVector& MovementClientLoc, unsigned char MovementNewFlags, unsigned char MovementClientRoll, int MovementView, int ClientFireRequestId, int ProjectileIndex, float ProjectileLocationX, float ProjectileLocationY, float ProjectileLocationZ, float ProjectileAimVectorX, float ProjectileAimVectorY, float ProjectileAimVectorZ, float ProjectileEndTraceX, float ProjectileEndTraceY, float ProjectileEndTraceZ, unsigned char ExtraInfo);
 	void STATIC_AdjustSpawnedProjectile(class ATgProjectile* SpawnedProjectile);
 	class ATgProj_NonSimulated* SpawnServerOnlyProjectile(class UTgDeviceFire* FireMode, const struct FVector& ProjectileSpawnLocation, const struct FVector& ProjectileSpawnDir, int ProjectileIdOverride);
@@ -7907,13 +7929,13 @@ public:
 	void STATIC_ServerInstantFireSingleImpact(float MovementTimeStamp, const struct FVector& MovementInAccel, const struct FVector& MovementClientLoc, unsigned char MovementNewFlags, unsigned char MovementClientRoll, int MovementView, int ClientFireRequestId, float StartTraceX, float StartTraceY, float StartTraceZ, float EndTraceX, float EndTraceY, float EndTraceZ, const struct FImpactToValidate& Impact);
 	void STATIC_ServerInstantFireThreeImpacts(float MovementTimeStamp, const struct FVector& MovementInAccel, const struct FVector& MovementClientLoc, unsigned char MovementNewFlags, unsigned char MovementClientRoll, int MovementView, int ClientFireRequestId, float StartTraceX, float StartTraceY, float StartTraceZ, float EndTraceX, float EndTraceY, float EndTraceZ, const struct FImpactToValidate& Impact, int NumImpacts, const struct FImpactToValidate& InImpactList);
 	void STATIC_ServerInstantFire(float MovementTimeStamp, const struct FVector& MovementInAccel, const struct FVector& MovementClientLoc, unsigned char MovementNewFlags, unsigned char MovementClientRoll, int MovementView, int ClientFireRequestId, float StartTraceX, float StartTraceY, float StartTraceZ, float EndTraceX, float EndTraceY, float EndTraceZ, const struct FImpactToValidate& Impact, int NumImpacts, const struct FImpactToValidate& InImpactList);
-	void STATIC_HandleClientReportedInstantShot(int nFireRequestId, const struct FAimData& InServerAim, const struct FAimData& InClientAim, const struct FImpactToValidate& InPrimaryImpact, TArray<struct FImpactToValidate> InClientImpacts);
+	void HandleClientReportedInstantShot(int nFireRequestId, const struct FAimData& InServerAim, const struct FAimData& InClientAim, const struct FImpactToValidate& InPrimaryImpact, TArray<struct FImpactToValidate> InClientImpacts);
 	void OnInstantShotRejected(const struct FImpactToValidate& RejectedPrimaryImpact);
 	void OnInstantShotVerified(const struct FImpactInfo& VerifiedPrimaryImpact);
 	void STATIC_SendImpactsForVerification(struct FAimData* baseaim, struct FImpactInfo* Impact, TArray<unsigned char>* nShotsToImpactIndex);
 	void STATIC_SetImpactExtraInfo(struct FImpactToValidate* Impact);
 	void PerformOnInstantFireServerValidation(float AccuracyValue, float AccuracyRandomValue1, float AccuracyRandomValue2, struct FAimData* Aim);
-	void STATIC_HandleInstantFireWithConsolidation(bool bSendForServerValidation, struct FAimData* baseaim, struct FAimData* Aim, struct FImpactInfo* Impact);
+	void HandleInstantFireWithConsolidation(bool bSendForServerValidation, struct FAimData* baseaim, struct FAimData* Aim, struct FImpactInfo* Impact);
 	void InstantFire();
 	void STATIC_RemoveHitFromTarget(class ATgPawn_Character* Target, int nHitSpecialSituationalType);
 	void STATIC_ApplyHitToTarget(class ATgPawn_Character* Target, int nHitSpecialSituationalType, const struct FVector& vHitLocation, const struct FVector& vHitNormal);
@@ -7935,7 +7957,7 @@ public:
 	void STATIC_CallServerStartFire(const struct FAimData& Aim, bool bPendingUpdate);
 	float STATIC_GetLastMoveTimeStamp(struct FVector* LastSentMoveAcceleration, int* LastSentMoveCompressedFlags, struct FVector* LastSentClientLoc, unsigned char* LastSentClientRoll, int* LastSentView);
 	void STATIC_ServerAckProjectileSpawn(int ClientFireRequestId);
-	void STATIC_HandleQueuedProjectileExplosion(class ATgProj_Simulated* SimulatedProjectile, float ProjectileAliveTime, class AActor* Other, float MovementTimeStamp, float AoeRewindTimeStamp, const struct FVector& HitLocation, const struct FVector& HitNormal);
+	void HandleQueuedProjectileExplosion(class ATgProj_Simulated* SimulatedProjectile, float ProjectileAliveTime, class AActor* Other, float MovementTimeStamp, float AoeRewindTimeStamp, const struct FVector& HitLocation, const struct FVector& HitNormal);
 	void STATIC_ServerQueueProjectileExplode(int ClientFireRequestId, float ProjectileAliveTime, class AActor* Other, float MovementTimeStamp, float HitLocationX, float HitLocationY, float HitLocationZ, float HitNormalX, float HitNormalY, float HitNormalZ);
 	void ServerStartFireAsEvent();
 	void STATIC_FireLockComplete();
@@ -7999,7 +8021,7 @@ public:
 	void PostBeginPlay();
 	float STATIC_GetRecoilMultiplier();
 	class UTgGameplayCurvesSet_RecoilSimple* STATIC_GetRecoilCurve();
-	void AddRecoil();
+	void STATIC_AddRecoil();
 	void STATIC_GenerateRecoilSeed();
 	bool STATIC_ShouldInterruptEmote();
 	bool STATIC_ShouldInterruptMount();
@@ -8065,13 +8087,13 @@ public:
 	struct FString STATIC_GetInstantFirePredictionStats();
 	struct FString STATIC_GetAimValidationStats();
 	struct FString STATIC_GetLastUsedAimStats();
-	void RecordUsedAim(struct FVector* InAim);
+	void STATIC_RecordUsedAim(struct FVector* InAim);
 	void STATIC_SetRandomShotSpreadSeed(int Seed);
 	bool STATIC_ValidateClientInstantHit(int nFireRequestId, struct FImpactInfo* ValidPrimaryImpact, TArray<struct FImpactInfo>* OutValidImpacts, struct FAimData* InServerAim, struct FAimData* InClientAim, struct FImpactToValidate* InPrimaryImpact, TArray<struct FImpactToValidate>* InClientImpacts, TArray<float>* OutHitRanges);
 	bool STATIC_ValidateClientProjectileImpact(class ATgProj_Simulated* SimulatedProjectile, float ProjectileAliveTime, class AActor* Other, float MovementTimeStamp, const struct FVector& HitLocation, const struct FVector& HitNormal);
 	int STATIC_GenerateUniqueAmmoValidationId();
 	int STATIC_GenerateUniqueFireRequestId();
-	bool STATIC_HasRemoteOwner();
+	bool HasRemoteOwner();
 	void STATIC_ReplicatePlayerDeviceAmmo();
 	int STATIC_GetPetIDOverride(int PetIndex);
 	void STATIC_DeviceAdjustHeal(int nPropertyId, struct FImpactInfo* Impact, float* fHeal);
@@ -8089,7 +8111,7 @@ public:
 	bool STATIC_ShouldTreatAmmoAsCharges();
 	int STATIC_GetCurrentAmmoAmount();
 	bool STATIC_RequiresAmmoToFire();
-	bool STATIC_HasAmmo();
+	bool HasAmmo();
 	bool STATIC_ShouldShowAmmoCount();
 	bool STATIC_ShouldLiftInterrupt();
 	bool STATIC_ShouldInterruptLift();
@@ -8153,7 +8175,7 @@ public:
 	bool IsDeviceCoolingDown();
 	bool ShouldBankCooldown();
 	void STATIC_DeviceConsumePowerPool(unsigned char FireModeNum);
-	bool STATIC_HasEnoughPowerPool(unsigned char FireModeNum);
+	bool HasEnoughPowerPool(unsigned char FireModeNum);
 	bool STATIC_IsInPostfire();
 	bool STATIC_IsInPrefire();
 	float STATIC_GetConePullbackDistance();
@@ -8241,6 +8263,7 @@ public:
 
 	void STATIC_TriggerArc(int Index);
 	void STATIC_EndArcing(int Index);
+	void STATIC_ApplyCustomFireToInitial(class AActor* InitialTarget, class UTgDeviceFire* FireMode);
 	void BeginArcing(class AActor* InitialTarget, class UTgDeviceFire* FireMode);
 	int GetNumArcJumps(class AActor* InitialTarget, class UTgDeviceFire* FireMode);
 	void Tick(float DeltaTime);
@@ -8445,13 +8468,14 @@ public:
 
 
 // Class TgGame.TgDevice_ChainSequence
-// 0x000C (0x0A18 - 0x0A0C)
+// 0x0010 (0x0A1C - 0x0A0C)
 class ATgDevice_ChainSequence : public ATgDevice
 {
 public:
 	int                                                m_nChainCount;                                            // 0x0A0C(0x0004)
 	float                                              m_fChainResetTimer;                                       // 0x0A10(0x0004)
 	float                                              m_fChainResetDuration;                                    // 0x0A14(0x0004) (Const)
+	unsigned long                                      m_bReloadResetsChainCount : 1;                            // 0x0A18(0x0004)
 
 	static UClass* StaticClass()
 	{
@@ -8461,7 +8485,9 @@ public:
 
 
 	void OnChainReset();
+	void OnInterruptEvent();
 	void STATIC_UpdateDesiredFireMode();
+	void PostReloadTimer();
 	void STATIC_FireAmmunition();
 	int STATIC_GetChainFireModeIndex();
 	int GetChainMax();
@@ -8534,7 +8560,7 @@ public:
 	bool CanBeCanceled();
 	bool STATIC_ShouldIgnoreActorHit(class AActor* pQueryActor);
 	float STATIC_GetActorHitPeriod(class AActor* pQueryActor);
-	void AddActorToHitlist(class AActor* pActor);
+	void STATIC_AddActorToHitlist(class AActor* pActor);
 	void STATIC_ForceStartChargeOnServer();
 	void ServerStartChargeNewAim(int nPitch, int nYaw);
 	bool StartFire();
@@ -8798,7 +8824,7 @@ public:
 	bool CanFiringBeCanceledByReactivation();
 	bool CanFiringBeCanceledByRightMouse();
 	bool STATIC_ShouldLockJumping();
-	void STATIC_HandleDeviceFormStartFire(int nDeviceModeNum, float fRefireTime, struct FAimData* Aim);
+	void HandleDeviceFormStartFire(int nDeviceModeNum, float fRefireTime, struct FAimData* Aim);
 	void SetEmote(int nSlot);
 	void SetFirstValidEmote();
 	void STATIC_ServerSetEmote(int nSlot);
@@ -8888,7 +8914,7 @@ public:
 	void STATIC_SetIsPullingHitSpecial(bool bIsPulling);
 	void EndPull();
 	void STATIC_FireAmmunition();
-	void STATIC_ParentFireAmmunition();
+	void ParentFireAmmunition();
 	void PullToTarget();
 	bool StartFire();
 	bool ParentStartFire();
@@ -8931,7 +8957,7 @@ public:
 
 
 	void STATIC_SetLeapParams(float* scaleLateral, float* scaleVertical, float* additiveLateral, float* additiveVertical);
-	void STATIC_NotifyNewLeapDirection(const struct FVector& vNewDir);
+	void NotifyNewLeapDirection(const struct FVector& vNewDir);
 	bool CanBeCanceled();
 	struct FVector STATIC_ApplyRandomRotation(const struct FVector& vJumpVelocity);
 	float STATIC_GetFiringPreHitDelay(int nMode);
@@ -9094,7 +9120,7 @@ public:
 
 	void STATIC_DeviceShutDown(bool bDeactiveMode, bool bResetCooldowns);
 	bool STATIC_ShouldSwitchBackToBasicAttackTargeting(TEnumAsByte<ECastMode> CastMode);
-	void STATIC_HandlePickUpAndDrop(bool bPickedUp);
+	void HandlePickUpAndDrop(bool bPickedUp);
 	void STATIC_FireAmmunition();
 	bool STATIC_ShouldInterruptMount();
 	bool InterceptLeftMouseReleased(class ATgPlayerController* TgController);
@@ -9320,14 +9346,14 @@ public:
 	void OnInstantShotVerified(const struct FImpactInfo& VerifiedPrimaryImpact);
 	void STATIC_AuthStartCooldown(int nMode, float fCooldownTimeOverride);
 	bool ShouldCooldownAfterFire();
-	void STATIC_HandleDeviceFormStartFire(int nDeviceModeNum, float fRefireTime, struct FAimData* Aim);
+	void HandleDeviceFormStartFire(int nDeviceModeNum, float fRefireTime, struct FAimData* Aim);
 	void STATIC_ServerTrySpawnFXSpray();
 	bool Use();
 	void SetSpray(int nSlot);
 	void SetFirstValidSpray();
 	void STATIC_ServerSetEmote(int nSlot);
 	bool STATIC_SelectedSprayRequiresFire(float* fCooldownOverride);
-	void ActivateSpray(int nSlot);
+	void STATIC_ActivateSpray(int nSlot);
 	bool STATIC_ShouldInterruptStealth();
 };
 
@@ -9618,7 +9644,7 @@ public:
 	void STATIC_FireAmmunition();
 	bool STATIC_ShouldStopActionOnOffhandSlotReleased();
 	bool ShouldInterruptReloadOnFire();
-	bool STATIC_HasCachedInhand();
+	bool HasCachedInhand();
 };
 
 
@@ -9787,7 +9813,7 @@ public:
 	bool STATIC_DoWallNormalAndLookAgree(const struct FVector& vNormal);
 	float STATIC_GetWallClimbAngularThreshold();
 	float STATIC_GetWallClimbVelocityThreshold();
-	void AbortWallClimb();
+	void STATIC_AbortWallClimb();
 	bool STATIC_ShouldBlockReload(class ATgDevice* Dev, bool bIsAutoReload);
 };
 
@@ -9900,8 +9926,8 @@ public:
 	void SubmitWhileDeadEffects(class AActor* DamageInstigator, const struct FImpactInfo& Impact);
 	void SubmitFinalBlowEffects(class AActor* DamageInstigator, const struct FImpactInfo& Impact);
 	void STATIC_SubmitHitEffects(class AActor* DamageInstigator, const struct FImpactInfo& Impact, int nType);
-	void STATIC_HandleSuccessfulHit(class AActor* DamageInstigator, class APawn* OwnerInstigator, const struct FImpactInfo& Impact);
-	void STATIC_HandleMiss();
+	void HandleSuccessfulHit(class AActor* DamageInstigator, class APawn* OwnerInstigator, const struct FImpactInfo& Impact);
+	void HandleMiss();
 	bool ApplyHit(const struct FImpactInfo& Impact, class AActor* DamageInstigator);
 	void STATIC_TrackDeviceModeHit(class ATgPawn* Hitter, float fDistance, bool bHitPlayer);
 	void RemoveHitSpecial(class AActor* Target, bool bForceRemove, int nHitSpecialSituationalType, int StackCount, class AActor* InstigatorOverride);
@@ -9914,7 +9940,7 @@ public:
 	void SubmitEffect(const struct FImpactInfo& Impact, class UTgEffectGroup* effectGroup, bool bRemove, int StackCount, class AActor* InstigatorOverride);
 	void RemoveEquipEffects();
 	void ApplyEquipEffects();
-	struct FTgPropertyInstance STATIC_NativeGetPropertyInstance(int nPropertyId);
+	struct FTgPropertyInstance NativeGetPropertyInstance(int nPropertyId);
 	int STATIC_GetFireModeIndex();
 	int STATIC_GetShotsPerFire();
 	float STATIC_GetBasePropertyValueById(int nPropertyId);
@@ -9938,10 +9964,10 @@ public:
 	bool STATIC_ShouldAddToImpactList(class AActor* HitActor, TArray<struct FImpactInfo> ImpactList);
 	struct FVector STATIC_GetHitLocationToCenter(struct FVector* StartTrace, struct FVector* TargetLocation, struct FVector* targetExtent);
 	struct FVector STATIC_GetHitLocationFlat(struct FVector* StartTrace, struct FVector* TargetLocation, struct FVector* targetExtent);
-	bool STATIC_IgnoreTargetForBlocking(class AActor* Target);
+	bool IgnoreTargetForBlocking(class AActor* Target);
 	class AActor* IsBlockedByBlocker(class AActor* DamageInstigator, class AActor* Target, const struct FVector& OriginLocation, const struct FVector& TargetLocation);
 	TEnumAsByte<EDeviceTargetMode> STATIC_GetTargetingMode();
-	void AddEffectiveRangeReduction(class AActor* DamageInstigator, const struct FVector& OriginLocation, bool bUseRadius, struct FImpactInfo* Impact);
+	void STATIC_AddEffectiveRangeReduction(class AActor* DamageInstigator, const struct FVector& OriginLocation, bool bUseRadius, struct FImpactInfo* Impact);
 	float STATIC_GetShotPowerCost(int nPacingType);
 	bool STATIC_UsesActorEncroachmentForCalcTargetingFire();
 	bool IsArcingAttack();
@@ -10167,7 +10193,7 @@ public:
 
 
 	void UpdateEncroachmentActorScale();
-	bool STATIC_IgnoreTargetForBlocking(class AActor* Target);
+	bool IgnoreTargetForBlocking(class AActor* Target);
 };
 
 
@@ -10268,7 +10294,7 @@ public:
 	}
 
 
-	bool STATIC_IgnoreTargetForBlocking(class AActor* Target);
+	bool IgnoreTargetForBlocking(class AActor* Target);
 };
 
 
@@ -10286,7 +10312,7 @@ public:
 
 
 	bool STATIC_ShouldAddToImpactList(class AActor* HitActor, TArray<struct FImpactInfo> ImpactList);
-	bool STATIC_IgnoreTargetForBlocking(class AActor* Target);
+	bool IgnoreTargetForBlocking(class AActor* Target);
 };
 
 
@@ -10424,7 +10450,7 @@ public:
 	}
 
 
-	bool STATIC_IgnoreTargetForBlocking(class AActor* Target);
+	bool IgnoreTargetForBlocking(class AActor* Target);
 };
 
 
@@ -10515,7 +10541,7 @@ public:
 
 	void OnDestroyed();
 	void OnRetrieveAnimDone();
-	void RecoverDeviceState(TEnumAsByte<ETG_REP_DEVICE_STATE> DesiredState);
+	void STATIC_RecoverDeviceState(TEnumAsByte<ETG_REP_DEVICE_STATE> DesiredState);
 	void SetToggleState(bool IsActive);
 	void PlayToggleTransitionAnimations(float transitionPercent, float totalTransitionTime, bool transitionToActive);
 	void GotoFormState(const struct FName& NewState);
@@ -10526,7 +10552,7 @@ public:
 	void CooldownComplete();
 	void Cooldown(int nFireModeNum, float fCooldownTime);
 	void Hit(int nFireMode, class AActor* Target, float fDamageAmount, const struct FVector& HitLocation, const struct FVector& HitNormal, struct FExtraDamageInfo* ExtraInfo);
-	void RecoverFireMultiHitLocations(float fDistUnit, int nSeed, float fSpreadAngle, int nNumShots, TArray<struct FVector>* vHitLocations, struct FVector* vAimStart, struct FVector* vAimDir, unsigned char* hitRanges);
+	void STATIC_RecoverFireMultiHitLocations(float fDistUnit, int nSeed, float fSpreadAngle, int nNumShots, TArray<struct FVector>* vHitLocations, struct FVector* vAimStart, struct FVector* vAimDir, unsigned char* hitRanges);
 	void FireMultiUnpacked(TArray<struct FVector> vHitLocations, int nFireMode, int nEquipSlot, int nSocketIndex, bool bSuccessfulHit, float fRefireTime, float fPackedDistanceUnit);
 	void FireMulti(const struct FVector& vAimStart, const struct FVector& vAimDir, int nFireMode, float fMaxRange, int nSeed, float fSpreadAngle, int nNumShots, int nEquipSlot, int nSocketIndex, bool bSuccessfulHit, float fRefireTime, unsigned char* hitRanges);
 	void Fire(const struct FVector& HitLocation, int nFireMode, int nEquipSlot, int nSocketIndex, bool bSuccessfulHit, float fRefireTime);
@@ -10537,7 +10563,7 @@ public:
 	void StartFire(int nFireMode, float fRefireTime, class AActor* Target, int nAmmoRemaining);
 	bool SetAmmoNodesOnStartFire();
 	bool IsCurrentInHandWeapon();
-	class UTgDeviceForm* STATIC_InHandWeaponForm();
+	class UTgDeviceForm* InHandWeaponForm();
 	void BuildUp(int nFireMode, int nEquipSlot, int nSocketIndex, float fBuildupTime);
 	void FireHoldFull(bool bIsFull);
 	void InterruptTargeting();
@@ -10572,6 +10598,7 @@ public:
 	void Cache3PAnimNodes(class UTgSkeletalMeshComponent* SkelComp);
 	void STATIC_CacheAnimNode(class UAnimNode* Node, bool bIs3p);
 	void ClearAnimNodes(bool bIs3p);
+	int STATIC_GetAssemblyIdFromFiremode(int nFireMode, bool bFromProj);
 	class ATgPawn* STATIC_GetPawnById(int nPawnId);
 	void STATIC_GetAdjustedAim(struct FAimData* Aim);
 	float STATIC_GetAccuracy();
@@ -10589,10 +10616,10 @@ public:
 	void STATIC_Destruct(const struct FVector& vLocation);
 	int STATIC_GetFormIndex();
 	void STATIC_DeactivateFxGroup(const struct FName& nmGroup);
-	class UTgSpecialFx* ActivateFxIndependent(const struct FName& nmGroup, bool bSkipActivate, const struct FParticleChannelContainer& PSysChannels);
-	void ActivateFxGroup(const struct FName& nmGroup);
+	class UTgSpecialFx* STATIC_ActivateFxIndependent(const struct FName& nmGroup, bool bSkipActivate, const struct FParticleChannelContainer& PSysChannels);
+	void STATIC_ActivateFxGroup(const struct FName& nmGroup);
 	bool LogDebugInfo();
-	void STATIC_InitCameraViewpoint();
+	void InitCameraViewpoint();
 	void STATIC_DetachInHandDevice_DA();
 	void STATIC_DetachDevice_DA(class USkeletalMeshComponent* ParentMesh, class UMeshComponent* AttachedMesh);
 	bool STATIC_AttachInHandDevice_DA(bool bFirstPerson);
@@ -10694,7 +10721,7 @@ public:
 	void ConnectBeamToTarget();
 	void SetBeamActive(bool bActive);
 	void UpdateBeamEndpoint(float DeltaTime);
-	void STATIC_MoveBeamEndpoint(const struct FVector& vNewPosition);
+	void MoveBeamEndpoint(const struct FVector& vNewPosition);
 	bool STATIC_UsesTargetingMode();
 	void STATIC_SetFireMode(int nMode);
 	void SetLatchAssembly(int nAsmId);
@@ -10933,16 +10960,16 @@ public:
 	void STATIC_EndBurst();
 	void STATIC_ResetBurst(class ATgDevice* Device);
 	void STATIC_ClearFirstShotInBurst();
-	bool STATIC_HandleStopFire(class ATgDevice* Device);
+	bool HandleStopFire(class ATgDevice* Device);
 	void STATIC_StartServerBurst(bool bFirstShotInBurst);
 	bool STATIC_ServerStartFireDiscardFalseBurst();
-	void STATIC_HandleFalseFireRecovery();
-	bool STATIC_HandleBurstUse(class ATgDevice* Device);
+	void HandleFalseFireRecovery();
+	bool HandleBurstUse(class ATgDevice* Device);
 	int STATIC_GetRemainingShotsInBurst();
 	int STATIC_GetAmmoToConsumeOverride(int nAmmoToConsume);
 	float STATIC_GetTotalBurstTime(class UTgDeviceFire* FireMode);
 	float STATIC_GetPreHitDelayOverride(float fPreHitDelay);
-	void STATIC_HandleDeviceInterrupted(class ATgDevice* Device);
+	void HandleDeviceInterrupted(class ATgDevice* Device);
 	bool STATIC_CanAllowInterrupt();
 	float STATIC_GetPostHitDelayOverride(float fPostHitDelay);
 };
@@ -11125,7 +11152,7 @@ public:
 	void OnPersistTimerExpire();
 	void STATIC_CalcDeployPercentage();
 	void OnSetTaskforce(class UTgSeqAct_SetTaskforce* Action);
-	void RefireCheckTimer();
+	void STATIC_RefireCheckTimer();
 	void StartDeploy();
 	void STATIC_TimeDeviceFiring();
 	bool BenefitsFromPctShieldIncrease();
@@ -11162,7 +11189,7 @@ public:
 	bool STATIC_UseRangeFalloffCurve();
 	class UTgGameplayCurvesSet* STATIC_GetCurrentGameplayCurveSet(TEnumAsByte<ECurveSetTypes> Type);
 	bool STATIC_IsObscuringOverriden(class ATgPawn* Viewer, class ATgPawn* Target, bool bViewerInside);
-	void STATIC_NotifyQueuedLagCompWorldExplosion(class ATgProj_Simulated* Proj, const struct FVector& HitLocation, const struct FVector& HitVelocity);
+	void NotifyQueuedLagCompWorldExplosion(class ATgProj_Simulated* Proj, const struct FVector& HitLocation, const struct FVector& HitVelocity);
 	bool STATIC_CanQueueLagCompWorldExplosion(class ATgProj_Simulated* Proj, unsigned char* bHideProjectile);
 	class AActor* STATIC_GetActorFromCombatActor();
 	class AActor* STATIC_GetPetOwner();
@@ -11180,7 +11207,7 @@ public:
 	class UTgSpecialFx* STATIC_GetTakeHitFxOverride(class UTgSpecialFx* TakeHit);
 	struct FVector STATIC_GetLocation();
 	bool LocalPlayerHasLOS();
-	void STATIC_HandleNotificationsForAI(float fStatChange, class ATgPawn* InstigatorPawn);
+	void HandleNotificationsForAI(float fStatChange, class ATgPawn* InstigatorPawn);
 	float STATIC_GetDamageToLeaveStealth();
 	void STATIC_TakeStealthDamage(float fDamage);
 	bool STATIC_ShieldDamageAppliesToHealth();
@@ -11193,7 +11220,7 @@ public:
 	bool STATIC_CanBeLifestealInstigator();
 	void STATIC_TakeHealthDamage(float fDamage, class AController* InstigatedBy, class UClass* DamageType, const struct FImpactInfo& Impact, const struct FExtraDamageInfo& ExtraInfo, class AActor* DamageCauser);
 	void MitigateHealthDamage(class ATgPawn* pInstigator, class UTgEffectDamage* Effect, const struct FImpactInfo& Impact, bool bIsHeadshot, float* NewValue, float* fPercReduction, unsigned char* bWasCapped);
-	void STATIC_MitigateExecuteDamage(class ATgPawn* pInstigator, class UTgEffectDamage* Effect, const struct FImpactInfo& Impact, bool bIsHeadshot, float* NewValue, float* fPercReduction);
+	void MitigateExecuteDamage(class ATgPawn* pInstigator, class UTgEffectDamage* Effect, const struct FImpactInfo& Impact, bool bIsHeadshot, float* NewValue, float* fPercReduction);
 	float STATIC_GetSpecialDamageTakenPercentAI();
 	float STATIC_GetSpecialDamageDealtPercentAI();
 	void STATIC_BuffDamage(class AActor* Target, class UTgEffectDamage* Effect, const struct FImpactInfo& Impact, float fBaseDamage, float* fProratedAmount, struct FExtraDamageInfo* ExtraInfo);
@@ -11258,7 +11285,7 @@ public:
 	void STATIC_ResetProperties();
 	void STATIC_SetProperty(int nPropertyId, float fNewValue);
 	struct FTgPropertyInstance STATIC_GetProperty(int nPropertyId);
-	void AddProperty(int nPropId, float fBase, float fRaw, float FMin, float FMax);
+	void STATIC_AddProperty(int nPropId, float fBase, float fRaw, float FMin, float FMax);
 	void InitializeDefaultProps();
 	bool STATIC_ApplyDeployableSetup();
 };
@@ -11873,7 +11900,8 @@ public:
 	int                                                s_nSpawnDeployableId;                                     // 0x0380(0x0004)
 	TEnumAsByte<ESpawnDeployableOrientation>           m_DeployableSpawnOrientation;                             // 0x0384(0x0001)
 	TEnumAsByte<ETG_EQUIP_POINT>                       r_eEquippedAt;                                            // 0x0385(0x0001) (Net)
-	unsigned char                                      UnknownData00[0x2];                                       // 0x0386(0x0002) MISSED OFFSET
+	TEnumAsByte<EDeployableOverlayIcon>                m_eOverlayIcon;                                           // 0x0386(0x0001)
+	unsigned char                                      UnknownData00[0x1];                                       // 0x0387(0x0001) MISSED OFFSET
 	TArray<class ATgPawn*>                             s_GrabbedTargets;                                         // 0x0388(0x0010) (NeedCtorLink)
 	float                                              m_fDamageRadius;                                          // 0x0398(0x0004)
 	struct FVector                                     r_vSpawnLocation;                                         // 0x039C(0x000C) (Net)
@@ -11926,7 +11954,7 @@ public:
 	bool ProjectileCalcCamera(float fDeltaTime, struct FVector* out_CamLoc, struct FRotator* out_CamRot, float* out_FOV);
 	void MyOnParticleSystemFinished(class UParticleSystemComponent* PSC);
 	void Destroyed();
-	void STATIC_HideProjectile();
+	void HideProjectile();
 	void TornOff();
 	void ShutDown();
 	void STATIC_SpawnExplosionEffects(const struct FVector& HitLocation, const struct FVector& HitNormal, const struct FIMPACT_FX& ImpactFx);
@@ -11944,16 +11972,16 @@ public:
 	void Tick(float DeltaSeconds);
 	void ProxyUnTouch(class AActor* Other);
 	void ProxyTouch(class AActor* Other, class UPrimitiveComponent* OtherComp, const struct FVector& HitLocation, const struct FVector& HitNormal);
-	void STATIC_HitPassThroughTarget(class AActor* Target, const struct FVector& HitLocation, const struct FVector& HitNormal);
+	void HitPassThroughTarget(class AActor* Target, const struct FVector& HitLocation, const struct FVector& HitNormal);
 	bool STATIC_ShouldExplodeOnTouching(class AActor* Other);
 	bool STATIC_ForcefieldExclusionCheck(class AActor* Other);
 	void STATIC_ProcessTouch(class AActor* Other, const struct FVector& HitLocation, const struct FVector& HitNormal);
 	bool WouldStopOnTouch(class AActor* Other);
 	bool IsValidTouchTarget(class AActor* Other);
 	bool STATIC_CanHitTarget(class AActor* Other);
-	bool STATIC_HitAllTaskforces();
+	bool HitAllTaskforces();
 	bool STATIC_CanHitInstigator();
-	bool STATIC_HandleOnProjectileHitTarget(class AActor* Other, const struct FVector& HitLocation, const struct FVector& HitNormal);
+	bool HandleOnProjectileHitTarget(class AActor* Other, const struct FVector& HitLocation, const struct FVector& HitNormal);
 	void STATIC_ShutdownAndNotifyClient();
 	void ProcessTouchAsEvent(class AActor* Other, const struct FVector& HitLocation, const struct FVector& HitNormal);
 	void FellOutOfWorld(class UClass* dmgType);
@@ -11966,7 +11994,7 @@ public:
 	void SetTarget(class AActor* TargetActor, const struct FVector& TargetLocation);
 	struct FVector GetSeekLocation();
 	void STATIC_UpdateSeekingDirection(float fDeltaTime);
-	void RangeReached();
+	void STATIC_RangeReached();
 	bool STATIC_ShouldExplodeAtMaxRange();
 	bool STATIC_CheckProjectileRange(const struct FVector& vLocOverride);
 	void QueueSoundShutdown();
@@ -12119,7 +12147,7 @@ public:
 	void Explode(const struct FVector& HitLocation, const struct FVector& HitNormal);
 	void SendSpawnAckToServer();
 	void STATIC_SendExplodeToServer(class AActor* Other, const struct FVector& HitLocation, const struct FVector& HitNormal);
-	void STATIC_HitPassThroughTarget(class AActor* Target, const struct FVector& HitLocation, const struct FVector& HitNormal);
+	void HitPassThroughTarget(class AActor* Target, const struct FVector& HitLocation, const struct FVector& HitNormal);
 	void STATIC_ProcessTouch(class AActor* Other, const struct FVector& HitLocation, const struct FVector& HitNormal);
 	void HandleQueuedFirstWorldExplosion();
 	void LoadFiremodeProp(int nPropId, float fValue);
@@ -12293,13 +12321,13 @@ public:
 	void PlayHitWallExplosionFX(const struct FVector& HitNormal, const struct FVector& HitLocation);
 	void PlayHitTargetFX(class AActor* Target, const struct FVector& HitLocation, const struct FVector& HitNormal, bool bExploded);
 	float STATIC_GetDecalRotationOffset();
-	void STATIC_HideProjectile();
+	void HideProjectile();
 	void Destroyed();
 	void SpawnSecondaryCollisionProxies();
 	float GetCollistionOffsetDistance();
 	struct FVector GetCollisionOffsetDir();
-	void STATIC_HandleSecondaryProxyUntouch(class AActor* Other);
-	void STATIC_HandleSecondaryProxyTouch(class AActor* Other, class UPrimitiveComponent* OtherComp, const struct FVector& HitLocation, const struct FVector& HitNormal);
+	void HandleSecondaryProxyUntouch(class AActor* Other);
+	void HandleSecondaryProxyTouch(class AActor* Other, class UPrimitiveComponent* OtherComp, const struct FVector& HitLocation, const struct FVector& HitNormal);
 	void ProxyUnTouch(class AActor* Other);
 	void ProxyTouch(class AActor* Other, class UPrimitiveComponent* OtherComp, const struct FVector& HitLocation, const struct FVector& HitNormal);
 	void ForwardProxyUntouch(class AActor* Other);
@@ -12409,7 +12437,7 @@ public:
 	void STATIC_SetSoundList(TArray<struct FFx_Sound> SoundList);
 	void SetCameraEffectActive(bool bActive);
 	void Reactivate();
-	void Deactivate();
+	void STATIC_Deactivate();
 	void Activate();
 	void Destroyed();
 };
@@ -12726,22 +12754,22 @@ public:
 	void UpdateBeamFx(const struct FVector& HitLocation, const struct FVector& HitOrigin, class AActor* targetOverride);
 	void SpawnTracer(const struct FVector& HitLocation, const struct FVector& HitOrigin);
 	class AActor* STATIC_GetHitActor(const struct FVector& EffectLocation, const struct FVector& HitLocation);
-	bool STATIC_HasSoundCue();
+	bool HasSoundCue();
 	void STATIC_RemoveMICFxFromOwningPawn();
 	void STATIC_ApplyMICFxToOwningPawn(int nMatTypeCodeOverride, int nMaterialPriority);
 	class USkeletalMeshComponent* STATIC_FindMeshWithSocket(const struct FName& nmSocket, class USkeletalMeshComponent* first, class AActor* Second, struct FName* BoneName, struct FVector* RelativeLocation, struct FRotator* RelativeRotation, struct FVector* RelativeScale);
 	void OverridePSCChannels(const struct FParticleChannelContainer& PSysChannels);
 	struct FParticleChannelContainer STATIC_GetLocalPlayerPSCChannels(class UParticleSystemComponent* ActivePSC, class UParticleSystem* Template);
 	void STATIC_UpdateHiddenDecals(bool bClearAll);
-	bool STATIC_InitDecalFadeOut(struct FFx_Decal* Decal);
+	bool InitDecalFadeOut(struct FFx_Decal* Decal);
 	void STATIC_DeactivateDecal(struct FFx_Decal* Decal);
-	void ActivateDecal(struct FFx_Decal* Decal);
+	void STATIC_ActivateDecal(struct FFx_Decal* Decal);
 	void StopSound();
 	void PlaySound();
 	void STATIC_CheckDeactivate();
 	void OnAudioFinishedFX(class UAudioComponent* FinishedComponent);
 	void OnParticleSystemFinished(class UParticleSystemComponent* FinishedComponent);
-	void Deactivate(bool bForceDeactivate);
+	void STATIC_Deactivate(bool bForceDeactivate);
 	float Activate(const struct FVector& HitLocation, bool bSkipRelevantChecking, bool bForceSetManaged);
 	void STATIC_AdjustEffectFOV(float NewFOV);
 	void STATIC_AdjustEffectScale(int nPSCIndex, float fScale);
@@ -12768,7 +12796,7 @@ public:
 	void STATIC_SetActiveTime(float Duration, class ATgPawn* Owner);
 	class AActor* STATIC_SpawnActor(class UClass* InClass, const struct FVector& Location, const struct FRotator& Rotation);
 	void STATIC_SetPSCChannels(class UParticleSystemComponent* PSC, bool bOnlyAllowNonZeroMask, class UParticleSystem* Template);
-	void ActivateLocalPlayerFx(class UParticleSystemComponent* ActivePSC);
+	void STATIC_ActivateLocalPlayerFx(class UParticleSystemComponent* ActivePSC);
 	class UMeshComponent* STATIC_GetOwnerMesh(class AActor* pOwner);
 	struct FRotator STATIC_GetEffectRotation();
 	struct FVector STATIC_GetEffectLocation();
@@ -12801,7 +12829,7 @@ public:
 	void STATIC_SetLevelInternal(int LightLevel);
 	void LightKilledElsewhere(const struct FPointer& FxEmitterKilled);
 	void STATIC_SetLightState(const struct FPointer& ExtantFxEmitter, TEnumAsByte<ESpecialFxLightState> NewFxLightState);
-	void AddLight(const struct FPointer& NewFxEmitter);
+	void STATIC_AddLight(const struct FPointer& NewFxEmitter);
 	void InitializeFxLightManager();
 };
 
@@ -12843,7 +12871,7 @@ public:
 	int STATIC_GetTopMostDevice(class UTgDeviceFire* devFire);
 	void STATIC_TrackStats(class ATgPawn* Instigator, class AActor* Target, const struct FImpactInfo& Impact, float fDamage, int iTargetDeviceModeId, bool bIsEnemy, float fMissingHealth, float fMitigatedDamage, float fDamageToShields);
 	void Remove(class AActor* Target);
-	void Reapply(class AActor* Target);
+	void STATIC_Reapply(class AActor* Target);
 	float STATIC_GetScaledBaseValue();
 	float STATIC_GetProratedValue();
 	void STATIC_ApplyToProperty(class AActor* Target, int nPropertyId, float fProratedAmount, bool bRemove);
@@ -12983,7 +13011,7 @@ public:
 
 	void InitializeEffectInfo();
 	class UTgEffect* STATIC_CloneEffect();
-	void AddDamageStamp(float Damage);
+	void STATIC_AddDamageStamp(float Damage);
 	bool STATIC_ApplyEffect(class AActor* Target, const struct FImpactInfo& Impact, bool bLatent);
 };
 
@@ -13317,9 +13345,9 @@ public:
 	bool STATIC_ShouldShowEffectForm();
 	void STATIC_AdjustHidden();
 	void Detach();
-	void Reattach();
+	void STATIC_Reattach();
 	void Attach(class AActor* pOwner);
-	void STATIC_HideEffectForm();
+	void HideEffectForm();
 	void STATIC_ShowEffectForm(bool bLocal);
 	void RecalculateFx();
 };
@@ -13359,7 +13387,7 @@ public:
 	}
 
 
-	void STATIC_HideEffectForm();
+	void HideEffectForm();
 	void STATIC_ShowEffectForm(bool bLocal);
 };
 
@@ -13378,7 +13406,7 @@ public:
 	}
 
 
-	void STATIC_HideEffectForm();
+	void HideEffectForm();
 };
 
 
@@ -13400,9 +13428,9 @@ public:
 	void STATIC_AttachMeshes(class AActor* pOwner);
 	void STATIC_AdjustHidden();
 	void Detach();
-	void Reattach();
+	void STATIC_Reattach();
 	void Attach(class AActor* pOwner);
-	void STATIC_HideEffectForm();
+	void HideEffectForm();
 	void STATIC_ShowEffectForm(bool bLocal);
 	void RecalculateFx();
 };
@@ -13479,11 +13507,11 @@ public:
 
 
 	bool STATIC_SupportsEffectSimulation();
-	float STATIC_HealShield(float fHeal);
+	float HealShield(float fHeal);
 	float STATIC_DamageShield(float fDamage);
 	float STATIC_GetShieldMaxHealth();
 	float STATIC_GetShieldHealth();
-	bool STATIC_HasShield();
+	bool HasShield();
 	void STATIC_ExtendLifeTime(float fAmount);
 	void QueueRemovalOnManagerTick();
 	float STATIC_GetUtilityPower();
@@ -13497,12 +13525,12 @@ public:
 	float STATIC_GetPercentTimeRemaining();
 	float STATIC_GetTimeRemaining();
 	float STATIC_GetTimeElapsed();
-	void STATIC_HandleStatusEffects(bool bRemoving);
+	void HandleStatusEffects(bool bRemoving);
 	void SetActive(bool bActive, bool bRemoving);
 	bool IsActive();
-	bool STATIC_HasCategoryCode(int nCategoryCode, bool bBehaviorOnly, bool bIgnoreIfBlockCategory);
+	bool HasCategoryCode(int nCategoryCode, bool bBehaviorOnly, bool bIgnoreIfBlockCategory);
 	bool STATIC_DoesDamage();
-	bool ReceivesDiminishingReturns();
+	bool STATIC_ReceivesDiminishingReturns();
 	bool STATIC_AppliesDiminishingReturns();
 	bool IsCrowdControl();
 	bool IsSuperiorCrowdControl();
@@ -13625,8 +13653,8 @@ public:
 	class UTgEffectGroup* STATIC_ApplyProperty(float nValue, int nPropId, class AActor* aInstigator, const struct FImpactInfo& Impact, int nCategory, bool bApplyAsPercent);
 	void ProcessReduceActiveCooldownEffects();
 	void STATIC_RemoveDelayedReduceActiveCooldownEffect(const struct FReduceActiveCooldownEntry& effectEntry);
-	void AddDelayedReduceActiveCooldownEffect(const struct FReduceActiveCooldownEntry& effectEntry);
-	void ReduceActiveCooldown(const struct FReduceActiveCooldownEntry& effectEntry, bool bInitialApplication);
+	void STATIC_AddDelayedReduceActiveCooldownEffect(const struct FReduceActiveCooldownEntry& effectEntry);
+	void STATIC_ReduceActiveCooldown(const struct FReduceActiveCooldownEntry& effectEntry, bool bInitialApplication);
 	void STATIC_ApplyStasis(int nValue, class AActor* aInstigator, int nAttackType, int nDamageType, const struct FImpactInfo& Impact, int nEffectGroupCategory);
 	void STATIC_RemoveSpawnGuard();
 	void STATIC_ApplySpawnGuard();
@@ -13638,8 +13666,8 @@ public:
 	int STATIC_CountApplicationOfPermanentEffect(class UTgEffect* pEffect);
 	void STATIC_UnregisterPermanentEffect(class UTgEffect* pEffect);
 	void STATIC_RegisterPermanentEffect(class UTgEffect* pEffect);
-	void STATIC_HandleOnLandedIntercepts();
-	void RecalculateBeltFx();
+	void HandleOnLandedIntercepts();
+	void STATIC_RecalculateBeltFx();
 	void RecalculateFx();
 	bool IsDazed();
 	bool IsSlowed();
@@ -13979,6 +14007,27 @@ public:
 };
 
 
+// Class TgGame.AudioLUT
+// 0x00F4 (0x0154 - 0x0060)
+class UAudioLUT : public UObject
+{
+public:
+	struct FVector                                     LutStartPos;                                              // 0x0060(0x000C)
+	struct FVector                                     LutEndPos;                                                // 0x006C(0x000C)
+	struct FMap_Mirror                                 spatial_hash;                                             // 0x0078(0x0048) (Native)
+	struct FMap_Mirror                                 lut;                                                      // 0x00C0(0x0048) (Native)
+	struct FMap_Mirror                                 PositionSampleMap;                                        // 0x0108(0x0048) (Native)
+	float                                              ListenerDistance;                                         // 0x0150(0x0004)
+
+	static UClass* StaticClass()
+	{
+		static auto ptr = UObject::FindClass("Class TgGame.AudioLUT");
+		return ptr;
+	}
+
+};
+
+
 // Class TgGame.TgAkAudioManagement
 // 0x0114 (0x0174 - 0x0060)
 class UTgAkAudioManagement : public UObject
@@ -14146,7 +14195,7 @@ public:
 	class ATgDevice* STATIC_GetDeviceByInstanceId(int nDeviceInstanceId);
 	void STATIC_SwapDevices(class UTgInventoryObject_Device* pInv, int nEquipPoint);
 	void STATIC_RemoveDevice(class UTgInventoryObject_Device* pInv);
-	class ATgDevice* AddDevice(int nDeviceId, int nEquipPoint, class ATgDevice* parentDevice, bool bReplaceIfOccupied, int nLevel, int nPower);
+	class ATgDevice* STATIC_AddDevice(int nDeviceId, int nEquipPoint, class ATgDevice* parentDevice, bool bReplaceIfOccupied, int nLevel, int nPower);
 	void STATIC_RequestInventory();
 };
 
@@ -14166,7 +14215,7 @@ public:
 
 	void STATIC_ChangeDeviceLevel(int nEquipPoint, int nLevel);
 	void STATIC_RemoveDevice(class UTgInventoryObject_Device* pInv);
-	class ATgDevice* AddDevice(int nDeviceId, int nEquipPoint, class ATgDevice* parentDevice, bool bReplaceIfOccupied, int nLevel, int nPower);
+	class ATgDevice* STATIC_AddDevice(int nDeviceId, int nEquipPoint, class ATgDevice* parentDevice, bool bReplaceIfOccupied, int nLevel, int nPower);
 	int STATIC_CountFilledBurnCardSlots();
 	void STATIC_RemoveBurnCards();
 };
@@ -17596,7 +17645,7 @@ public:
 	}
 
 
-	void AddStackCount(int nStackCount);
+	void STATIC_AddStackCount(int nStackCount);
 };
 
 
@@ -19550,7 +19599,7 @@ public:
 
 
 	void Touch(class AActor* Other, class UPrimitiveComponent* OtherComp, const struct FVector& HitLocation, const struct FVector& HitNormal);
-	void STATIC_HandleTouch(class AActor* Other, const struct FVector& HitLocation, const struct FVector& HitNormal);
+	void HandleTouch(class AActor* Other, const struct FVector& HitLocation, const struct FVector& HitNormal);
 };
 
 
@@ -20035,9 +20084,9 @@ public:
 	TEnumAsByte<EeSetRouteResult> STATIC_SetRoute(class AActor* destActor);
 	void STATIC_DeactivatePathingFx();
 	void STATIC_DeactivateFx();
-	void ActivatePathingFx();
-	void ActivateSpinDownFx();
-	void ActivateSpinUpFx();
+	void STATIC_ActivatePathingFx();
+	void STATIC_ActivateSpinDownFx();
+	void STATIC_ActivateSpinUpFx();
 };
 
 
@@ -20062,7 +20111,7 @@ public:
 	bool PawnCanUse(class ATgPawn* TgP);
 	void STATIC_OnToggle(class USeqAct_Toggle* Action);
 	struct FVector STATIC_GetTargetLocation(class AActor* RequestedBy, bool bRequestAlternateLoc);
-	bool STATIC_HasRoomForPawn(class ATgPawn* TgP);
+	bool HasRoomForPawn(class ATgPawn* TgP);
 };
 
 
@@ -20190,7 +20239,7 @@ public:
 	void PostBeginPlay();
 	void PreBeginPlay();
 	void LoadObjectConfig();
-	bool STATIC_HandlePostTouch(class AActor* Other);
+	bool HandlePostTouch(class AActor* Other);
 };
 
 
@@ -20249,11 +20298,11 @@ public:
 	float STATIC_GetPropCurrentValue(int nPropIndex);
 	float STATIC_GetPropBaseValue(int nPropIndex);
 	class UTgSpecialFx* STATIC_GetTakeHitFxOverride(class UTgSpecialFx* TakeHit);
-	void STATIC_NotifyQueuedLagCompWorldExplosion(class ATgProj_Simulated* Proj, const struct FVector& HitLocation, const struct FVector& HitVelocity);
+	void NotifyQueuedLagCompWorldExplosion(class ATgProj_Simulated* Proj, const struct FVector& HitLocation, const struct FVector& HitVelocity);
 	bool STATIC_CanQueueLagCompWorldExplosion(class ATgProj_Simulated* Proj, unsigned char* bHideProjectile);
 	struct FVector STATIC_GetLocation();
 	bool LocalPlayerHasLOS();
-	void STATIC_HandleNotificationsForAI(float fStatChange, class ATgPawn* InstigatorPawn);
+	void HandleNotificationsForAI(float fStatChange, class ATgPawn* InstigatorPawn);
 	float STATIC_GetDamageToLeaveStealth();
 	void STATIC_TakeStealthDamage(float fDamage);
 	bool STATIC_ShieldDamageAppliesToHealth();
@@ -20266,7 +20315,7 @@ public:
 	bool STATIC_CanBeLifestealInstigator();
 	void STATIC_TakeHealthDamage(float fDamage, class AController* InstigatedBy, class UClass* DamageType, const struct FImpactInfo& Impact, const struct FExtraDamageInfo& ExtraInfo, class AActor* DamageCauser);
 	void MitigateHealthDamage(class ATgPawn* pInstigator, class UTgEffectDamage* Effect, const struct FImpactInfo& Impact, bool bIsHeadshot, float* NewValue, float* fPercReduction, unsigned char* bWasCapped);
-	void STATIC_MitigateExecuteDamage(class ATgPawn* pInstigator, class UTgEffectDamage* Effect, const struct FImpactInfo& Impact, bool bIsHeadshot, float* NewValue, float* fPercReduction);
+	void MitigateExecuteDamage(class ATgPawn* pInstigator, class UTgEffectDamage* Effect, const struct FImpactInfo& Impact, bool bIsHeadshot, float* NewValue, float* fPercReduction);
 	float STATIC_GetSpecialDamageTakenPercentAI();
 	float STATIC_GetSpecialDamageDealtPercentAI();
 	void STATIC_BuffDamage(class AActor* Target, class UTgEffectDamage* Effect, const struct FImpactInfo& Impact, float fBaseDamage, float* fProratedAmount, struct FExtraDamageInfo* ExtraInfo);
@@ -20357,7 +20406,7 @@ public:
 	struct FRotator GetBaseAimRotation(class AWeapon* W, bool bIgnoreAutoLock);
 	void STATIC_PlayerMove(float DeltaTime);
 	void STATIC_ProcessMove(float DeltaTime, const struct FVector& newAccel, TEnumAsByte<EDoubleClickDir> DoubleClickMove, const struct FRotator& DeltaRot);
-	bool STATIC_NoDeathCamCodePath();
+	bool NoDeathCamCodePath();
 };
 
 
@@ -20728,7 +20777,7 @@ public:
 	class ATgPawn* STATIC_GetOwnedTgPawn();
 	void Revive();
 	void LiveRespawn(bool bResetHealth, bool bResetDevices);
-	void STATIC_PrepareForLiveRespawn();
+	void PrepareForLiveRespawn();
 	void STATIC_SetRewardValues(int XP, int Currency, class AActor* Source, TEnumAsByte<ERewardValueType> RewardType, bool bFlankKill);
 	void STATIC_ResetUlt();
 	void SetCredits(int nCreditsAmount);
@@ -20737,7 +20786,7 @@ public:
 
 
 // Class TgGame.TgPawn
-// 0x2918 (0x2EC4 - 0x05AC)
+// 0x2920 (0x2ECC - 0x05AC)
 class ATgPawn : public AGamePawn
 {
 public:
@@ -21463,19 +21512,20 @@ public:
 	float                                              m_fSteepTerrainSlopeZMidBreakpoint;                       // 0x2E38(0x0004)
 	class UTgSpecialFx*                                m_CameraInvisFX3P;                                        // 0x2E3C(0x0008)
 	TArray<class ATgIndoorVolume*>                     m_TouchingIndoorVolumes;                                  // 0x2E44(0x0010) (NeedCtorLink)
-	int                                                s_nMctsPlayerId;                                          // 0x2E54(0x0004)
-	float                                              m_fHitBoneValidation;                                     // 0x2E58(0x0004) (Config)
-	TArray<int>                                        m_nExtraTimerBarEqpSlots;                                 // 0x2E5C(0x0010) (NeedCtorLink)
-	class UPComPositionHistoryServerComponent*         m_CachedPositionHistoryServerComponent;                   // 0x2E6C(0x0008) (ExportObject, Component, EditInline)
-	class UTgCallbackContainer*                        m_CallbackContainer;                                      // 0x2E74(0x0008)
-	TArray<class UTgPawnMod*>                          m_PawnMods;                                               // 0x2E7C(0x0010) (NeedCtorLink)
-	struct FName                                       m_nmAppliedBlindPostProcess;                              // 0x2E8C(0x0008)
-	struct FScriptDelegate                             __On3pTransitionEvent__Delegate;                          // 0x2E94(0x000C) (NeedCtorLink)
-	unsigned char                                      UnknownData01[0x4];                                       // 0x2E94(0x0004) FIX WRONG TYPE SIZE OF PREVIOUS PROPERTY
-	struct FScriptDelegate                             __OnPhysTweenEndEvent__Delegate;                          // 0x2EA4(0x000C) (NeedCtorLink)
-	unsigned char                                      UnknownData02[0x4];                                       // 0x2EA4(0x0004) FIX WRONG TYPE SIZE OF PREVIOUS PROPERTY
-	struct FScriptDelegate                             __OnJumpEvent__Delegate;                                  // 0x2EB4(0x000C) (NeedCtorLink)
-	unsigned char                                      UnknownData03[0x4];                                       // 0x2EB4(0x0004) FIX WRONG TYPE SIZE OF PREVIOUS PROPERTY
+	class UAudioLUT*                                   m_Lut;                                                    // 0x2E54(0x0008) (Transient)
+	int                                                s_nMctsPlayerId;                                          // 0x2E5C(0x0004)
+	float                                              m_fHitBoneValidation;                                     // 0x2E60(0x0004) (Config)
+	TArray<int>                                        m_nExtraTimerBarEqpSlots;                                 // 0x2E64(0x0010) (NeedCtorLink)
+	class UPComPositionHistoryServerComponent*         m_CachedPositionHistoryServerComponent;                   // 0x2E74(0x0008) (ExportObject, Component, EditInline)
+	class UTgCallbackContainer*                        m_CallbackContainer;                                      // 0x2E7C(0x0008)
+	TArray<class UTgPawnMod*>                          m_PawnMods;                                               // 0x2E84(0x0010) (NeedCtorLink)
+	struct FName                                       m_nmAppliedBlindPostProcess;                              // 0x2E94(0x0008)
+	struct FScriptDelegate                             __On3pTransitionEvent__Delegate;                          // 0x2E9C(0x000C) (NeedCtorLink)
+	unsigned char                                      UnknownData01[0x4];                                       // 0x2E9C(0x0004) FIX WRONG TYPE SIZE OF PREVIOUS PROPERTY
+	struct FScriptDelegate                             __OnPhysTweenEndEvent__Delegate;                          // 0x2EAC(0x000C) (NeedCtorLink)
+	unsigned char                                      UnknownData02[0x4];                                       // 0x2EAC(0x0004) FIX WRONG TYPE SIZE OF PREVIOUS PROPERTY
+	struct FScriptDelegate                             __OnJumpEvent__Delegate;                                  // 0x2EBC(0x000C) (NeedCtorLink)
+	unsigned char                                      UnknownData03[0x4];                                       // 0x2EBC(0x0004) FIX WRONG TYPE SIZE OF PREVIOUS PROPERTY
 
 	static UClass* StaticClass()
 	{
@@ -21486,7 +21536,7 @@ public:
 
 	void TIMER_CANNOT_BE_STUCK();
 	void OnPlayerReconnected();
-	void STATIC_NotifyResetPawn();
+	void NotifyResetPawn();
 	void ServerRequestFiremodeModifications();
 	bool IsIndoors();
 	void STATIC_ServerResetDebugPropertyMods(const struct FString& sProperty);
@@ -21582,7 +21632,7 @@ public:
 	TEnumAsByte<EMetaGameState> STATIC_GetMetaGameState();
 	void STATIC_UpdateMetaGameState(TEnumAsByte<EMetaGameState> NewState);
 	void STATIC_ClientSetActiveWeapon(class AWeapon* NewWeapon);
-	void AddIncomingImpact(int bNumToAdd);
+	void STATIC_AddIncomingImpact(int bNumToAdd);
 	void SetUITargetingType(TEnumAsByte<EUITargetingType> NewTargetingType, bool bForceRequiredToSet, TEnumAsByte<EUITargetingType> RequiredToSet);
 	float GetDistanceToNearestCapturePoint();
 	void InterruptAllMovementDevices();
@@ -21701,7 +21751,7 @@ public:
 	void STATIC_UpdateBob(float DeltaSeconds);
 	void STATIC_TickScale(float DeltaSeconds);
 	float STATIC_TickScaleVariable(float fDesiredValue, float fOldValue, float fScaleChangePerSecond, float DeltaSeconds);
-	void AddRecoil(const struct FRotator& rNewRecoil, float fRecoilSmoothRate, float fSettleDelay, float fSettleSpeed);
+	void STATIC_AddRecoil(const struct FRotator& rNewRecoil, float fRecoilSmoothRate, float fSettleDelay, float fSettleSpeed);
 	void Tick(float DeltaSeconds);
 	void STATIC_DoubleCheckSimulatedProxy();
 	void STATIC_TickFriendlyPush();
@@ -21730,7 +21780,7 @@ public:
 	void GetBaseAimRotationNative(class AWeapon* W, bool bIgnoreAutoLock, struct FRotator* Rot);
 	struct FVector GetWeaponStartTraceLocationAlt(const struct FVector& Offset);
 	struct FVector GetWeaponStartTraceLocation(class ATgDevice* Dev);
-	void STATIC_HideWeaponSwitchProgressBar();
+	void HideWeaponSwitchProgressBar();
 	void STATIC_DisplayWeaponSwitchProgressBar(float Duration);
 	void CheckUseDuration(float* fDuration);
 	void STATIC_ClientSetTriggerMessage(class ATgTrigger_Use* newTrigger, int msgId);
@@ -21792,7 +21842,7 @@ public:
 	float GetEnergyPercent();
 	bool InCombat();
 	void Combat(bool bInCombat);
-	void STATIC_InCombatTimer();
+	void InCombatTimer();
 	void ExitCombat();
 	void EnterCombat(class AActor* aInstigator, class AActor* ATarget, float fLength);
 	float STATIC_GetBaseCombatDuration();
@@ -21810,7 +21860,7 @@ public:
 	void STATIC_VolumeStealthOn(class AActor* Vol, bool bFull);
 	void STATIC_VolumeStealthFadeComplete();
 	void STATIC_RemoveVisibilityVolume(class AActor* Vol);
-	void AddVisibilityVolume(class AActor* Vol);
+	void STATIC_AddVisibilityVolume(class AActor* Vol);
 	void FixUpVisibilityVolumes();
 	void ApplyStealthClient();
 	void UpdateStealthClientFx(bool bIsHardRevealed);
@@ -21840,7 +21890,7 @@ public:
 	void ClientOnCrowdControlBreak();
 	void ClientPrepareForEndMission();
 	void ClientPrepareForLiveRespawn();
-	void STATIC_PrepareForLiveRespawn();
+	void PrepareForLiveRespawn();
 	void AutoMount(bool bShouldBeMounted, bool bToggleMount);
 	void STATIC_DrawPawnEncroachmentFire(bool bDraw);
 	void STATIC_SetMountOnRespawn();
@@ -21869,7 +21919,7 @@ public:
 	void STATIC_BaselessGrabEnd(bool bInterrupted);
 	void STATIC_BaselessGrabStart(bool bRemoveRoots);
 	void STATIC_DefaultGrabEnd(bool bInterrupted);
-	void STATIC_PullGrabStart(TEnumAsByte<EGrabState> newGrabState, bool bRemoveRoots);
+	void PullGrabStart(TEnumAsByte<EGrabState> newGrabState, bool bRemoveRoots);
 	void STATIC_EndGrab(TEnumAsByte<EGrabState> endingGrabState, bool bInterrupted);
 	void STATIC_BeginGrab(TEnumAsByte<EGrabState> newGrabState);
 	bool IsBaselessGrab(TEnumAsByte<EGrabState> grabState);
@@ -21881,7 +21931,7 @@ public:
 	void StartPhysGrab(class AActor* Source, float fTime, TEnumAsByte<EGrabState> grabState, const struct FName& grabSocket, const struct FVector& grabLocOffset, const struct FRotator& grabRotOffset, bool bCanShootDuringGrab);
 	void LiftTweenEnd(bool bInterrupted);
 	void STATIC_DefaultTweenEnd(bool bInterrupted);
-	void STATIC_PullGrabTweenEnd(bool bInterrupted);
+	void PullGrabTweenEnd(bool bInterrupted);
 	void STATIC_SuspendTweenEnd(bool bInterrupted);
 	void STATIC_EndTween(TEnumAsByte<ETweenState> endingTweenState, bool bInterrupted);
 	void STATIC_DefaultTweenStart(bool bCanBeHit, bool bRemoveRoots, bool bCollideWithWorld);
@@ -21895,8 +21945,8 @@ public:
 	void OnSwapToDestroyedMesh();
 	void STATIC_AttachDeathAnimationFX(int SpecialFXId, const struct FName& SocketName);
 	struct FName GetDeathAnimName();
-	void RagdollPawn();
-	void STATIC_HideMeshForDeath();
+	void STATIC_RagdollPawn();
+	void HideMeshForDeath();
 	void PlayDeathAnimation();
 	void STATIC_FreezeOnDeath();
 	bool STATIC_AllowRagdoll();
@@ -21974,11 +22024,11 @@ public:
 	void PostRecallTimerToKillParticles();
 	void OnDeviceFormHit(int nEquipSlot, class AActor* Target, float DamageAmount, const struct FVector& HitLocation, const struct FVector& HitNormal, struct FExtraDamageInfo* ExtraInfo);
 	void OnDeviceFormFire(int nEquipSlot, float fRefireTime, int nFireMode);
-	void AddVisualRecoil(int nEquipSlot, float fFireDuration);
+	void STATIC_AddVisualRecoil(int nEquipSlot, float fFireDuration);
 	bool STATIC_GetCamLocationOffsetOverride(const struct FRotator& vInCameraRotation, float fZoomFactor, TEnumAsByte<ECameraPerspectiveType> ePerspective, struct FVector* vOutCameraSpaceTranslation, struct FVector* vOutCameraPivotLocation);
 	void OnDeviceFormStartFire(int nEquipSlot, float FireDuration, int nFireMode, int nAmmoRemaining);
 	void OnDeviceFormBuildup(int nEquipSlot, float fBuildupTime);
-	bool STATIC_HasLeftItemShop();
+	bool HasLeftItemShop();
 	bool IsInItemShop();
 	void STATIC_SyncDeviceTimers(class ATgDevice* SourceDevice, class ATgDevice* DestinationDevice);
 	void STATIC_SwapEquippedDevices(class ATgDevice* newDev, int nEqpSlot);
@@ -22012,7 +22062,7 @@ public:
 	bool IsCustomCharacter();
 	void MissionTimeUpdate();
 	bool PostPawnSetup();
-	void CrushedBy(class APawn* OtherPawn);
+	void STATIC_CrushedBy(class APawn* OtherPawn);
 	void STATIC_SetupPIEMesh(TEnumAsByte<EPIEPawnMeshTypes> PIEPawnType, int BotId);
 	void STATIC_ClearSpawnFxTimer();
 	void PostBeginPlay();
@@ -22051,7 +22101,7 @@ public:
 	void PlayPawnDiedFX();
 	bool STATIC_ShouldSwapAltAndInhandInputs();
 	void OnDismount();
-	void STATIC_OnAutoMount();
+	void OnAutoMount();
 	void OnLeaveItemShop();
 	void OnEnterItemShop();
 	void STATIC_EndLocalDeathRTPC();
@@ -22114,9 +22164,9 @@ public:
 	void OnMeshSwapped();
 	void STATIC_SwapToLiveMesh();
 	void STATIC_SwapToDestroyedMesh();
-	void AddBodyMesh();
+	void STATIC_AddBodyMesh();
 	void STATIC_RetouchAllVolumes();
-	void STATIC_OnApplyArmor(float fArmorChange, bool bMaxIncreased);
+	void OnApplyArmor(float fArmorChange, bool bMaxIncreased);
 	void STATIC_EffectGroupOnSetActive(bool bActive, bool bRemoving, class UTgEffectGroup* effectGroup);
 	void STATIC_DeployableOnRemoveEffect(class ATgDeployable* dep, class AActor* HitActor);
 	void STATIC_DeployableOnApplyEffect(class ATgDeployable* dep, class AActor* HitActor);
@@ -22162,16 +22212,16 @@ public:
 	void PawnOnExitCombat();
 	void PawnOnEnterCombat();
 	void PawnOnRevive();
-	void STATIC_PawnOnDied(class AController* pKilller);
-	void STATIC_PawnOnKilledGlobal(class AActor* Victim, class AActor* Killer, TArray<class ATgRepInfo_Player*> AssistingPlayers);
+	void PawnOnDied(class AController* pKilller);
+	void PawnOnKilledGlobal(class AActor* Victim, class AActor* Killer, TArray<class ATgRepInfo_Player*> AssistingPlayers);
 	void PawnOnAssisted(class AActor* pVictim, class AActor* pKiller);
 	void PawnOnKilled(class AActor* pVictim);
 	void PawnOnHealed(struct FOnHealedParams* Params);
-	void STATIC_PawnOnExecuteMitigation(class ATgPawn* attacker, class UTgEffectGroup* eg, int nPropertyId, float* fDamage);
+	void PawnOnExecuteMitigation(class ATgPawn* attacker, class UTgEffectGroup* eg, int nPropertyId, float* fDamage);
 	void PawnOnDamageMitigation(class ATgPawn* attacker, class UTgEffectGroup* eg, int nPropertyId, float* fDamage);
 	void PawnOnPreDamageMitigation(class ATgPawn* attacker, class UTgEffectGroup* eg, int nPropertyId, float* fDamage);
 	void PawnOnDamaged(struct FOnDamagedParams* Params);
-	void STATIC_PawnMitigateDamageOther(class ATgPawn* Other, TEnumAsByte<EPawnDamageMitigatorReason> eReason, class ATgPawn* attacker, class UTgEffectGroup* eg, int nPropertyId, float* fDamage);
+	void PawnMitigateDamageOther(class ATgPawn* Other, TEnumAsByte<EPawnDamageMitigatorReason> eReason, class ATgPawn* attacker, class UTgEffectGroup* eg, int nPropertyId, float* fDamage);
 	void RemovePawnDamageMitigatorByReason(TEnumAsByte<EPawnDamageMitigatorReason> eReason);
 	void RemovePawnDamageMitigator(class ATgPawn* PawnMitigator, TEnumAsByte<EPawnDamageMitigatorReason> eReason);
 	void STATIC_AddPawnDamageMitigator(class ATgPawn* PawnMitigator, TEnumAsByte<EPawnDamageMitigatorReason> eReason);
@@ -22221,7 +22271,7 @@ public:
 	float STATIC_GetPhysicalPower();
 	void STATIC_UpdateMountScale(bool bIsMounted);
 	bool STATIC_ShouldRagdollOnDeath(class UClass* m_DamageType);
-	bool STATIC_HasDeathPostureAnimation();
+	bool HasDeathPostureAnimation();
 	bool STATIC_ServerUpdateLockedTarget(class AActor* Locked);
 	float STATIC_GetMaxPowerPoolValue(int nPacingType);
 	float STATIC_GetCurrentPowerPoolValue(int nPacingType);
@@ -22241,7 +22291,7 @@ public:
 	bool NativeReplicatedEvent(const struct FName& VarName);
 	struct FVector STATIC_GetTargetCenter();
 	void STATIC_CheckUiVolumeTriggers();
-	void STATIC_NotifyQueuedLagCompWorldExplosion(class ATgProj_Simulated* Proj, const struct FVector& HitLocation, const struct FVector& HitVelocity);
+	void NotifyQueuedLagCompWorldExplosion(class ATgProj_Simulated* Proj, const struct FVector& HitLocation, const struct FVector& HitVelocity);
 	bool STATIC_CanQueueLagCompWorldExplosion(class ATgProj_Simulated* Proj, unsigned char* bHideProjectile);
 	class AActor* STATIC_GetActorFromCombatActor();
 	class AActor* STATIC_GetPetOwner();
@@ -22256,7 +22306,7 @@ public:
 	float STATIC_GetPropCurrentValueByName(const struct FString& propName);
 	float STATIC_GetPropCurrentValue(int nPropIndex);
 	float STATIC_GetPropBaseValue(int nPropIndex);
-	void STATIC_HandleNotificationsForAI(float fStatChange, class ATgPawn* InstigatorPawn);
+	void HandleNotificationsForAI(float fStatChange, class ATgPawn* InstigatorPawn);
 	float STATIC_GetDamageToLeaveStealth();
 	void STATIC_TakeStealthDamage(float fDamage);
 	bool STATIC_ShieldDamageAppliesToHealth();
@@ -22270,7 +22320,7 @@ public:
 	bool STATIC_WillHitSuccessfully(class AActor* aInstigator, const struct FImpactInfo& Impact);
 	void STATIC_TakeHealthDamage(float fDamage, class AController* InstigatedBy, class UClass* DamageType, const struct FImpactInfo& Impact, const struct FExtraDamageInfo& ExtraInfo, class AActor* DamageCauser);
 	void MitigateHealthDamage(class ATgPawn* pInstigator, class UTgEffectDamage* Effect, const struct FImpactInfo& Impact, bool bIsHeadshot, float* NewValue, float* fPercReduction, unsigned char* bWasCapped);
-	void STATIC_MitigateExecuteDamage(class ATgPawn* pInstigator, class UTgEffectDamage* Effect, const struct FImpactInfo& Impact, bool bIsHeadshot, float* NewValue, float* fPercReduction);
+	void MitigateExecuteDamage(class ATgPawn* pInstigator, class UTgEffectDamage* Effect, const struct FImpactInfo& Impact, bool bIsHeadshot, float* NewValue, float* fPercReduction);
 	float STATIC_GetSpecialDamageTakenPercentAI();
 	float STATIC_GetSpecialDamageDealtPercentAI();
 	void STATIC_BuffDamage(class AActor* Target, class UTgEffectDamage* Effect, const struct FImpactInfo& Impact, float fBaseDamage, float* fProratedAmount, struct FExtraDamageInfo* ExtraInfo);
@@ -22331,8 +22381,8 @@ public:
 	bool IsInOffensiveGrab();
 	bool IsGrabBreakable(TEnumAsByte<EGrabState> tweenState);
 	void STATIC_ResetSkelControls(class USkeletalMeshComponent* SkelComp);
-	void STATIC_NativeDefaultGrabEnd(bool bInterrupted);
-	void STATIC_NativeDefaultGrabStart(bool bRemoveRoots);
+	void NativeDefaultGrabEnd(bool bInterrupted);
+	void NativeDefaultGrabStart(bool bRemoveRoots);
 	bool SetRelativeGrabLocation(const struct FVector& NewLocation, bool bDeferUpdate);
 	struct FRotator STATIC_TweenRelRotation(float fDeltaSeconds, const struct FRotator& currRel, const struct FRotator& targetRel);
 	bool IsStatTrackable();
@@ -22455,24 +22505,24 @@ public:
 	void KillPets();
 	void KillPet(class ATgPawn* PetPawn);
 	void STATIC_SetPetOwner(class ATgPawn* PetOwner);
-	void AddPet(class ATgPawn* PetPawn);
+	void STATIC_AddPet(class ATgPawn* PetPawn);
 	class UMeshComponent* STATIC_CreateMeshComponent(int nMeshId, class UMeshComponent* DestComponent, bool bPartialFixup);
 	class UTgSpecialFx* STATIC_GetSpecialFx(int nSpecialFxId);
 	void STATIC_SetMeshVisibility(bool bVisible);
 	bool STATIC_CanSeeActor(class AActor* Other);
 	bool IsJumpDisabled();
 	float STATIC_GetGravityZ();
-	void AddRemoveAnimSetList(TArray<class UAnimSet*> AnimSetList, bool bAdd);
+	void STATIC_AddRemoveAnimSetList(TArray<class UAnimSet*> AnimSetList, bool bAdd);
 	bool TermRagdoll();
 	void OnSpawnGatesOpened();
 	void STATIC_ShowCombo(int nPawnId, bool bCrit);
 	void STATIC_DrawClientDebug();
 	bool bIsEditor();
-	void ReapplyLoadoutEffects(bool bKeepFiringMount, bool bPostRevive);
-	void ReapplyLevelEffectGroups(int nPrevLevel, int nCurrentLevel, bool bPreserveParams);
-	void STATIC_PawnMod3Flashed(int nPawnModIndex, int nParamA, int nParamB);
-	void STATIC_PawnMod2Flashed(int nPawnModIndex, int nParamA, int nParamB);
-	void STATIC_PawnMod1Flashed(int nPawnModIndex, int nParamA, int nParamB);
+	void STATIC_ReapplyLoadoutEffects(bool bKeepFiringMount, bool bPostRevive);
+	void STATIC_ReapplyLevelEffectGroups(int nPrevLevel, int nCurrentLevel, bool bPreserveParams);
+	void PawnMod3Flashed(int nPawnModIndex, int nParamA, int nParamB);
+	void PawnMod2Flashed(int nPawnModIndex, int nParamA, int nParamB);
+	void PawnMod1Flashed(int nPawnModIndex, int nParamA, int nParamB);
 	void STATIC_FlashedEventCooldown(int nIndex, int nMode, float fCooldown);
 	void STATIC_FlashPawnHealed(struct FOnHealedParams* Params);
 	void STATIC_FlashKillOrAssist(class AActor* Target, bool bIsKill, int nComboCount);
@@ -22525,7 +22575,7 @@ public:
 	int STATIC_DrawNameText(class UCanvas* CanvasToUse, float StartX, float StartY, const struct FString& NameString, class UFont* NameFont, const struct FColor& NameColor, float Scale);
 	int STATIC_DrawScaledString(class UCanvas* CanvasToUse, float StartX, float StartY, const struct FString& NameString, class UFont* NameFont, const struct FColor& NameColor, float Scale);
 	bool STATIC_SpecialAOEImmunity(const struct FVector& AOECenter, class UTgDeviceFire* instigatingFiremode);
-	void STATIC_OnCrowdControlBreak();
+	void OnCrowdControlBreak();
 	void STATIC_CrowdControlBreak();
 	bool STATIC_IsMounted();
 	bool STATIC_IsInYagorathGrab();
@@ -22543,7 +22593,7 @@ public:
 	void STATIC_SetProperty(int nPropIndex, float fNewValue);
 	struct FTgPropertyInstance STATIC_GetPropertyById(int nPropId);
 	struct FTgPropertyInstance STATIC_GetProperty(int nPropIndex);
-	void AddProperty(int nPropId, float fBase, float fRaw, float FMin, float FMax);
+	void STATIC_AddProperty(int nPropId, float fBase, float fRaw, float FMin, float FMax);
 	void InitializeDefaultProps();
 	bool STATIC_ApplyPawnSetup();
 	void STATIC_DeviceFormChanged(bool bForceReload);
@@ -22586,10 +22636,10 @@ public:
 	int STATIC_GetHealFeedIconOverrideId();
 	int STATIC_GetDefaultSkinId();
 	struct FName STATIC_GetStealthFxGroup();
-	void STATIC_OnRewindEnded();
-	void STATIC_OnRewindStarted(float fDurationRealTime);
-	void STATIC_OnPrepareForLiveRespawn();
-	void STATIC_PrepareForEndMission();
+	void OnRewindEnded();
+	void OnRewindStarted(float fDurationRealTime);
+	void OnPrepareForLiveRespawn();
+	void PrepareForEndMission();
 	void STATIC_FindBase();
 	void OnJumpEvent();
 	void OnPhysTweenEndEvent();
@@ -22598,55 +22648,55 @@ public:
 
 
 // Class TgGame.TgPawn_Biped
-// 0x0130 (0x2FF4 - 0x2EC4)
+// 0x0130 (0x2FFC - 0x2ECC)
 class ATgPawn_Biped : public ATgPawn
 {
 public:
-	struct FName                                       m_nmLeftFootBone;                                         // 0x2EC4(0x0008) (Edit)
-	struct FName                                       m_nmRightFootBone;                                        // 0x2ECC(0x0008) (Edit)
-	struct FName                                       m_nmLeftFootControlName;                                  // 0x2ED4(0x0008) (Edit)
-	struct FName                                       m_nmRightFootControlName;                                 // 0x2EDC(0x0008) (Edit)
-	float                                              m_fOldLocationZ;                                          // 0x2EE4(0x0004)
-	unsigned long                                      m_bEnableRightFootPlacement : 1;                          // 0x2EE8(0x0004)
-	unsigned long                                      m_bEnableLeftFootPlacement : 1;                           // 0x2EE8(0x0004)
-	unsigned long                                      m_bMayDisableFootIKFromAnimNodes : 1;                     // 0x2EE8(0x0004)
-	unsigned long                                      m_bInitializedFootIKCachedNodeList : 1;                   // 0x2EE8(0x0004)
-	unsigned long                                      m_bApplyLeftHandWeaponIK : 1;                             // 0x2EE8(0x0004)
-	unsigned long                                      m_bSetHandIKStrengthFromAnimNodes : 1;                    // 0x2EE8(0x0004)
-	unsigned long                                      m_bInitializedHandIKCachedNodeList : 1;                   // 0x2EE8(0x0004)
-	unsigned long                                      c_bPlayingRefire : 1;                                     // 0x2EE8(0x0004)
-	unsigned long                                      c_bRefireIsUpperBody : 1;                                 // 0x2EE8(0x0004)
-	float                                              m_fZSmoothingRate;                                        // 0x2EEC(0x0004) (Const)
-	float                                              m_fMaxFootPlacementDistSquared;                           // 0x2EF0(0x0004)
-	class USkelControlFootPlacement*                   m_LeftLegControl;                                         // 0x2EF4(0x0008)
-	class USkelControlFootPlacement*                   m_RightLegControl;                                        // 0x2EFC(0x0008)
-	TArray<struct FName>                               m_FootIKZeroStrengthAnimNodeNameList;                     // 0x2F04(0x0010) (NeedCtorLink)
-	TArray<class UAnimNode*>                           m_FootIKZeroStrengthCachedNodeList;                       // 0x2F14(0x0010) (NeedCtorLink)
-	struct FVector                                     m_vPreviousRightFootPosition;                             // 0x2F24(0x000C)
-	struct FVector                                     m_vPreviousLeftFootPosition;                              // 0x2F30(0x000C)
-	float                                              m_fCachedRightTracedFloor;                                // 0x2F3C(0x0004)
-	float                                              m_fCachedLeftTracedFloor;                                 // 0x2F40(0x0004)
-	float                                              m_fCachedRightFloorNormalZ;                               // 0x2F44(0x0004)
-	float                                              m_fCachedLeftFloorNormalZ;                                // 0x2F48(0x0004)
-	int                                                m_nCachedLeftFootBoneIndex;                               // 0x2F4C(0x0004)
-	int                                                m_nCachedRightFootBoneIndex;                              // 0x2F50(0x0004)
-	struct FName                                       m_SkelControl_LeftHandName;                               // 0x2F54(0x0008)
-	class USkelControlLimb*                            m_SkelControl_LeftHand;                                   // 0x2F5C(0x0008)
-	class USkelControlSingleBone*                      m_SkelControl_LeftHandRotate;                             // 0x2F64(0x0008)
-	struct FName                                       m_SkelControl_RightHandName;                              // 0x2F6C(0x0008)
-	class USkelControlLimb*                            m_SkelControl_RightHand;                                  // 0x2F74(0x0008)
-	class USkelControlSingleBone*                      m_SkelControl_RightHandRotate;                            // 0x2F7C(0x0008)
-	class USkelControlSingleBone*                      m_SkelControl_RightToLeftPropSwitch;                      // 0x2F84(0x0008)
-	TArray<struct FName>                               m_HandIKFullStrengthAnimNodeNameList;                     // 0x2F8C(0x0010) (NeedCtorLink)
-	TArray<struct FName>                               m_HandIKZeroStrengthAnimNodeNameList;                     // 0x2F9C(0x0010) (NeedCtorLink)
-	TArray<class UAnimNode*>                           m_HandIKFullStengthCachedNodeList;                        // 0x2FAC(0x0010) (NeedCtorLink)
-	TArray<class UAnimNode*>                           m_HandIKZeroStrengthCachedNodeList;                       // 0x2FBC(0x0010) (NeedCtorLink)
-	class UMaterialInstanceConstant*                   m_FadeMaterialControllerBody;                             // 0x2FCC(0x0008)
-	struct FName                                       c_RefireBeginBlendAnimationName;                          // 0x2FD4(0x0008)
-	struct FName                                       c_RefireEndBlendAnimationName;                            // 0x2FDC(0x0008)
-	class UAnimSet*                                    c_RefireAnimSet;                                          // 0x2FE4(0x0008)
-	float                                              c_fRefireDuration;                                        // 0x2FEC(0x0004)
-	float                                              c_fRefireEndDuration;                                     // 0x2FF0(0x0004)
+	struct FName                                       m_nmLeftFootBone;                                         // 0x2ECC(0x0008) (Edit)
+	struct FName                                       m_nmRightFootBone;                                        // 0x2ED4(0x0008) (Edit)
+	struct FName                                       m_nmLeftFootControlName;                                  // 0x2EDC(0x0008) (Edit)
+	struct FName                                       m_nmRightFootControlName;                                 // 0x2EE4(0x0008) (Edit)
+	float                                              m_fOldLocationZ;                                          // 0x2EEC(0x0004)
+	unsigned long                                      m_bEnableRightFootPlacement : 1;                          // 0x2EF0(0x0004)
+	unsigned long                                      m_bEnableLeftFootPlacement : 1;                           // 0x2EF0(0x0004)
+	unsigned long                                      m_bMayDisableFootIKFromAnimNodes : 1;                     // 0x2EF0(0x0004)
+	unsigned long                                      m_bInitializedFootIKCachedNodeList : 1;                   // 0x2EF0(0x0004)
+	unsigned long                                      m_bApplyLeftHandWeaponIK : 1;                             // 0x2EF0(0x0004)
+	unsigned long                                      m_bSetHandIKStrengthFromAnimNodes : 1;                    // 0x2EF0(0x0004)
+	unsigned long                                      m_bInitializedHandIKCachedNodeList : 1;                   // 0x2EF0(0x0004)
+	unsigned long                                      c_bPlayingRefire : 1;                                     // 0x2EF0(0x0004)
+	unsigned long                                      c_bRefireIsUpperBody : 1;                                 // 0x2EF0(0x0004)
+	float                                              m_fZSmoothingRate;                                        // 0x2EF4(0x0004) (Const)
+	float                                              m_fMaxFootPlacementDistSquared;                           // 0x2EF8(0x0004)
+	class USkelControlFootPlacement*                   m_LeftLegControl;                                         // 0x2EFC(0x0008)
+	class USkelControlFootPlacement*                   m_RightLegControl;                                        // 0x2F04(0x0008)
+	TArray<struct FName>                               m_FootIKZeroStrengthAnimNodeNameList;                     // 0x2F0C(0x0010) (NeedCtorLink)
+	TArray<class UAnimNode*>                           m_FootIKZeroStrengthCachedNodeList;                       // 0x2F1C(0x0010) (NeedCtorLink)
+	struct FVector                                     m_vPreviousRightFootPosition;                             // 0x2F2C(0x000C)
+	struct FVector                                     m_vPreviousLeftFootPosition;                              // 0x2F38(0x000C)
+	float                                              m_fCachedRightTracedFloor;                                // 0x2F44(0x0004)
+	float                                              m_fCachedLeftTracedFloor;                                 // 0x2F48(0x0004)
+	float                                              m_fCachedRightFloorNormalZ;                               // 0x2F4C(0x0004)
+	float                                              m_fCachedLeftFloorNormalZ;                                // 0x2F50(0x0004)
+	int                                                m_nCachedLeftFootBoneIndex;                               // 0x2F54(0x0004)
+	int                                                m_nCachedRightFootBoneIndex;                              // 0x2F58(0x0004)
+	struct FName                                       m_SkelControl_LeftHandName;                               // 0x2F5C(0x0008)
+	class USkelControlLimb*                            m_SkelControl_LeftHand;                                   // 0x2F64(0x0008)
+	class USkelControlSingleBone*                      m_SkelControl_LeftHandRotate;                             // 0x2F6C(0x0008)
+	struct FName                                       m_SkelControl_RightHandName;                              // 0x2F74(0x0008)
+	class USkelControlLimb*                            m_SkelControl_RightHand;                                  // 0x2F7C(0x0008)
+	class USkelControlSingleBone*                      m_SkelControl_RightHandRotate;                            // 0x2F84(0x0008)
+	class USkelControlSingleBone*                      m_SkelControl_RightToLeftPropSwitch;                      // 0x2F8C(0x0008)
+	TArray<struct FName>                               m_HandIKFullStrengthAnimNodeNameList;                     // 0x2F94(0x0010) (NeedCtorLink)
+	TArray<struct FName>                               m_HandIKZeroStrengthAnimNodeNameList;                     // 0x2FA4(0x0010) (NeedCtorLink)
+	TArray<class UAnimNode*>                           m_HandIKFullStengthCachedNodeList;                        // 0x2FB4(0x0010) (NeedCtorLink)
+	TArray<class UAnimNode*>                           m_HandIKZeroStrengthCachedNodeList;                       // 0x2FC4(0x0010) (NeedCtorLink)
+	class UMaterialInstanceConstant*                   m_FadeMaterialControllerBody;                             // 0x2FD4(0x0008)
+	struct FName                                       c_RefireBeginBlendAnimationName;                          // 0x2FDC(0x0008)
+	struct FName                                       c_RefireEndBlendAnimationName;                            // 0x2FE4(0x0008)
+	class UAnimSet*                                    c_RefireAnimSet;                                          // 0x2FEC(0x0008)
+	float                                              c_fRefireDuration;                                        // 0x2FF4(0x0004)
+	float                                              c_fRefireEndDuration;                                     // 0x2FF8(0x0004)
 
 	static UClass* StaticClass()
 	{
@@ -22672,89 +22722,89 @@ public:
 
 
 // Class TgGame.TgPawn_Character
-// 0x02DC (0x32D0 - 0x2FF4)
+// 0x02DC (0x32D8 - 0x2FFC)
 class ATgPawn_Character : public ATgPawn_Biped
 {
 public:
-	unsigned long                                      c_bUpdatePlayerStatUI : 1;                                // 0x2FF4(0x0004)
-	unsigned long                                      m_bInHandFiring : 1;                                      // 0x2FF4(0x0004)
-	unsigned long                                      r_bNearCapturePoint : 1;                                  // 0x2FF4(0x0004) (Net)
-	unsigned long                                      r_bNearPayload : 1;                                       // 0x2FF4(0x0004) (Net)
-	unsigned long                                      r_bNearSiegeMonster : 1;                                  // 0x2FF4(0x0004)
-	unsigned long                                      r_bVisibleToEnemies : 1;                                  // 0x2FF4(0x0004) (Net)
-	unsigned long                                      s_bAmmoReloadCheat : 1;                                   // 0x2FF4(0x0004)
-	unsigned long                                      s_bAutomountProtection : 1;                               // 0x2FF4(0x0004)
-	unsigned long                                      m_bRecalcMoveSpeed : 1;                                   // 0x2FF4(0x0004)
-	unsigned long                                      m_bAttemptingAirJump : 1;                                 // 0x2FF4(0x0004)
-	unsigned long                                      m_bDelayingStopSpecialJumpFx : 1;                         // 0x2FF4(0x0004)
-	unsigned long                                      m_bPendingBounce : 1;                                     // 0x2FF4(0x0004)
-	unsigned long                                      s_bInitiatingJoin : 1;                                    // 0x2FF4(0x0004)
-	unsigned long                                      r_bJoinForceView : 1;                                     // 0x2FF4(0x0004) (Net)
-	unsigned long                                      c_bInterpolatingFOV : 1;                                  // 0x2FF4(0x0004)
-	unsigned long                                      s_bReplicateInhandAmmo : 1;                               // 0x2FF4(0x0004) (Const)
-	unsigned long                                      m_bPendingPawnModScan : 1;                                // 0x2FF4(0x0004)
-	unsigned long                                      m_bInSpawnRoom : 1;                                       // 0x2FF4(0x0004)
-	unsigned long                                      c_bShouldTickThisFrame : 1;                               // 0x2FF4(0x0004)
-	unsigned long                                      r_bCanChangeLoadout : 1;                                  // 0x2FF4(0x0004) (Net)
-	float                                              m_fLastCapturePointReclaimedTime;                         // 0x2FF8(0x0004) (Transient)
-	float                                              m_fMinReclaimPointTime;                                   // 0x2FFC(0x0004)
-	float                                              c_fUpdateAltitudeRTPCDelay;                               // 0x3000(0x0004)
-	float                                              m_fInHandStartFireTime;                                   // 0x3004(0x0004) (Transient)
-	float                                              m_fInHandStopFireTime;                                    // 0x3008(0x0004) (Transient)
-	float                                              m_fWallDamagePercent;                                     // 0x300C(0x0004)
-	float                                              m_fSiegeDamagePercent;                                    // 0x3010(0x0004)
-	float                                              r_fZoomAmt;                                               // 0x3014(0x0004) (Net)
-	unsigned char                                      r_nCriticalHit;                                           // 0x3018(0x0001) (Net)
-	unsigned char                                      UnknownData00[0x3];                                       // 0x3019(0x0003) MISSED OFFSET
-	float                                              m_fMountZoomOverride;                                     // 0x301C(0x0004) (Edit)
-	class ATgDeploy_BombKingStickyBomb*                r_StuckBombs[0x6];                                        // 0x3020(0x0008) (Net)
-	int                                                m_nCharacterRole;                                         // 0x3050(0x0004)
-	class UTgCustomCharacterComponent*                 m_CustomCharacterComponent;                               // 0x3054(0x0008) (Edit, ExportObject, Component, EditInline)
-	class UPrimitiveComponent*                         m_MountedCollisionComponent;                              // 0x305C(0x0008) (Edit, ExportObject, Component, EditInline)
-	class UPrimitiveComponent*                         m_MeshEncompassingCollisionComponent;                     // 0x3064(0x0008) (Edit, ExportObject, Component, EditInline)
-	TArray<TScriptInterface<class UTgDeviceInterface_MoveSpeedMultiplier>> m_CachedMoveSpeedModDevices;                              // 0x306C(0x0010) (NeedCtorLink)
-	TArray<TScriptInterface<class UTgDeviceInterface_AccelMultiplier>> m_CachedAccelModDevices;                                  // 0x307C(0x0010) (NeedCtorLink)
-	TArray<TScriptInterface<class UTgDeviceInterface_DeployMod>> m_CachedDeployModDevices;                                 // 0x308C(0x0010) (NeedCtorLink)
-	int                                                m_nAirJumps;                                              // 0x309C(0x0004)
-	float                                              m_fAirJumpZSpeed;                                         // 0x30A0(0x0004) (Edit)
-	struct FVector                                     m_vBounceVelocity;                                        // 0x30A4(0x000C)
-	class ATgPawn_Character*                           m_JoinTargetLocal;                                        // 0x30B0(0x0008)
-	class ATgPawn_Character*                           m_JoinSourceLocal;                                        // 0x30B8(0x0008)
-	class ATgPawn_Character*                           r_JoinTarget;                                             // 0x30C0(0x0008) (Net)
-	struct FVector                                     r_vJoinSourceLocation;                                    // 0x30C8(0x000C) (Net)
-	struct FVector                                     r_vJoinTargetLocation;                                    // 0x30D4(0x000C) (Net)
-	float                                              r_fJoinTweenDuration;                                     // 0x30E0(0x0004) (Net)
-	float                                              c_fFOVInterpStartTimestamp;                               // 0x30E4(0x0004)
-	float                                              c_fFOVInterpStartValue;                                   // 0x30E8(0x0004)
-	float                                              c_fFOVInterpEndTimestamp;                                 // 0x30EC(0x0004)
-	float                                              c_fLastAppliedFOV;                                        // 0x30F0(0x0004)
-	class ATgPawn_Character*                           r_JoinSource;                                             // 0x30F4(0x0008) (Net)
-	TArray<struct FForceFaceTargetActor>               m_ForceFaceActors;                                        // 0x30FC(0x0010) (NeedCtorLink)
-	float                                              m_fForceFaceRotationTime;                                 // 0x310C(0x0004)
-	struct FRotator                                    m_rForcedRotation;                                        // 0x3110(0x000C)
-	float                                              m_fForceFaceRotationRate;                                 // 0x311C(0x0004)
-	int                                                r_nInHandCurrentAmmo;                                     // 0x3120(0x0004) (Net)
-	int                                                r_nInHandMaxAmmo;                                         // 0x3124(0x0004) (Net)
-	int                                                s_nOppressorMineStackCount;                               // 0x3128(0x0004)
-	float                                              c_fTickCatchup;                                           // 0x312C(0x0004)
-	float                                              m_fEmoteMoveSpeedCeiling;                                 // 0x3130(0x0004)
-	int                                                r_nEquippedEmotes[0x4];                                   // 0x3134(0x0004) (Net, AlwaysInit)
-	int                                                r_nEquippedSprays[0x4];                                   // 0x3144(0x0004) (Net, AlwaysInit)
-	int                                                m_DefaultFlankItemStore1Items[0x4];                       // 0x3154(0x0004)
-	int                                                m_DefaultFlankItemStore2Items[0xC];                       // 0x3164(0x0004)
-	int                                                m_DefaultTankItemStore1Items[0x4];                        // 0x3194(0x0004)
-	int                                                m_DefaultTankItemStore2Items[0xC];                        // 0x31A4(0x0004)
-	int                                                m_DefaultDamageItemStore1Items[0x4];                      // 0x31D4(0x0004)
-	int                                                m_DefaultDamageItemStore2Items[0xC];                      // 0x31E4(0x0004)
-	int                                                m_DefaultSupportItemStore1Items[0x4];                     // 0x3214(0x0004)
-	int                                                m_DefaultSupportItemStore2Items[0xC];                     // 0x3224(0x0004)
-	int                                                m_OverrideItemStore1Items[0x4];                           // 0x3254(0x0004)
-	int                                                m_OverrideItemStore2Items[0xC];                           // 0x3264(0x0004)
-	struct FWeaponDOF                                  m_CurrentDOFSettings;                                     // 0x3294(0x0028) (Edit)
-	float                                              m_fOverriddenFOV;                                         // 0x32BC(0x0004)
-	class ATgCollisionProxy_Capture*                   s_pCaptureProxy;                                          // 0x32C0(0x0008)
-	float                                              fMatchPrepareAnnouncer;                                   // 0x32C8(0x0004) (Const)
-	float                                              fMatchPrepareAnnouncerTDM;                                // 0x32CC(0x0004) (Const)
+	unsigned long                                      c_bUpdatePlayerStatUI : 1;                                // 0x2FFC(0x0004)
+	unsigned long                                      m_bInHandFiring : 1;                                      // 0x2FFC(0x0004)
+	unsigned long                                      r_bNearCapturePoint : 1;                                  // 0x2FFC(0x0004) (Net)
+	unsigned long                                      r_bNearPayload : 1;                                       // 0x2FFC(0x0004) (Net)
+	unsigned long                                      r_bNearSiegeMonster : 1;                                  // 0x2FFC(0x0004)
+	unsigned long                                      r_bVisibleToEnemies : 1;                                  // 0x2FFC(0x0004) (Net)
+	unsigned long                                      s_bAmmoReloadCheat : 1;                                   // 0x2FFC(0x0004)
+	unsigned long                                      s_bAutomountProtection : 1;                               // 0x2FFC(0x0004)
+	unsigned long                                      m_bRecalcMoveSpeed : 1;                                   // 0x2FFC(0x0004)
+	unsigned long                                      m_bAttemptingAirJump : 1;                                 // 0x2FFC(0x0004)
+	unsigned long                                      m_bDelayingStopSpecialJumpFx : 1;                         // 0x2FFC(0x0004)
+	unsigned long                                      m_bPendingBounce : 1;                                     // 0x2FFC(0x0004)
+	unsigned long                                      s_bInitiatingJoin : 1;                                    // 0x2FFC(0x0004)
+	unsigned long                                      r_bJoinForceView : 1;                                     // 0x2FFC(0x0004) (Net)
+	unsigned long                                      c_bInterpolatingFOV : 1;                                  // 0x2FFC(0x0004)
+	unsigned long                                      s_bReplicateInhandAmmo : 1;                               // 0x2FFC(0x0004) (Const)
+	unsigned long                                      m_bPendingPawnModScan : 1;                                // 0x2FFC(0x0004)
+	unsigned long                                      m_bInSpawnRoom : 1;                                       // 0x2FFC(0x0004)
+	unsigned long                                      c_bShouldTickThisFrame : 1;                               // 0x2FFC(0x0004)
+	unsigned long                                      r_bCanChangeLoadout : 1;                                  // 0x2FFC(0x0004) (Net)
+	float                                              m_fLastCapturePointReclaimedTime;                         // 0x3000(0x0004) (Transient)
+	float                                              m_fMinReclaimPointTime;                                   // 0x3004(0x0004)
+	float                                              c_fUpdateAltitudeRTPCDelay;                               // 0x3008(0x0004)
+	float                                              m_fInHandStartFireTime;                                   // 0x300C(0x0004) (Transient)
+	float                                              m_fInHandStopFireTime;                                    // 0x3010(0x0004) (Transient)
+	float                                              m_fWallDamagePercent;                                     // 0x3014(0x0004)
+	float                                              m_fSiegeDamagePercent;                                    // 0x3018(0x0004)
+	float                                              r_fZoomAmt;                                               // 0x301C(0x0004) (Net)
+	unsigned char                                      r_nCriticalHit;                                           // 0x3020(0x0001) (Net)
+	unsigned char                                      UnknownData00[0x3];                                       // 0x3021(0x0003) MISSED OFFSET
+	float                                              m_fMountZoomOverride;                                     // 0x3024(0x0004) (Edit)
+	class ATgDeploy_BombKingStickyBomb*                r_StuckBombs[0x6];                                        // 0x3028(0x0008) (Net)
+	int                                                m_nCharacterRole;                                         // 0x3058(0x0004)
+	class UTgCustomCharacterComponent*                 m_CustomCharacterComponent;                               // 0x305C(0x0008) (Edit, ExportObject, Component, EditInline)
+	class UPrimitiveComponent*                         m_MountedCollisionComponent;                              // 0x3064(0x0008) (Edit, ExportObject, Component, EditInline)
+	class UPrimitiveComponent*                         m_MeshEncompassingCollisionComponent;                     // 0x306C(0x0008) (Edit, ExportObject, Component, EditInline)
+	TArray<TScriptInterface<class UTgDeviceInterface_MoveSpeedMultiplier>> m_CachedMoveSpeedModDevices;                              // 0x3074(0x0010) (NeedCtorLink)
+	TArray<TScriptInterface<class UTgDeviceInterface_AccelMultiplier>> m_CachedAccelModDevices;                                  // 0x3084(0x0010) (NeedCtorLink)
+	TArray<TScriptInterface<class UTgDeviceInterface_DeployMod>> m_CachedDeployModDevices;                                 // 0x3094(0x0010) (NeedCtorLink)
+	int                                                m_nAirJumps;                                              // 0x30A4(0x0004)
+	float                                              m_fAirJumpZSpeed;                                         // 0x30A8(0x0004) (Edit)
+	struct FVector                                     m_vBounceVelocity;                                        // 0x30AC(0x000C)
+	class ATgPawn_Character*                           m_JoinTargetLocal;                                        // 0x30B8(0x0008)
+	class ATgPawn_Character*                           m_JoinSourceLocal;                                        // 0x30C0(0x0008)
+	class ATgPawn_Character*                           r_JoinTarget;                                             // 0x30C8(0x0008) (Net)
+	struct FVector                                     r_vJoinSourceLocation;                                    // 0x30D0(0x000C) (Net)
+	struct FVector                                     r_vJoinTargetLocation;                                    // 0x30DC(0x000C) (Net)
+	float                                              r_fJoinTweenDuration;                                     // 0x30E8(0x0004) (Net)
+	float                                              c_fFOVInterpStartTimestamp;                               // 0x30EC(0x0004)
+	float                                              c_fFOVInterpStartValue;                                   // 0x30F0(0x0004)
+	float                                              c_fFOVInterpEndTimestamp;                                 // 0x30F4(0x0004)
+	float                                              c_fLastAppliedFOV;                                        // 0x30F8(0x0004)
+	class ATgPawn_Character*                           r_JoinSource;                                             // 0x30FC(0x0008) (Net)
+	TArray<struct FForceFaceTargetActor>               m_ForceFaceActors;                                        // 0x3104(0x0010) (NeedCtorLink)
+	float                                              m_fForceFaceRotationTime;                                 // 0x3114(0x0004)
+	struct FRotator                                    m_rForcedRotation;                                        // 0x3118(0x000C)
+	float                                              m_fForceFaceRotationRate;                                 // 0x3124(0x0004)
+	int                                                r_nInHandCurrentAmmo;                                     // 0x3128(0x0004) (Net)
+	int                                                r_nInHandMaxAmmo;                                         // 0x312C(0x0004) (Net)
+	int                                                s_nOppressorMineStackCount;                               // 0x3130(0x0004)
+	float                                              c_fTickCatchup;                                           // 0x3134(0x0004)
+	float                                              m_fEmoteMoveSpeedCeiling;                                 // 0x3138(0x0004)
+	int                                                r_nEquippedEmotes[0x4];                                   // 0x313C(0x0004) (Net, AlwaysInit)
+	int                                                r_nEquippedSprays[0x4];                                   // 0x314C(0x0004) (Net, AlwaysInit)
+	int                                                m_DefaultFlankItemStore1Items[0x4];                       // 0x315C(0x0004)
+	int                                                m_DefaultFlankItemStore2Items[0xC];                       // 0x316C(0x0004)
+	int                                                m_DefaultTankItemStore1Items[0x4];                        // 0x319C(0x0004)
+	int                                                m_DefaultTankItemStore2Items[0xC];                        // 0x31AC(0x0004)
+	int                                                m_DefaultDamageItemStore1Items[0x4];                      // 0x31DC(0x0004)
+	int                                                m_DefaultDamageItemStore2Items[0xC];                      // 0x31EC(0x0004)
+	int                                                m_DefaultSupportItemStore1Items[0x4];                     // 0x321C(0x0004)
+	int                                                m_DefaultSupportItemStore2Items[0xC];                     // 0x322C(0x0004)
+	int                                                m_OverrideItemStore1Items[0x4];                           // 0x325C(0x0004)
+	int                                                m_OverrideItemStore2Items[0xC];                           // 0x326C(0x0004)
+	struct FWeaponDOF                                  m_CurrentDOFSettings;                                     // 0x329C(0x0028) (Edit)
+	float                                              m_fOverriddenFOV;                                         // 0x32C4(0x0004)
+	class ATgCollisionProxy_Capture*                   s_pCaptureProxy;                                          // 0x32C8(0x0008)
+	float                                              fMatchPrepareAnnouncer;                                   // 0x32D0(0x0004) (Const)
+	float                                              fMatchPrepareAnnouncerTDM;                                // 0x32D4(0x0004) (Const)
 
 	static UClass* StaticClass()
 	{
@@ -22773,7 +22823,7 @@ public:
 	void InterpolateFOV(float NewFOV, float InterpolationTime);
 	void SetFOV(float NewFOV);
 	void ResetFOV();
-	void ReenableFallAccelLimit();
+	void STATIC_ReenableFallAccelLimit();
 	void STATIC_TemporarilyDisableFallAccelLimit(float fTime);
 	struct FVector STATIC_GetPullGrabLocation();
 	struct FVector GetPhysTweenTargetLocation(bool bFinalLocation);
@@ -22787,7 +22837,7 @@ public:
 	bool AdvancedTeleport(bool bFakeTeleport, struct FTeleportParams* Params, struct FVector* vTeleportLocation);
 	void STATIC_UpdateJoinSourceLocal();
 	void STATIC_RemoveJoinForcedView(class ATgPawn_Character* Source, class ATgPawn_Character* Target);
-	void AddJoinForcedView(class ATgPawn_Character* Source, class ATgPawn_Character* Target);
+	void STATIC_AddJoinForcedView(class ATgPawn_Character* Source, class ATgPawn_Character* Target);
 	void STATIC_TweenForJoinFinished();
 	void STATIC_TweenForJoin();
 	void STATIC_ClientUnjoinFromTarget();
@@ -22795,7 +22845,7 @@ public:
 	void UnjoinFromTarget();
 	void JoinToTarget(class ATgPawn_Character* Target, const struct FVector& SourceLocation, const struct FVector& TargetLocation, float TweenDuration, bool bForceView);
 	void StartPhysTween(const struct FVector& Target, float fTime, TEnumAsByte<ETweenState> tweenState, bool bCollideWithWorld, bool bRotateTowardsTarget, float fTweenSpeed, bool bKeepPitch);
-	void AbortJoin();
+	void STATIC_AbortJoin();
 	void UpdateForcedRotation(float DeltaTime, TEnumAsByte<EForceFaceActorReason> eReason);
 	void AddForcedViewRotation(const struct FRotator& rTargetRotation, float fTime, float fRate);
 	void STATIC_ClearOldForcedViewTargets();
@@ -22837,7 +22887,7 @@ public:
 	void ReplicatedEvent(const struct FName& VarName);
 	bool IsViewPawn();
 	void ReceivedPropValues();
-	void STATIC_HideHeadMesh();
+	void HideHeadMesh();
 	void STATIC_ShowHeadMesh();
 	void PostPawnSetupServer();
 	bool PostPawnSetup();
@@ -22853,7 +22903,7 @@ public:
 	void STATIC_ClientPlaybackRewind(float fDuration, float fRate, float fDelay, bool bIsBuff);
 	void PlaybackRewind(float fDuration, float fRate, float fDelay, bool bIsBuff);
 	bool IsJoined();
-	bool STATIC_HasForcedRotation(TEnumAsByte<EForceFaceActorReason> eReason);
+	bool HasForcedRotation(TEnumAsByte<EForceFaceActorReason> eReason);
 	bool STATIC_AddRequiredPawnMods();
 	void STATIC_InvokeRewind(float fDuration, float fRate, float fDelay, bool bIsBuff);
 	void Play3dSprayFx(int nSlot);
@@ -22893,7 +22943,7 @@ public:
 	void PawnOnExitCombat();
 	void PawnOnEnterCombat();
 	void PawnOnRevive();
-	void STATIC_PawnOnKilledGlobal(class AActor* Victim, class AActor* Killer, TArray<class ATgRepInfo_Player*> AssistingPlayers);
+	void PawnOnKilledGlobal(class AActor* Victim, class AActor* Killer, TArray<class ATgRepInfo_Player*> AssistingPlayers);
 	void PawnOnAssisted(class AActor* pVictim, class AActor* pKiller);
 	void PawnOnKilled(class AActor* pVictim);
 	void PawnOnHealed(struct FOnHealedParams* Params);
@@ -22905,8 +22955,8 @@ public:
 	void STATIC_SpawnGuard();
 	void OnPawnDied();
 	bool STATIC_ApplyItemEffects(class UTgInventoryObject* pItem, bool bRemove);
-	void AddSpray(int nSlot, int nDeviceId);
-	void AddEmote(int nSlot, int nDeviceId);
+	void STATIC_AddSpray(int nSlot, int nDeviceId);
+	void STATIC_AddEmote(int nSlot, int nDeviceId);
 	void OnHealingWell(bool bTouched);
 	void LoadDisconnectedPlayerState();
 	void STATIC_SetSpawnMana();
@@ -22915,35 +22965,35 @@ public:
 
 
 // Class TgGame.TgPawn_LanePusherBase
-// 0x0058 (0x304C - 0x2FF4)
+// 0x0058 (0x3054 - 0x2FFC)
 class ATgPawn_LanePusherBase : public ATgPawn_Biped
 {
 public:
-	float                                              s_fSpeedMultiplierToCatchUpToSquad;                       // 0x2FF4(0x0004)
-	class ATgPawn_Character*                           s_PlayerAttacker;                                         // 0x2FF8(0x0008)
-	class ATgSplineActor*                              r_StartSpline;                                            // 0x3000(0x0008) (Const, Net)
-	class ATgSplineActor*                              r_ServerSyncSpline;                                       // 0x3008(0x0008) (Const, Net)
-	struct FServerSplineSync                           r_ServerSync;                                             // 0x3010(0x0008) (Const, Net)
-	unsigned long                                      m_bMoving : 1;                                            // 0x3018(0x0004) (Const)
-	unsigned long                                      c_bServerSync : 1;                                        // 0x3018(0x0004)
-	unsigned long                                      m_bDoNotScaleCollisionBoxWithDatabase : 1;                // 0x3018(0x0004) (Const)
-	unsigned long                                      m_bApplySplinePitchToActor : 1;                           // 0x3018(0x0004) (Const)
-	unsigned long                                      c_bApplySplinePitchToMesh : 1;                            // 0x3018(0x0004) (Const)
-	unsigned long                                      m_bFullStopWhenNoDesiredSpeed : 1;                        // 0x3018(0x0004) (Const)
-	unsigned long                                      s_bStopBackpeddlingAtCheckpoints : 1;                     // 0x3018(0x0004) (Const)
-	unsigned long                                      m_bAllowBackpeddling : 1;                                 // 0x3018(0x0004)
-	unsigned long                                      m_bDestroyed : 1;                                         // 0x3018(0x0004)
-	unsigned long                                      r_bAsleep : 1;                                            // 0x3018(0x0004) (Net)
-	class ATgSplineActor*                              m_Spline;                                                 // 0x301C(0x0008)
-	class UStaticMeshComponent*                        m_CollisionBox;                                           // 0x3024(0x0008) (ExportObject, Component, EditInline)
-	float                                              m_fSplineDist;                                            // 0x302C(0x0004)
-	float                                              c_fSplineDistCorrection;                                  // 0x3030(0x0004)
-	float                                              c_fClientSideMovementFudgeFactor;                         // 0x3034(0x0004)
-	float                                              c_fClientCorrectionTolerance;                             // 0x3038(0x0004)
-	float                                              c_fClientCorrectionRate;                                  // 0x303C(0x0004)
-	float                                              m_fGroundSpeedScaleLastTick;                              // 0x3040(0x0004)
-	float                                              r_fTrackGroundSpeed;                                      // 0x3044(0x0004) (Net)
-	float                                              m_fAcceleration;                                          // 0x3048(0x0004)
+	float                                              s_fSpeedMultiplierToCatchUpToSquad;                       // 0x2FFC(0x0004)
+	class ATgPawn_Character*                           s_PlayerAttacker;                                         // 0x3000(0x0008)
+	class ATgSplineActor*                              r_StartSpline;                                            // 0x3008(0x0008) (Const, Net)
+	class ATgSplineActor*                              r_ServerSyncSpline;                                       // 0x3010(0x0008) (Const, Net)
+	struct FServerSplineSync                           r_ServerSync;                                             // 0x3018(0x0008) (Const, Net)
+	unsigned long                                      m_bMoving : 1;                                            // 0x3020(0x0004) (Const)
+	unsigned long                                      c_bServerSync : 1;                                        // 0x3020(0x0004)
+	unsigned long                                      m_bDoNotScaleCollisionBoxWithDatabase : 1;                // 0x3020(0x0004) (Const)
+	unsigned long                                      m_bApplySplinePitchToActor : 1;                           // 0x3020(0x0004) (Const)
+	unsigned long                                      c_bApplySplinePitchToMesh : 1;                            // 0x3020(0x0004) (Const)
+	unsigned long                                      m_bFullStopWhenNoDesiredSpeed : 1;                        // 0x3020(0x0004) (Const)
+	unsigned long                                      s_bStopBackpeddlingAtCheckpoints : 1;                     // 0x3020(0x0004) (Const)
+	unsigned long                                      m_bAllowBackpeddling : 1;                                 // 0x3020(0x0004)
+	unsigned long                                      m_bDestroyed : 1;                                         // 0x3020(0x0004)
+	unsigned long                                      r_bAsleep : 1;                                            // 0x3020(0x0004) (Net)
+	class ATgSplineActor*                              m_Spline;                                                 // 0x3024(0x0008)
+	class UStaticMeshComponent*                        m_CollisionBox;                                           // 0x302C(0x0008) (ExportObject, Component, EditInline)
+	float                                              m_fSplineDist;                                            // 0x3034(0x0004)
+	float                                              c_fSplineDistCorrection;                                  // 0x3038(0x0004)
+	float                                              c_fClientSideMovementFudgeFactor;                         // 0x303C(0x0004)
+	float                                              c_fClientCorrectionTolerance;                             // 0x3040(0x0004)
+	float                                              c_fClientCorrectionRate;                                  // 0x3044(0x0004)
+	float                                              m_fGroundSpeedScaleLastTick;                              // 0x3048(0x0004)
+	float                                              r_fTrackGroundSpeed;                                      // 0x304C(0x0004) (Net)
+	float                                              m_fAcceleration;                                          // 0x3050(0x0004)
 
 	static UClass* StaticClass()
 	{
@@ -22968,7 +23018,7 @@ public:
 	bool IsImmuneToHealing();
 	bool IsImmuneToDamage();
 	void STATIC_SnapToServerSync();
-	void ReceiveServerSync();
+	void STATIC_ReceiveServerSync();
 	void STATIC_UpdateServerSync();
 	void STATIC_UpdateMoving();
 	void STATIC_SetSpline(class ATgSplineActor* NewSpline, bool bSnapToStart);
@@ -22980,23 +23030,23 @@ public:
 
 
 // Class TgGame.TgPawn_LanePusher
-// 0x0034 (0x3080 - 0x304C)
+// 0x0034 (0x3088 - 0x3054)
 class ATgPawn_LanePusher : public ATgPawn_LanePusherBase
 {
 public:
-	unsigned long                                      m_bInIntroduction : 1;                                    // 0x304C(0x0004)
-	unsigned long                                      r_bIsInsideBase : 1;                                      // 0x304C(0x0004) (Net)
-	unsigned long                                      m_bHarvestTexturesForFadeMIC : 1;                         // 0x304C(0x0004)
-	unsigned long                                      m_bBroadcastDeath : 1;                                    // 0x304C(0x0004)
-	TEnumAsByte<EDestroyedAnimStages>                  c_eDestroyedAnimStage;                                    // 0x3050(0x0001)
-	unsigned char                                      UnknownData00[0x3];                                       // 0x3051(0x0003) MISSED OFFSET
-	class UTgSpecialFx*                                c_BeamFX;                                                 // 0x3054(0x0008) (Transient)
-	float                                              m_fBaseWheelSpeed;                                        // 0x305C(0x0004) (Edit)
-	int                                                m_nMaxLevel;                                              // 0x3060(0x0004) (Const)
-	int                                                m_nFriendlyFadeMaterialFXId;                              // 0x3064(0x0004)
-	int                                                m_nEnemyFadeMaterialFXId;                                 // 0x3068(0x0004)
-	TArray<class UMaterialInstanceConstant*>           m_FadeMICs;                                               // 0x306C(0x0010) (NeedCtorLink)
-	float                                              m_fDamageScaleWhileTraveling;                             // 0x307C(0x0004)
+	unsigned long                                      m_bInIntroduction : 1;                                    // 0x3054(0x0004)
+	unsigned long                                      r_bIsInsideBase : 1;                                      // 0x3054(0x0004) (Net)
+	unsigned long                                      m_bHarvestTexturesForFadeMIC : 1;                         // 0x3054(0x0004)
+	unsigned long                                      m_bBroadcastDeath : 1;                                    // 0x3054(0x0004)
+	TEnumAsByte<EDestroyedAnimStages>                  c_eDestroyedAnimStage;                                    // 0x3058(0x0001)
+	unsigned char                                      UnknownData00[0x3];                                       // 0x3059(0x0003) MISSED OFFSET
+	class UTgSpecialFx*                                c_BeamFX;                                                 // 0x305C(0x0008) (Transient)
+	float                                              m_fBaseWheelSpeed;                                        // 0x3064(0x0004) (Edit)
+	int                                                m_nMaxLevel;                                              // 0x3068(0x0004) (Const)
+	int                                                m_nFriendlyFadeMaterialFXId;                              // 0x306C(0x0004)
+	int                                                m_nEnemyFadeMaterialFXId;                                 // 0x3070(0x0004)
+	TArray<class UMaterialInstanceConstant*>           m_FadeMICs;                                               // 0x3074(0x0010) (NeedCtorLink)
+	float                                              m_fDamageScaleWhileTraveling;                             // 0x3084(0x0004)
 
 	static UClass* StaticClass()
 	{
@@ -23027,7 +23077,7 @@ public:
 	void PostPawnSetupServer();
 	void STATIC_SetSpline(class ATgSplineActor* NewSpline, bool bSnapToStart);
 	void STATIC_CalcDistanceFadeValue(float fDeltaTime);
-	void ReapplyLevelEffectGroups(int nPrevLevel, int nCurrentLevel, bool bPreserveParams);
+	void STATIC_ReapplyLevelEffectGroups(int nPrevLevel, int nCurrentLevel, bool bPreserveParams);
 	void PawnOnPreDamageMitigation(class ATgPawn* attacker, class UTgEffectGroup* eg, int nPropertyId, float* fDamage);
 	void STATIC_DropHealthNuggetTeamOnly(int nTaskForce, const struct FVector& SpawnVelocity, float fHealOverride, float fHoTOverride);
 	void STATIC_DropHealthNugget(const struct FVector& SpawnVelocity, float fHealOverride, float fHoTOverride);
@@ -23037,12 +23087,12 @@ public:
 
 
 // Class TgGame.TgPawn_Juggernaut
-// 0x0004 (0x3084 - 0x3080)
+// 0x0004 (0x308C - 0x3088)
 class ATgPawn_Juggernaut : public ATgPawn_LanePusher
 {
 public:
-	unsigned long                                      m_bNextLaserLeft : 1;                                     // 0x3080(0x0004)
-	unsigned long                                      m_bInGenericFirePosture : 1;                              // 0x3080(0x0004)
+	unsigned long                                      m_bNextLaserLeft : 1;                                     // 0x3088(0x0004)
+	unsigned long                                      m_bInGenericFirePosture : 1;                              // 0x3088(0x0004)
 
 	static UClass* StaticClass()
 	{
@@ -23062,35 +23112,35 @@ public:
 
 
 // Class TgGame.TgPawn_SiegeEngine_Payload
-// 0x0064 (0x30E8 - 0x3084)
+// 0x0064 (0x30F0 - 0x308C)
 class ATgPawn_SiegeEngine_Payload : public ATgPawn_Juggernaut
 {
 public:
-	float                                              s_fTotalSplineLength;                                     // 0x3084(0x0004)
-	float                                              s_fPreviousSplineLength;                                  // 0x3088(0x0004)
-	unsigned long                                      r_bEnable : 1;                                            // 0x308C(0x0004) (Net)
-	unsigned long                                      m_bRequireLineOfSightForNearby : 1;                       // 0x308C(0x0004) (Const)
-	unsigned long                                      m_bShouldAccelerateLOSChecks : 1;                         // 0x308C(0x0004)
-	unsigned long                                      r_bMovingBackwards : 1;                                   // 0x308C(0x0004) (Net)
-	unsigned long                                      r_bCanAutoPushForward : 1;                                // 0x308C(0x0004) (Net)
-	float                                              r_fBaseSpeedScale;                                        // 0x3090(0x0004) (Net)
-	float                                              m_fNearbyProximityDistance;                               // 0x3094(0x0004) (Const)
-	class ATgCollisionProxy*                           m_NearbyCollisionProxy;                                   // 0x3098(0x0008)
-	TArray<class ATgPawn*>                             m_TouchingPlayers;                                        // 0x30A0(0x0010) (NeedCtorLink)
-	TArray<class ATgPawn*>                             m_VisiblePlayers;                                         // 0x30B0(0x0010) (NeedCtorLink)
-	float                                              m_fSpeedScaleIncreasePerFriendly;                         // 0x30C0(0x0004) (Const)
-	float                                              m_fLineOfSightUpdatePeriod;                               // 0x30C4(0x0004) (Const)
-	float                                              m_fLineOfSightUpdatePeriodAccelerated;                    // 0x30C8(0x0004) (Const)
-	float                                              m_fNextLineOfSightUpdateTime;                             // 0x30CC(0x0004)
-	float                                              s_fTimeUntilMoveBackwards;                                // 0x30D0(0x0004) (Const)
-	float                                              m_fMoveBackSpeedScale;                                    // 0x30D4(0x0004) (Const)
-	TEnumAsByte<EAutoMovePayload>                      r_eMoveWithoutAllies;                                     // 0x30D8(0x0001) (Net)
-	TEnumAsByte<EPayloadControlState>                  m_eControlState;                                          // 0x30D9(0x0001)
-	unsigned char                                      r_nFriends;                                               // 0x30DA(0x0001) (Net)
-	unsigned char                                      r_nEnemies;                                               // 0x30DB(0x0001) (Net)
-	float                                              m_fAutoPushForwardDelay;                                  // 0x30DC(0x0004) (Const)
-	float                                              r_fAutoPushForwardSpeedScale;                             // 0x30E0(0x0004) (Const, Net)
-	float                                              m_fStopAutoPushDelay;                                     // 0x30E4(0x0004) (Const)
+	float                                              s_fTotalSplineLength;                                     // 0x308C(0x0004)
+	float                                              s_fPreviousSplineLength;                                  // 0x3090(0x0004)
+	unsigned long                                      r_bEnable : 1;                                            // 0x3094(0x0004) (Net)
+	unsigned long                                      m_bRequireLineOfSightForNearby : 1;                       // 0x3094(0x0004) (Const)
+	unsigned long                                      m_bShouldAccelerateLOSChecks : 1;                         // 0x3094(0x0004)
+	unsigned long                                      r_bMovingBackwards : 1;                                   // 0x3094(0x0004) (Net)
+	unsigned long                                      r_bCanAutoPushForward : 1;                                // 0x3094(0x0004) (Net)
+	float                                              r_fBaseSpeedScale;                                        // 0x3098(0x0004) (Net)
+	float                                              m_fNearbyProximityDistance;                               // 0x309C(0x0004) (Const)
+	class ATgCollisionProxy*                           m_NearbyCollisionProxy;                                   // 0x30A0(0x0008)
+	TArray<class ATgPawn*>                             m_TouchingPlayers;                                        // 0x30A8(0x0010) (NeedCtorLink)
+	TArray<class ATgPawn*>                             m_VisiblePlayers;                                         // 0x30B8(0x0010) (NeedCtorLink)
+	float                                              m_fSpeedScaleIncreasePerFriendly;                         // 0x30C8(0x0004) (Const)
+	float                                              m_fLineOfSightUpdatePeriod;                               // 0x30CC(0x0004) (Const)
+	float                                              m_fLineOfSightUpdatePeriodAccelerated;                    // 0x30D0(0x0004) (Const)
+	float                                              m_fNextLineOfSightUpdateTime;                             // 0x30D4(0x0004)
+	float                                              s_fTimeUntilMoveBackwards;                                // 0x30D8(0x0004) (Const)
+	float                                              m_fMoveBackSpeedScale;                                    // 0x30DC(0x0004) (Const)
+	TEnumAsByte<EAutoMovePayload>                      r_eMoveWithoutAllies;                                     // 0x30E0(0x0001) (Net)
+	TEnumAsByte<EPayloadControlState>                  m_eControlState;                                          // 0x30E1(0x0001)
+	unsigned char                                      r_nFriends;                                               // 0x30E2(0x0001) (Net)
+	unsigned char                                      r_nEnemies;                                               // 0x30E3(0x0001) (Net)
+	float                                              m_fAutoPushForwardDelay;                                  // 0x30E4(0x0004) (Const)
+	float                                              r_fAutoPushForwardSpeedScale;                             // 0x30E8(0x0004) (Const, Net)
+	float                                              m_fStopAutoPushDelay;                                     // 0x30EC(0x0004) (Const)
 
 	static UClass* StaticClass()
 	{
@@ -23113,12 +23163,12 @@ public:
 	void STATIC_UpdateAlliesNearbyBehavior(bool bSkipCountUpdate);
 	TEnumAsByte<EPayloadControlState> STATIC_GetNextControlState();
 	void STATIC_RemoveNearbyPlayer(class AActor* Other);
-	void AddNearbyPlayer(class AActor* Other);
+	void STATIC_AddNearbyPlayer(class AActor* Other);
 	void ProxyUnTouch(class AActor* Other);
 	void ProxyTouch(class AActor* Other, class UPrimitiveComponent* OtherComp, const struct FVector& HitLocation, const struct FVector& HitNormal);
 	bool IsContested();
-	bool STATIC_HasEnemyPlayersNearby();
-	bool STATIC_HasFriendlyPlayersNearby();
+	bool HasEnemyPlayersNearby();
+	bool HasFriendlyPlayersNearby();
 	bool STATIC_CanTriggerOvertime();
 	void STATIC_FullUpdate();
 	void OnEnableChanged();
@@ -23140,34 +23190,34 @@ public:
 
 
 // Class TgGame.TgPawn_SiegeBeyond_Payload
-// 0x0070 (0x3158 - 0x30E8)
+// 0x0070 (0x3160 - 0x30F0)
 class ATgPawn_SiegeBeyond_Payload : public ATgPawn_SiegeEngine_Payload
 {
 public:
-	float                                              m_fBaseBuffFXRadius;                                      // 0x30E8(0x0004) (Const)
-	float                                              m_fBuffFXRadiusScaleMultiplierOffset;                     // 0x30EC(0x0004) (Const)
-	struct FName                                       m_nmOffensiveTypeName;                                    // 0x30F0(0x0008) (Const)
-	struct FName                                       m_nmDefensiveTypeName;                                    // 0x30F8(0x0008) (Const)
-	float                                              m_fLastRepairedTimeStamp;                                 // 0x3100(0x0004)
-	float                                              r_fAccumulatedRepairTime;                                 // 0x3104(0x0004) (Net)
-	float                                              r_fRepairTimeNecessary;                                   // 0x3108(0x0004) (Net)
-	float                                              r_fAllyMovementScale;                                     // 0x310C(0x0004) (Net)
-	float                                              r_fEnemyMovementScale;                                    // 0x3110(0x0004) (Net)
-	float                                              r_fDestroyedMovementScale;                                // 0x3114(0x0004) (Net)
-	float                                              r_fCloseToBaseThreshold;                                  // 0x3118(0x0004) (Net)
-	float                                              r_fCloseSlowdownFactor;                                   // 0x311C(0x0004) (Net)
-	unsigned long                                      r_bInDestroyedState : 1;                                  // 0x3120(0x0004) (Net)
-	unsigned long                                      r_bCanRepairSelf : 1;                                     // 0x3120(0x0004) (Net)
-	unsigned long                                      r_bDefensiveBuffActive : 1;                               // 0x3120(0x0004) (Net)
-	unsigned long                                      r_bOffensiveBuffActive : 1;                               // 0x3120(0x0004) (Net)
-	unsigned long                                      r_bExplodeOnDestroyed : 1;                                // 0x3120(0x0004) (Net)
-	float                                              m_fAccumulatedOffensiveCrystalRepairTime;                 // 0x3124(0x0004)
-	float                                              m_fAccumulatedDefensiveCrystalRepairTime;                 // 0x3128(0x0004)
-	float                                              m_fCrystalBuffProgressThreshold;                          // 0x312C(0x0004) (Const)
-	TArray<class ATgPawn*>                             m_BuffedPawns;                                            // 0x3130(0x0010) (NeedCtorLink)
-	class ATgDevice*                                   m_CachedPassiveDevice;                                    // 0x3140(0x0008)
-	class UTgDeviceFire*                               m_CachedBuffMode;                                         // 0x3148(0x0008)
-	class UTgDeviceFire*                               m_CachedExplosionMode;                                    // 0x3150(0x0008)
+	float                                              m_fBaseBuffFXRadius;                                      // 0x30F0(0x0004) (Const)
+	float                                              m_fBuffFXRadiusScaleMultiplierOffset;                     // 0x30F4(0x0004) (Const)
+	struct FName                                       m_nmOffensiveTypeName;                                    // 0x30F8(0x0008) (Const)
+	struct FName                                       m_nmDefensiveTypeName;                                    // 0x3100(0x0008) (Const)
+	float                                              m_fLastRepairedTimeStamp;                                 // 0x3108(0x0004)
+	float                                              r_fAccumulatedRepairTime;                                 // 0x310C(0x0004) (Net)
+	float                                              r_fRepairTimeNecessary;                                   // 0x3110(0x0004) (Net)
+	float                                              r_fAllyMovementScale;                                     // 0x3114(0x0004) (Net)
+	float                                              r_fEnemyMovementScale;                                    // 0x3118(0x0004) (Net)
+	float                                              r_fDestroyedMovementScale;                                // 0x311C(0x0004) (Net)
+	float                                              r_fCloseToBaseThreshold;                                  // 0x3120(0x0004) (Net)
+	float                                              r_fCloseSlowdownFactor;                                   // 0x3124(0x0004) (Net)
+	unsigned long                                      r_bInDestroyedState : 1;                                  // 0x3128(0x0004) (Net)
+	unsigned long                                      r_bCanRepairSelf : 1;                                     // 0x3128(0x0004) (Net)
+	unsigned long                                      r_bDefensiveBuffActive : 1;                               // 0x3128(0x0004) (Net)
+	unsigned long                                      r_bOffensiveBuffActive : 1;                               // 0x3128(0x0004) (Net)
+	unsigned long                                      r_bExplodeOnDestroyed : 1;                                // 0x3128(0x0004) (Net)
+	float                                              m_fAccumulatedOffensiveCrystalRepairTime;                 // 0x312C(0x0004)
+	float                                              m_fAccumulatedDefensiveCrystalRepairTime;                 // 0x3130(0x0004)
+	float                                              m_fCrystalBuffProgressThreshold;                          // 0x3134(0x0004) (Const)
+	TArray<class ATgPawn*>                             m_BuffedPawns;                                            // 0x3138(0x0010) (NeedCtorLink)
+	class ATgDevice*                                   m_CachedPassiveDevice;                                    // 0x3148(0x0008)
+	class UTgDeviceFire*                               m_CachedBuffMode;                                         // 0x3150(0x0008)
+	class UTgDeviceFire*                               m_CachedExplosionMode;                                    // 0x3158(0x0008)
 
 	static UClass* StaticClass()
 	{
@@ -23176,14 +23226,14 @@ public:
 	}
 
 
-	bool STATIC_HasFriendlyPlayersNearby();
+	bool HasFriendlyPlayersNearby();
 	bool STATIC_CanTriggerOvertime();
 	TEnumAsByte<EPayloadControlState> STATIC_GetNextControlState();
 	void STATIC_RemoveNearbyPlayer(class AActor* Other);
-	void AddNearbyPlayer(class AActor* Other);
+	void STATIC_AddNearbyPlayer(class AActor* Other);
 	bool STATIC_Died(class AController* Killer, class UClass* dmgType, const struct FVector& HitLocation);
 	void ExplodeAt(const struct FVector& vLoc);
-	void STATIC_PlayExplosion(const struct FVector& vLoc);
+	void PlayExplosion(const struct FVector& vLoc);
 	void Destroyed();
 	void ReplicatedEvent(const struct FName& VarName);
 	void UpdateBuffFX();
@@ -23209,15 +23259,15 @@ public:
 
 
 // Class TgGame.TgPawn_SiegeEngine_CaptureAndPayload
-// 0x0010 (0x30F8 - 0x30E8)
+// 0x0010 (0x3100 - 0x30F0)
 class ATgPawn_SiegeEngine_CaptureAndPayload : public ATgPawn_SiegeEngine_Payload
 {
 public:
-	float                                              r_fMinimumPayloadTravelTime;                              // 0x30E8(0x0004) (Const, Net)
-	float                                              r_fTravelSpeedScaleBeforeBase;                            // 0x30EC(0x0004) (Const, Net)
-	TEnumAsByte<ELanePusherActionPoint>                r_eSpeedScaledTravelPoint;                                // 0x30F0(0x0001) (Const, Net)
-	unsigned char                                      UnknownData00[0x3];                                       // 0x30F1(0x0003) MISSED OFFSET
-	unsigned long                                      r_bIsPassedSpeedScaledTravelPoint : 1;                    // 0x30F4(0x0004) (Const, Net)
+	float                                              r_fMinimumPayloadTravelTime;                              // 0x30F0(0x0004) (Const, Net)
+	float                                              r_fTravelSpeedScaleBeforeBase;                            // 0x30F4(0x0004) (Const, Net)
+	TEnumAsByte<ELanePusherActionPoint>                r_eSpeedScaledTravelPoint;                                // 0x30F8(0x0001) (Const, Net)
+	unsigned char                                      UnknownData00[0x3];                                       // 0x30F9(0x0003) MISSED OFFSET
+	unsigned long                                      r_bIsPassedSpeedScaledTravelPoint : 1;                    // 0x30FC(0x0004) (Const, Net)
 
 	static UClass* StaticClass()
 	{
@@ -23231,11 +23281,11 @@ public:
 
 
 // Class TgGame.TgPawn_SiegeEngine_Wedge
-// 0x0004 (0x30FC - 0x30F8)
+// 0x0004 (0x3104 - 0x3100)
 class ATgPawn_SiegeEngine_Wedge : public ATgPawn_SiegeEngine_CaptureAndPayload
 {
 public:
-	int                                                m_nCollisionMeshId;                                       // 0x30F8(0x0004)
+	int                                                m_nCollisionMeshId;                                       // 0x3100(0x0004)
 
 	static UClass* StaticClass()
 	{
@@ -23247,7 +23297,7 @@ public:
 
 
 // Class TgGame.TgPawn_SiegeEngine_Payload_Crusade
-// 0x0000 (0x30E8 - 0x30E8)
+// 0x0000 (0x30F0 - 0x30F0)
 class ATgPawn_SiegeEngine_Payload_Crusade : public ATgPawn_SiegeEngine_Payload
 {
 public:
@@ -23262,13 +23312,13 @@ public:
 
 
 // Class TgGame.TgPawn_LanePusherRace
-// 0x000C (0x3058 - 0x304C)
+// 0x000C (0x3060 - 0x3054)
 class ATgPawn_LanePusherRace : public ATgPawn_LanePusherBase
 {
 public:
-	float                                              s_fTotalSplineLength;                                     // 0x304C(0x0004) (Const)
-	float                                              s_fPreviousSplineLength;                                  // 0x3050(0x0004) (Const)
-	float                                              r_fProgressPercent;                                       // 0x3054(0x0004) (Const, Net)
+	float                                              s_fTotalSplineLength;                                     // 0x3054(0x0004) (Const)
+	float                                              s_fPreviousSplineLength;                                  // 0x3058(0x0004) (Const)
+	float                                              r_fProgressPercent;                                       // 0x305C(0x0004) (Const, Net)
 
 	static UClass* StaticClass()
 	{
@@ -23288,11 +23338,11 @@ public:
 
 
 // Class TgGame.TgPawn_HHGate
-// 0x0004 (0x2EC8 - 0x2EC4)
+// 0x0004 (0x2ED0 - 0x2ECC)
 class ATgPawn_HHGate : public ATgPawn
 {
 public:
-	unsigned long                                      s_bRegistered : 1;                                        // 0x2EC4(0x0004)
+	unsigned long                                      s_bRegistered : 1;                                        // 0x2ECC(0x0004)
 
 	static UClass* StaticClass()
 	{
@@ -23304,25 +23354,25 @@ public:
 
 
 // Class TgGame.TgPawn_Pet
-// 0x005C (0x2F20 - 0x2EC4)
+// 0x005C (0x2F28 - 0x2ECC)
 class ATgPawn_Pet : public ATgPawn
 {
 public:
-	float                                              m_fOwnerPhysPowerItemPercent;                             // 0x2EC4(0x0004)
-	float                                              m_fOwnerMagicalPowerItemPercent;                          // 0x2EC8(0x0004)
-	float                                              m_fOwnerUltilityPowerItemPercent;                         // 0x2ECC(0x0004)
-	TEnumAsByte<EPetPhase>                             s_PetPhase;                                               // 0x2ED0(0x0001)
-	TEnumAsByte<EPetPosition>                          s_PetPosition;                                            // 0x2ED1(0x0001)
-	unsigned char                                      UnknownData00[0x2];                                       // 0x2ED2(0x0002) MISSED OFFSET
-	struct FRotator                                    s_LastPositionAdjustmentRotation;                         // 0x2ED4(0x000C)
-	struct FVector                                     s_InterpolatedPetPosition;                                // 0x2EE0(0x000C)
-	struct FVector                                     s_InterpolatedPetOwnerPosition;                           // 0x2EEC(0x000C)
-	float                                              s_fPetPositionDistanceMultiplier;                         // 0x2EF8(0x0004)
-	float                                              s_fOwnerVelocityTime;                                     // 0x2EFC(0x0004)
-	float                                              s_fSmoothedMaxSpeed;                                      // 0x2F00(0x0004)
-	class UTgSpecialFx*                                c_BeamFX;                                                 // 0x2F04(0x0008) (Transient)
-	struct FRotator                                    r_InitialOrientation;                                     // 0x2F0C(0x000C) (Net)
-	class UParticleSystemComponent*                    c_AimVisibilityMesh;                                      // 0x2F18(0x0008) (ExportObject, Component, EditInline)
+	float                                              m_fOwnerPhysPowerItemPercent;                             // 0x2ECC(0x0004)
+	float                                              m_fOwnerMagicalPowerItemPercent;                          // 0x2ED0(0x0004)
+	float                                              m_fOwnerUltilityPowerItemPercent;                         // 0x2ED4(0x0004)
+	TEnumAsByte<EPetPhase>                             s_PetPhase;                                               // 0x2ED8(0x0001)
+	TEnumAsByte<EPetPosition>                          s_PetPosition;                                            // 0x2ED9(0x0001)
+	unsigned char                                      UnknownData00[0x2];                                       // 0x2EDA(0x0002) MISSED OFFSET
+	struct FRotator                                    s_LastPositionAdjustmentRotation;                         // 0x2EDC(0x000C)
+	struct FVector                                     s_InterpolatedPetPosition;                                // 0x2EE8(0x000C)
+	struct FVector                                     s_InterpolatedPetOwnerPosition;                           // 0x2EF4(0x000C)
+	float                                              s_fPetPositionDistanceMultiplier;                         // 0x2F00(0x0004)
+	float                                              s_fOwnerVelocityTime;                                     // 0x2F04(0x0004)
+	float                                              s_fSmoothedMaxSpeed;                                      // 0x2F08(0x0004)
+	class UTgSpecialFx*                                c_BeamFX;                                                 // 0x2F0C(0x0008) (Transient)
+	struct FRotator                                    r_InitialOrientation;                                     // 0x2F14(0x000C) (Net)
+	class UParticleSystemComponent*                    c_AimVisibilityMesh;                                      // 0x2F20(0x0008) (ExportObject, Component, EditInline)
 
 	static UClass* StaticClass()
 	{
@@ -23357,17 +23407,17 @@ public:
 
 
 // Class TgGame.TgPawn_Turret
-// 0x0020 (0x2F40 - 0x2F20)
+// 0x0020 (0x2F48 - 0x2F28)
 class ATgPawn_Turret : public ATgPawn_Pet
 {
 public:
-	unsigned long                                      r_bLockdownIsOn : 1;                                      // 0x2F20(0x0004) (Net)
-	unsigned long                                      r_bHasHealingStation : 1;                                 // 0x2F20(0x0004) (Net)
-	unsigned long                                      m_bFirstAidNuggetOverride : 1;                            // 0x2F20(0x0004)
-	int                                                m_nLockdownPostureID;                                     // 0x2F24(0x0004)
-	class ATgDevice*                                   m_SpawningDevice;                                         // 0x2F28(0x0008)
-	class UAkEvent*                                    m_TargetingNotificationAkEvent;                           // 0x2F30(0x0008)
-	class AActor*                                      m_PrevTargetActor;                                        // 0x2F38(0x0008)
+	unsigned long                                      r_bLockdownIsOn : 1;                                      // 0x2F28(0x0004) (Net)
+	unsigned long                                      r_bHasHealingStation : 1;                                 // 0x2F28(0x0004) (Net)
+	unsigned long                                      m_bFirstAidNuggetOverride : 1;                            // 0x2F28(0x0004)
+	int                                                m_nLockdownPostureID;                                     // 0x2F2C(0x0004)
+	class ATgDevice*                                   m_SpawningDevice;                                         // 0x2F30(0x0008)
+	class UAkEvent*                                    m_TargetingNotificationAkEvent;                           // 0x2F38(0x0008)
+	class AActor*                                      m_PrevTargetActor;                                        // 0x2F40(0x0008)
 
 	static UClass* StaticClass()
 	{
@@ -23377,7 +23427,7 @@ public:
 
 
 	bool STATIC_Died(class AController* Killer, class UClass* dmgType, const struct FVector& HitLocation);
-	void RagdollPawn();
+	void STATIC_RagdollPawn();
 	void PlayDeathAnimation();
 	void ReplicatedEvent(const struct FName& VarName);
 	void PlayTargetingSound();
@@ -23391,7 +23441,7 @@ public:
 
 
 // Class TgGame.TgPawn_Turret_Flamethrower
-// 0x0000 (0x2F40 - 0x2F40)
+// 0x0000 (0x2F48 - 0x2F48)
 class ATgPawn_Turret_Flamethrower : public ATgPawn_Turret
 {
 public:
@@ -23406,11 +23456,11 @@ public:
 
 
 // Class TgGame.TgPawn_Turret_Flamethrower_Mini
-// 0x0004 (0x2F44 - 0x2F40)
+// 0x0004 (0x2F4C - 0x2F48)
 class ATgPawn_Turret_Flamethrower_Mini : public ATgPawn_Turret_Flamethrower
 {
 public:
-	float                                              m_fExtraTranslationOffsetZ;                               // 0x2F40(0x0004)
+	float                                              m_fExtraTranslationOffsetZ;                               // 0x2F48(0x0004)
 
 	static UClass* StaticClass()
 	{
@@ -23422,7 +23472,7 @@ public:
 
 
 // Class TgGame.TgPawn_Turret_Mega
-// 0x0000 (0x2F40 - 0x2F40)
+// 0x0000 (0x2F48 - 0x2F48)
 class ATgPawn_Turret_Mega : public ATgPawn_Turret
 {
 public:
@@ -23437,15 +23487,15 @@ public:
 
 
 // Class TgGame.TgPawn_VoodooTotem
-// 0x005C (0x2F7C - 0x2F20)
+// 0x005C (0x2F84 - 0x2F28)
 class ATgPawn_VoodooTotem : public ATgPawn_Pet
 {
 public:
-	class ATgPawn*                                     r_linkedEnemies[0x5];                                     // 0x2F20(0x0008) (Net)
-	int                                                nBreakDist;                                               // 0x2F48(0x0004)
-	int                                                m_nBeamFXID;                                              // 0x2F4C(0x0004)
-	class UTgSpecialFx*                                m_BeamFXs[0x5];                                           // 0x2F50(0x0008)
-	float                                              fDamageAmount;                                            // 0x2F78(0x0004)
+	class ATgPawn*                                     r_linkedEnemies[0x5];                                     // 0x2F28(0x0008) (Net)
+	int                                                nBreakDist;                                               // 0x2F50(0x0004)
+	int                                                m_nBeamFXID;                                              // 0x2F54(0x0004)
+	class UTgSpecialFx*                                m_BeamFXs[0x5];                                           // 0x2F58(0x0008)
+	float                                              fDamageAmount;                                            // 0x2F80(0x0004)
 
 	static UClass* StaticClass()
 	{
@@ -23468,12 +23518,12 @@ public:
 
 
 // Class TgGame.TgPawn_Structure
-// 0x0008 (0x2ECC - 0x2EC4)
+// 0x0008 (0x2ED4 - 0x2ECC)
 class ATgPawn_Structure : public ATgPawn
 {
 public:
-	float                                              s_fLastDamageTime;                                        // 0x2EC4(0x0004)
-	float                                              s_fDamageNotificationDelay;                               // 0x2EC8(0x0004)
+	float                                              s_fLastDamageTime;                                        // 0x2ECC(0x0004)
+	float                                              s_fDamageNotificationDelay;                               // 0x2ED0(0x0004)
 
 	static UClass* StaticClass()
 	{
@@ -23494,19 +23544,19 @@ public:
 
 
 // Class TgGame.TgPawn_TowerBase
-// 0x0034 (0x2F00 - 0x2ECC)
+// 0x0034 (0x2F08 - 0x2ED4)
 class ATgPawn_TowerBase : public ATgPawn_Structure
 {
 public:
-	TArray<struct FNavMeshBorderEdges>                 BorderEdges;                                              // 0x2ECC(0x0010) (AlwaysInit, NeedCtorLink)
-	class UTgSpecialFx*                                c_BeamFX;                                                 // 0x2EDC(0x0008) (Transient)
-	class UTgMarkComponent*                            s_DamageScaler;                                           // 0x2EE4(0x0008) (ExportObject, Component, EditInline)
-	int                                                m_nNumGuardianLevels;                                     // 0x2EEC(0x0004)
-	unsigned long                                      r_bLocked : 1;                                            // 0x2EF0(0x0004) (Net)
-	unsigned long                                      m_bShouldBeFaded : 1;                                     // 0x2EF0(0x0004) (Transient)
-	float                                              m_fTransparentFadeSpeed;                                  // 0x2EF4(0x0004)
-	float                                              m_fMaxFadeTransparency;                                   // 0x2EF8(0x0004)
-	float                                              m_fFadeDistance2D;                                        // 0x2EFC(0x0004)
+	TArray<struct FNavMeshBorderEdges>                 BorderEdges;                                              // 0x2ED4(0x0010) (AlwaysInit, NeedCtorLink)
+	class UTgSpecialFx*                                c_BeamFX;                                                 // 0x2EE4(0x0008) (Transient)
+	class UTgMarkComponent*                            s_DamageScaler;                                           // 0x2EEC(0x0008) (ExportObject, Component, EditInline)
+	int                                                m_nNumGuardianLevels;                                     // 0x2EF4(0x0004)
+	unsigned long                                      r_bLocked : 1;                                            // 0x2EF8(0x0004) (Net)
+	unsigned long                                      m_bShouldBeFaded : 1;                                     // 0x2EF8(0x0004) (Transient)
+	float                                              m_fTransparentFadeSpeed;                                  // 0x2EFC(0x0004)
+	float                                              m_fMaxFadeTransparency;                                   // 0x2F00(0x0004)
+	float                                              m_fFadeDistance2D;                                        // 0x2F04(0x0004)
 
 	static UClass* StaticClass()
 	{
@@ -23529,32 +23579,32 @@ public:
 
 
 // Class TgGame.TgPawn_Tower
-// 0x0050 (0x2F50 - 0x2F00)
+// 0x0050 (0x2F58 - 0x2F08)
 class ATgPawn_Tower : public ATgPawn_TowerBase
 {
 public:
-	float                                              m_TimeSinceDeath;                                         // 0x2F00(0x0004)
-	TArray<class UMaterialInstanceConstant*>           m_DestroyedMICs;                                          // 0x2F04(0x0010) (NeedCtorLink)
-	float                                              m_fFadeOutStartTime;                                      // 0x2F14(0x0004)
-	float                                              m_fFadeOutEndTime;                                        // 0x2F18(0x0004)
-	struct FVector                                     r_vInitialRotation;                                       // 0x2F1C(0x000C) (Net)
-	unsigned long                                      m_bUseDestruction : 1;                                    // 0x2F28(0x0004)
-	unsigned long                                      r_bSide0Destroyed : 1;                                    // 0x2F28(0x0004) (Net)
-	unsigned long                                      r_bSide1Destroyed : 1;                                    // 0x2F28(0x0004) (Net)
-	unsigned long                                      r_bSide2Destroyed : 1;                                    // 0x2F28(0x0004) (Net)
-	unsigned long                                      r_bSide3Destroyed : 1;                                    // 0x2F28(0x0004) (Net)
-	unsigned char                                      r_PlaySide0Destruction;                                   // 0x2F2C(0x0001) (Net)
-	unsigned char                                      r_PlaySide1Destruction;                                   // 0x2F2D(0x0001) (Net)
-	unsigned char                                      r_PlaySide2Destruction;                                   // 0x2F2E(0x0001) (Net)
-	unsigned char                                      r_PlaySide3Destruction;                                   // 0x2F2F(0x0001) (Net)
-	int                                                m_nSide0MeshId;                                           // 0x2F30(0x0004)
-	int                                                m_nSide1MeshId;                                           // 0x2F34(0x0004)
-	int                                                m_nSide2MeshId;                                           // 0x2F38(0x0004)
-	int                                                m_nSide3MeshId;                                           // 0x2F3C(0x0004)
-	int                                                m_nSide0Health;                                           // 0x2F40(0x0004)
-	int                                                m_nSide1Health;                                           // 0x2F44(0x0004)
-	int                                                m_nSide2Health;                                           // 0x2F48(0x0004)
-	int                                                m_nSide3Health;                                           // 0x2F4C(0x0004)
+	float                                              m_TimeSinceDeath;                                         // 0x2F08(0x0004)
+	TArray<class UMaterialInstanceConstant*>           m_DestroyedMICs;                                          // 0x2F0C(0x0010) (NeedCtorLink)
+	float                                              m_fFadeOutStartTime;                                      // 0x2F1C(0x0004)
+	float                                              m_fFadeOutEndTime;                                        // 0x2F20(0x0004)
+	struct FVector                                     r_vInitialRotation;                                       // 0x2F24(0x000C) (Net)
+	unsigned long                                      m_bUseDestruction : 1;                                    // 0x2F30(0x0004)
+	unsigned long                                      r_bSide0Destroyed : 1;                                    // 0x2F30(0x0004) (Net)
+	unsigned long                                      r_bSide1Destroyed : 1;                                    // 0x2F30(0x0004) (Net)
+	unsigned long                                      r_bSide2Destroyed : 1;                                    // 0x2F30(0x0004) (Net)
+	unsigned long                                      r_bSide3Destroyed : 1;                                    // 0x2F30(0x0004) (Net)
+	unsigned char                                      r_PlaySide0Destruction;                                   // 0x2F34(0x0001) (Net)
+	unsigned char                                      r_PlaySide1Destruction;                                   // 0x2F35(0x0001) (Net)
+	unsigned char                                      r_PlaySide2Destruction;                                   // 0x2F36(0x0001) (Net)
+	unsigned char                                      r_PlaySide3Destruction;                                   // 0x2F37(0x0001) (Net)
+	int                                                m_nSide0MeshId;                                           // 0x2F38(0x0004)
+	int                                                m_nSide1MeshId;                                           // 0x2F3C(0x0004)
+	int                                                m_nSide2MeshId;                                           // 0x2F40(0x0004)
+	int                                                m_nSide3MeshId;                                           // 0x2F44(0x0004)
+	int                                                m_nSide0Health;                                           // 0x2F48(0x0004)
+	int                                                m_nSide1Health;                                           // 0x2F4C(0x0004)
+	int                                                m_nSide2Health;                                           // 0x2F50(0x0004)
+	int                                                m_nSide3Health;                                           // 0x2F54(0x0004)
 
 	static UClass* StaticClass()
 	{
@@ -23582,21 +23632,21 @@ public:
 
 
 // Class TgGame.TgPawn_SiegeWall
-// 0x002C (0x2F7C - 0x2F50)
+// 0x002C (0x2F84 - 0x2F58)
 class ATgPawn_SiegeWall : public ATgPawn_Tower
 {
 public:
-	float                                              m_fImpactEffectXRange;                                    // 0x2F50(0x0004) (Edit)
-	float                                              m_fImpactEffectYRange;                                    // 0x2F54(0x0004) (Edit)
-	struct FVector                                     r_vNextImpactEffectLocation;                              // 0x2F58(0x000C) (Net)
-	float                                              m_fImpactRecoveryTime;                                    // 0x2F64(0x0004) (Edit)
-	float                                              m_fRemainingImpactRecoveryTime;                           // 0x2F68(0x0004)
-	float                                              m_fMaxImpactSize;                                         // 0x2F6C(0x0004) (Edit)
-	class UMaterialInstanceConstant*                   m_ImpactMIC;                                              // 0x2F70(0x0008)
-	unsigned long                                      c_bIsVulnerable : 1;                                      // 0x2F78(0x0004)
-	unsigned long                                      m_bHasRegisteredObstacle : 1;                             // 0x2F78(0x0004)
-	unsigned long                                      m_bSpawnedThisFrame : 1;                                  // 0x2F78(0x0004)
-	unsigned long                                      m_bQueriedBorderEdges : 1;                                // 0x2F78(0x0004)
+	float                                              m_fImpactEffectXRange;                                    // 0x2F58(0x0004) (Edit)
+	float                                              m_fImpactEffectYRange;                                    // 0x2F5C(0x0004) (Edit)
+	struct FVector                                     r_vNextImpactEffectLocation;                              // 0x2F60(0x000C) (Net)
+	float                                              m_fImpactRecoveryTime;                                    // 0x2F6C(0x0004) (Edit)
+	float                                              m_fRemainingImpactRecoveryTime;                           // 0x2F70(0x0004)
+	float                                              m_fMaxImpactSize;                                         // 0x2F74(0x0004) (Edit)
+	class UMaterialInstanceConstant*                   m_ImpactMIC;                                              // 0x2F78(0x0008)
+	unsigned long                                      c_bIsVulnerable : 1;                                      // 0x2F80(0x0004)
+	unsigned long                                      m_bHasRegisteredObstacle : 1;                             // 0x2F80(0x0004)
+	unsigned long                                      m_bSpawnedThisFrame : 1;                                  // 0x2F80(0x0004)
+	unsigned long                                      m_bQueriedBorderEdges : 1;                                // 0x2F80(0x0004)
 
 	static UClass* StaticClass()
 	{
@@ -23627,12 +23677,12 @@ public:
 
 
 // Class TgGame.TgPawn_SiegeWall_Base
-// 0x0008 (0x2F84 - 0x2F7C)
+// 0x0008 (0x2F8C - 0x2F84)
 class ATgPawn_SiegeWall_Base : public ATgPawn_SiegeWall
 {
 public:
-	unsigned long                                      m_bHasAlertedLowHealth : 1;                               // 0x2F7C(0x0004)
-	float                                              m_fLowHealthTrigger;                                      // 0x2F80(0x0004)
+	unsigned long                                      m_bHasAlertedLowHealth : 1;                               // 0x2F84(0x0004)
+	float                                              m_fLowHealthTrigger;                                      // 0x2F88(0x0004)
 
 	static UClass* StaticClass()
 	{
@@ -23653,7 +23703,7 @@ public:
 
 
 // Class TgGame.TgPawn_SiegeWall_Inner
-// 0x0000 (0x2F7C - 0x2F7C)
+// 0x0000 (0x2F84 - 0x2F84)
 class ATgPawn_SiegeWall_Inner : public ATgPawn_SiegeWall
 {
 public:
@@ -23675,7 +23725,7 @@ public:
 
 
 // Class TgGame.TgPawn_SiegeWall_Outer
-// 0x0000 (0x2F7C - 0x2F7C)
+// 0x0000 (0x2F84 - 0x2F84)
 class ATgPawn_SiegeWall_Outer : public ATgPawn_SiegeWall
 {
 public:
@@ -23697,14 +23747,14 @@ public:
 
 
 // Class TgGame.TgPawn_Tower_FA
-// 0x0018 (0x2F68 - 0x2F50)
+// 0x0018 (0x2F70 - 0x2F58)
 class ATgPawn_Tower_FA : public ATgPawn_Tower
 {
 public:
-	TEnumAsByte<ETowerType>                            m_TowerType;                                              // 0x2F50(0x0001)
-	unsigned char                                      UnknownData00[0x3];                                       // 0x2F51(0x0003) MISSED OFFSET
-	struct FRotator                                    r_InitialOrientation;                                     // 0x2F54(0x000C) (Net)
-	class UParticleSystemComponent*                    c_AimVisibilityMesh;                                      // 0x2F60(0x0008) (ExportObject, Component, EditInline)
+	TEnumAsByte<ETowerType>                            m_TowerType;                                              // 0x2F58(0x0001)
+	unsigned char                                      UnknownData00[0x3];                                       // 0x2F59(0x0003) MISSED OFFSET
+	struct FRotator                                    r_InitialOrientation;                                     // 0x2F5C(0x000C) (Net)
+	class UParticleSystemComponent*                    c_AimVisibilityMesh;                                      // 0x2F68(0x0008) (ExportObject, Component, EditInline)
 
 	static UClass* StaticClass()
 	{
@@ -23829,11 +23879,11 @@ public:
 	void STATIC_ToggleOutlineCharacters();
 	struct FString STATIC_StripClanTag(const struct FString& PlayerName);
 	void STATIC_DecreaseCameraSpeed();
-	void STATIC_IncreaseCameraSpeeed();
+	void IncreaseCameraSpeeed();
 	void STATIC_CameraSpeed(float NewSpeed);
 	void STATIC_GotoCinematicCam(const struct FString& sCamName);
 	void STATIC_SpecSetFlightMode(TEnumAsByte<ESpecFlightMode> sfm);
-	void RecallSpectatorBookmark(int nNum);
+	void STATIC_RecallSpectatorBookmark(int nNum);
 	void STATIC_SetSpectatorBookmark(int nNum);
 	struct FViewTargetTransitionParams STATIC_GetSnapBlendParams();
 	struct FViewTargetTransitionParams STATIC_GetDefaultBlendParams();
@@ -23915,7 +23965,7 @@ public:
 	}
 
 
-	void ReceiveCamSyncTarget(int PawnId, int SourcePlayerId);
+	void STATIC_ReceiveCamSyncTarget(int PawnId, int SourcePlayerId);
 	void STATIC_SendCamSyncTarget();
 	void SpectatorReceivedViewTarget(class AActor* VT);
 	void SpectatorSetViewTarget(class AActor* VT, const struct FViewTargetTransitionParams& TransitionParams);
@@ -24030,7 +24080,7 @@ public:
 
 
 	void STATIC_FlushPressedKey(const struct FName& Key);
-	void UnbindCommand(const struct FString& Command, bool bGamepad, int nAlternate);
+	void STATIC_UnbindCommand(const struct FString& Command, bool bGamepad, int nAlternate);
 	void UnbindCommandAll(const struct FString& Command);
 	void SetCommandBind(const struct FString& Command, bool bGamepad, int nAlternate, const struct FString& ExtendedBinding);
 	void SetBindExtended(const struct FString& ExtendedBinding, const struct FString& Command);
@@ -24049,7 +24099,7 @@ public:
 	void STATIC_SetKeyCaptureState(bool bSpectator, bool bCaptureKey);
 	void ResetKeysToDefault();
 	void ReadMouseSettings();
-	void StoreMouseSettings();
+	void STATIC_StoreMouseSettings();
 	bool OnInputChar(int ControllerId, const struct FString& Unicode);
 	bool OnInputAxis(int ControllerId, const struct FName& Key, float Delta, float DeltaTime);
 	bool OnRawInputKey(int ControllerId, const struct FName& Key, TEnumAsByte<EInputEvent> Event, float AmountDepressed);
@@ -24300,7 +24350,7 @@ public:
 	}
 
 
-	void STATIC_OnSetLobbyMeshSkin(class UTgSeqAct_SetLobbyMeshSkin* tgSeqAct);
+	void OnSetLobbyMeshSkin(class UTgSeqAct_SetLobbyMeshSkin* tgSeqAct);
 	void OnSetSkelPosture(class UTgSeqAct_SetSkelPosture* Action);
 	void SetActivePosture(TEnumAsByte<ETG_POSTURE> Posture);
 	void BeginTransition(bool bPlayFx);
@@ -25105,7 +25155,7 @@ public:
 	bool LineCheckMovement(class AActor* pTarget, class AActor* pSource);
 	void SetTaskForceNumber(int nTaskForce);
 	int STATIC_GetTaskForceNumber();
-	void AddThreat(class ATgPawn* attacker, float fAmount);
+	void STATIC_AddThreat(class ATgPawn* attacker, float fAmount);
 	bool IsDeviceReady(TEnumAsByte<ETG_EQUIP_POINT> DeviceSlot);
 	bool AtLocation(const struct FVector& vLocation);
 };
@@ -25239,13 +25289,13 @@ public:
 	float STATIC_GetCooldownIncrease();
 	void Stun(bool bStun, TEnumAsByte<EStunType> eType);
 	void STATIC_UpdateDeviceRanges();
-	void STATIC_OnPathfindTerminated();
-	void STATIC_OnPathfindFailed();
+	void OnPathfindTerminated();
+	void OnPathfindFailed();
 	void STATIC_StopNavigation();
 	void STATIC_ClearNavigation();
-	void AddLocationToNavigationQueue(int NodeToken, const struct FVector& TargetLocation, bool bLookAtTarget, bool bMustHaveLOS, float DistanceTolerance);
-	void AddActorToNavigationQueue(int NodeToken, class AActor* TargetActor, bool bLookAtTarget, bool bMustHaveLOS, float DistanceTolerance, bool bStopNavOnReachedDestination);
-	bool STATIC_HasVisibilityToPoint(struct FVector* TestPoint);
+	void STATIC_AddLocationToNavigationQueue(int NodeToken, const struct FVector& TargetLocation, bool bLookAtTarget, bool bMustHaveLOS, float DistanceTolerance);
+	void STATIC_AddActorToNavigationQueue(int NodeToken, class AActor* TargetActor, bool bLookAtTarget, bool bMustHaveLOS, float DistanceTolerance, bool bStopNavOnReachedDestination);
+	bool HasVisibilityToPoint(struct FVector* TestPoint);
 	void ResetBlackboard();
 	void Possess(class APawn* inPawn, bool bVehicleTransition);
 	void Destroyed();
@@ -25299,7 +25349,7 @@ public:
 	void STATIC_PawnDied(class APawn* P);
 	void Possess(class APawn* inPawn, bool bVehicleTransition);
 	void LiveRespawn(bool bResetHealth, bool bResetDevices);
-	void STATIC_PrepareForLiveRespawn();
+	void PrepareForLiveRespawn();
 	void Revive();
 	void STATIC_InitPlayerReplicationInfo();
 	int STATIC_GetTaskForceNumber();
@@ -25310,7 +25360,7 @@ public:
 	float STATIC_StartReviveTimer();
 	void PurchaseSkills();
 	int STATIC_GetSkillPointsAvailable();
-	bool STATIC_HaveBasicSkillsBeenActivated();
+	bool HaveBasicSkillsBeenActivated();
 	bool STATIC_CanAllocateSkillPoint(int DeviceID, class ATgDevice* aDevice);
 	void PurchaseItems();
 };
@@ -25398,7 +25448,7 @@ public:
 	void STATIC_Evade();
 	bool STATIC_CanSpreadOut();
 	void STATIC_ClearThreatList();
-	void AddThreat(class ATgPawn* attacker, float ThreatLevel);
+	void STATIC_AddThreat(class ATgPawn* attacker, float ThreatLevel);
 };
 
 
@@ -25838,7 +25888,7 @@ public:
 	void STATIC_ZoomIn();
 	void BecomeViewTarget(class ATgPlayerController* PC);
 	void UpdateCamera(class APawn* P, class ATgPlayerCamera* CameraActor, float DeltaTime, struct FTViewTarget* OutVT);
-	bool STATIC_NoDeathCamCodePath();
+	bool NoDeathCamCodePath();
 	struct FVector STATIC_GetCamLocationOffset(class APawn* P);
 };
 
@@ -25900,7 +25950,7 @@ public:
 	void OnBecomeInActive(class UTgCameraModule* NewCamera);
 	void OnBecomeActive(class UTgCameraModule* OldCamera);
 	void STATIC_DecreaseCameraSpeed();
-	void STATIC_IncreaseCameraSpeeed();
+	void IncreaseCameraSpeeed();
 	void STATIC_ZoomOut();
 	void STATIC_ZoomIn();
 	float GetFOVAngle();
@@ -26171,7 +26221,7 @@ public:
 
 
 // Class TgGame.TgPlayerCamera
-// 0x0294 (0x0898 - 0x0604)
+// 0x029C (0x08A0 - 0x0604)
 class ATgPlayerCamera : public ACamera
 {
 public:
@@ -26225,20 +26275,19 @@ public:
 	float                                              m_fHealFXUpdatePeriod;                                    // 0x0854(0x0004)
 	float                                              m_fBloodHazeIntensity;                                    // 0x0858(0x0004)
 	int                                                m_nSerisDefaultShadowTravelFX;                            // 0x085C(0x0004) (Const)
-	int                                                m_nLillithUltFX1;                                         // 0x0860(0x0004) (Const)
-	int                                                m_nLillithUltFX2;                                         // 0x0864(0x0004) (Const)
-	float                                              m_fHealingFXHalflifeAccumulation;                         // 0x0868(0x0004)
-	float                                              m_fHealingFXHalflifeImpulse;                              // 0x086C(0x0004)
-	float                                              m_fHealingFXReliefFactor;                                 // 0x0870(0x0004)
-	float                                              m_fHealingFXAccumulationMix;                              // 0x0874(0x0004)
-	float                                              m_fHealingFXVisibleThreshold;                             // 0x0878(0x0004)
-	float                                              m_fHealingCritFXThreshold;                                // 0x087C(0x0004)
-	float                                              m_fHealthDamageFXHalflifeAccumulation;                    // 0x0880(0x0004)
-	float                                              m_fHealthDamageFXHalflifeImpulse;                         // 0x0884(0x0004)
-	float                                              m_fHealthDamageFXPainFactor;                              // 0x0888(0x0004)
-	float                                              m_fHealthDamageFXAccumulationMix;                         // 0x088C(0x0004)
-	float                                              m_fHealthDamageCritFXThreshold;                           // 0x0890(0x0004)
-	float                                              m_fHealthDamageCritFXAccumulationMix;                     // 0x0894(0x0004)
+	int                                                m_LillithUltFX[0x4];                                      // 0x0860(0x0004)
+	float                                              m_fHealingFXHalflifeAccumulation;                         // 0x0870(0x0004)
+	float                                              m_fHealingFXHalflifeImpulse;                              // 0x0874(0x0004)
+	float                                              m_fHealingFXReliefFactor;                                 // 0x0878(0x0004)
+	float                                              m_fHealingFXAccumulationMix;                              // 0x087C(0x0004)
+	float                                              m_fHealingFXVisibleThreshold;                             // 0x0880(0x0004)
+	float                                              m_fHealingCritFXThreshold;                                // 0x0884(0x0004)
+	float                                              m_fHealthDamageFXHalflifeAccumulation;                    // 0x0888(0x0004)
+	float                                              m_fHealthDamageFXHalflifeImpulse;                         // 0x088C(0x0004)
+	float                                              m_fHealthDamageFXPainFactor;                              // 0x0890(0x0004)
+	float                                              m_fHealthDamageFXAccumulationMix;                         // 0x0894(0x0004)
+	float                                              m_fHealthDamageCritFXThreshold;                           // 0x0898(0x0004)
+	float                                              m_fHealthDamageCritFXAccumulationMix;                     // 0x089C(0x0004)
 
 	static UClass* StaticClass()
 	{
@@ -26303,14 +26352,14 @@ public:
 
 
 // Class TgGame.TgSpectatorCamera
-// 0x0030 (0x08C8 - 0x0898)
+// 0x0030 (0x08D0 - 0x08A0)
 class ATgSpectatorCamera : public ATgPlayerCamera
 {
 public:
-	struct FViewTargetTransitionParams                 m_DefaultBlendParams;                                     // 0x0898(0x0010)
-	struct FViewTargetTransitionParams                 m_SnapBlendParams;                                        // 0x08A8(0x0010)
-	class UCameraAnim*                                 m_CinematicAnim;                                          // 0x08B8(0x0008)
-	class UCameraAnimInst*                             m_AnimInstance;                                           // 0x08C0(0x0008) (Transient)
+	struct FViewTargetTransitionParams                 m_DefaultBlendParams;                                     // 0x08A0(0x0010)
+	struct FViewTargetTransitionParams                 m_SnapBlendParams;                                        // 0x08B0(0x0010)
+	class UCameraAnim*                                 m_CinematicAnim;                                          // 0x08C0(0x0008)
+	class UCameraAnimInst*                             m_AnimInstance;                                           // 0x08C8(0x0008) (Transient)
 
 	static UClass* StaticClass()
 	{
@@ -26554,7 +26603,7 @@ public:
 	void UnTouch(class AActor* Other);
 	void Touch(class AActor* Other, class UPrimitiveComponent* OtherComp, const struct FVector& HitLocation, const struct FVector& HitNormal);
 	void STATIC_RemoveGameTips(class ATgPlayerController* aPC);
-	void AddGameTips(class ATgPlayerController* aPC);
+	void STATIC_AddGameTips(class ATgPlayerController* aPC);
 };
 
 
@@ -26816,7 +26865,7 @@ public:
 
 
 	void STATIC_ToggleTeamColors();
-	void Deactivate();
+	void STATIC_Deactivate();
 	void Activate();
 	void PostBeginPlay();
 	int STATIC_GetCurrentTaskforce();
@@ -27053,11 +27102,11 @@ public:
 	bool STATIC_FindInactivePRI(class APlayerController* PC);
 	void AddInactivePRI(class APlayerReplicationInfo* PRI, class APlayerController* PC);
 	void StartMatch();
-	void STATIC_NativeEACStartMatch();
+	void NativeEACStartMatch();
 	void STATIC_GotoGameRunningState();
 	bool ShouldSpawnAtStartSpot(class AController* Player);
 	bool ChangeTeam(class AController* Other, int Num, bool bNewTeam);
-	float STATIC_RatePlayerStart(class APlayerStart* P, unsigned char Team, class AController* Player);
+	float RatePlayerStart(class APlayerStart* P, unsigned char Team, class AController* Player);
 	float RatePlayerStartPoint(class APlayerStart* P, class AController* Player);
 	class ANavigationPoint* STATIC_FindPlayerGroupStart(class AController* Player, int groupNumber, unsigned char InTeam, const struct FString& IncomingName);
 	class ANavigationPoint* STATIC_FindPlayerStart(class AController* Player, unsigned char InTeam, const struct FString& IncomingName);
@@ -27117,7 +27166,7 @@ public:
 	int STATIC_GetWinningTaskforce();
 	void STATIC_ApplyCharacterBasedGameProperties(class ATgPawn* Pawn, class ATgInventoryManager* tgInvManager, int nTaskForce);
 	class ATgPawn* STATIC_SpawnPlayerCharacter(class AController* C, const struct FVector& vLocation);
-	void STATIC_InitGameRepInfo();
+	void InitGameRepInfo();
 	void LoadGameConfig();
 };
 
@@ -27258,7 +27307,7 @@ public:
 	void STATIC_CreateMinimapManagers(class UClass* managerClass);
 	void PostBeginPlay();
 	void NativeUpdateTimerState();
-	void STATIC_HandleDisconnectedPawn(class ATgPawn_Character* PC);
+	void HandleDisconnectedPawn(class ATgPawn_Character* PC);
 	bool RemoveTimeDilationWindow(int nWindowId);
 	int RequestTimeDilation(float fTimeDilation, float fDuration, float fRampUp, float fRampDown);
 	float STATIC_GetMinIntroWait();
@@ -27796,7 +27845,7 @@ public:
 	void STATIC_UpdateTgPawnMetaGameState(class ATgPawn* CurPawn, TEnumAsByte<EMetaGameState> NewState);
 	void OnKillConfirmed(class ATgRepInfo_Player* PRI, class ATgRepInfo_TaskForce* Taskforce, int bonusScore);
 	void OnPlayerDamaged(class ATgPawn* TargetPawn, class ATgPawn* InstigatorPawn);
-	void STATIC_OnPawnRespawned(class ATgPawn* RespawningPawn);
+	void OnPawnRespawned(class ATgPawn* RespawningPawn);
 	void OnPawnDied(class ATgPawn* Victim, class AController* Killer, class UClass* dmgType);
 	void STATIC_Killed(class AController* Killer, class AController* KilledPlayer, class APawn* KilledPawn, class UClass* DamageType);
 	void STATIC_SendClientsRequestHelpText(int GameTipId);
@@ -27843,11 +27892,11 @@ public:
 	void STATIC_GoToNextPhase();
 	void STATIC_StartPhase(class UTgGamePhase* NextPhase);
 	void STATIC_StartFirstPhase();
-	void STATIC_PushDecoratedPhase(TEnumAsByte<EGamePhase> phaseType, float fDuration, const struct FString& phaseName);
+	void PushDecoratedPhase(TEnumAsByte<EGamePhase> phaseType, float fDuration, const struct FString& phaseName);
 	void PopPhase();
 	void PushPhase(TEnumAsByte<EGamePhase> phaseType, float fDuration, const struct FString& phaseName);
 	void STATIC_DecoratePhase(TEnumAsByte<EGamePhase> phaseType, float fDuration, const struct FString& phaseName);
-	void AddPhase(TEnumAsByte<EGamePhase> phaseType, float fDuration, const struct FString& phaseName);
+	void STATIC_AddPhase(TEnumAsByte<EGamePhase> phaseType, float fDuration, const struct FString& phaseName);
 	class UTgGamePhase* STATIC_ConstructGamePhase(TEnumAsByte<EGamePhase> phaseType, float fDuration, const struct FString& phaseName);
 	void InitMasterPhase();
 	void PostPhaseSetup();
@@ -27863,7 +27912,7 @@ public:
 	void STATIC_TriggerMapLaneChange();
 	bool STATIC_BeginEndMission(bool bClearNextMapGame, class AActor* EndMissionFocus, float fDelayOverride);
 	void OnBeaconReset(int nTaskForce, class AController* Killer);
-	void STATIC_HandleEchoAchievements(int nEchoId, bool bTF1DamagedEcho, bool bTF2DamagedEcho);
+	void HandleEchoAchievements(int nEchoId, bool bTF1DamagedEcho, bool bTF2DamagedEcho);
 	void STATIC_ScoreKillCommon(struct FScoreKillData* Data);
 	bool STATIC_GetScoreKillData(class AController* Killer, class AController* Other, bool bFakeDeath, struct FScoreKillData* Data);
 	void STATIC_ScoreKillGameType(struct FScoreKillData* Data);
@@ -27959,7 +28008,7 @@ public:
 	void Tick(float DeltaSeconds);
 	void STATIC_SetupPhases();
 	void PostBeginPlay();
-	void STATIC_HandleDisconnectedPawn(class ATgPawn_Character* PC);
+	void HandleDisconnectedPawn(class ATgPawn_Character* PC);
 };
 
 
@@ -28175,7 +28224,7 @@ public:
 	bool AllowPausing(class APlayerController* PC);
 	void STATIC_UpdateOccupationStatus(class ATgChaosCapturePoint* CapturePoint, int nNumTF1, int nNumTF2);
 	void OnPawnDied(class ATgPawn* Victim, class AController* Killer, class UClass* dmgType);
-	void ReachTicketLimit(int nTaskForce, TEnumAsByte<EVictoryType> VictoryType);
+	void STATIC_ReachTicketLimit(int nTaskForce, TEnumAsByte<EVictoryType> VictoryType);
 	bool STATIC_GainTickets(int nTaskForce, float fNumTickets, TEnumAsByte<EVictoryType> VictoryType);
 	void STATIC_SetTickets(int nTaskForce, float fNumTickets);
 	void STATIC_SetLanePusherSpeedScale(float fNewSpeedScale);
@@ -28293,6 +28342,7 @@ public:
 	class ATgChaosCapturePoint* STATIC_GetCurrentCapturePoint();
 	void STATIC_ResetOvertime();
 	float STATIC_GetOvertimeDuration();
+	float STATIC_GetWinningTickets();
 };
 
 
@@ -28414,7 +28464,7 @@ public:
 	void InstructClientsOnTakeoverSecondPhase();
 	void NotifyPlayersOfPointCapture();
 	float STATIC_GetPointCaptureScoreMultiplier(int nTaskForce);
-	void ActivateTaskforceSpecificCapturePoint(int TaskForceId);
+	void STATIC_ActivateTaskforceSpecificCapturePoint(int TaskForceId);
 	class ATgChaosCapturePoint* STATIC_GetCurrentCapturePoint();
 	void STATIC_SendAssaultPointCapturedAlert(int Taskforce);
 };
@@ -28601,7 +28651,7 @@ public:
 	int STATIC_GetGamepadObjectiveMsg();
 	int STATIC_GetObjectiveMsg();
 	bool IsUIReady();
-	void STATIC_HideWorldOverlays();
+	void HideWorldOverlays();
 	int STATIC_GetWinningTaskforce();
 	void STATIC_AwardAchievement();
 	void STATIC_EnableTutorialUI(TEnumAsByte<ETutorialUI> TutUIElement, bool bEnable, float fFadeTime);
@@ -29128,7 +29178,7 @@ public:
 	void STATIC_SyncLifespanTimer();
 	void STATIC_StartLifespanTimer(float fTime);
 	void STATIC_UpdateDeployableLocation();
-	void ReceivedDeployableOwner();
+	void STATIC_ReceivedDeployableOwner();
 	void ReplicatedEvent(const struct FName& VarName);
 	void Destroyed();
 	void PostBeginPlay();
@@ -29197,7 +29247,7 @@ public:
 	void Destroyed();
 	void ReplicatedEvent(const struct FName& VarName);
 	void PostBeginPlay();
-	void STATIC_InitFor(class ATgActorFactory* Factory);
+	void InitFor(class ATgActorFactory* Factory);
 	float STATIC_GetRespawnElapsedPercent();
 	bool IsVisibleToLocalPlayer();
 	void STATIC_UpdateMapVisibility(TEnumAsByte<ETgMapTeam> MAPTEAM, unsigned char bVisible, float fVisionRange, bool bDetected);
@@ -29205,7 +29255,7 @@ public:
 
 
 // Class TgGame.TgRepInfo_Game
-// 0x0318 (0x0600 - 0x02E8)
+// 0x031C (0x0604 - 0x02E8)
 class ATgRepInfo_Game : public AGameReplicationInfo
 {
 public:
@@ -29248,7 +29298,6 @@ public:
 	unsigned long                                      r_bAimAssistEnabled : 1;                                  // 0x0318(0x0004) (Net)
 	unsigned long                                      r_bSuddenDeath : 1;                                       // 0x0318(0x0004) (Net)
 	unsigned long                                      r_bCanPurchaseItemsWhileDead : 1;                         // 0x0318(0x0004) (Net)
-	unsigned long                                      r_bSuppressLoadoutMenu : 1;                               // 0x0318(0x0004) (Net)
 	unsigned long                                      r_bSuppressItemMenu : 1;                                  // 0x0318(0x0004) (Net)
 	unsigned long                                      r_bUsesItemStoreV2 : 1;                                   // 0x0318(0x0004) (Net)
 	unsigned long                                      r_bEnableDistanceFOW : 1;                                 // 0x0318(0x0004) (Net)
@@ -29259,7 +29308,7 @@ public:
 	unsigned long                                      r_bServerFlagSprint : 1;                                  // 0x0318(0x0004) (Net)
 	unsigned long                                      r_bServerFlagMinimapTeamVisibility : 1;                   // 0x0318(0x0004) (Net)
 	unsigned long                                      r_bForce3P : 1;                                           // 0x0318(0x0004) (Net)
-	unsigned long                                      r_bForce1P : 1;                                           // 0x031C(0x0004) (Net)
+	unsigned long                                      r_bForce1P : 1;                                           // 0x0318(0x0004) (Net)
 	unsigned long                                      r_bForceOutOfCombatSprint : 1;                            // 0x031C(0x0004) (Net)
 	unsigned long                                      r_bAutoMelee : 1;                                         // 0x031C(0x0004) (Net)
 	unsigned long                                      r_bShowProjectileProximityDistance : 1;                   // 0x031C(0x0004) (Net)
@@ -29390,15 +29439,16 @@ public:
 	int                                                r_nVideoPathID;                                           // 0x0568(0x0004) (Net)
 	int                                                r_nTargetPhaseTicketCount;                                // 0x056C(0x0004) (Net)
 	struct FBotDifficultyDebugData                     r_DifficultyDebugData;                                    // 0x0570(0x0064) (Net)
-	int                                                r_nAbyssalEchoTimer;                                      // 0x05D4(0x0004) (Net)
-	float                                              c_fAbyssalEchoTimer;                                      // 0x05D8(0x0004)
-	int                                                r_nAbyssalEchoTimerTotal;                                 // 0x05DC(0x0004) (Net)
-	int                                                r_nAbyssalEchoBotId;                                      // 0x05E0(0x0004) (Net)
-	class ATgPawn*                                     r_AbyssalEcho;                                            // 0x05E4(0x0008) (Net)
-	class UMaterialInstanceConstant*                   c_AbyssalEchoMIC;                                         // 0x05EC(0x0008)
-	float                                              c_fAbyssalEchoMICFadeInDuration;                          // 0x05F4(0x0004)
-	float                                              c_fAbyssalEchoMICFadeOutDuration;                         // 0x05F8(0x0004)
-	float                                              c_fAbyssalEchoMICTimer;                                   // 0x05FC(0x0004)
+	float                                              r_fWinningTicketsOverride;                                // 0x05D4(0x0004) (Net)
+	int                                                r_nAbyssalEchoTimer;                                      // 0x05D8(0x0004) (Net)
+	float                                              c_fAbyssalEchoTimer;                                      // 0x05DC(0x0004)
+	int                                                r_nAbyssalEchoTimerTotal;                                 // 0x05E0(0x0004) (Net)
+	int                                                r_nAbyssalEchoBotId;                                      // 0x05E4(0x0004) (Net)
+	class ATgPawn*                                     r_AbyssalEcho;                                            // 0x05E8(0x0008) (Net)
+	class UMaterialInstanceConstant*                   c_AbyssalEchoMIC;                                         // 0x05F0(0x0008)
+	float                                              c_fAbyssalEchoMICFadeInDuration;                          // 0x05F8(0x0004)
+	float                                              c_fAbyssalEchoMICFadeOutDuration;                         // 0x05FC(0x0004)
+	float                                              c_fAbyssalEchoMICTimer;                                   // 0x0600(0x0004)
 
 	static UClass* StaticClass()
 	{
@@ -29431,15 +29481,15 @@ public:
 	void STATIC_SetFlagHome(int TeamIndex);
 	int GetNextClientOnlyProjectileInstanceId();
 	void STATIC_RemoveDestructible(class ATgDestructible* Dest);
-	void AddDestructible(class ATgDestructible* Dest);
+	void STATIC_AddDestructible(class ATgDestructible* Dest);
 	void STATIC_RemoveCapturePoint(class ATgChaosCapturePoint* pPoint);
 	void STATIC_AddCrystal(class ATgObjectiveCrystal* pCrystal);
-	void AddCapturePoint(class ATgChaosCapturePoint* pPoint);
+	void STATIC_AddCapturePoint(class ATgChaosCapturePoint* pPoint);
 	void RegisterHHGate(class ATgPawn_HHGate* pGate);
 	void STATIC_RemoveCPRI(class ATgRepInfo_CapturePoint* CPRI);
-	void AddCPRI(class ATgRepInfo_CapturePoint* CPRI);
+	void STATIC_AddCPRI(class ATgRepInfo_CapturePoint* CPRI);
 	void STATIC_RemoveDRI(class ATgRepInfo_Deployable* DRI);
-	void AddDRI(class ATgRepInfo_Deployable* DRI);
+	void STATIC_AddDRI(class ATgRepInfo_Deployable* DRI);
 	void MissionTimeUpdateAllClients();
 	void STATIC_UpdateMissionTimer(bool bForcePrimary, bool bForceSecondary);
 	void InitSecondaryMissionTime();
@@ -29451,7 +29501,7 @@ public:
 	void STATIC_GameEnvironmentRuleUpdated();
 	void STATIC_SetGameRespawnRule(TEnumAsByte<EGameRespawnRule> Rule);
 	void STATIC_SetGameEnvironmentRule(TEnumAsByte<EGameEnvironmentRule> Rule);
-	void STATIC_HideHeadMesh();
+	void HideHeadMesh();
 	void STATIC_ShowHeadMesh();
 	void PrecacheClassByName(const struct FString& godName, const struct FString& SkinName, const struct FString& weaponSkinName);
 	void PrecacheClassById(int nBotId, const struct FString& SkinName, const struct FString& weaponSkinName);
@@ -29462,7 +29512,7 @@ public:
 	void ReplicatedEvent(const struct FName& VarName);
 	class ATgChaosCapturePoint* STATIC_GetActiveCapturePoint();
 	bool STATIC_AllowHeadShots();
-	void RecalcRespawnTimers();
+	void STATIC_RecalcRespawnTimers();
 	bool STATIC_SiegeEngineRequiresAlliesToMove();
 	TEnumAsByte<EMAP_LANE> STATIC_GetLane(int nLane, class ATgRepInfo_TaskForce* tfri);
 	class ATgProj_Simulated* STATIC_SpawnSimulatedProjectile(int nProjectileInstanceId, int nFireModeId, class AActor* pOwner, const struct FVector& vLocation, const struct FVector& vRotation, int nProjectileIdOverride, bool bPredictStartLocationBasedOnPing, class UTgDeviceFire* FireMode, unsigned char ExtraInfo);
@@ -29478,6 +29528,7 @@ public:
 	void STATIC_UpdateGameTransitionUI();
 	void STATIC_UpdateGameScoreUI();
 	void STATIC_UpdateGameClockUI();
+	void ProcessServerGameProperties();
 	bool CheckIsEnemy(class AActor* A, class AActor* B);
 	class ATgRepInfo_TaskForce* STATIC_GetDefendingTaskForce();
 	class ATgRepInfo_TaskForce* STATIC_GetAttackingTaskForce();
@@ -29500,12 +29551,12 @@ public:
 
 
 // Class TgGame.TgRepInfo_Game_TeamDeathMatch
-// 0x0008 (0x0608 - 0x0600)
+// 0x0008 (0x060C - 0x0604)
 class ATgRepInfo_Game_TeamDeathMatch : public ATgRepInfo_Game
 {
 public:
-	int                                                c_nLeadingTeam;                                           // 0x0600(0x0004)
-	int                                                c_nLeadingTeamScoreAmount;                                // 0x0604(0x0004)
+	int                                                c_nLeadingTeam;                                           // 0x0604(0x0004)
+	int                                                c_nLeadingTeamScoreAmount;                                // 0x0608(0x0004)
 
 	static UClass* StaticClass()
 	{
@@ -29687,7 +29738,7 @@ public:
 	void STATIC_SetFlag(class ATgCarriedFlag* NewFlag);
 	void OnDeath();
 	void STATIC_TransferMinionOwnershipTo(class ATgRepInfo_Player* NewOwner);
-	void CopyProperties(class APlayerReplicationInfo* PRI);
+	void STATIC_CopyProperties(class APlayerReplicationInfo* PRI);
 	void STATIC_OverrideWith(class APlayerReplicationInfo* PRI);
 	class APlayerReplicationInfo* Duplicate();
 	bool ShouldBroadCastWelcomeMessage(bool bExiting);
@@ -29706,7 +29757,7 @@ public:
 	void STATIC_UpdatePlayerLocation();
 	void UpdateIdAndProfile();
 	void Timer();
-	void RecalculateTeamColor();
+	void STATIC_RecalculateTeamColor();
 	void ClientInitialize(class AController* C);
 	void SetAnnouncerPlaying(bool bPlaying);
 	void PopulateGeneralAbilities();
@@ -29717,8 +29768,8 @@ public:
 	void STATIC_ClientSetAnnouncerPlaying(bool bPlaying);
 	int STATIC_GetMarkedTargetCount(int nPawnId);
 	void STATIC_RemoveMarkedTarget(int nPawnId, int nCount);
-	void AddMarkedTarget(int nPawnId, int nCount);
-	void AddPlayOfTheGameEvent(TEnumAsByte<EPlayOfTheGameEventType> Type, float Amount);
+	void STATIC_AddMarkedTarget(int nPawnId, int nCount);
+	void STATIC_AddPlayOfTheGameEvent(TEnumAsByte<EPlayOfTheGameEventType> Type, float Amount);
 	void STATIC_DrawNewCards(int nPrevPower);
 	bool LoadCardDeck(bool bDefault);
 	void STATIC_UpdatePlayerNameWithTag();
@@ -29733,7 +29784,7 @@ public:
 	bool IsVisibleToPlayer(class ATgRepInfo_Player* PRI);
 	bool IsVisibleToMapTeam(TEnumAsByte<ETgMapTeam> MAPTEAM);
 	bool IsVisibleToAnEnemyTeam();
-	bool STATIC_HasBeenSeenByEnemyTeam();
+	bool HasBeenSeenByEnemyTeam();
 	void STATIC_UpdateFX();
 	void STATIC_UpdatePlayerTaskforceUI();
 	void STATIC_UpdateWinsPerRole();
@@ -29752,7 +29803,7 @@ public:
 	int STATIC_GetCurrentHealth();
 	void STATIC_CheckMembership();
 	void STATIC_RemoveMinion(class AReplicationInfo* pRepInfo);
-	void AddMinion(class AReplicationInfo* pRepInfo);
+	void STATIC_AddMinion(class AReplicationInfo* pRepInfo);
 	void SetTeam(class ATgRepInfo_TaskForce* pNewTeamRep);
 	void STATIC_UpdateBroadcastedItems(class ATgInventoryManager* InvMgr);
 	void STATIC_UpdateLevel();
@@ -29826,7 +29877,7 @@ public:
 	void ReplicatedEvent(const struct FName& VarName);
 	void ReceivedTaskForceNumber();
 	void ReceivedScoringChanges();
-	bool STATIC_HasActivePlayers();
+	bool HasActivePlayers();
 	void RemoveFromTeam(class AController* Other);
 	void STATIC_CreateMinimap(TEnumAsByte<ETgMapTeam> Team, class UClass* managerClass);
 	void PostDemoRewind();
@@ -29834,7 +29885,7 @@ public:
 	void STATIC_GetPlayersByDistance(const struct FVector& fromVector, float dwDist, TArray<class ATgRepInfo_Player*>* List);
 	void GetPlayers(TArray<class ATgRepInfo_Player*>* List);
 	int STATIC_GetNumAlivePlayers();
-	bool STATIC_HasBot(class UClass* PawnClass);
+	bool HasBot(class UClass* PawnClass);
 	class ATgPawn* STATIC_GetASiegeWeapon();
 	int LaneOfSiegeWeapon();
 	class ATgRepInfo_Player* STATIC_GetNextGod(bool bIncrement, bool bReset);
@@ -29842,11 +29893,11 @@ public:
 	class ATgRepInfo_Player* STATIC_GetGod(int nIndex);
 	int STATIC_GetGodCount();
 	void STATIC_RemoveAllGlobalEffectGroups();
-	void ReapplyGlobalEffectGroups();
+	void STATIC_ReapplyGlobalEffectGroups();
 	void STATIC_RemoveGlobalEffectGroups(class ATgPawn_Character* aPawn);
 	void STATIC_ApplyGlobalEffectGroups(class ATgPawn_Character* aPawn);
 	void STATIC_RemoveGlobalEffectGroup(int nEffectGroupID);
-	void AddGlobalEffectGroup(class UTgEffectGroup* eg, class ATgPawn* InstigatorPawn);
+	void STATIC_AddGlobalEffectGroup(class UTgEffectGroup* eg, class ATgPawn* InstigatorPawn);
 	void STATIC_UpdateSurrenderTimer();
 	void STATIC_TeamRemoveFrom(class AController* Other);
 	bool IsLeader(class ATgRepInfo_Player* pTgPri);
@@ -29930,9 +29981,9 @@ public:
 	void LanePusherReachedBaseObjective(class ATgPawn_LanePusher* Lanepusher);
 	void LanePusherReachedInnerWall(class ATgPawn_LanePusher* Lanepusher);
 	void LanePusherReachedOuterWall(class ATgPawn_LanePusher* Lanepusher);
-	void STATIC_OnCapturePointTick(class ATgChaosCapturePoint* CapturePoint, int nControllingTaskforce);
+	void OnCapturePointTick(class ATgChaosCapturePoint* CapturePoint, int nControllingTaskforce);
 	void OnScoreChanged(int nTaskForce, int nCurrentScore);
-	void STATIC_OnPawnRespawned(class ATgPawn* RespawningPawn);
+	void OnPawnRespawned(class ATgPawn* RespawningPawn);
 	void OnPawnDied(class ATgPawn* Victim, class AController* Killer, class UClass* dmgType);
 	struct FString GetPhaseValueText();
 	void OnDurationEnd();
@@ -29953,7 +30004,7 @@ public:
 	bool IsAggregatePhase();
 	void PostPhaseSetup();
 	void STATIC_Decorate(class UTgGamePhase* Phase);
-	void AddPhase(class UTgGamePhase* Phase);
+	void STATIC_AddPhase(class UTgGamePhase* Phase);
 	void SetParent(class UTgGamePhase* Phase);
 	void STATIC_SetParentGame(class ATgGame_Paladins* Parent);
 };
@@ -29974,7 +30025,7 @@ public:
 	}
 
 
-	void STATIC_OnPawnRespawned(class ATgPawn* RespawningPawn);
+	void OnPawnRespawned(class ATgPawn* RespawningPawn);
 	void STATIC_EndPhase();
 	void STATIC_BeginPhase();
 	void STATIC_SetupFireMode();
@@ -29982,7 +30033,7 @@ public:
 
 
 // Class TgGame.TgGamePhase_Bombardment
-// 0x002C (0x00E4 - 0x00B8)
+// 0x0038 (0x00F0 - 0x00B8)
 class UTgGamePhase_Bombardment : public UTgGamePhase
 {
 public:
@@ -29994,6 +30045,7 @@ public:
 	float                                              m_fBombardmentDelay;                                      // 0x00D4(0x0004)
 	float                                              m_fBombardmentRate;                                       // 0x00D8(0x0004)
 	class UTgDeviceFire*                               m_FireMode;                                               // 0x00DC(0x0008)
+	struct FVector                                     m_vCachedEndpoint;                                        // 0x00E4(0x000C)
 
 	static UClass* StaticClass()
 	{
@@ -30006,6 +30058,7 @@ public:
 	void STATIC_BombardmentTimer();
 	void STATIC_BombardmentDelay();
 	void STATIC_BeginPhase();
+	void STATIC_GetEndpoint(const struct FVector& vStart, const struct FVector& vDirection, float fDist);
 	void STATIC_SetupFireMode();
 };
 
@@ -30047,7 +30100,7 @@ public:
 
 
 	void STATIC_EndPhase();
-	void ActivateRandomCreditCache();
+	void STATIC_ActivateRandomCreditCache();
 	void OnTick(float DeltaSeconds);
 	void STATIC_BeginPhase();
 	void NotifyPlayersOfCreditCacheSpawn();
@@ -30101,7 +30154,7 @@ public:
 
 
 	void STATIC_StopTracking();
-	bool STATIC_PassesAsDevice(int nIncomingDeviceID, int nExpectedDeviceID, int nFireMode);
+	bool PassesAsDevice(int nIncomingDeviceID, int nExpectedDeviceID, int nFireMode);
 	bool STATIC_BelongsToBot(int BotId);
 	float STATIC_GetCustomValue5();
 	float STATIC_GetCustomValue4();
@@ -31399,7 +31452,7 @@ public:
 
 	void StartCooldown(int nMode, float fCooldownTimeOverride);
 	void STATIC_DeviceAdjustDamage(int nPropertyId, struct FImpactInfo* Impact, float* fDamage);
-	bool STATIC_HasCachedAndroxusInhand();
+	bool HasCachedAndroxusInhand();
 };
 
 
@@ -31556,27 +31609,27 @@ public:
 
 
 // Class TgGame.TgPawn_Androxus
-// 0x004C (0x331C - 0x32D0)
+// 0x004C (0x3324 - 0x32D8)
 class ATgPawn_Androxus : public ATgPawn_Character
 {
 public:
-	unsigned long                                      m_bIsInSlowFall : 1;                                      // 0x32D0(0x0004)
-	unsigned long                                      r_bIsInSlowFallSimulated : 1;                             // 0x32D0(0x0004) (Net)
-	unsigned long                                      m_bForceAccursedArmDevice : 1;                            // 0x32D0(0x0004)
-	unsigned long                                      r_bAccursedArmFiring : 1;                                 // 0x32D0(0x0004) (Net)
-	unsigned long                                      m_bUltimateReadyDisplayGroupOn : 1;                       // 0x32D0(0x0004)
-	float                                              m_fAccursedArmSpeedModifier;                              // 0x32D4(0x0004)
-	class ATgDevice*                                   m_AccursedArmInHand;                                      // 0x32D8(0x0008)
-	float                                              m_fDefianceAirControl;                                    // 0x32E0(0x0004)
-	float                                              m_fAirHangGravityModifier;                                // 0x32E4(0x0004)
-	float                                              m_fJumpHoldMaxFallSpeed;                                  // 0x32E8(0x0004)
-	class ATgDevice_NetherStep*                        m_NetherStepDevice;                                       // 0x32EC(0x0008)
-	float                                              r_fFeatherweightDamageReduction;                          // 0x32F4(0x0004) (Net)
-	float                                              r_fLiftOffDrift;                                          // 0x32F8(0x0004) (Net)
-	int                                                m_nAccursedArmActiveFX;                                   // 0x32FC(0x0004)
-	TArray<class UTgAnimNodeBlendBySlowFall*>          m_SlowFallAnimNodes;                                      // 0x3300(0x0010) (NeedCtorLink)
-	int                                                r_nDesiredSlowFallAnimChild;                              // 0x3310(0x0004) (Net)
-	class UTgSpecialFx*                                m_SlowFallFX;                                             // 0x3314(0x0008)
+	unsigned long                                      m_bIsInSlowFall : 1;                                      // 0x32D8(0x0004)
+	unsigned long                                      r_bIsInSlowFallSimulated : 1;                             // 0x32D8(0x0004) (Net)
+	unsigned long                                      m_bForceAccursedArmDevice : 1;                            // 0x32D8(0x0004)
+	unsigned long                                      r_bAccursedArmFiring : 1;                                 // 0x32D8(0x0004) (Net)
+	unsigned long                                      m_bUltimateReadyDisplayGroupOn : 1;                       // 0x32D8(0x0004)
+	float                                              m_fAccursedArmSpeedModifier;                              // 0x32DC(0x0004)
+	class ATgDevice*                                   m_AccursedArmInHand;                                      // 0x32E0(0x0008)
+	float                                              m_fDefianceAirControl;                                    // 0x32E8(0x0004)
+	float                                              m_fAirHangGravityModifier;                                // 0x32EC(0x0004)
+	float                                              m_fJumpHoldMaxFallSpeed;                                  // 0x32F0(0x0004)
+	class ATgDevice_NetherStep*                        m_NetherStepDevice;                                       // 0x32F4(0x0008)
+	float                                              r_fFeatherweightDamageReduction;                          // 0x32FC(0x0004) (Net)
+	float                                              r_fLiftOffDrift;                                          // 0x3300(0x0004) (Net)
+	int                                                m_nAccursedArmActiveFX;                                   // 0x3304(0x0004)
+	TArray<class UTgAnimNodeBlendBySlowFall*>          m_SlowFallAnimNodes;                                      // 0x3308(0x0010) (NeedCtorLink)
+	int                                                r_nDesiredSlowFallAnimChild;                              // 0x3318(0x0004) (Net)
+	class UTgSpecialFx*                                m_SlowFallFX;                                             // 0x331C(0x0008)
 
 	static UClass* StaticClass()
 	{
@@ -31780,7 +31833,7 @@ public:
 	void OnProxyTouch(class AActor* Other, class UPrimitiveComponent* OtherComp, const struct FVector& HitLocation, const struct FVector& HitNormal);
 	void STATIC_FireAmmunition();
 	void InterruptOtherDevices(class ATgPawn* TgP);
-	void STATIC_HandleDeviceFormStartFire(int nDeviceModeNum, float fRefireTime, struct FAimData* Aim);
+	void HandleDeviceFormStartFire(int nDeviceModeNum, float fRefireTime, struct FAimData* Aim);
 	void DeliverHit(const struct FImpactInfo& Impact);
 	bool STATIC_ShouldStopActionOnOffhandSlotReleased();
 	bool IsFunctionallyToggleDevice();
@@ -31843,7 +31896,7 @@ public:
 
 
 	bool ApplyHit(const struct FImpactInfo& Impact, class AActor* DamageInstigator);
-	bool STATIC_IgnoreTargetForBlocking(class AActor* Target);
+	bool IgnoreTargetForBlocking(class AActor* Target);
 };
 
 
@@ -31912,24 +31965,24 @@ public:
 
 
 // Class TgGame.TgPawn_Astro
-// 0x0074 (0x3344 - 0x32D0)
+// 0x0074 (0x334C - 0x32D8)
 class ATgPawn_Astro : public ATgPawn_Character
 {
 public:
-	class ATgDevice_Lightspeed*                        m_LightSpeedDevice;                                       // 0x32D0(0x0008)
-	class ATgDevice_AstroQ*                            m_GravityLiftDevice;                                      // 0x32D8(0x0008)
-	class ATgDevice_AstralMark*                        m_AstralMarkDevice;                                       // 0x32E0(0x0008)
-	class ATgDevice_AstralCycle*                       m_AstralCycleCard;                                        // 0x32E8(0x0008)
-	class ATgDevice_StarSeeker*                        m_StarSeekerCard;                                         // 0x32F0(0x0008)
-	class ATgPawn_Character*                           m_AstralTarget;                                           // 0x32F8(0x0008)
-	class ATgPawn_Character*                           m_GravityLiftTarget;                                      // 0x3300(0x0008)
-	class ATgPawn_Character*                           m_HitGravityLiftTarget;                                   // 0x3308(0x0008)
-	class ATgRepInfo_Player*                           r_HitAstralTarget;                                        // 0x3310(0x0008) (Net)
-	class ATgRepInfo_Player*                           r_RemoveAstralTarget;                                     // 0x3318(0x0008) (Net)
-	TArray<class ATgRepInfo_Player*>                   m_AstralMarkTargets;                                      // 0x3320(0x0010) (NeedCtorLink)
-	float                                              m_fDeadSpaceTimer;                                        // 0x3330(0x0004)
-	unsigned long                                      m_bDeadSpaceTimerActive : 1;                              // 0x3334(0x0004)
-	struct FRotator                                    r_mUltimateAimRotation;                                   // 0x3338(0x000C) (Net)
+	class ATgDevice_Lightspeed*                        m_LightSpeedDevice;                                       // 0x32D8(0x0008)
+	class ATgDevice_AstroQ*                            m_GravityLiftDevice;                                      // 0x32E0(0x0008)
+	class ATgDevice_AstralMark*                        m_AstralMarkDevice;                                       // 0x32E8(0x0008)
+	class ATgDevice_AstralCycle*                       m_AstralCycleCard;                                        // 0x32F0(0x0008)
+	class ATgDevice_StarSeeker*                        m_StarSeekerCard;                                         // 0x32F8(0x0008)
+	class ATgPawn_Character*                           m_AstralTarget;                                           // 0x3300(0x0008)
+	class ATgPawn_Character*                           m_GravityLiftTarget;                                      // 0x3308(0x0008)
+	class ATgPawn_Character*                           m_HitGravityLiftTarget;                                   // 0x3310(0x0008)
+	class ATgRepInfo_Player*                           r_HitAstralTarget;                                        // 0x3318(0x0008) (Net)
+	class ATgRepInfo_Player*                           r_RemoveAstralTarget;                                     // 0x3320(0x0008) (Net)
+	TArray<class ATgRepInfo_Player*>                   m_AstralMarkTargets;                                      // 0x3328(0x0010) (NeedCtorLink)
+	float                                              m_fDeadSpaceTimer;                                        // 0x3338(0x0004)
+	unsigned long                                      m_bDeadSpaceTimerActive : 1;                              // 0x333C(0x0004)
+	struct FRotator                                    r_mUltimateAimRotation;                                   // 0x3340(0x000C) (Net)
 
 	static UClass* StaticClass()
 	{
@@ -31941,14 +31994,14 @@ public:
 	void STATIC_GetCameraZoomOverride(float* fZoom, float* fZoomDuration);
 	float GetJumpSpeedMultiplier();
 	void STATIC_RemoveAstralMarkTarget();
-	void AddAstralMarkTarget();
+	void STATIC_AddAstralMarkTarget();
 	float STATIC_GetAirControl();
 	float STATIC_GetGravityZ();
 	void STATIC_EffectGroupOnSetActive(bool bActive, bool bRemoving, class UTgEffectGroup* effectGroup);
 	void STATIC_GlobalOnPlayerDied(class ATgPawn_Character* Player);
 	bool STATIC_CanKnockbackAffectAC();
 	bool STATIC_AllowBoostedJump();
-	bool STATIC_HasDeviceCached(int DeviceID);
+	bool HasDeviceCached(int DeviceID);
 	void ReplicatedEvent(const struct FName& VarName);
 };
 
@@ -32282,11 +32335,11 @@ public:
 
 
 // Class TgGame.TgPawn_Barik
-// 0x0008 (0x32D8 - 0x32D0)
+// 0x0008 (0x32E0 - 0x32D8)
 class ATgPawn_Barik : public ATgPawn_Character
 {
 public:
-	class ATgDevice*                                   m_CachedBurninate;                                        // 0x32D0(0x0008)
+	class ATgDevice*                                   m_CachedBurninate;                                        // 0x32D8(0x0008)
 
 	static UClass* StaticClass()
 	{
@@ -32295,7 +32348,7 @@ public:
 	}
 
 
-	bool STATIC_HasCachedBurninate();
+	bool HasCachedBurninate();
 	bool STATIC_CanSpawnScalableShields();
 	void STATIC_RequestEmote(TEnumAsByte<EEmote> Emote, int ExtraInfo, int nPriority, float fRelevance, float fPause);
 	void ModifyAccuracyForReticleBloom(float* fAccuracy);
@@ -32332,8 +32385,8 @@ public:
 	void RemoveBasedPawn(class ATgPawn* basedPawn);
 	void AddBasedPawn(class ATgPawn* basedPawn);
 	void ReplicatedEvent(const struct FName& VarName);
-	void ActivateDisplayGroups(const struct FName& DisplayGroup, bool bActivateIndependent, bool bTurnOn);
-	bool STATIC_HasCachedInaraPawn();
+	void STATIC_ActivateDisplayGroups(const struct FName& DisplayGroup, bool bActivateIndependent, bool bTurnOn);
+	bool HasCachedInaraPawn();
 	struct FVector STATIC_GetSegmentWorldLocation(const struct FVector& vLocalLocation);
 	void PushOverlappingActors(float DeltaSeconds);
 	void STATIC_DoInitialHit();
@@ -32390,7 +32443,7 @@ public:
 	void LinkedDeviceEquipped(class ATgDevice* Dev);
 	void InterruptFiringDelegate();
 	void InterruptLockoutTime();
-	bool STATIC_HasCachedBarrierTankPawn();
+	bool HasCachedBarrierTankPawn();
 	void SetAmmo(int AmmoCount, int ClipSize, bool bShouldValidate, int ValidationIDOverride);
 	int STATIC_GetProjectileIDOverride(int ProjectileIndex);
 	struct FVector GetProjectileSpawnOffset();
@@ -32561,20 +32614,20 @@ public:
 
 
 // Class TgGame.TgPawn_BarrierTank
-// 0x0080 (0x3350 - 0x32D0)
+// 0x0080 (0x3358 - 0x32D8)
 class ATgPawn_BarrierTank : public ATgPawn_Character
 {
 public:
-	struct FWallPlacementInfo                          m_WallPlacementInfos[0x5];                                // 0x32D0(0x0010)
-	struct FVector                                     m_vSegmentExtent;                                         // 0x3320(0x000C) (Const)
-	struct FVector                                     m_vOpenSpotExtent;                                        // 0x332C(0x000C) (Const)
-	float                                              m_fWallTraceDownDistance;                                 // 0x3338(0x0004) (Const)
-	float                                              m_fWallOpenSpotTolerance;                                 // 0x333C(0x0004) (Const)
-	float                                              m_fInitialWallScaleZ;                                     // 0x3340(0x0004) (Const)
-	unsigned long                                      r_bInGaeBolg : 1;                                         // 0x3344(0x0004) (Net)
-	unsigned long                                      m_bUseGaeBolgRetrieve : 1;                                // 0x3344(0x0004)
-	float                                              m_fGaeBolgJumpZModifier;                                  // 0x3348(0x0004)
-	int                                                r_nInhandAmmoRemaining;                                   // 0x334C(0x0004) (Net)
+	struct FWallPlacementInfo                          m_WallPlacementInfos[0x5];                                // 0x32D8(0x0010)
+	struct FVector                                     m_vSegmentExtent;                                         // 0x3328(0x000C) (Const)
+	struct FVector                                     m_vOpenSpotExtent;                                        // 0x3334(0x000C) (Const)
+	float                                              m_fWallTraceDownDistance;                                 // 0x3340(0x0004) (Const)
+	float                                              m_fWallOpenSpotTolerance;                                 // 0x3344(0x0004) (Const)
+	float                                              m_fInitialWallScaleZ;                                     // 0x3348(0x0004) (Const)
+	unsigned long                                      r_bInGaeBolg : 1;                                         // 0x334C(0x0004) (Net)
+	unsigned long                                      m_bUseGaeBolgRetrieve : 1;                                // 0x334C(0x0004)
+	float                                              m_fGaeBolgJumpZModifier;                                  // 0x3350(0x0004)
+	int                                                r_nInhandAmmoRemaining;                                   // 0x3354(0x0004) (Net)
 
 	static UClass* StaticClass()
 	{
@@ -32700,7 +32753,7 @@ public:
 	void STATIC_ClientBounceOff();
 	void STATIC_ServerBounceOff(class AActor* Other);
 	void PostHitLockOut();
-	bool STATIC_HasCachedBlades();
+	bool HasCachedBlades();
 	void STATIC_GetTargetingAim(struct FAimData* Aim);
 	bool IsPostHitLockOutActive();
 };
@@ -32868,7 +32921,7 @@ public:
 
 
 	void KillEndFX();
-	void STATIC_HideEffectForm();
+	void HideEffectForm();
 };
 
 
@@ -32903,48 +32956,48 @@ public:
 
 
 // Class TgGame.TgPawn_Blades
-// 0x0114 (0x33E4 - 0x32D0)
+// 0x0114 (0x33EC - 0x32D8)
 class ATgPawn_Blades : public ATgPawn_Character
 {
 public:
-	float                                              m_fGravityFalloffDuration;                                // 0x32D0(0x0004)
-	float                                              m_fGravityFalloffTimer;                                   // 0x32D4(0x0004)
-	float                                              m_fAirControlReductionDuration;                           // 0x32D8(0x0004)
-	float                                              m_fAirControlReductionTimer;                              // 0x32DC(0x0004)
-	float                                              m_fAirControlReductionPercent;                            // 0x32E0(0x0004)
-	unsigned long                                      r_bProwlActive : 1;                                       // 0x32E4(0x0004) (Net)
-	unsigned long                                      c_bHasDjSkin : 1;                                         // 0x32E4(0x0004)
-	unsigned long                                      c_bHasDjWeapon : 1;                                       // 0x32E4(0x0004)
-	float                                              r_fProwlAccelMultiplier;                                  // 0x32E8(0x0004) (Net)
-	float                                              r_fProwlGroundSpeedMultiplier;                            // 0x32EC(0x0004) (Net)
-	float                                              r_fProwlJumpHeightMultiplier;                             // 0x32F0(0x0004) (Net)
-	float                                              r_fProwlAirControlMultiplier;                             // 0x32F4(0x0004) (Net)
-	float                                              r_fProwlFadeOutDuration;                                  // 0x32F8(0x0004) (Net)
-	float                                              m_fProwlFadeOutTimer;                                     // 0x32FC(0x0004)
-	float                                              r_fFeatherliteGravityMultiplier;                          // 0x3300(0x0004) (Net)
-	TEnumAsByte<EGemEmissiveAnim>                      r_eGemEmissiveAnim;                                       // 0x3304(0x0001) (Net)
-	TEnumAsByte<EGemEmissiveAnim>                      r_eGemEmissiveEndAnim;                                    // 0x3305(0x0001) (Net)
-	TEnumAsByte<EDjBladesFace>                         c_eCurrentDjBladesFace;                                   // 0x3306(0x0001)
-	TEnumAsByte<EDjBladesFace>                         c_eDjBladesFace[0x3];                                     // 0x3307(0x0001)
-	unsigned char                                      UnknownData00[0x2];                                       // 0x330A(0x0002) MISSED OFFSET
-	class UMaterialInstanceConstant*                   c_pGemEmissiveMIC;                                        // 0x330C(0x0008)
-	struct FName                                       m_nmGemEmissiveParamName;                                 // 0x3314(0x0008)
-	float                                              m_fGemEmissiveBaseValue;                                  // 0x331C(0x0004)
-	float                                              m_fGemEmissiveBaseAnimSpeed;                              // 0x3320(0x0004)
-	float                                              c_fGemEmissiveCurrentValue;                               // 0x3324(0x0004)
-	TArray<TEnumAsByte<EGemEmissiveAnim>>              c_eGemEmissiveAnimType;                                   // 0x3328(0x0010) (NeedCtorLink)
-	TArray<float>                                      c_fGemEmissiveTargetValue;                                // 0x3338(0x0010) (NeedCtorLink)
-	TArray<float>                                      c_fGemEmissiveAnimSpeed;                                  // 0x3348(0x0010) (NeedCtorLink)
-	TArray<float>                                      c_fGemEmissiveHoldTimer;                                  // 0x3358(0x0010) (NeedCtorLink)
-	float                                              m_fGemEmissive1PBaseValue;                                // 0x3368(0x0004)
-	float                                              m_fGemEmissive1PAnimSpeedMult;                            // 0x336C(0x0004)
-	float                                              m_fGemEmissive1PValueMult;                                // 0x3370(0x0004)
-	float                                              m_fGemEmissiveGlobalScalar;                               // 0x3374(0x0004)
-	float                                              c_fDjBladesFaceTimeout[0x3];                              // 0x3378(0x0004)
-	struct FDjBladesFaceConfig                         c_DjBladesFaceConfig[0x8];                                // 0x3384(0x0008)
-	TArray<struct FDjBladesVGSFace>                    c_DjBladesVGSFaces;                                       // 0x33C4(0x0010) (NeedCtorLink)
-	struct FName                                       c_nmDjBladesFaceXParamName;                               // 0x33D4(0x0008)
-	struct FName                                       c_nmDjBladesFaceYParamName;                               // 0x33DC(0x0008)
+	float                                              m_fGravityFalloffDuration;                                // 0x32D8(0x0004)
+	float                                              m_fGravityFalloffTimer;                                   // 0x32DC(0x0004)
+	float                                              m_fAirControlReductionDuration;                           // 0x32E0(0x0004)
+	float                                              m_fAirControlReductionTimer;                              // 0x32E4(0x0004)
+	float                                              m_fAirControlReductionPercent;                            // 0x32E8(0x0004)
+	unsigned long                                      r_bProwlActive : 1;                                       // 0x32EC(0x0004) (Net)
+	unsigned long                                      c_bHasDjSkin : 1;                                         // 0x32EC(0x0004)
+	unsigned long                                      c_bHasDjWeapon : 1;                                       // 0x32EC(0x0004)
+	float                                              r_fProwlAccelMultiplier;                                  // 0x32F0(0x0004) (Net)
+	float                                              r_fProwlGroundSpeedMultiplier;                            // 0x32F4(0x0004) (Net)
+	float                                              r_fProwlJumpHeightMultiplier;                             // 0x32F8(0x0004) (Net)
+	float                                              r_fProwlAirControlMultiplier;                             // 0x32FC(0x0004) (Net)
+	float                                              r_fProwlFadeOutDuration;                                  // 0x3300(0x0004) (Net)
+	float                                              m_fProwlFadeOutTimer;                                     // 0x3304(0x0004)
+	float                                              r_fFeatherliteGravityMultiplier;                          // 0x3308(0x0004) (Net)
+	TEnumAsByte<EGemEmissiveAnim>                      r_eGemEmissiveAnim;                                       // 0x330C(0x0001) (Net)
+	TEnumAsByte<EGemEmissiveAnim>                      r_eGemEmissiveEndAnim;                                    // 0x330D(0x0001) (Net)
+	TEnumAsByte<EDjBladesFace>                         c_eCurrentDjBladesFace;                                   // 0x330E(0x0001)
+	TEnumAsByte<EDjBladesFace>                         c_eDjBladesFace[0x3];                                     // 0x330F(0x0001)
+	unsigned char                                      UnknownData00[0x2];                                       // 0x3312(0x0002) MISSED OFFSET
+	class UMaterialInstanceConstant*                   c_pGemEmissiveMIC;                                        // 0x3314(0x0008)
+	struct FName                                       m_nmGemEmissiveParamName;                                 // 0x331C(0x0008)
+	float                                              m_fGemEmissiveBaseValue;                                  // 0x3324(0x0004)
+	float                                              m_fGemEmissiveBaseAnimSpeed;                              // 0x3328(0x0004)
+	float                                              c_fGemEmissiveCurrentValue;                               // 0x332C(0x0004)
+	TArray<TEnumAsByte<EGemEmissiveAnim>>              c_eGemEmissiveAnimType;                                   // 0x3330(0x0010) (NeedCtorLink)
+	TArray<float>                                      c_fGemEmissiveTargetValue;                                // 0x3340(0x0010) (NeedCtorLink)
+	TArray<float>                                      c_fGemEmissiveAnimSpeed;                                  // 0x3350(0x0010) (NeedCtorLink)
+	TArray<float>                                      c_fGemEmissiveHoldTimer;                                  // 0x3360(0x0010) (NeedCtorLink)
+	float                                              m_fGemEmissive1PBaseValue;                                // 0x3370(0x0004)
+	float                                              m_fGemEmissive1PAnimSpeedMult;                            // 0x3374(0x0004)
+	float                                              m_fGemEmissive1PValueMult;                                // 0x3378(0x0004)
+	float                                              m_fGemEmissiveGlobalScalar;                               // 0x337C(0x0004)
+	float                                              c_fDjBladesFaceTimeout[0x3];                              // 0x3380(0x0004)
+	struct FDjBladesFaceConfig                         c_DjBladesFaceConfig[0x8];                                // 0x338C(0x0008)
+	TArray<struct FDjBladesVGSFace>                    c_DjBladesVGSFaces;                                       // 0x33CC(0x0010) (NeedCtorLink)
+	struct FName                                       c_nmDjBladesFaceXParamName;                               // 0x33DC(0x0008)
+	struct FName                                       c_nmDjBladesFaceYParamName;                               // 0x33E4(0x0008)
 
 	static UClass* StaticClass()
 	{
@@ -33160,7 +33213,7 @@ public:
 	void LinkedDeviceEquipped(class ATgDevice* Dev);
 	void DetonatorFiringDelegate();
 	void STATIC_UpdateActiveProjectiles(class ATgProjectile* Proj);
-	void AddProjectileWaitingForDeployable(class ATgProj_BombKingStickyBomb* stickyBomb);
+	void STATIC_AddProjectileWaitingForDeployable(class ATgProj_BombKingStickyBomb* stickyBomb);
 	void STATIC_ServerRestoreBombs();
 	void STATIC_ClientRestoreBombs();
 	void SpecialInstantFire(const struct FVector& explodeLocation);
@@ -33216,7 +33269,7 @@ public:
 
 	bool Use();
 	void PlayPoppyDetonateAnim();
-	void STATIC_HandleDeviceFormStartFire(int nDeviceModeNum, float fRefireTime, struct FAimData* Aim);
+	void HandleDeviceFormStartFire(int nDeviceModeNum, float fRefireTime, struct FAimData* Aim);
 	void STATIC_ServerDetonatePoppyBomb();
 	void STATIC_DetonatePoppyBomb();
 	bool HasActivePoppyBomb();
@@ -33243,27 +33296,27 @@ public:
 
 
 // Class TgGame.TgPawn_BombKing
-// 0x0050 (0x3320 - 0x32D0)
+// 0x0050 (0x3328 - 0x32D8)
 class ATgPawn_BombKing : public ATgPawn_Character
 {
 public:
-	float                                              m_fBounceDampingVertMin;                                  // 0x32D0(0x0004) (Edit)
-	float                                              m_fBounceDampingVertMax;                                  // 0x32D4(0x0004) (Edit)
-	float                                              m_fBounceDampingHorizMin;                                 // 0x32D8(0x0004) (Edit)
-	float                                              m_fBounceDampingHorizMax;                                 // 0x32DC(0x0004) (Edit)
-	unsigned long                                      c_bRenderKingBombMesh : 1;                                // 0x32E0(0x0004)
-	unsigned long                                      m_bForced3PDuringKingBomb : 1;                            // 0x32E0(0x0004)
-	int                                                c_nKingBombMeshID;                                        // 0x32E4(0x0004)
-	struct FVector                                     m_fKingBombCameraOffset;                                  // 0x32E8(0x000C) (Edit)
-	TEnumAsByte<EWeaponMeshState>                      r_weaponMeshState;                                        // 0x32F4(0x0001) (Net)
-	unsigned char                                      UnknownData00[0x3];                                       // 0x32F5(0x0003) MISSED OFFSET
-	int                                                m_nInhandID;                                              // 0x32F8(0x0004)
-	int                                                m_nGrumpyBombID;                                          // 0x32FC(0x0004)
-	int                                                m_nPoppyBombID;                                           // 0x3300(0x0004)
-	float                                              r_fJoltKnockback;                                         // 0x3304(0x0004) (Net)
-	class UClass*                                      m_InhandClass;                                            // 0x3308(0x0008)
-	class UClass*                                      m_GrumpyBombClass;                                        // 0x3310(0x0008)
-	class UClass*                                      m_PoppyBombClass;                                         // 0x3318(0x0008)
+	float                                              m_fBounceDampingVertMin;                                  // 0x32D8(0x0004) (Edit)
+	float                                              m_fBounceDampingVertMax;                                  // 0x32DC(0x0004) (Edit)
+	float                                              m_fBounceDampingHorizMin;                                 // 0x32E0(0x0004) (Edit)
+	float                                              m_fBounceDampingHorizMax;                                 // 0x32E4(0x0004) (Edit)
+	unsigned long                                      c_bRenderKingBombMesh : 1;                                // 0x32E8(0x0004)
+	unsigned long                                      m_bForced3PDuringKingBomb : 1;                            // 0x32E8(0x0004)
+	int                                                c_nKingBombMeshID;                                        // 0x32EC(0x0004)
+	struct FVector                                     m_fKingBombCameraOffset;                                  // 0x32F0(0x000C) (Edit)
+	TEnumAsByte<EWeaponMeshState>                      r_weaponMeshState;                                        // 0x32FC(0x0001) (Net)
+	unsigned char                                      UnknownData00[0x3];                                       // 0x32FD(0x0003) MISSED OFFSET
+	int                                                m_nInhandID;                                              // 0x3300(0x0004)
+	int                                                m_nGrumpyBombID;                                          // 0x3304(0x0004)
+	int                                                m_nPoppyBombID;                                           // 0x3308(0x0004)
+	float                                              r_fJoltKnockback;                                         // 0x330C(0x0004) (Net)
+	class UClass*                                      m_InhandClass;                                            // 0x3310(0x0008)
+	class UClass*                                      m_GrumpyBombClass;                                        // 0x3318(0x0008)
+	class UClass*                                      m_PoppyBombClass;                                         // 0x3320(0x0008)
 
 	static UClass* StaticClass()
 	{
@@ -33314,10 +33367,10 @@ public:
 	void SetNonThreatening();
 	void ShutDown();
 	void Destroyed();
-	void STATIC_HideForNonOwnerClient();
+	void HideForNonOwnerClient();
 	void ClientExplodeSpecial(class AActor* Target, const struct FVector& HitLocation, const struct FVector& HitNormal);
 	bool PredictStickToPlayerSocket(struct FVector* outSocketLocation, struct FRotator* outSocketRotation);
-	void STATIC_HideProjectile();
+	void HideProjectile();
 	void STATIC_SpecialHideProjectile();
 	bool STATIC_ApplyTheHit(class UTgDeviceFire* FireMode, const struct FImpactInfo& Impact, class AActor* DamageInstigator);
 	void STATIC_AltFireDetonate();
@@ -33481,12 +33534,12 @@ public:
 	}
 
 
-	bool STATIC_IgnoreTargetForBlocking(class AActor* Target);
+	bool IgnoreTargetForBlocking(class AActor* Target);
 };
 
 
 // Class TgGame.TgPawn_Buck
-// 0x0000 (0x32D0 - 0x32D0)
+// 0x0000 (0x32D8 - 0x32D8)
 class ATgPawn_Buck : public ATgPawn_Character
 {
 public:
@@ -33544,7 +33597,7 @@ public:
 	void STATIC_FireAmmunition();
 	bool CanBeCanceled();
 	void Tick(float DeltaSeconds);
-	void STATIC_PerformAoE();
+	void PerformAoE();
 	class UTgDeviceFire* STATIC_GetAoEFireMode();
 	bool CanFiringBeCanceledByLeftMouse();
 	void RemoveAllEnvelopEnemyEffects();
@@ -33585,12 +33638,12 @@ public:
 	float STATIC_GetRange();
 	class ATgProj_BunnyHeal* SpawnHealProjectile(class ATgPawn* PawnFrom, class ATgPawn* PawnTo);
 	void OnHealProjectileImpact(class ATgProj_BunnyHeal* Proj, class ATgPawn* HitPawn);
-	void STATIC_OnProjectileShutdownCheckEndSequence(class ATgProj_BunnyHeal* Proj);
-	void STATIC_PerformCleanup();
+	void OnProjectileShutdownCheckEndSequence(class ATgProj_BunnyHeal* Proj);
+	void PerformCleanup();
 	class UTgDeviceFire* STATIC_GetFireModeForFiringProjectile();
-	class UTgDeviceFire* STATIC_NativeGetFireModeForFiringProjectile();
+	class UTgDeviceFire* NativeGetFireModeForFiringProjectile();
 	bool STATIC_CheckHealTargetLoS(const struct FVector& vOrigin, class ATgPawn* pTarget);
-	bool STATIC_HealTarget(class ATgPawn* pTarget);
+	bool HealTarget(class ATgPawn* pTarget);
 	class ATgPawn* STATIC_GetNextHealTarget(const struct FVector& vOrigin, class ATgPawn* pPawnFrom);
 };
 
@@ -33637,7 +33690,7 @@ public:
 	void InstantFire();
 	bool STATIC_IsSelfDamageEffectGroup(class UTgEffectGroup* pEffectGroup);
 	bool STATIC_HasLinkDeviceMode();
-	class ATgPawn_Character* STATIC_QueryForTarget();
+	class ATgPawn_Character* QueryForTarget();
 	int STATIC_GetMaxSpiritLinks();
 	void STATIC_ApplySelfDamage(class ATgPawn* attacker, int nDamageAmount);
 };
@@ -33715,41 +33768,41 @@ public:
 
 
 // Class TgGame.TgPawn_Bunny
-// 0x00B0 (0x3380 - 0x32D0)
+// 0x00B0 (0x3388 - 0x32D8)
 class ATgPawn_Bunny : public ATgPawn_Character
 {
 public:
-	class ATgDevice_BunnyLink*                         m_CachedBunnyLink;                                        // 0x32D0(0x0008)
-	class ATgDevice_BunnyHeal*                         m_CachedBunnyHeal;                                        // 0x32D8(0x0008)
-	class ATgDevice_BunnyDefense*                      m_CachedBunnyDefense;                                     // 0x32E0(0x0008)
-	class ATgDevice_BunnyUlt*                          m_CachedBunnyUlt;                                         // 0x32E8(0x0008)
-	class UTgDeviceForm_BunnySpiritLink*               c_CachedBunnyLinkForm;                                    // 0x32F0(0x0008)
-	unsigned long                                      m_bWhileEnemyLinkedEffectsApplied : 1;                    // 0x32F8(0x0004)
-	unsigned long                                      m_bWhileFriendlyLinkedEffectsApplied : 1;                 // 0x32F8(0x0004)
-	unsigned long                                      m_bSpiritLinkViewConstraint : 1;                          // 0x32F8(0x0004) (Const)
-	unsigned long                                      m_bLinkedPawnsNetworkUpdate : 1;                          // 0x32F8(0x0004)
-	unsigned long                                      m_bHasBeefySpiritLinkTalent : 1;                          // 0x32F8(0x0004)
-	int                                                m_nFriendlyLinkBeamFXId_1P;                               // 0x32FC(0x0004)
-	int                                                m_nFriendlyLinkBeamFXId_3P;                               // 0x3300(0x0004)
-	int                                                m_nEnemyLinkBeamFXId_1P;                                  // 0x3304(0x0004)
-	int                                                m_nEnemyLinkBeamFXId_3P;                                  // 0x3308(0x0004)
-	int                                                m_nLinkBreakBeamFXId_1P;                                  // 0x330C(0x0004)
-	float                                              m_fLinkBreakBeamTTL;                                      // 0x3310(0x0004)
-	struct FName                                       m_nmLinkBeamStartSocket;                                  // 0x3314(0x0008)
-	float                                              m_fLinkBreakDelay;                                        // 0x331C(0x0004)
-	float                                              m_fLinkBeamWeaknessOffset;                                // 0x3320(0x0004)
-	float                                              m_fLinkBeamRestrengthenPeriod;                            // 0x3324(0x0004)
-	struct FName                                       m_nmFamiliarFxDisplayGroup;                               // 0x3328(0x0008)
-	struct FName                                       m_nmBeamWeaknessParameter;                                // 0x3330(0x0008)
-	class ATgPawn_Character*                           m_CurrentTarget;                                          // 0x3338(0x0008)
-	float                                              m_fMaxSpiritLinkRangeFeet;                                // 0x3340(0x0004) (Const)
-	float                                              m_fSpiritLinkLoSFoVClient;                                // 0x3344(0x0004) (Const)
-	float                                              m_fSpiritLinkLoSFoVServerGrace;                           // 0x3348(0x0004) (Const)
-	TArray<struct FSpiritLink>                         m_SpiritLinks;                                            // 0x334C(0x0010) (AlwaysInit, NeedCtorLink)
-	TArray<struct FBreakingSpiritLink>                 m_SpiritLinkBreaks;                                       // 0x335C(0x0010) (AlwaysInit, NeedCtorLink)
-	int                                                r_nSpiritLinkedPawnIds[0x3];                              // 0x336C(0x0004) (Net)
-	int                                                m_nBeefySpiritLinkTalentId;                               // 0x3378(0x0004)
-	float                                              m_fBeefySpiritLinkTalentDuration;                         // 0x337C(0x0004)
+	class ATgDevice_BunnyLink*                         m_CachedBunnyLink;                                        // 0x32D8(0x0008)
+	class ATgDevice_BunnyHeal*                         m_CachedBunnyHeal;                                        // 0x32E0(0x0008)
+	class ATgDevice_BunnyDefense*                      m_CachedBunnyDefense;                                     // 0x32E8(0x0008)
+	class ATgDevice_BunnyUlt*                          m_CachedBunnyUlt;                                         // 0x32F0(0x0008)
+	class UTgDeviceForm_BunnySpiritLink*               c_CachedBunnyLinkForm;                                    // 0x32F8(0x0008)
+	unsigned long                                      m_bWhileEnemyLinkedEffectsApplied : 1;                    // 0x3300(0x0004)
+	unsigned long                                      m_bWhileFriendlyLinkedEffectsApplied : 1;                 // 0x3300(0x0004)
+	unsigned long                                      m_bSpiritLinkViewConstraint : 1;                          // 0x3300(0x0004) (Const)
+	unsigned long                                      m_bLinkedPawnsNetworkUpdate : 1;                          // 0x3300(0x0004)
+	unsigned long                                      m_bHasBeefySpiritLinkTalent : 1;                          // 0x3300(0x0004)
+	int                                                m_nFriendlyLinkBeamFXId_1P;                               // 0x3304(0x0004)
+	int                                                m_nFriendlyLinkBeamFXId_3P;                               // 0x3308(0x0004)
+	int                                                m_nEnemyLinkBeamFXId_1P;                                  // 0x330C(0x0004)
+	int                                                m_nEnemyLinkBeamFXId_3P;                                  // 0x3310(0x0004)
+	int                                                m_nLinkBreakBeamFXId_1P;                                  // 0x3314(0x0004)
+	float                                              m_fLinkBreakBeamTTL;                                      // 0x3318(0x0004)
+	struct FName                                       m_nmLinkBeamStartSocket;                                  // 0x331C(0x0008)
+	float                                              m_fLinkBreakDelay;                                        // 0x3324(0x0004)
+	float                                              m_fLinkBeamWeaknessOffset;                                // 0x3328(0x0004)
+	float                                              m_fLinkBeamRestrengthenPeriod;                            // 0x332C(0x0004)
+	struct FName                                       m_nmFamiliarFxDisplayGroup;                               // 0x3330(0x0008)
+	struct FName                                       m_nmBeamWeaknessParameter;                                // 0x3338(0x0008)
+	class ATgPawn_Character*                           m_CurrentTarget;                                          // 0x3340(0x0008)
+	float                                              m_fMaxSpiritLinkRangeFeet;                                // 0x3348(0x0004) (Const)
+	float                                              m_fSpiritLinkLoSFoVClient;                                // 0x334C(0x0004) (Const)
+	float                                              m_fSpiritLinkLoSFoVServerGrace;                           // 0x3350(0x0004) (Const)
+	TArray<struct FSpiritLink>                         m_SpiritLinks;                                            // 0x3354(0x0010) (AlwaysInit, NeedCtorLink)
+	TArray<struct FBreakingSpiritLink>                 m_SpiritLinkBreaks;                                       // 0x3364(0x0010) (AlwaysInit, NeedCtorLink)
+	int                                                r_nSpiritLinkedPawnIds[0x3];                              // 0x3374(0x0004) (Net)
+	int                                                m_nBeefySpiritLinkTalentId;                               // 0x3380(0x0004)
+	float                                              m_fBeefySpiritLinkTalentDuration;                         // 0x3384(0x0004)
 
 	static UClass* StaticClass()
 	{
@@ -33772,7 +33825,7 @@ public:
 	void STATIC_AddBreakingSpiritLink(class ATgPawn* LinkTarget);
 	bool RemoveSpiritLinkEffects(class ATgPawn* LinkTarget);
 	bool STATIC_ApplySpiritLinkEffects(class ATgPawn* LinkTarget);
-	void STATIC_PawnMitigateDamageOther(class ATgPawn* Other, TEnumAsByte<EPawnDamageMitigatorReason> eReason, class ATgPawn* attacker, class UTgEffectGroup* eg, int nPropertyId, float* fDamage);
+	void PawnMitigateDamageOther(class ATgPawn* Other, TEnumAsByte<EPawnDamageMitigatorReason> eReason, class ATgPawn* attacker, class UTgEffectGroup* eg, int nPropertyId, float* fDamage);
 	float STATIC_GetLinkBreakDelay();
 };
 
@@ -33881,13 +33934,13 @@ public:
 
 
 // Class TgGame.TgPawn_Cassie
-// 0x0010 (0x32E0 - 0x32D0)
+// 0x0010 (0x32E8 - 0x32D8)
 class ATgPawn_Cassie : public ATgPawn_Character
 {
 public:
-	float                                              r_fRadiusForBlastShotFX;                                  // 0x32D0(0x0004) (Net)
-	unsigned long                                      r_bRollBonusActive : 1;                                   // 0x32D4(0x0004) (Net)
-	class ATgDevice_Scout*                             m_CachedScoutDevice;                                      // 0x32D8(0x0008)
+	float                                              r_fRadiusForBlastShotFX;                                  // 0x32D8(0x0004) (Net)
+	unsigned long                                      r_bRollBonusActive : 1;                                   // 0x32DC(0x0004) (Net)
+	class ATgDevice_Scout*                             m_CachedScoutDevice;                                      // 0x32E0(0x0008)
 
 	static UClass* StaticClass()
 	{
@@ -34051,7 +34104,7 @@ public:
 	void OnUnlinkDevice(class ATgPawn* TgP);
 	void OnLinkDevice(class ATgPawn* TgP);
 	void LinkedDeviceEquipped(class ATgDevice* Dev);
-	void STATIC_HandleDeviceFormStartFire(int nDeviceModeNum, float fRefireTime, struct FAimData* Aim);
+	void HandleDeviceFormStartFire(int nDeviceModeNum, float fRefireTime, struct FAimData* Aim);
 	bool ShouldInterruptReloadOnFire();
 	bool STATIC_UsesEnergy();
 	bool STATIC_UpdateUltChargePercent();
@@ -34220,20 +34273,20 @@ public:
 
 
 // Class TgGame.TgPawn_Commander
-// 0x002C (0x32FC - 0x32D0)
+// 0x002C (0x3304 - 0x32D8)
 class ATgPawn_Commander : public ATgPawn_Character
 {
 public:
-	TArray<int>                                        c_ScopeRevealTargets;                                     // 0x32D0(0x0010) (AlwaysInit, NeedCtorLink)
-	unsigned long                                      m_bAirScoped : 1;                                         // 0x32E0(0x0004)
-	unsigned long                                      m_bAirJumpFloating : 1;                                   // 0x32E0(0x0004)
-	unsigned long                                      m_bScopedThisJump : 1;                                    // 0x32E0(0x0004)
-	unsigned long                                      m_bJumpFloatedThisJump : 1;                               // 0x32E0(0x0004)
-	unsigned long                                      r_bDistortionFieldTalentEquipped : 1;                     // 0x32E0(0x0004) (Net)
-	float                                              m_fAirScopeTime;                                          // 0x32E4(0x0004)
-	float                                              m_fJumpLockoutTime;                                       // 0x32E8(0x0004) (Const)
-	class ATgDevice_CommanderPassive*                  m_CachedCommanderPassive;                                 // 0x32EC(0x0008)
-	class ATgDevice_CommanderScope*                    m_CommanderScope;                                         // 0x32F4(0x0008)
+	TArray<int>                                        c_ScopeRevealTargets;                                     // 0x32D8(0x0010) (AlwaysInit, NeedCtorLink)
+	unsigned long                                      m_bAirScoped : 1;                                         // 0x32E8(0x0004)
+	unsigned long                                      m_bAirJumpFloating : 1;                                   // 0x32E8(0x0004)
+	unsigned long                                      m_bScopedThisJump : 1;                                    // 0x32E8(0x0004)
+	unsigned long                                      m_bJumpFloatedThisJump : 1;                               // 0x32E8(0x0004)
+	unsigned long                                      r_bDistortionFieldTalentEquipped : 1;                     // 0x32E8(0x0004) (Net)
+	float                                              m_fAirScopeTime;                                          // 0x32EC(0x0004)
+	float                                              m_fJumpLockoutTime;                                       // 0x32F0(0x0004) (Const)
+	class ATgDevice_CommanderPassive*                  m_CachedCommanderPassive;                                 // 0x32F4(0x0008)
+	class ATgDevice_CommanderScope*                    m_CommanderScope;                                         // 0x32FC(0x0008)
 
 	static UClass* StaticClass()
 	{
@@ -34604,7 +34657,7 @@ public:
 	}
 
 
-	bool STATIC_IgnoreTargetForBlocking(class AActor* Target);
+	bool IgnoreTargetForBlocking(class AActor* Target);
 };
 
 
@@ -34685,26 +34738,26 @@ public:
 
 
 // Class TgGame.TgPawn_Corvus
-// 0x0070 (0x3340 - 0x32D0)
+// 0x0070 (0x3348 - 0x32D8)
 class ATgPawn_Corvus : public ATgPawn_Character
 {
 public:
-	class ATgPawn*                                     r_RMBTarget;                                              // 0x32D0(0x0008) (Net)
-	float                                              m_fDelayTargetValid;                                      // 0x32D8(0x0004)
-	class ATgPawn_Character*                           m_BeaconTarget;                                           // 0x32DC(0x0008)
-	class ATgDevice_CorvusBeacon*                      m_CachedBeaconDevice;                                     // 0x32E4(0x0008)
-	class ATgDevice_CorvusDagger*                      m_CachedCorvusDagger;                                     // 0x32EC(0x0008)
-	class ATgDevice_CorvusUlt*                         m_CachedCorvusUlt;                                        // 0x32F4(0x0008)
-	class ATgDevice_CorvusDaggerTalent*                m_CachedCorvusDaggerTalent;                               // 0x32FC(0x0008)
-	class ATgProj_CorvusDagger*                        r_DaggerProjectile;                                       // 0x3304(0x0008) (Net)
-	class ATgDeploy_CorvusDagger*                      r_DaggerDeployable;                                       // 0x330C(0x0008) (Net)
-	TEnumAsByte<ECorvusDaggerState>                    r_eRemoteDaggerState;                                     // 0x3314(0x0001) (Net)
-	unsigned char                                      UnknownData00[0x3];                                       // 0x3315(0x0003) MISSED OFFSET
-	struct FVector                                     r_vPreTeleportLocation;                                   // 0x3318(0x000C) (Net)
-	float                                              m_fPreviousAscentVelocity;                                // 0x3324(0x0004)
-	float                                              m_fFlightMaxRiseSpeed;                                    // 0x3328(0x0004)
-	TArray<struct FBeaconInfo>                         m_BeaconTargets;                                          // 0x332C(0x0010) (Component, AlwaysInit, NeedCtorLink)
-	unsigned long                                      r_bBeaconLifeStealEquipped : 1;                           // 0x333C(0x0004) (Net)
+	class ATgPawn*                                     r_RMBTarget;                                              // 0x32D8(0x0008) (Net)
+	float                                              m_fDelayTargetValid;                                      // 0x32E0(0x0004)
+	class ATgPawn_Character*                           m_BeaconTarget;                                           // 0x32E4(0x0008)
+	class ATgDevice_CorvusBeacon*                      m_CachedBeaconDevice;                                     // 0x32EC(0x0008)
+	class ATgDevice_CorvusDagger*                      m_CachedCorvusDagger;                                     // 0x32F4(0x0008)
+	class ATgDevice_CorvusUlt*                         m_CachedCorvusUlt;                                        // 0x32FC(0x0008)
+	class ATgDevice_CorvusDaggerTalent*                m_CachedCorvusDaggerTalent;                               // 0x3304(0x0008)
+	class ATgProj_CorvusDagger*                        r_DaggerProjectile;                                       // 0x330C(0x0008) (Net)
+	class ATgDeploy_CorvusDagger*                      r_DaggerDeployable;                                       // 0x3314(0x0008) (Net)
+	TEnumAsByte<ECorvusDaggerState>                    r_eRemoteDaggerState;                                     // 0x331C(0x0001) (Net)
+	unsigned char                                      UnknownData00[0x3];                                       // 0x331D(0x0003) MISSED OFFSET
+	struct FVector                                     r_vPreTeleportLocation;                                   // 0x3320(0x000C) (Net)
+	float                                              m_fPreviousAscentVelocity;                                // 0x332C(0x0004)
+	float                                              m_fFlightMaxRiseSpeed;                                    // 0x3330(0x0004)
+	TArray<struct FBeaconInfo>                         m_BeaconTargets;                                          // 0x3334(0x0010) (Component, AlwaysInit, NeedCtorLink)
+	unsigned long                                      r_bBeaconLifeStealEquipped : 1;                           // 0x3344(0x0004) (Net)
 
 	static UClass* StaticClass()
 	{
@@ -34768,13 +34821,13 @@ public:
 
 
 // Class TgGame.TgDevice_CorrupterInhand
-// 0x0014 (0x0A2C - 0x0A18)
+// 0x0014 (0x0A30 - 0x0A1C)
 class ATgDevice_CorrupterInhand : public ATgDevice_ChainSequence
 {
 public:
-	class ATgPawn_Corrupter*                           m_Corrupter;                                              // 0x0A18(0x0008)
-	class UTgDeviceForm_CorrupterInhand*               m_DeviceForm;                                             // 0x0A20(0x0008)
-	int                                                m_nChainMax;                                              // 0x0A28(0x0004)
+	class ATgPawn_Corrupter*                           m_Corrupter;                                              // 0x0A1C(0x0008)
+	class UTgDeviceForm_CorrupterInhand*               m_DeviceForm;                                             // 0x0A24(0x0008)
+	int                                                m_nChainMax;                                              // 0x0A2C(0x0004)
 
 	static UClass* StaticClass()
 	{
@@ -34966,7 +35019,7 @@ public:
 	void StartFire(int nFireMode, float fRefireTime, class AActor* Target, int nAmmoRemaining);
 	void BuildUp(int nFireMode, int nEquipSlot, int nSocketIndex, float fBuildupTime);
 	bool STATIC_IsFinishedIntro();
-	void RecoverDeviceState(TEnumAsByte<ETG_REP_DEVICE_STATE> DesiredState);
+	void STATIC_RecoverDeviceState(TEnumAsByte<ETG_REP_DEVICE_STATE> DesiredState);
 	void STATIC_CacheAnimNode(class UAnimNode* Node, bool bIs3p);
 	void ClearAnimNodes(bool bIs3p);
 	bool STATIC_HasCachedCorrupter();
@@ -34974,26 +35027,26 @@ public:
 
 
 // Class TgGame.TgPawn_Corrupter
-// 0x0048 (0x3318 - 0x32D0)
+// 0x0048 (0x3320 - 0x32D8)
 class ATgPawn_Corrupter : public ATgPawn_Character
 {
 public:
-	class ATgDevice_CorrupterSpin*                     m_SpinDevice;                                             // 0x32D0(0x0008)
-	class ATgDevice_CorrupterInhand*                   m_InHandDevice;                                           // 0x32D8(0x0008)
-	class ATgDevice_CorrupterLatch*                    m_CachedLatch;                                            // 0x32E0(0x0008)
-	class ATgDevice_CorrupterPassive*                  m_CorruptionPassive;                                      // 0x32E8(0x0008)
-	class ATgDevice_CorrupterUlt*                      m_UltDevice;                                              // 0x32F0(0x0008)
-	int                                                r_nCorruptionStacks;                                      // 0x32F8(0x0004) (Net)
-	int                                                nMaxCorruption;                                           // 0x32FC(0x0004)
-	int                                                nAmountToHealPerStack;                                    // 0x3300(0x0004)
-	int                                                c_nPoolMeshID;                                            // 0x3304(0x0004)
-	int                                                c_nNormalMeshID;                                          // 0x3308(0x0004)
-	float                                              m_PreviousZHeight;                                        // 0x330C(0x0004)
-	float                                              m_GravityMultiplier;                                      // 0x3310(0x0004)
-	unsigned long                                      m_bRenderPool : 1;                                        // 0x3314(0x0004)
-	unsigned long                                      m_bForced3PDuringPool : 1;                                // 0x3314(0x0004)
-	unsigned long                                      m_bForcingMeshTransition : 1;                             // 0x3314(0x0004)
-	unsigned long                                      r_bAbility1CanEmote : 1;                                  // 0x3314(0x0004) (Net)
+	class ATgDevice_CorrupterSpin*                     m_SpinDevice;                                             // 0x32D8(0x0008)
+	class ATgDevice_CorrupterInhand*                   m_InHandDevice;                                           // 0x32E0(0x0008)
+	class ATgDevice_CorrupterLatch*                    m_CachedLatch;                                            // 0x32E8(0x0008)
+	class ATgDevice_CorrupterPassive*                  m_CorruptionPassive;                                      // 0x32F0(0x0008)
+	class ATgDevice_CorrupterUlt*                      m_UltDevice;                                              // 0x32F8(0x0008)
+	int                                                r_nCorruptionStacks;                                      // 0x3300(0x0004) (Net)
+	int                                                nMaxCorruption;                                           // 0x3304(0x0004)
+	int                                                nAmountToHealPerStack;                                    // 0x3308(0x0004)
+	int                                                c_nPoolMeshID;                                            // 0x330C(0x0004)
+	int                                                c_nNormalMeshID;                                          // 0x3310(0x0004)
+	float                                              m_PreviousZHeight;                                        // 0x3314(0x0004)
+	float                                              m_GravityMultiplier;                                      // 0x3318(0x0004)
+	unsigned long                                      m_bRenderPool : 1;                                        // 0x331C(0x0004)
+	unsigned long                                      m_bForced3PDuringPool : 1;                                // 0x331C(0x0004)
+	unsigned long                                      m_bForcingMeshTransition : 1;                             // 0x331C(0x0004)
+	unsigned long                                      r_bAbility1CanEmote : 1;                                  // 0x331C(0x0004) (Net)
 
 	static UClass* StaticClass()
 	{
@@ -35128,7 +35181,7 @@ public:
 
 
 	bool STATIC_ApplyTheHit(class UTgDeviceFire* FireMode, const struct FImpactInfo& Impact, class AActor* DamageInstigator);
-	void RangeReached();
+	void STATIC_RangeReached();
 	bool ApplyHit(class AActor* Target, const struct FVector& HitLocation, const struct FVector& HitNormal, int HitItem);
 };
 
@@ -35200,7 +35253,7 @@ public:
 
 
 // Class TgGame.TgDevice_DarklordInhand
-// 0x0000 (0x0A18 - 0x0A18)
+// 0x0000 (0x0A1C - 0x0A1C)
 class ATgDevice_DarklordInhand : public ATgDevice_ChainSequence
 {
 public:
@@ -35257,12 +35310,12 @@ public:
 	void STATIC_ClientStartChainAttacks(class AActor* Other);
 	void STATIC_BounceOff();
 	void STATIC_CheckForRefund();
-	void AbortChainAttacks();
+	void STATIC_AbortChainAttacks();
 	void OnInterruptEvent();
 	void STATIC_ServerStartChainAttacks(class AActor* Other);
 	bool STATIC_ShouldAbortChainAttacks();
 	bool IsTargetImmune(class ATgPawn_Character* pOther);
-	bool STATIC_HasCachedDarklord();
+	bool HasCachedDarklord();
 	float STATIC_GetCachedFiringPostHitDelay();
 	bool STATIC_ShouldLiftInterrupt();
 	bool ShouldUseGradualMovement();
@@ -35406,7 +35459,7 @@ public:
 	void STATIC_UpdateAmmoCountFx(float fPreviousPerc, float fCurrentPerc);
 	void ForceUpdateAmmoCountFx(float fPreviousPerc, float fCurrentPerc);
 	void OnReload(float fReloadTime);
-	bool STATIC_HasCachedDarklord();
+	bool HasCachedDarklord();
 };
 
 
@@ -35429,7 +35482,7 @@ public:
 	}
 
 
-	void RecoverDeviceState(TEnumAsByte<ETG_REP_DEVICE_STATE> DesiredState);
+	void STATIC_RecoverDeviceState(TEnumAsByte<ETG_REP_DEVICE_STATE> DesiredState);
 	void STATIC_TriggerFOVZoom(bool bActive);
 	void StopFire(int nFireModeNum);
 	void Generic5(unsigned char byExtraData);
@@ -35489,11 +35542,11 @@ public:
 
 
 // Class TgGame.TgPawn_Darklord
-// 0x0004 (0x32D4 - 0x32D0)
+// 0x0004 (0x32DC - 0x32D8)
 class ATgPawn_Darklord : public ATgPawn_Character
 {
 public:
-	unsigned long                                      m_bUseWhirlZoom : 1;                                      // 0x32D0(0x0004)
+	unsigned long                                      m_bUseWhirlZoom : 1;                                      // 0x32D8(0x0004)
 
 	static UClass* StaticClass()
 	{
@@ -35506,7 +35559,7 @@ public:
 	void OnDeviceFormStartFire(int nEquipSlot, float FireDuration, int nFireMode, int nAmmoRemaining);
 	TEnumAsByte<EEmote> STATIC_GetDeviceEmoteType(class ATgDevice* Dev);
 	void STATIC_RemoveJoinForcedView(class ATgPawn_Character* Source, class ATgPawn_Character* Target);
-	void AddJoinForcedView(class ATgPawn_Character* Source, class ATgPawn_Character* Target);
+	void STATIC_AddJoinForcedView(class ATgPawn_Character* Source, class ATgPawn_Character* Target);
 	void STATIC_DeviceAdjustDamage(struct FAdjustDamageParams* Params, float* fDamage);
 };
 
@@ -35756,7 +35809,7 @@ public:
 
 	bool STATIC_ShouldRemoveLift();
 	bool IsTargetInRangeToHit();
-	void AbortTelepunch();
+	void STATIC_AbortTelepunch();
 	void OnInterruptEvent();
 	void STATIC_ConfirmTelepunchTarget();
 	void STATIC_ApplySlam(class ATgPawn_Character* Target);
@@ -35775,7 +35828,7 @@ public:
 	float STATIC_GetLerpToTargetTime(const struct FVector& vTargetLocation);
 	void DeliverHit(const struct FImpactInfo& Impact);
 	struct FImpactInfo STATIC_CalcWeaponFire(const struct FAimData& Aim, TArray<struct FImpactInfo>* ImpactList);
-	bool STATIC_HasCachedDemon();
+	bool HasCachedDemon();
 	bool STATIC_ShouldConsumePowerPoolOnStartFire();
 	bool ShouldUseGradualMovement();
 	float STATIC_GetMoveSpeedMultiplier();
@@ -35887,7 +35940,7 @@ public:
 	}
 
 
-	void RecoverDeviceState(TEnumAsByte<ETG_REP_DEVICE_STATE> DesiredState);
+	void STATIC_RecoverDeviceState(TEnumAsByte<ETG_REP_DEVICE_STATE> DesiredState);
 	void STATIC_EnableUltFx(bool bActive);
 	void DoInterrupt();
 	void StopFire(int nFireModeNum);
@@ -35930,28 +35983,28 @@ public:
 
 
 // Class TgGame.TgPawn_Demon
-// 0x0020 (0x32F0 - 0x32D0)
+// 0x0020 (0x32F8 - 0x32D8)
 class ATgPawn_Demon : public ATgPawn_Character
 {
 public:
-	unsigned long                                      r_bIsUltActive : 1;                                       // 0x32D0(0x0004) (Net)
-	unsigned long                                      r_bIsUltTargeting : 1;                                    // 0x32D0(0x0004) (Net)
-	unsigned long                                      r_bIsUltTraveling : 1;                                    // 0x32D0(0x0004) (Net)
-	unsigned long                                      c_bUltRevealApplied : 1;                                  // 0x32D0(0x0004)
-	unsigned long                                      c_bStimActive : 1;                                        // 0x32D0(0x0004)
-	unsigned long                                      r_bTeleportActive : 1;                                    // 0x32D0(0x0004) (Net)
-	unsigned long                                      r_bTeleportAlmostFinished : 1;                            // 0x32D0(0x0004) (Net)
-	unsigned long                                      r_bBloodSenseActive : 1;                                  // 0x32D0(0x0004) (Net)
-	unsigned long                                      c_bBloodSenseRevealApplied : 1;                           // 0x32D0(0x0004)
-	unsigned long                                      m_bUseTeleportZoom : 1;                                   // 0x32D0(0x0004)
-	unsigned long                                      m_bUseTelepunchZoom : 1;                                  // 0x32D0(0x0004)
-	unsigned long                                      m_bTelepunchTargetLocked : 1;                             // 0x32D0(0x0004)
-	float                                              r_fBloodSenseThreshold;                                   // 0x32D4(0x0004) (Net)
-	float                                              c_fBloodSenseUpdateTimer;                                 // 0x32D8(0x0004)
-	float                                              c_fBloodSenseUpdateRate;                                  // 0x32DC(0x0004)
-	float                                              s_fPostUltKillVoiceTimer;                                 // 0x32E0(0x0004)
-	int                                                s_LastTelepunchTargetPawnId;                              // 0x32E4(0x0004)
-	class ATgPawn_Character*                           m_TelepunchTarget;                                        // 0x32E8(0x0008)
+	unsigned long                                      r_bIsUltActive : 1;                                       // 0x32D8(0x0004) (Net)
+	unsigned long                                      r_bIsUltTargeting : 1;                                    // 0x32D8(0x0004) (Net)
+	unsigned long                                      r_bIsUltTraveling : 1;                                    // 0x32D8(0x0004) (Net)
+	unsigned long                                      c_bUltRevealApplied : 1;                                  // 0x32D8(0x0004)
+	unsigned long                                      c_bStimActive : 1;                                        // 0x32D8(0x0004)
+	unsigned long                                      r_bTeleportActive : 1;                                    // 0x32D8(0x0004) (Net)
+	unsigned long                                      r_bTeleportAlmostFinished : 1;                            // 0x32D8(0x0004) (Net)
+	unsigned long                                      r_bBloodSenseActive : 1;                                  // 0x32D8(0x0004) (Net)
+	unsigned long                                      c_bBloodSenseRevealApplied : 1;                           // 0x32D8(0x0004)
+	unsigned long                                      m_bUseTeleportZoom : 1;                                   // 0x32D8(0x0004)
+	unsigned long                                      m_bUseTelepunchZoom : 1;                                  // 0x32D8(0x0004)
+	unsigned long                                      m_bTelepunchTargetLocked : 1;                             // 0x32D8(0x0004)
+	float                                              r_fBloodSenseThreshold;                                   // 0x32DC(0x0004) (Net)
+	float                                              c_fBloodSenseUpdateTimer;                                 // 0x32E0(0x0004)
+	float                                              c_fBloodSenseUpdateRate;                                  // 0x32E4(0x0004)
+	float                                              s_fPostUltKillVoiceTimer;                                 // 0x32E8(0x0004)
+	int                                                s_LastTelepunchTargetPawnId;                              // 0x32EC(0x0004)
+	class ATgPawn_Character*                           m_TelepunchTarget;                                        // 0x32F0(0x0008)
 
 	static UClass* StaticClass()
 	{
@@ -35993,7 +36046,7 @@ public:
 
 
 	void STATIC_StopMoving(const struct FVector& NewLocation);
-	void RangeReached();
+	void STATIC_RangeReached();
 	void ExplodeOnTarget(class AActor* Target, const struct FVector& HitLocation, const struct FVector& HitNormal);
 	void HitWall(const struct FVector& HitNormal, class AActor* Wall, class UPrimitiveComponent* WallComp);
 	bool ApplyHit(class AActor* Target, const struct FVector& HitLocation, const struct FVector& HitNormal, int HitItem);
@@ -36084,7 +36137,7 @@ public:
 	void OnProxyTouch(class AActor* Other, class UPrimitiveComponent* OtherComp, const struct FVector& HitLocation, const struct FVector& HitNormal);
 	void STATIC_CustomFire();
 	bool InterceptRightMousePressed(class ATgPlayerController* TgController);
-	bool STATIC_HasDrogozLeg1();
+	bool HasDrogozLeg1();
 };
 
 
@@ -36117,7 +36170,7 @@ public:
 	struct FVector GetProjectileSpawnOffset();
 	void GiveAmmoWithClientSync(int Amount);
 	void SetAmmo(int AmmoCount, int ClipSize, bool bShouldValidate, int ValidationIDOverride);
-	bool STATIC_HasCachedDrogozPawn();
+	bool HasCachedDrogozPawn();
 	void STATIC_FireAmmunition();
 	bool HasDrogozLeg2();
 	bool STATIC_CanFiringBeLocked();
@@ -36159,7 +36212,7 @@ public:
 	void LinkedDeviceUnequipped(class ATgDevice* Dev);
 	void LinkedDeviceEquipped(class ATgDevice* Dev);
 	void STATIC_EndSalvo();
-	void STATIC_HandleDeviceFormStartFire(int nDeviceModeNum, float fRefireTime, struct FAimData* Aim);
+	void HandleDeviceFormStartFire(int nDeviceModeNum, float fRefireTime, struct FAimData* Aim);
 	bool ShouldMountCancelFiring();
 	bool CanBeInterrupted();
 	bool HasDrogozLeg2();
@@ -36243,7 +36296,7 @@ public:
 
 	float STATIC_GetPostHitDelay();
 	float STATIC_GetBonusShieldDamagePerc();
-	bool STATIC_HasCachedDrogozInhand();
+	bool HasCachedDrogozInhand();
 };
 
 
@@ -36262,7 +36315,7 @@ public:
 
 
 	float STATIC_GetPreHitDelay();
-	bool STATIC_HasCachedDrogozInhand();
+	bool HasCachedDrogozInhand();
 };
 
 
@@ -36354,29 +36407,29 @@ public:
 
 
 // Class TgGame.TgPawn_Drogoz
-// 0x0034 (0x3304 - 0x32D0)
+// 0x0034 (0x330C - 0x32D8)
 class ATgPawn_Drogoz : public ATgPawn_Character
 {
 public:
-	unsigned long                                      m_bIsInBooster : 1;                                       // 0x32D0(0x0004)
-	unsigned long                                      m_bDragonSlamIsBlocking : 1;                              // 0x32D0(0x0004)
-	unsigned long                                      m_bDragonSlamHasHit : 1;                                  // 0x32D0(0x0004)
-	unsigned long                                      m_bUseDragonSlamRetrieve : 1;                             // 0x32D0(0x0004)
-	unsigned long                                      m_bInBoosterLockout : 1;                                  // 0x32D0(0x0004)
-	unsigned long                                      r_bSalvoActiveFlag : 1;                                   // 0x32D0(0x0004) (Net)
-	unsigned long                                      r_bCombustibleActive : 1;                                 // 0x32D0(0x0004) (Net)
-	unsigned long                                      m_bBoosterUseConstantSpeedReduction : 1;                  // 0x32D0(0x0004) (Edit)
-	float                                              m_fCurrentBoosterSpeed;                                   // 0x32D4(0x0004)
-	float                                              m_fBoosterEndTime;                                        // 0x32D8(0x0004)
-	class ATgDevice*                                   m_CachedBoosterDevice;                                    // 0x32DC(0x0008)
-	float                                              m_fBoosterLockoutTime;                                    // 0x32E4(0x0004)
-	float                                              m_fBoosterKnockbackLockoutTime;                           // 0x32E8(0x0004)
-	float                                              m_fBoosterKnockbackLockoutTimestamp;                      // 0x32EC(0x0004)
-	int                                                r_nInhandAmmoRemaining;                                   // 0x32F0(0x0004) (Net)
-	float                                              m_fBoosterSpeedReductionRate;                             // 0x32F4(0x0004) (Edit)
-	float                                              m_fBoosterInactiveSpeedReductionRate;                     // 0x32F8(0x0004) (Edit)
-	float                                              m_fBoosterInactiveSpeedReductionDelay;                    // 0x32FC(0x0004) (Edit)
-	float                                              m_fBoosterInactiveSpeedReductionTimer;                    // 0x3300(0x0004)
+	unsigned long                                      m_bIsInBooster : 1;                                       // 0x32D8(0x0004)
+	unsigned long                                      m_bDragonSlamIsBlocking : 1;                              // 0x32D8(0x0004)
+	unsigned long                                      m_bDragonSlamHasHit : 1;                                  // 0x32D8(0x0004)
+	unsigned long                                      m_bUseDragonSlamRetrieve : 1;                             // 0x32D8(0x0004)
+	unsigned long                                      m_bInBoosterLockout : 1;                                  // 0x32D8(0x0004)
+	unsigned long                                      r_bSalvoActiveFlag : 1;                                   // 0x32D8(0x0004) (Net)
+	unsigned long                                      r_bCombustibleActive : 1;                                 // 0x32D8(0x0004) (Net)
+	unsigned long                                      m_bBoosterUseConstantSpeedReduction : 1;                  // 0x32D8(0x0004) (Edit)
+	float                                              m_fCurrentBoosterSpeed;                                   // 0x32DC(0x0004)
+	float                                              m_fBoosterEndTime;                                        // 0x32E0(0x0004)
+	class ATgDevice*                                   m_CachedBoosterDevice;                                    // 0x32E4(0x0008)
+	float                                              m_fBoosterLockoutTime;                                    // 0x32EC(0x0004)
+	float                                              m_fBoosterKnockbackLockoutTime;                           // 0x32F0(0x0004)
+	float                                              m_fBoosterKnockbackLockoutTimestamp;                      // 0x32F4(0x0004)
+	int                                                r_nInhandAmmoRemaining;                                   // 0x32F8(0x0004) (Net)
+	float                                              m_fBoosterSpeedReductionRate;                             // 0x32FC(0x0004) (Edit)
+	float                                              m_fBoosterInactiveSpeedReductionRate;                     // 0x3300(0x0004) (Edit)
+	float                                              m_fBoosterInactiveSpeedReductionDelay;                    // 0x3304(0x0004) (Edit)
+	float                                              m_fBoosterInactiveSpeedReductionTimer;                    // 0x3308(0x0004)
 
 	static UClass* StaticClass()
 	{
@@ -36437,7 +36490,7 @@ public:
 	void ProxyTouch(class AActor* Other, class UPrimitiveComponent* OtherComp, const struct FVector& HitLocation, const struct FVector& HitNormal);
 	void ScaleAbilityFX();
 	void PlayAdditionalHitFX(class AActor* HitActor, const struct FVector& FXLocation, const struct FVector& HitNormal, const struct FVector& ProjDir, TArray<struct FParticleSysParam>* ExplosionParams);
-	void STATIC_HideProjectile();
+	void HideProjectile();
 };
 
 
@@ -36511,7 +36564,7 @@ public:
 	void LinkedDeviceUnequipped(class ATgDevice* Dev);
 	void LinkedDeviceEquipped(class ATgDevice* Dev);
 	void STATIC_ResetWormhole();
-	void RefireLockout();
+	void STATIC_RefireLockout();
 	void STATIC_ClientRefireLockout();
 	void STATIC_DisableWormhole();
 	void STATIC_ClientDisableWormhole();
@@ -36548,7 +36601,7 @@ public:
 
 
 // Class TgGame.TgPawn_Evie
-// 0x0000 (0x32D0 - 0x32D0)
+// 0x0000 (0x32D8 - 0x32D8)
 class ATgPawn_Evie : public ATgPawn_Character
 {
 public:
@@ -36648,19 +36701,19 @@ public:
 
 
 // Class TgGame.TgPawn_Fairy
-// 0x002C (0x32FC - 0x32D0)
+// 0x002C (0x3304 - 0x32D8)
 class ATgPawn_Fairy : public ATgPawn_Character
 {
 public:
-	float                                              m_fFairyFlySpeedModifier;                                 // 0x32D0(0x0004)
-	float                                              m_fFlightAccelerationPerSecond;                           // 0x32D4(0x0004) (Edit)
-	float                                              m_fFlightDecelerationPerSecond;                           // 0x32D8(0x0004) (Edit)
-	float                                              m_fFlightMaxRiseSpeed;                                    // 0x32DC(0x0004) (Edit)
-	float                                              m_fAscentDecelerationPerSecond;                           // 0x32E0(0x0004) (Edit)
-	float                                              m_fFaeFlightFriction;                                     // 0x32E4(0x0004) (Edit)
-	float                                              m_fPreviousAscentVelocity;                                // 0x32E8(0x0004)
-	class ATgDevice_Flutter*                           m_CachedFlutterDevice;                                    // 0x32EC(0x0008)
-	class ATgDevice_FaeFlight*                         m_CachedFaeFlightDevice;                                  // 0x32F4(0x0008)
+	float                                              m_fFairyFlySpeedModifier;                                 // 0x32D8(0x0004)
+	float                                              m_fFlightAccelerationPerSecond;                           // 0x32DC(0x0004) (Edit)
+	float                                              m_fFlightDecelerationPerSecond;                           // 0x32E0(0x0004) (Edit)
+	float                                              m_fFlightMaxRiseSpeed;                                    // 0x32E4(0x0004) (Edit)
+	float                                              m_fAscentDecelerationPerSecond;                           // 0x32E8(0x0004) (Edit)
+	float                                              m_fFaeFlightFriction;                                     // 0x32EC(0x0004) (Edit)
+	float                                              m_fPreviousAscentVelocity;                                // 0x32F0(0x0004)
+	class ATgDevice_Flutter*                           m_CachedFlutterDevice;                                    // 0x32F4(0x0008)
+	class ATgDevice_FaeFlight*                         m_CachedFaeFlightDevice;                                  // 0x32FC(0x0008)
 
 	static UClass* StaticClass()
 	{
@@ -36670,8 +36723,8 @@ public:
 
 
 	struct FVector STATIC_GetChargeDirection();
-	bool STATIC_HasFaeFlightDevice();
-	bool STATIC_HasFlutterDevice();
+	bool HasFaeFlightDevice();
+	bool HasFlutterDevice();
 };
 
 
@@ -36869,9 +36922,9 @@ public:
 	void LinkedDeviceUnequipped(class ATgDevice* Dev);
 	void LinkedDeviceEquipped(class ATgDevice* Dev);
 	void STATIC_AegisShieldDestroyedLockoutTimer();
-	void STATIC_ManaRegenLockoutTimer();
+	void ManaRegenLockoutTimer();
 	bool CanBeCanceled();
-	bool STATIC_HasCachedPawn();
+	bool HasCachedPawn();
 	bool CanBeInterrupted();
 	void CancelSafetyPeriodTimer();
 	void InitMaxHealth();
@@ -36885,15 +36938,15 @@ public:
 
 
 // Class TgGame.TgPawn_Fernando
-// 0x0010 (0x32E0 - 0x32D0)
+// 0x0010 (0x32E8 - 0x32D8)
 class ATgPawn_Fernando : public ATgPawn_Character
 {
 public:
-	int                                                r_ShieldDisplayType;                                      // 0x32D0(0x0004) (Net)
-	unsigned long                                      r_bHasAegisTalent : 1;                                    // 0x32D4(0x0004) (Net)
-	unsigned long                                      r_bAegisShieldWasDestroyed : 1;                           // 0x32D4(0x0004) (Net)
-	unsigned long                                      c_bShowingShield : 1;                                     // 0x32D4(0x0004)
-	class ATgDevice_ShieldFernando*                    m_CachedShieldDevice;                                     // 0x32D8(0x0008)
+	int                                                r_ShieldDisplayType;                                      // 0x32D8(0x0004) (Net)
+	unsigned long                                      r_bHasAegisTalent : 1;                                    // 0x32DC(0x0004) (Net)
+	unsigned long                                      r_bAegisShieldWasDestroyed : 1;                           // 0x32DC(0x0004) (Net)
+	unsigned long                                      c_bShowingShield : 1;                                     // 0x32DC(0x0004)
+	class ATgDevice_ShieldFernando*                    m_CachedShieldDevice;                                     // 0x32E0(0x0008)
 
 	static UClass* StaticClass()
 	{
@@ -36976,7 +37029,7 @@ public:
 	}
 
 
-	bool STATIC_HasCachedGauntlet();
+	bool HasCachedGauntlet();
 	void STATIC_UpdateHitTargetInfo(class AActor* HitActor, const struct FVector& HitLocation);
 	void OnInstantShotVerified(const struct FImpactInfo& VerifiedPrimaryImpact);
 	struct FImpactInfo STATIC_CalcWeaponFire(const struct FAimData& Aim, TArray<struct FImpactInfo>* ImpactList);
@@ -37009,7 +37062,7 @@ public:
 	void STATIC_ApplySilence(class ATgPawn* pTarget);
 	float GetCustomTimerBarMaxTime();
 	float GetCustomTimerBarCurrentTime();
-	bool STATIC_HasCachedGauntlet();
+	bool HasCachedGauntlet();
 	void STATIC_UpdateSilenceTargetInfo(class AActor* HitActor, const struct FVector& HitLocation);
 	void OnInstantShotVerified(const struct FImpactInfo& VerifiedPrimaryImpact);
 	struct FImpactInfo STATIC_CalcWeaponFire(const struct FAimData& Aim, TArray<struct FImpactInfo>* ImpactList);
@@ -37089,7 +37142,7 @@ public:
 	}
 
 
-	bool STATIC_IgnoreTargetForBlocking(class AActor* Target);
+	bool IgnoreTargetForBlocking(class AActor* Target);
 	struct FWeaponFireResults STATIC_CalcActorEncroachmentTargetingFire(class AActor* DamageInstigator, const struct FAimData& Aim, bool bPredicting, float RewindTime, TArray<struct FImpactInfo>* ImpactList, TArray<struct FImpactToValidate>* ImpactsToValidate);
 };
 
@@ -37107,7 +37160,7 @@ public:
 	}
 
 
-	bool STATIC_IgnoreTargetForBlocking(class AActor* Target);
+	bool IgnoreTargetForBlocking(class AActor* Target);
 };
 
 
@@ -37127,7 +37180,7 @@ public:
 
 
 	void STATIC_SpecialShieldDestroyed();
-	bool STATIC_IgnoreTargetForBlocking(class AActor* Target);
+	bool IgnoreTargetForBlocking(class AActor* Target);
 	bool IsValidTarget(class AActor* P, TEnumAsByte<EDeviceTargeterType> eTargeterType, bool bIgnoreHealth, bool bInvertTeam);
 };
 
@@ -37171,29 +37224,29 @@ public:
 	void STATIC_UpdateAmmoCountFx(float fPreviousPerc, float fCurrentPerc);
 	void STATIC_UpdateAmmoCountSingleFx(class UTgSpecialFx* Fx, float fAmmoPerc);
 	void StopFire(int nFireModeNum);
-	void RecoverDeviceState(TEnumAsByte<ETG_REP_DEVICE_STATE> DesiredState);
+	void STATIC_RecoverDeviceState(TEnumAsByte<ETG_REP_DEVICE_STATE> DesiredState);
 	void PlayToggleTransitionAnimations(float transitionPercent, float totalTransitionTime, bool transitionToActive);
 	void Fire(const struct FVector& HitLocation, int nFireMode, int nEquipSlot, int nSocketIndex, bool bSuccessfulHit, float fRefireTime);
 	class UTgAnimNodeSlot* STATIC_GetFullBodyAnimNode();
-	bool STATIC_HasCachedGauntlet();
+	bool HasCachedGauntlet();
 };
 
 
 // Class TgGame.TgPawn_Gauntlet
-// 0x0058 (0x3328 - 0x32D0)
+// 0x0058 (0x3330 - 0x32D8)
 class ATgPawn_Gauntlet : public ATgPawn_Character
 {
 public:
-	class AActor*                                      r_SilenceTarget;                                          // 0x32D0(0x0008) (Net)
-	struct FVector                                     r_SilenceHitOffset;                                       // 0x32D8(0x000C) (Net)
-	struct FVector                                     c_InterpSilenceHitOffset;                                 // 0x32E4(0x000C)
-	float                                              c_fSilenceHitOffsetInterpSpeed;                           // 0x32F0(0x0004)
-	class AActor*                                      r_RechargeTarget;                                         // 0x32F4(0x0008) (Net)
-	struct FVector                                     r_RechargeHitOffset;                                      // 0x32FC(0x000C) (Net)
-	struct FVector                                     c_InterpRechargeHitOffset;                                // 0x3308(0x000C)
-	class ATgPawn_Character*                           c_SilenceTarget;                                          // 0x3314(0x0008)
-	class ATgPawn_Character*                           c_ProtectionTarget;                                       // 0x331C(0x0008)
-	int                                                m_PrePolymorphRechargeShield;                             // 0x3324(0x0004)
+	class AActor*                                      r_SilenceTarget;                                          // 0x32D8(0x0008) (Net)
+	struct FVector                                     r_SilenceHitOffset;                                       // 0x32E0(0x000C) (Net)
+	struct FVector                                     c_InterpSilenceHitOffset;                                 // 0x32EC(0x000C)
+	float                                              c_fSilenceHitOffsetInterpSpeed;                           // 0x32F8(0x0004)
+	class AActor*                                      r_RechargeTarget;                                         // 0x32FC(0x0008) (Net)
+	struct FVector                                     r_RechargeHitOffset;                                      // 0x3304(0x000C) (Net)
+	struct FVector                                     c_InterpRechargeHitOffset;                                // 0x3310(0x000C)
+	class ATgPawn_Character*                           c_SilenceTarget;                                          // 0x331C(0x0008)
+	class ATgPawn_Character*                           c_ProtectionTarget;                                       // 0x3324(0x0008)
+	int                                                m_PrePolymorphRechargeShield;                             // 0x332C(0x0004)
 
 	static UClass* StaticClass()
 	{
@@ -37258,7 +37311,7 @@ public:
 	void STATIC_UpdateInhandTargetInfo(class AActor* HitActor, const struct FVector& HitLocation);
 	void OnInstantShotVerified(const struct FImpactInfo& VerifiedPrimaryImpact);
 	struct FImpactInfo STATIC_CalcWeaponFire(const struct FAimData& Aim, TArray<struct FImpactInfo>* ImpactList);
-	bool STATIC_HasCachedGrohkPawn();
+	bool HasCachedGrohkPawn();
 };
 
 
@@ -37427,17 +37480,17 @@ public:
 
 
 // Class TgGame.TgPawn_Grohk
-// 0x002C (0x32FC - 0x32D0)
+// 0x002C (0x3304 - 0x32D8)
 class ATgPawn_Grohk : public ATgPawn_Character
 {
 public:
-	class AActor*                                      r_InhandTarget;                                           // 0x32D0(0x0008) (Net)
-	struct FVector                                     r_InhandHitOffset;                                        // 0x32D8(0x000C) (Net)
-	unsigned long                                      c_bIsInTempest : 1;                                       // 0x32E4(0x0004)
-	float                                              c_fTempestOverlayStrength;                                // 0x32E8(0x0004)
-	float                                              c_fTempestRampUpRate;                                     // 0x32EC(0x0004) (Const)
-	float                                              c_fTempsetRampDownRate;                                   // 0x32F0(0x0004) (Const)
-	class ATgDevice_Tempest*                           m_CachedTempest;                                          // 0x32F4(0x0008)
+	class AActor*                                      r_InhandTarget;                                           // 0x32D8(0x0008) (Net)
+	struct FVector                                     r_InhandHitOffset;                                        // 0x32E0(0x000C) (Net)
+	unsigned long                                      c_bIsInTempest : 1;                                       // 0x32EC(0x0004)
+	float                                              c_fTempestOverlayStrength;                                // 0x32F0(0x0004)
+	float                                              c_fTempestRampUpRate;                                     // 0x32F4(0x0004) (Const)
+	float                                              c_fTempsetRampDownRate;                                   // 0x32F8(0x0004) (Const)
+	class ATgDevice_Tempest*                           m_CachedTempest;                                          // 0x32FC(0x0008)
 
 	static UClass* StaticClass()
 	{
@@ -37609,7 +37662,7 @@ public:
 	}
 
 
-	bool STATIC_HasCachedPawn();
+	bool HasCachedPawn();
 	void RampantBloomingHeal();
 	bool CanBeCanceled();
 	void STATIC_AuthStartCooldown(int nMode, float fCooldownTimeOverride);
@@ -37720,14 +37773,14 @@ public:
 
 
 // Class TgGame.TgPawn_Grover
-// 0x0018 (0x32E8 - 0x32D0)
+// 0x0018 (0x32F0 - 0x32D8)
 class ATgPawn_Grover : public ATgPawn_Character
 {
 public:
-	float                                              r_fRadiusForFXBlossom;                                    // 0x32D0(0x0004) (Net)
-	unsigned long                                      r_bHasRampantBlooming : 1;                                // 0x32D4(0x0004) (Net)
-	class ATgDevice_Vine*                              m_CachedVine;                                             // 0x32D8(0x0008)
-	class ATgDevice_Whirlwind2*                        m_CachedUlt;                                              // 0x32E0(0x0008)
+	float                                              r_fRadiusForFXBlossom;                                    // 0x32D8(0x0004) (Net)
+	unsigned long                                      r_bHasRampantBlooming : 1;                                // 0x32DC(0x0004) (Net)
+	class ATgDevice_Vine*                              m_CachedVine;                                             // 0x32E0(0x0008)
+	class ATgDevice_Whirlwind2*                        m_CachedUlt;                                              // 0x32E8(0x0008)
 
 	static UClass* StaticClass()
 	{
@@ -37737,7 +37790,7 @@ public:
 
 
 	bool STATIC_HasCachedUlt();
-	bool STATIC_HasCachedVine();
+	bool HasCachedVine();
 	float STATIC_GetUIUltChargePercent();
 };
 
@@ -37958,7 +38011,7 @@ public:
 	}
 
 
-	bool STATIC_IgnoreTargetForBlocking(class AActor* Target);
+	bool IgnoreTargetForBlocking(class AActor* Target);
 };
 
 
@@ -38023,26 +38076,26 @@ public:
 
 
 // Class TgGame.TgPawn_Kinessa
-// 0x0040 (0x3310 - 0x32D0)
+// 0x0040 (0x3318 - 0x32D8)
 class ATgPawn_Kinessa : public ATgPawn_Character
 {
 public:
-	float                                              m_fPreviousPitchMin;                                      // 0x32D0(0x0004)
-	float                                              m_fPreviousPitchMax;                                      // 0x32D4(0x0004)
-	struct FVector                                     r_vHyperTargetEndLocation;                                // 0x32D8(0x000C) (Net)
-	struct FVector                                     r_vHyperShotEndLocation;                                  // 0x32E4(0x000C) (Net)
-	unsigned long                                      m_bPendingMovementPenaltyOnLanded : 1;                    // 0x32F0(0x0004)
-	unsigned long                                      r_bIsZoomed : 1;                                          // 0x32F0(0x0004) (Net)
-	unsigned long                                      m_bIsInInhandPostFire : 1;                                // 0x32F0(0x0004)
-	unsigned long                                      c_bHeadHunterFiring : 1;                                  // 0x32F0(0x0004)
-	unsigned long                                      r_bTeleportOverlayActive : 1;                             // 0x32F0(0x0004) (Net)
-	float                                              m_fScopedSpeedModifier;                                   // 0x32F4(0x0004)
-	float                                              m_fZoomChargeTimestamp;                                   // 0x32F8(0x0004)
-	float                                              r_fFullChargeDelay;                                       // 0x32FC(0x0004) (Net)
-	float                                              r_fTeleportOverlayMaxStrength;                            // 0x3300(0x0004) (Net)
-	float                                              c_fTeleportOverlayStrength;                               // 0x3304(0x0004)
-	float                                              r_fTeleportOverlayUpRate;                                 // 0x3308(0x0004) (Net)
-	float                                              r_fTeleportOverlayDownRate;                               // 0x330C(0x0004) (Net)
+	float                                              m_fPreviousPitchMin;                                      // 0x32D8(0x0004)
+	float                                              m_fPreviousPitchMax;                                      // 0x32DC(0x0004)
+	struct FVector                                     r_vHyperTargetEndLocation;                                // 0x32E0(0x000C) (Net)
+	struct FVector                                     r_vHyperShotEndLocation;                                  // 0x32EC(0x000C) (Net)
+	unsigned long                                      m_bPendingMovementPenaltyOnLanded : 1;                    // 0x32F8(0x0004)
+	unsigned long                                      r_bIsZoomed : 1;                                          // 0x32F8(0x0004) (Net)
+	unsigned long                                      m_bIsInInhandPostFire : 1;                                // 0x32F8(0x0004)
+	unsigned long                                      c_bHeadHunterFiring : 1;                                  // 0x32F8(0x0004)
+	unsigned long                                      r_bTeleportOverlayActive : 1;                             // 0x32F8(0x0004) (Net)
+	float                                              m_fScopedSpeedModifier;                                   // 0x32FC(0x0004)
+	float                                              m_fZoomChargeTimestamp;                                   // 0x3300(0x0004)
+	float                                              r_fFullChargeDelay;                                       // 0x3304(0x0004) (Net)
+	float                                              r_fTeleportOverlayMaxStrength;                            // 0x3308(0x0004) (Net)
+	float                                              c_fTeleportOverlayStrength;                               // 0x330C(0x0004)
+	float                                              r_fTeleportOverlayUpRate;                                 // 0x3310(0x0004) (Net)
+	float                                              r_fTeleportOverlayDownRate;                               // 0x3314(0x0004) (Net)
 
 	static UClass* StaticClass()
 	{
@@ -38110,7 +38163,7 @@ public:
 	bool CanFiringBeCanceledByRightMouse();
 	bool CanFiringBeCanceledByLeftMouse();
 	bool IsDeviceFiringLockedForUI();
-	bool STATIC_HasEnoughStaminaToFire();
+	bool HasEnoughStaminaToFire();
 };
 
 
@@ -38226,7 +38279,7 @@ public:
 	void STATIC_ConsumeStaminaOnFire();
 	bool CanDeviceStartFiringNow(unsigned char FireModeNum, const struct FAimData& Aim, bool bDebugRelevant, bool bIgnoreCachedValue, TEnumAsByte<EDeviceFailType>* failType);
 	bool IsDeviceFiringLockedForUI();
-	bool STATIC_HasEnoughStaminaToFire();
+	bool HasEnoughStaminaToFire();
 };
 
 
@@ -38260,7 +38313,7 @@ public:
 	void STATIC_ClientEndFireAndRestart();
 	void STATIC_DeviceConsumePowerPool(unsigned char FireModeNum);
 	bool IsDeviceFiringLockedForUI();
-	bool STATIC_HasEnoughStaminaToFire();
+	bool HasEnoughStaminaToFire();
 	float STATIC_GetStaminaCostPerSec();
 	bool ShouldUseGradualMovement();
 	float STATIC_GetMoveSpeedMultiplier();
@@ -38304,7 +38357,7 @@ public:
 
 	bool CanFiringBeCanceledByReactivation();
 	void FiringEndTransition();
-	void STATIC_HandleDeviceFormStartFire(int nDeviceModeNum, float fRefireTime, struct FAimData* Aim);
+	void HandleDeviceFormStartFire(int nDeviceModeNum, float fRefireTime, struct FAimData* Aim);
 	void LinkedDeviceUnequipped(class ATgDevice* Dev);
 	void LinkedDeviceEquipped(class ATgDevice* Dev);
 	void OnRMB2Charge();
@@ -38314,7 +38367,7 @@ public:
 	bool IsFunctionallyToggleDevice();
 	bool CanBeCanceled();
 	bool CanDeviceStartFiringNow(unsigned char FireModeNum, const struct FAimData& Aim, bool bDebugRelevant, bool bIgnoreCachedValue, TEnumAsByte<EDeviceFailType>* failType);
-	bool STATIC_HasEnoughStaminaToFire();
+	bool HasEnoughStaminaToFire();
 	bool IsDeviceFiringLockedForUI();
 	void QueueInterrupt();
 	float STATIC_GetStaminaCostPerSec();
@@ -38362,27 +38415,27 @@ public:
 
 
 // Class TgGame.TgPawn_Koga
-// 0x0058 (0x3328 - 0x32D0)
+// 0x0058 (0x3330 - 0x32D8)
 class ATgPawn_Koga : public ATgPawn_Character
 {
 public:
-	unsigned long                                      m_bUseSecondWeapon : 1;                                   // 0x32D0(0x0004)
-	unsigned long                                      c_bUseSecondDeathAnim : 1;                                // 0x32D0(0x0004)
-	unsigned long                                      c_bWallClimbExpected : 1;                                 // 0x32D0(0x0004)
-	int                                                m_nAltInhandSlot;                                         // 0x32D4(0x0004) (Const)
-	int                                                m_nAltAltfireSlot;                                        // 0x32D8(0x0004) (Const)
-	float                                              m_fStamina;                                               // 0x32DC(0x0004)
-	float                                              m_fMaxStamina;                                            // 0x32E0(0x0004)
-	float                                              m_fStaminaRegenLockout;                                   // 0x32E4(0x0004)
-	float                                              m_fSwapLockoutTime;                                       // 0x32E8(0x0004)
-	float                                              m_fStaminaRegenLockoutTime;                               // 0x32EC(0x0004)
-	float                                              r_fRemoteStamina;                                         // 0x32F0(0x0004) (Net)
-	float                                              c_fOldRemoteStamina;                                      // 0x32F4(0x0004)
-	class ATgDevice_NinjaF*                            m_CachedNinjaF;                                           // 0x32F8(0x0008)
-	class ATgDevice_NinjaSwap*                         m_CachedNinjaSwap;                                        // 0x3300(0x0008)
-	class ATgDevice_WallClimb*                         m_CachedWallClimb;                                        // 0x3308(0x0008)
-	class ATgDevice_DragonFang*                        m_CachedDragonFangLeg;                                    // 0x3310(0x0008)
-	struct FString                                     m_sSkillIconOverride;                                     // 0x3318(0x0010) (NeedCtorLink)
+	unsigned long                                      m_bUseSecondWeapon : 1;                                   // 0x32D8(0x0004)
+	unsigned long                                      c_bUseSecondDeathAnim : 1;                                // 0x32D8(0x0004)
+	unsigned long                                      c_bWallClimbExpected : 1;                                 // 0x32D8(0x0004)
+	int                                                m_nAltInhandSlot;                                         // 0x32DC(0x0004) (Const)
+	int                                                m_nAltAltfireSlot;                                        // 0x32E0(0x0004) (Const)
+	float                                              m_fStamina;                                               // 0x32E4(0x0004)
+	float                                              m_fMaxStamina;                                            // 0x32E8(0x0004)
+	float                                              m_fStaminaRegenLockout;                                   // 0x32EC(0x0004)
+	float                                              m_fSwapLockoutTime;                                       // 0x32F0(0x0004)
+	float                                              m_fStaminaRegenLockoutTime;                               // 0x32F4(0x0004)
+	float                                              r_fRemoteStamina;                                         // 0x32F8(0x0004) (Net)
+	float                                              c_fOldRemoteStamina;                                      // 0x32FC(0x0004)
+	class ATgDevice_NinjaF*                            m_CachedNinjaF;                                           // 0x3300(0x0008)
+	class ATgDevice_NinjaSwap*                         m_CachedNinjaSwap;                                        // 0x3308(0x0008)
+	class ATgDevice_WallClimb*                         m_CachedWallClimb;                                        // 0x3310(0x0008)
+	class ATgDevice_DragonFang*                        m_CachedDragonFangLeg;                                    // 0x3318(0x0008)
+	struct FString                                     m_sSkillIconOverride;                                     // 0x3320(0x0010) (NeedCtorLink)
 
 	static UClass* StaticClass()
 	{
@@ -38488,7 +38541,7 @@ public:
 	}
 
 
-	bool STATIC_HasCachedLexPawn();
+	bool HasCachedLexPawn();
 	void SetAmmo(int AmmoCount, int ClipSize, bool bShouldValidate, int ValidationIDOverride);
 	bool InterceptLeftMousePressed(class ATgPlayerController* TgController);
 	void STATIC_DeviceAdjustDamage(int nPropertyId, struct FImpactInfo* Impact, float* fDamage);
@@ -38665,7 +38718,7 @@ public:
 	void StartFire(int nFireMode, float fRefireTime, class AActor* Target, int nAmmoRemaining);
 	void STATIC_CacheAnimNode(class UAnimNode* Node, bool bIs3p);
 	void ClearAnimNodes(bool bIs3p);
-	bool STATIC_HasCachedLex();
+	bool HasCachedLex();
 	void STATIC_SetFireMode(int nMode);
 };
 
@@ -38734,24 +38787,24 @@ public:
 
 
 // Class TgGame.TgPawn_Lex
-// 0x0068 (0x3338 - 0x32D0)
+// 0x0068 (0x3340 - 0x32D8)
 class ATgPawn_Lex : public ATgPawn_Character
 {
 public:
-	class ATgDevice_Vengeance_Lex*                     m_VengeanceDevice;                                        // 0x32D0(0x0008)
-	class ATgDevice_CombatSlide*                       m_CombatSlideDevice;                                      // 0x32D8(0x0008)
-	class ATgDevice_InPursuit*                         m_InPursuitDevice;                                        // 0x32E0(0x0008)
-	class ATgWeaponMeshActor_LexInhand*                m_WeaponMeshActorLexInhand;                               // 0x32E8(0x0008)
-	class ATgPawn*                                     m_Target;                                                 // 0x32F0(0x0008)
-	float                                              m_MaxSlideCameraAngle;                                    // 0x32F8(0x0004)
-	int                                                m_PrevCameraYaw;                                          // 0x32FC(0x0004)
-	unsigned long                                      c_bUltFiring : 1;                                         // 0x3300(0x0004)
-	unsigned long                                      c_bPursuitFiring : 1;                                     // 0x3300(0x0004)
-	unsigned long                                      m_bFireLeftWeapon : 1;                                    // 0x3300(0x0004)
-	class ATgPawn_Character*                           r_Targets[0x5];                                           // 0x3304(0x0008) (Net)
-	TEnumAsByte<ETheLawTargetState>                    r_TargetStates[0x5];                                      // 0x332C(0x0001) (Net)
-	unsigned char                                      UnknownData00[0x3];                                       // 0x3331(0x0003) MISSED OFFSET
-	int                                                r_nInhandAmmoRemaining;                                   // 0x3334(0x0004) (Net)
+	class ATgDevice_Vengeance_Lex*                     m_VengeanceDevice;                                        // 0x32D8(0x0008)
+	class ATgDevice_CombatSlide*                       m_CombatSlideDevice;                                      // 0x32E0(0x0008)
+	class ATgDevice_InPursuit*                         m_InPursuitDevice;                                        // 0x32E8(0x0008)
+	class ATgWeaponMeshActor_LexInhand*                m_WeaponMeshActorLexInhand;                               // 0x32F0(0x0008)
+	class ATgPawn*                                     m_Target;                                                 // 0x32F8(0x0008)
+	float                                              m_MaxSlideCameraAngle;                                    // 0x3300(0x0004)
+	int                                                m_PrevCameraYaw;                                          // 0x3304(0x0004)
+	unsigned long                                      c_bUltFiring : 1;                                         // 0x3308(0x0004)
+	unsigned long                                      c_bPursuitFiring : 1;                                     // 0x3308(0x0004)
+	unsigned long                                      m_bFireLeftWeapon : 1;                                    // 0x3308(0x0004)
+	class ATgPawn_Character*                           r_Targets[0x5];                                           // 0x330C(0x0008) (Net)
+	TEnumAsByte<ETheLawTargetState>                    r_TargetStates[0x5];                                      // 0x3334(0x0001) (Net)
+	unsigned char                                      UnknownData00[0x3];                                       // 0x3339(0x0003) MISSED OFFSET
+	int                                                r_nInhandAmmoRemaining;                                   // 0x333C(0x0004) (Net)
 
 	static UClass* StaticClass()
 	{
@@ -38807,10 +38860,10 @@ public:
 	void STATIC_ClearNonExecutableBeam(int Index);
 	void STATIC_ClearBeam(int Index);
 	void STATIC_ClearBeams();
-	void STATIC_HideBeams();
+	void HideBeams();
 	void STATIC_ShowHitBeams();
 	void STATIC_ShowTargetingBeams();
-	bool STATIC_HasCachedLex();
+	bool HasCachedLex();
 };
 
 
@@ -38888,7 +38941,7 @@ public:
 
 	void LinkedDeviceUnequipped(class ATgDevice* Dev);
 	void LinkedDeviceEquipped(class ATgDevice* Dev);
-	void STATIC_InhandFired();
+	void InhandFired();
 };
 
 
@@ -39052,14 +39105,14 @@ public:
 
 
 // Class TgGame.TgPawn_Longbow
-// 0x000C (0x32DC - 0x32D0)
+// 0x000C (0x32E4 - 0x32D8)
 class ATgPawn_Longbow : public ATgPawn_Character
 {
 public:
-	class ATgDevice_LongbowInhand*                     m_CachedInhand;                                           // 0x32D0(0x0008)
-	unsigned long                                      r_bImpalerArrowIsActive : 1;                              // 0x32D8(0x0004) (Net)
-	unsigned long                                      r_bExplosiveImpalerArrow : 1;                             // 0x32D8(0x0004) (Net)
-	unsigned long                                      r_bDesertSilenceArrow : 1;                                // 0x32D8(0x0004) (Net)
+	class ATgDevice_LongbowInhand*                     m_CachedInhand;                                           // 0x32D8(0x0008)
+	unsigned long                                      r_bImpalerArrowIsActive : 1;                              // 0x32E0(0x0004) (Net)
+	unsigned long                                      r_bExplosiveImpalerArrow : 1;                             // 0x32E0(0x0004) (Net)
+	unsigned long                                      r_bDesertSilenceArrow : 1;                                // 0x32E0(0x0004) (Net)
 
 	static UClass* StaticClass()
 	{
@@ -39079,7 +39132,7 @@ public:
 	void ApplyStealthClient();
 	void STATIC_ToggleImpalerArrow(bool bEnabled);
 	void ReplicatedEvent(const struct FName& VarName);
-	bool STATIC_HasCachedInhandDevice();
+	bool HasCachedInhandDevice();
 	void STATIC_UpdateStealthScarfMaterial();
 };
 
@@ -39418,14 +39471,14 @@ public:
 	void STATIC_DetonateFrostBomb();
 	bool HasActiveFrostBomb();
 	void STATIC_UpdateActiveProjectiles(class ATgProjectile* Proj);
-	void STATIC_ProjectileInFlight();
+	void ProjectileInFlight();
 	void InterruptOtherDevices(class ATgPawn* TgP);
 	bool InterceptRightMouseReleased(class ATgPlayerController* TgController);
 	bool InterceptRightMousePressed(class ATgPlayerController* TgController);
 	bool InterceptLeftMouseReleased(class ATgPlayerController* TgController);
 	bool InterceptLeftMousePressed(class ATgPlayerController* TgController);
 	bool CanDeviceStartFiringNow(unsigned char FireModeNum, const struct FAimData& Aim, bool bDebugRelevant, bool bIgnoreCachedValue, TEnumAsByte<EDeviceFailType>* failType);
-	void STATIC_OnActiveProjectile(bool bActive);
+	void OnActiveProjectile(bool bActive);
 	void ReplicatedEvent(const struct FName& VarName);
 	bool STATIC_CanBeSilenced();
 	bool STATIC_UsesTargetingMode();
@@ -39485,8 +39538,8 @@ public:
 	}
 
 
-	void STATIC_HandleDeviceFormStartFire(int nDeviceModeNum, float fRefireTime, struct FAimData* Aim);
-	void STATIC_NotifyStanceSwap(float fSwapTime);
+	void HandleDeviceFormStartFire(int nDeviceModeNum, float fRefireTime, struct FAimData* Aim);
+	void NotifyStanceSwap(float fSwapTime);
 	bool CanBeCanceled();
 	bool CanDeviceStartFiringNow(unsigned char FireModeNum, const struct FAimData& Aim, bool bDebugRelevant, bool bIgnoreCachedValue, TEnumAsByte<EDeviceFailType>* failType);
 	bool IsDeviceFiringLockedForUI();
@@ -39533,7 +39586,7 @@ public:
 
 	void OnUnlinkDevice(class ATgPawn* TgP);
 	void OnLinkDevice(class ATgPawn* TgP);
-	void STATIC_OnSummonEnded();
+	void OnSummonEnded();
 	void STATIC_FailsafeTeardown();
 	float GetSummonDuration();
 	class ATgPawn_ImaniAvatar* STATIC_GetAvatarImani();
@@ -39664,7 +39717,7 @@ public:
 	}
 
 
-	void RecoverDeviceState(TEnumAsByte<ETG_REP_DEVICE_STATE> DesiredState);
+	void STATIC_RecoverDeviceState(TEnumAsByte<ETG_REP_DEVICE_STATE> DesiredState);
 	void DoInterrupt();
 	void Fire(const struct FVector& HitLocation, int nFireMode, int nEquipSlot, int nSocketIndex, bool bSuccessfulHit, float fRefireTime);
 	void StopFire(int nFireModeNum);
@@ -39672,67 +39725,67 @@ public:
 	void UpdateStanceFromPawn();
 	void SetMaterialState(const struct FName& ToStateName, const struct FName& FromStateName, bool useTransitionTime);
 	void SetStance(bool bUseSecondary);
-	bool STATIC_HasCachedWMA();
+	bool HasCachedWMA();
 	void RecalculateMaterial();
 };
 
 
 // Class TgGame.TgPawn_Imani
-// 0x0110 (0x33E0 - 0x32D0)
+// 0x0110 (0x33E8 - 0x32D8)
 class ATgPawn_Imani : public ATgPawn_Character
 {
 public:
-	float                                              m_fAccumulatedGlideDeviation;                             // 0x32D0(0x0004)
-	float                                              r_fGlideDeviationMeanLifetime;                            // 0x32D4(0x0004) (Net)
-	unsigned long                                      r_bUseSecondaryStance : 1;                                // 0x32D8(0x0004) (Net)
-	unsigned long                                      r_bPreventClearcast : 1;                                  // 0x32D8(0x0004) (Net)
-	unsigned long                                      r_bInClearcast : 1;                                       // 0x32D8(0x0004) (Net)
-	unsigned long                                      m_bPendingClearcastState : 1;                             // 0x32D8(0x0004)
-	unsigned long                                      s_bAvatarNeedsCleanup : 1;                                // 0x32D8(0x0004)
-	unsigned long                                      c_bLastBombManuallyDetonated : 1;                         // 0x32D8(0x0004)
-	unsigned long                                      m_bHasDragonsFire : 1;                                    // 0x32D8(0x0004)
-	unsigned long                                      c_bSimulateAccumulatedGlideDeviation : 1;                 // 0x32D8(0x0004)
-	unsigned long                                      c_bAkClearcastActive : 1;                                 // 0x32D8(0x0004)
-	unsigned long                                      c_bAkUsingFireStance : 1;                                 // 0x32D8(0x0004)
-	unsigned long                                      m_bBlockPossession : 1;                                   // 0x32D8(0x0004)
-	unsigned long                                      c_bFXCleanupNeeded : 1;                                   // 0x32D8(0x0004)
-	unsigned long                                      m_HideAvatarUIOverlay : 1;                                // 0x32D8(0x0004)
-	unsigned long                                      c_bHasDigitizedSkin : 1;                                  // 0x32D8(0x0004)
-	TEnumAsByte<ESummonState>                          r_eSummoningState;                                        // 0x32DC(0x0001) (Net)
-	TEnumAsByte<ESummonState>                          m_eAcknowledgedSummoningState;                            // 0x32DD(0x0001)
-	TEnumAsByte<EAvatarState>                          m_eLastAvatarState;                                       // 0x32DE(0x0001)
-	TEnumAsByte<EDigitizedImaniFace>                   c_eCurrentDigitizedImaniFace;                             // 0x32DF(0x0001)
-	float                                              m_fIceManaConversionLockout;                              // 0x32E0(0x0004)
-	float                                              m_fCachedMana;                                            // 0x32E4(0x0004)
-	float                                              r_fLastVerticalMovementSpeedMultiplier;                   // 0x32E8(0x0004) (Net)
-	int                                                m_nAltInhandSlot;                                         // 0x32EC(0x0004) (Const)
-	int                                                m_nAltAltfireSlot;                                        // 0x32F0(0x0004) (Const)
-	float                                              m_fSwapLockoutTime;                                       // 0x32F4(0x0004)
-	float                                              r_fMaxMovementDegPerSec;                                  // 0x32F8(0x0004) (Net)
-	float                                              m_fManaGainedPerPointDamage;                              // 0x32FC(0x0004)
-	struct FVector                                     r_InhandHitLoc;                                           // 0x3300(0x000C) (Net)
-	float                                              m_fLastFlightBearing;                                     // 0x330C(0x0004)
-	class ATgDevice_ImaniF*                            m_CachedImaniF;                                           // 0x3310(0x0008)
-	class ATgDevice_ImaniUlt*                          m_CachedImaniUlt;                                         // 0x3318(0x0008)
-	class ATgDevice_ImaniLMB1*                         m_CachedImaniFrost;                                       // 0x3320(0x0008)
-	class ATgDevice_ImaniLMB2*                         m_CachedImaniFire;                                        // 0x3328(0x0008)
-	class ATgDevice_ImaniRMB2*                         m_CachedImaniFlameCannon;                                 // 0x3330(0x0008)
-	class ATgPawn_ImaniAvatar*                         r_ActiveAvatar;                                           // 0x3338(0x0008) (Net)
-	float                                              m_fClearcastDuration;                                     // 0x3340(0x0004)
-	float                                              m_fTotalDragonTransition;                                 // 0x3344(0x0004)
-	float                                              m_fDragonTransitionTimeLeft;                              // 0x3348(0x0004)
-	TArray<int>                                        m_nDevicesDamageToMana;                                   // 0x334C(0x0010) (NeedCtorLink)
-	int                                                r_nDragonsFireParity;                                     // 0x335C(0x0004) (Net)
-	class AProjectile*                                 m_lastHitProjectile;                                      // 0x3360(0x0008)
-	class ATgPlayerController*                         m_pLastPlayerController;                                  // 0x3368(0x0008)
-	struct FString                                     m_sSkillIconOverride;                                     // 0x3370(0x0010) (NeedCtorLink)
-	float                                              r_fDragonTimePercentRemaining;                            // 0x3380(0x0004) (Net)
-	float                                              c_fDigitizedSkinFaceSwapDelayTimer;                       // 0x3384(0x0004)
-	float                                              c_fDigitizedSkinFaceSwapDelayMinTime;                     // 0x3388(0x0004) (Edit)
-	float                                              c_fDigitizedSkinFaceSwapDelayMaxTime;                     // 0x338C(0x0004) (Edit)
-	struct FDigitizedImaniConfig                       c_DigitizedImaniConfig[0x8];                              // 0x3390(0x0008)
-	struct FName                                       c_nmDigitizedImaniFaceXParamName;                         // 0x33D0(0x0008)
-	struct FName                                       c_nmDigitizedImaniFaceYParamName;                         // 0x33D8(0x0008)
+	float                                              m_fAccumulatedGlideDeviation;                             // 0x32D8(0x0004)
+	float                                              r_fGlideDeviationMeanLifetime;                            // 0x32DC(0x0004) (Net)
+	unsigned long                                      r_bUseSecondaryStance : 1;                                // 0x32E0(0x0004) (Net)
+	unsigned long                                      r_bPreventClearcast : 1;                                  // 0x32E0(0x0004) (Net)
+	unsigned long                                      r_bInClearcast : 1;                                       // 0x32E0(0x0004) (Net)
+	unsigned long                                      m_bPendingClearcastState : 1;                             // 0x32E0(0x0004)
+	unsigned long                                      s_bAvatarNeedsCleanup : 1;                                // 0x32E0(0x0004)
+	unsigned long                                      c_bLastBombManuallyDetonated : 1;                         // 0x32E0(0x0004)
+	unsigned long                                      m_bHasDragonsFire : 1;                                    // 0x32E0(0x0004)
+	unsigned long                                      c_bSimulateAccumulatedGlideDeviation : 1;                 // 0x32E0(0x0004)
+	unsigned long                                      c_bAkClearcastActive : 1;                                 // 0x32E0(0x0004)
+	unsigned long                                      c_bAkUsingFireStance : 1;                                 // 0x32E0(0x0004)
+	unsigned long                                      m_bBlockPossession : 1;                                   // 0x32E0(0x0004)
+	unsigned long                                      c_bFXCleanupNeeded : 1;                                   // 0x32E0(0x0004)
+	unsigned long                                      m_HideAvatarUIOverlay : 1;                                // 0x32E0(0x0004)
+	unsigned long                                      c_bHasDigitizedSkin : 1;                                  // 0x32E0(0x0004)
+	TEnumAsByte<ESummonState>                          r_eSummoningState;                                        // 0x32E4(0x0001) (Net)
+	TEnumAsByte<ESummonState>                          m_eAcknowledgedSummoningState;                            // 0x32E5(0x0001)
+	TEnumAsByte<EAvatarState>                          m_eLastAvatarState;                                       // 0x32E6(0x0001)
+	TEnumAsByte<EDigitizedImaniFace>                   c_eCurrentDigitizedImaniFace;                             // 0x32E7(0x0001)
+	float                                              m_fIceManaConversionLockout;                              // 0x32E8(0x0004)
+	float                                              m_fCachedMana;                                            // 0x32EC(0x0004)
+	float                                              r_fLastVerticalMovementSpeedMultiplier;                   // 0x32F0(0x0004) (Net)
+	int                                                m_nAltInhandSlot;                                         // 0x32F4(0x0004) (Const)
+	int                                                m_nAltAltfireSlot;                                        // 0x32F8(0x0004) (Const)
+	float                                              m_fSwapLockoutTime;                                       // 0x32FC(0x0004)
+	float                                              r_fMaxMovementDegPerSec;                                  // 0x3300(0x0004) (Net)
+	float                                              m_fManaGainedPerPointDamage;                              // 0x3304(0x0004)
+	struct FVector                                     r_InhandHitLoc;                                           // 0x3308(0x000C) (Net)
+	float                                              m_fLastFlightBearing;                                     // 0x3314(0x0004)
+	class ATgDevice_ImaniF*                            m_CachedImaniF;                                           // 0x3318(0x0008)
+	class ATgDevice_ImaniUlt*                          m_CachedImaniUlt;                                         // 0x3320(0x0008)
+	class ATgDevice_ImaniLMB1*                         m_CachedImaniFrost;                                       // 0x3328(0x0008)
+	class ATgDevice_ImaniLMB2*                         m_CachedImaniFire;                                        // 0x3330(0x0008)
+	class ATgDevice_ImaniRMB2*                         m_CachedImaniFlameCannon;                                 // 0x3338(0x0008)
+	class ATgPawn_ImaniAvatar*                         r_ActiveAvatar;                                           // 0x3340(0x0008) (Net)
+	float                                              m_fClearcastDuration;                                     // 0x3348(0x0004)
+	float                                              m_fTotalDragonTransition;                                 // 0x334C(0x0004)
+	float                                              m_fDragonTransitionTimeLeft;                              // 0x3350(0x0004)
+	TArray<int>                                        m_nDevicesDamageToMana;                                   // 0x3354(0x0010) (NeedCtorLink)
+	int                                                r_nDragonsFireParity;                                     // 0x3364(0x0004) (Net)
+	class AProjectile*                                 m_lastHitProjectile;                                      // 0x3368(0x0008)
+	class ATgPlayerController*                         m_pLastPlayerController;                                  // 0x3370(0x0008)
+	struct FString                                     m_sSkillIconOverride;                                     // 0x3378(0x0010) (NeedCtorLink)
+	float                                              r_fDragonTimePercentRemaining;                            // 0x3388(0x0004) (Net)
+	float                                              c_fDigitizedSkinFaceSwapDelayTimer;                       // 0x338C(0x0004)
+	float                                              c_fDigitizedSkinFaceSwapDelayMinTime;                     // 0x3390(0x0004) (Edit)
+	float                                              c_fDigitizedSkinFaceSwapDelayMaxTime;                     // 0x3394(0x0004) (Edit)
+	struct FDigitizedImaniConfig                       c_DigitizedImaniConfig[0x8];                              // 0x3398(0x0008)
+	struct FName                                       c_nmDigitizedImaniFaceXParamName;                         // 0x33D8(0x0008)
+	struct FName                                       c_nmDigitizedImaniFaceYParamName;                         // 0x33E0(0x0008)
 
 	static UClass* StaticClass()
 	{
@@ -39758,22 +39811,22 @@ public:
 	void STATIC_FrostBombFired();
 	void STATIC_ClearcastTimeout();
 	void ToggleClearcast(bool bActive, bool bForce);
-	void STATIC_OnInhandFired();
+	void OnInhandFired();
 	void SetSummoningState(TEnumAsByte<ESummonState> eNewState);
 	void PropertySet(int nPropertyId, float fPreviousValue, float fNewValue);
 	TEnumAsByte<ETG_EQUIP_POINT> OverrideOffhandSlot(TEnumAsByte<ETG_EQUIP_POINT> eqp);
 	bool IsSummonFinishedState(TEnumAsByte<ESummonState> eState);
-	void STATIC_PrepareForLiveRespawn();
+	void PrepareForLiveRespawn();
 	bool OnLiveRespawn();
 	void OnRespawn();
 	void ReplicatedEvent(const struct FName& VarName);
 	void OnProjectileExploded(class ATgProjectile* ExplodedProjectile, class AActor* HitActor, const struct FVector& HitLocation, const struct FVector& HitNormal);
-	void STATIC_PerformPrePossessionCleanup();
+	void PerformPrePossessionCleanup();
 	bool STATIC_IsTimelapseOrSpectating();
 	void STATIC_CheckTimelapseViewtarget();
 	void ProjectileOnFire(class ATgProjectile* Proj);
 	void ReportClearcastChange();
-	void STATIC_ManaChanged(float fOldValue, float fNewValue);
+	void ManaChanged(float fOldValue, float fNewValue);
 	void STATIC_SetSpawnMana();
 	void STATIC_DeviceOnDamaged(struct FOnDamagedParams* Params);
 	bool STATIC_IsSwappingStance();
@@ -39784,7 +39837,7 @@ public:
 	void STATIC_AvatarStateChanged(TEnumAsByte<EAvatarState> eNewState);
 	void UpdateDragonsFireHud();
 	class AActor* STATIC_GetViewTargetOverride();
-	void STATIC_PrepareForEndMission();
+	void PrepareForEndMission();
 	TEnumAsByte<EGameplayDesignType> STATIC_GetDesignType();
 	bool IsJumpDisabled();
 	void SetInitialGlideBearing();
@@ -39795,41 +39848,41 @@ public:
 
 
 // Class TgGame.TgPawn_ImaniAvatar
-// 0x00C4 (0x3394 - 0x32D0)
+// 0x00C4 (0x339C - 0x32D8)
 class ATgPawn_ImaniAvatar : public ATgPawn_Character
 {
 public:
-	class ATgPawn_Imani*                               r_CachedImani;                                            // 0x32D0(0x0008) (Net)
-	class ATgDevice_DragonFlight*                      m_CachedFlight;                                           // 0x32D8(0x0008)
-	float                                              m_fMaxMovementDegPerSec;                                  // 0x32E0(0x0004)
-	float                                              m_fAimConstraintAngle;                                    // 0x32E4(0x0004)
-	float                                              m_fLastFlightBearing;                                     // 0x32E8(0x0004)
-	TEnumAsByte<EAvatarState>                          r_eAvatarState;                                           // 0x32EC(0x0001) (Net)
-	TEnumAsByte<EAvatarIntroState>                     c_eIntroState;                                            // 0x32ED(0x0001)
-	unsigned char                                      UnknownData00[0x2];                                       // 0x32EE(0x0002) MISSED OFFSET
-	TArray<struct FScriptDelegate>                     s_OnDeathDelegates;                                       // 0x32F0(0x0010) (NeedCtorLink)
-	float                                              m_fHoverSpeedFactor;                                      // 0x3300(0x0004)
-	float                                              m_fCruiseSpeedFactor;                                     // 0x3304(0x0004)
-	float                                              m_fBoostSpeedFactor;                                      // 0x3308(0x0004)
-	float                                              c_fIntroPreparationTime;                                  // 0x330C(0x0004)
-	float                                              m_fReadyTimestamp;                                        // 0x3310(0x0004)
-	float                                              m_fProjectileSpawnNeckLength;                             // 0x3314(0x0004)
-	class UPrimitiveComponent*                         m_DamageCollisionComponent;                               // 0x3318(0x0008) (ExportObject, Component, EditInline)
-	int                                                r_nReplicatedAimPitch;                                    // 0x3320(0x0004) (Net)
-	int                                                r_nReplicatedAimYaw;                                      // 0x3324(0x0004) (Net)
-	float                                              m_fLockedFOV;                                             // 0x3328(0x0004)
-	float                                              m_fMinCameraRotationPitch;                                // 0x332C(0x0004)
-	float                                              m_fMaxCameraRotationPitch;                                // 0x3330(0x0004)
-	float                                              r_fCachedInhandRange;                                     // 0x3334(0x0004) (Net)
-	TArray<TEnumAsByte<ETG_EQUIP_POINT>>               c_eAscendInterceptSlots;                                  // 0x3338(0x0010) (NeedCtorLink)
-	TArray<TEnumAsByte<ETG_EQUIP_POINT>>               c_eDescendInterceptSlots;                                 // 0x3348(0x0010) (NeedCtorLink)
-	unsigned long                                      c_bControlExperiment : 1;                                 // 0x3358(0x0004)
-	int                                                m_nFlyUpIconId;                                           // 0x335C(0x0004)
-	int                                                m_nFlyDownIconId;                                         // 0x3360(0x0004)
-	struct FString                                     m_sFlyUpIcon;                                             // 0x3364(0x0010) (NeedCtorLink)
-	struct FString                                     m_sFlyDownIcon;                                           // 0x3374(0x0010) (NeedCtorLink)
-	struct FScriptDelegate                             __DestroyedEvent__Delegate;                               // 0x3384(0x000C) (NeedCtorLink)
-	unsigned char                                      UnknownData01[0x4];                                       // 0x3384(0x0004) FIX WRONG TYPE SIZE OF PREVIOUS PROPERTY
+	class ATgPawn_Imani*                               r_CachedImani;                                            // 0x32D8(0x0008) (Net)
+	class ATgDevice_DragonFlight*                      m_CachedFlight;                                           // 0x32E0(0x0008)
+	float                                              m_fMaxMovementDegPerSec;                                  // 0x32E8(0x0004)
+	float                                              m_fAimConstraintAngle;                                    // 0x32EC(0x0004)
+	float                                              m_fLastFlightBearing;                                     // 0x32F0(0x0004)
+	TEnumAsByte<EAvatarState>                          r_eAvatarState;                                           // 0x32F4(0x0001) (Net)
+	TEnumAsByte<EAvatarIntroState>                     c_eIntroState;                                            // 0x32F5(0x0001)
+	unsigned char                                      UnknownData00[0x2];                                       // 0x32F6(0x0002) MISSED OFFSET
+	TArray<struct FScriptDelegate>                     s_OnDeathDelegates;                                       // 0x32F8(0x0010) (NeedCtorLink)
+	float                                              m_fHoverSpeedFactor;                                      // 0x3308(0x0004)
+	float                                              m_fCruiseSpeedFactor;                                     // 0x330C(0x0004)
+	float                                              m_fBoostSpeedFactor;                                      // 0x3310(0x0004)
+	float                                              c_fIntroPreparationTime;                                  // 0x3314(0x0004)
+	float                                              m_fReadyTimestamp;                                        // 0x3318(0x0004)
+	float                                              m_fProjectileSpawnNeckLength;                             // 0x331C(0x0004)
+	class UPrimitiveComponent*                         m_DamageCollisionComponent;                               // 0x3320(0x0008) (ExportObject, Component, EditInline)
+	int                                                r_nReplicatedAimPitch;                                    // 0x3328(0x0004) (Net)
+	int                                                r_nReplicatedAimYaw;                                      // 0x332C(0x0004) (Net)
+	float                                              m_fLockedFOV;                                             // 0x3330(0x0004)
+	float                                              m_fMinCameraRotationPitch;                                // 0x3334(0x0004)
+	float                                              m_fMaxCameraRotationPitch;                                // 0x3338(0x0004)
+	float                                              r_fCachedInhandRange;                                     // 0x333C(0x0004) (Net)
+	TArray<TEnumAsByte<ETG_EQUIP_POINT>>               c_eAscendInterceptSlots;                                  // 0x3340(0x0010) (NeedCtorLink)
+	TArray<TEnumAsByte<ETG_EQUIP_POINT>>               c_eDescendInterceptSlots;                                 // 0x3350(0x0010) (NeedCtorLink)
+	unsigned long                                      c_bControlExperiment : 1;                                 // 0x3360(0x0004)
+	int                                                m_nFlyUpIconId;                                           // 0x3364(0x0004)
+	int                                                m_nFlyDownIconId;                                         // 0x3368(0x0004)
+	struct FString                                     m_sFlyUpIcon;                                             // 0x336C(0x0010) (NeedCtorLink)
+	struct FString                                     m_sFlyDownIcon;                                           // 0x337C(0x0010) (NeedCtorLink)
+	struct FScriptDelegate                             __DestroyedEvent__Delegate;                               // 0x338C(0x000C) (NeedCtorLink)
+	unsigned char                                      UnknownData01[0x4];                                       // 0x338C(0x0004) FIX WRONG TYPE SIZE OF PREVIOUS PROPERTY
 
 	static UClass* StaticClass()
 	{
@@ -39840,7 +39893,7 @@ public:
 
 	bool ShouldCreateCaptureProxy();
 	TEnumAsByte<ETG_EQUIP_POINT> OverrideOffhandSlot(TEnumAsByte<ETG_EQUIP_POINT> eqp);
-	void AddOnDestroyDelegate(const struct FScriptDelegate& delDestroy);
+	void STATIC_AddOnDestroyDelegate(const struct FScriptDelegate& delDestroy);
 	bool STATIC_Died(class AController* Killer, class UClass* DamageType, const struct FVector& HitLocation);
 	bool ShouldScoreKill();
 	bool CanFlyWithoutHover();
@@ -39854,7 +39907,7 @@ public:
 	void CacheInhandRange(float fNewRange);
 	void STATIC_HandleDisconnectedPlayer();
 	void RequestEndPossession();
-	void STATIC_PrepareForLiveRespawn();
+	void PrepareForLiveRespawn();
 	void PlayDeathAnimation();
 	bool STATIC_AllowRagdoll();
 	void HandleDragonSpectator();
@@ -39873,7 +39926,7 @@ public:
 	bool IsStatTrackable();
 	void STATIC_SpawnGuard();
 	void STATIC_SetPetOwner(class ATgPawn* PetOwner);
-	void STATIC_PrepareForEndMission();
+	void PrepareForEndMission();
 	TEnumAsByte<EGameplayDesignType> STATIC_GetDesignType();
 	bool STATIC_CanPawnParticipateInCapture();
 	void STATIC_EndStats();
@@ -39938,7 +39991,7 @@ public:
 	}
 
 
-	void ActivateFireAimed(bool bSetActive);
+	void STATIC_ActivateFireAimed(bool bSetActive);
 	void STATIC_SetLoopingMuzzleEffects(bool bSetActive, int nEquipSlot, int nFireMode);
 	void STATIC_UpdateFireAimedFX();
 	void Tick(float DeltaTime);
@@ -39992,7 +40045,7 @@ public:
 	void HitWall(const struct FVector& HitNormal, class AActor* Wall, class UPrimitiveComponent* WallComp);
 	void ReplicatedEvent(const struct FName& VarName);
 	void OnGrabTargetDetach(TEnumAsByte<EGrabState> endingGrabState, class ATgPawn* Target, bool bInterrupted);
-	void STATIC_NativeOnGrabEnded(class ATgPawn* pTarget);
+	void NativeOnGrabEnded(class ATgPawn* pTarget);
 	int STATIC_GetBestAvailableGrabPositionIndex(const struct FVector& vLoc);
 	struct FVector STATIC_GetGrabOffsetByIndex(int nIndex);
 	float STATIC_GetGrabAngle(const struct FVector& vLoc);
@@ -40002,13 +40055,13 @@ public:
 
 
 // Class TgGame.TgDevice_GuardianChainAttack
-// 0x001C (0x0A34 - 0x0A18)
+// 0x001C (0x0A38 - 0x0A1C)
 class ATgDevice_GuardianChainAttack : public ATgDevice_ChainSequence
 {
 public:
-	float                                              m_fPauseAttackChainDuration;                              // 0x0A18(0x0004)
-	struct FVector                                     m_vProjectileSpawnOffset2;                                // 0x0A1C(0x000C)
-	struct FVector                                     m_vProjectileSpawnOffset3;                                // 0x0A28(0x000C)
+	float                                              m_fPauseAttackChainDuration;                              // 0x0A1C(0x0004)
+	struct FVector                                     m_vProjectileSpawnOffset2;                                // 0x0A20(0x000C)
+	struct FVector                                     m_vProjectileSpawnOffset3;                                // 0x0A2C(0x000C)
 
 	static UClass* StaticClass()
 	{
@@ -40018,7 +40071,7 @@ public:
 
 
 	void OnChainReset();
-	void STATIC_PauseAttackChain();
+	void PauseAttackChain();
 	struct FVector GetProjectileSpawnOffset();
 	int GetChainMax();
 	bool STATIC_CanDeviceFireNow(unsigned char FireModeNum, const struct FAimData& Aim, bool bDeviceFailLog, TEnumAsByte<EDeviceFailType>* failType);
@@ -40091,7 +40144,7 @@ public:
 	float STATIC_GetDelayForPendingImpact(struct FImpactInfo* Impact);
 	bool ServerIsClientTargetValid(const struct FAimData& Aim);
 	bool STATIC_ShouldBlockReload(class ATgDevice* Dev, bool bIsAutoReload);
-	bool STATIC_HasAmmo();
+	bool HasAmmo();
 	struct FAimData STATIC_ValidateReceivedAim(float ClientMovementTimeStamp, const struct FAimData& Aim);
 	void STATIC_GetTargetingAim(struct FAimData* Aim);
 	bool STATIC_CanDeviceFireNow(unsigned char FireModeNum, const struct FAimData& Aim, bool bDeviceFailLog, TEnumAsByte<EDeviceFailType>* failType);
@@ -40233,7 +40286,7 @@ public:
 
 
 	bool IsValidTarget(class AActor* P, TEnumAsByte<EDeviceTargeterType> eTargeterType, bool bIgnoreHealth, bool bInvertTeam);
-	bool STATIC_IgnoreTargetForBlocking(class AActor* Target);
+	bool IgnoreTargetForBlocking(class AActor* Target);
 };
 
 
@@ -40259,27 +40312,27 @@ public:
 	void Fire(const struct FVector& HitLocation, int nFireMode, int nEquipSlot, int nSocketIndex, bool bSuccessfulHit, float fRefireTime);
 	int ReadyNextBeamIndex();
 	bool STATIC_HasCachedDruid();
-	void STATIC_PlayDelayedImpactFx(int nIndex);
+	void PlayDelayedImpactFx(int nIndex);
 	void STATIC_KillBeamAtIndex(int nIndex);
 	float STATIC_GetDelayForPendingHit(class AActor* pTarget);
 };
 
 
 // Class TgGame.TgPawn_Druid
-// 0x0048 (0x3318 - 0x32D0)
+// 0x0048 (0x3320 - 0x32D8)
 class ATgPawn_Druid : public ATgPawn_Character
 {
 public:
-	class ATgDevice_DruidRMBTargeting*                 m_CachedRMBTargeting;                                     // 0x32D0(0x0008)
-	class ATgDevice_DruidRMB*                          m_CachedRMB;                                              // 0x32D8(0x0008)
-	class ATgDevice_DruidSpawnGuardian*                m_CachedSpawnFox;                                         // 0x32E0(0x0008)
-	class ATgPawn*                                     m_GuidedArrowTarget;                                      // 0x32E8(0x0008)
-	class ATgPawn_DruidGuardian*                       r_ActiveFox;                                              // 0x32F0(0x0008) (Net)
-	float                                              r_fRMBProjectileSpeed;                                    // 0x32F8(0x0004) (Net)
-	float                                              r_fLastStandAnimTime;                                     // 0x32FC(0x0004) (Net)
-	int                                                r_nFoxActivityNonce;                                      // 0x3300(0x0004) (Net)
-	struct FString                                     m_sDeployRedeployIconOverride;                            // 0x3304(0x0010) (NeedCtorLink)
-	unsigned long                                      c_bAcknowledgedIsLeaping : 1;                             // 0x3314(0x0004)
+	class ATgDevice_DruidRMBTargeting*                 m_CachedRMBTargeting;                                     // 0x32D8(0x0008)
+	class ATgDevice_DruidRMB*                          m_CachedRMB;                                              // 0x32E0(0x0008)
+	class ATgDevice_DruidSpawnGuardian*                m_CachedSpawnFox;                                         // 0x32E8(0x0008)
+	class ATgPawn*                                     m_GuidedArrowTarget;                                      // 0x32F0(0x0008)
+	class ATgPawn_DruidGuardian*                       r_ActiveFox;                                              // 0x32F8(0x0008) (Net)
+	float                                              r_fRMBProjectileSpeed;                                    // 0x3300(0x0004) (Net)
+	float                                              r_fLastStandAnimTime;                                     // 0x3304(0x0004) (Net)
+	int                                                r_nFoxActivityNonce;                                      // 0x3308(0x0004) (Net)
+	struct FString                                     m_sDeployRedeployIconOverride;                            // 0x330C(0x0010) (NeedCtorLink)
+	unsigned long                                      c_bAcknowledgedIsLeaping : 1;                             // 0x331C(0x0004)
 
 	static UClass* StaticClass()
 	{
@@ -40298,44 +40351,44 @@ public:
 
 
 // Class TgGame.TgPawn_DruidGuardian
-// 0x0088 (0x3358 - 0x32D0)
+// 0x0088 (0x3360 - 0x32D8)
 class ATgPawn_DruidGuardian : public ATgPawn_Character
 {
 public:
-	class ATgPawn_Druid*                               m_CachedDruid;                                            // 0x32D0(0x0008)
-	class ATgDevice_GuardianStunRush*                  m_CachedRush;                                             // 0x32D8(0x0008)
-	class ATgDeployable*                               r_pRedeployPlaceholder;                                   // 0x32E0(0x0008) (Net)
-	float                                              m_fGuardianIntroLockoutTime;                              // 0x32E8(0x0004)
-	float                                              m_fRotationRateDegPerSec;                                 // 0x32EC(0x0004)
-	float                                              m_fRedeployTweenDuration;                                 // 0x32F0(0x0004)
-	float                                              m_fRedeployTweenRampUpDuration;                           // 0x32F4(0x0004)
-	float                                              m_fRedeployTweenSpeedFeetPerSecStart;                     // 0x32F8(0x0004)
-	float                                              m_fRedeployTweenSpeedFeetPerSecEnd;                       // 0x32FC(0x0004)
-	float                                              m_fRedeployFailsafeTime;                                  // 0x3300(0x0004)
-	float                                              m_fStunRushTweenRampUpDuration;                           // 0x3304(0x0004)
-	float                                              m_fStunRushTweenSpeedFeetPerSecStart;                     // 0x3308(0x0004)
-	float                                              m_fStunRushTweenSpeedFeetPerSecEnd;                       // 0x330C(0x0004)
-	float                                              m_fPostRedeployLockout;                                   // 0x3310(0x0004)
-	float                                              m_fRedeployVerticalOffset;                                // 0x3314(0x0004)
-	float                                              r_fStunRushCooldownTime;                                  // 0x3318(0x0004) (Net)
-	unsigned long                                      r_bStunRushInCooldown : 1;                                // 0x331C(0x0004) (Net)
-	unsigned long                                      r_bInWispForm : 1;                                        // 0x331C(0x0004) (Net)
-	unsigned long                                      r_bStunRushRedeploy : 1;                                  // 0x331C(0x0004) (Net)
-	unsigned long                                      r_bAnimatingRushHit : 1;                                  // 0x331C(0x0004) (Net)
-	unsigned long                                      c_bPsychicGrowlOnWindupOnly : 1;                          // 0x331C(0x0004)
-	int                                                r_nStunRushInCooldownNonce;                               // 0x3320(0x0004) (Net)
-	float                                              m_fPostRedeployOutputDuration;                            // 0x3324(0x0004)
-	int                                                m_nPostRedeployOutputSlot;                                // 0x3328(0x0004)
-	float                                              c_fWispTransitionTime;                                    // 0x332C(0x0004)
-	float                                              c_fWispTransitionTimeTotal;                               // 0x3330(0x0004)
-	float                                              m_fStunRushPsychicGrowlLockoutTime;                       // 0x3334(0x0004)
-	float                                              m_fMaxSeekingTurnDegPerSec;                               // 0x3338(0x0004)
-	float                                              m_fSeekingSpeedFeetPerSec;                                // 0x333C(0x0004)
-	float                                              m_fRushHitSpeedFactor;                                    // 0x3340(0x0004)
-	class ATgPawn*                                     r_pRushTarget;                                            // 0x3344(0x0008) (Net)
-	int                                                m_nHealFeedDefaultIconId;                                 // 0x334C(0x0004)
-	float                                              c_fPsychicGrowlCooldownTime;                              // 0x3350(0x0004)
-	float                                              r_fPsychicGrowlRangeSqr;                                  // 0x3354(0x0004) (Net)
+	class ATgPawn_Druid*                               m_CachedDruid;                                            // 0x32D8(0x0008)
+	class ATgDevice_GuardianStunRush*                  m_CachedRush;                                             // 0x32E0(0x0008)
+	class ATgDeployable*                               r_pRedeployPlaceholder;                                   // 0x32E8(0x0008) (Net)
+	float                                              m_fGuardianIntroLockoutTime;                              // 0x32F0(0x0004)
+	float                                              m_fRotationRateDegPerSec;                                 // 0x32F4(0x0004)
+	float                                              m_fRedeployTweenDuration;                                 // 0x32F8(0x0004)
+	float                                              m_fRedeployTweenRampUpDuration;                           // 0x32FC(0x0004)
+	float                                              m_fRedeployTweenSpeedFeetPerSecStart;                     // 0x3300(0x0004)
+	float                                              m_fRedeployTweenSpeedFeetPerSecEnd;                       // 0x3304(0x0004)
+	float                                              m_fRedeployFailsafeTime;                                  // 0x3308(0x0004)
+	float                                              m_fStunRushTweenRampUpDuration;                           // 0x330C(0x0004)
+	float                                              m_fStunRushTweenSpeedFeetPerSecStart;                     // 0x3310(0x0004)
+	float                                              m_fStunRushTweenSpeedFeetPerSecEnd;                       // 0x3314(0x0004)
+	float                                              m_fPostRedeployLockout;                                   // 0x3318(0x0004)
+	float                                              m_fRedeployVerticalOffset;                                // 0x331C(0x0004)
+	float                                              r_fStunRushCooldownTime;                                  // 0x3320(0x0004) (Net)
+	unsigned long                                      r_bStunRushInCooldown : 1;                                // 0x3324(0x0004) (Net)
+	unsigned long                                      r_bInWispForm : 1;                                        // 0x3324(0x0004) (Net)
+	unsigned long                                      r_bStunRushRedeploy : 1;                                  // 0x3324(0x0004) (Net)
+	unsigned long                                      r_bAnimatingRushHit : 1;                                  // 0x3324(0x0004) (Net)
+	unsigned long                                      c_bPsychicGrowlOnWindupOnly : 1;                          // 0x3324(0x0004)
+	int                                                r_nStunRushInCooldownNonce;                               // 0x3328(0x0004) (Net)
+	float                                              m_fPostRedeployOutputDuration;                            // 0x332C(0x0004)
+	int                                                m_nPostRedeployOutputSlot;                                // 0x3330(0x0004)
+	float                                              c_fWispTransitionTime;                                    // 0x3334(0x0004)
+	float                                              c_fWispTransitionTimeTotal;                               // 0x3338(0x0004)
+	float                                              m_fStunRushPsychicGrowlLockoutTime;                       // 0x333C(0x0004)
+	float                                              m_fMaxSeekingTurnDegPerSec;                               // 0x3340(0x0004)
+	float                                              m_fSeekingSpeedFeetPerSec;                                // 0x3344(0x0004)
+	float                                              m_fRushHitSpeedFactor;                                    // 0x3348(0x0004)
+	class ATgPawn*                                     r_pRushTarget;                                            // 0x334C(0x0008) (Net)
+	int                                                m_nHealFeedDefaultIconId;                                 // 0x3354(0x0004)
+	float                                              c_fPsychicGrowlCooldownTime;                              // 0x3358(0x0004)
+	float                                              r_fPsychicGrowlRangeSqr;                                  // 0x335C(0x0004) (Net)
 
 	static UClass* StaticClass()
 	{
@@ -40347,7 +40400,7 @@ public:
 	bool ShouldCreateCaptureProxy();
 	bool STATIC_AttemptRedeploy(class ATgDeployable* Placeholder);
 	void STATIC_EndRedeploy();
-	void STATIC_PostRedeployLockout();
+	void PostRedeployLockout();
 	void TweenFinished();
 	void STATIC_EndRedeployEffects();
 	void STATIC_ExitWispForm();
@@ -40355,8 +40408,8 @@ public:
 	void STATIC_BeginRedeploy();
 	void STATIC_InRedeploy();
 	void STATIC_EndTween(TEnumAsByte<ETweenState> endingTweenState, bool bInterrupted);
-	bool STATIC_PerformSavingSwapWithIo(class ATgPawn_Druid* pDruid);
-	void STATIC_PrepareForSavingSwapWithIo(float fFireLockTime);
+	bool PerformSavingSwapWithIo(class ATgPawn_Druid* pDruid);
+	void PrepareForSavingSwapWithIo(float fFireLockTime);
 	void STATIC_InSacrificeFireLock();
 	struct FVector GetPhysTweenTargetLocation(bool bFinalLocation);
 	void PlayDeathAnimation();
@@ -40599,7 +40652,7 @@ public:
 	void OnUnlinkDevice(class ATgPawn* TgP);
 	void OnLinkDevice(class ATgPawn* TgP);
 	bool STATIC_ShouldLockJumping();
-	bool STATIC_OnPotentialTarget(class AActor* NewTarget);
+	bool OnPotentialTarget(class AActor* NewTarget);
 	void STATIC_GetTargetingAim(struct FAimData* Aim);
 };
 
@@ -40631,7 +40684,7 @@ public:
 	float STATIC_GetSuckRate();
 	bool ShouldInterruptReloadOnFire();
 	bool ShouldCache();
-	bool STATIC_OnShardConsumed(int nStacks, bool bVirtualShard);
+	bool OnShardConsumed(int nStacks, bool bVirtualShard);
 	bool UpdateShardStacks();
 };
 
@@ -40769,52 +40822,52 @@ public:
 
 
 // Class TgGame.TgPawn_Raum
-// 0x04C8 (0x3798 - 0x32D0)
+// 0x04C8 (0x37A0 - 0x32D8)
 class ATgPawn_Raum : public ATgPawn_Character
 {
 public:
-	class ATgDevice_RaumMinigun*                       m_CachedMinigun;                                          // 0x32D0(0x0008)
-	class ATgDevice_RaumRevUp*                         m_CachedRev;                                              // 0x32D8(0x0008)
-	class ATgDevice_RaumSuck*                          m_CachedSuck;                                             // 0x32E0(0x0008)
-	class ATgDevice_RaumUlt*                           m_CachedUlt;                                              // 0x32E8(0x0008)
-	class ATgDevice_RaumStomp*                         m_CachedStomp;                                            // 0x32F0(0x0008)
-	class ATgDevice_RaumShardTalent*                   m_CachedShardTalent;                                      // 0x32F8(0x0008)
-	class UTgDeviceForm_RaumInhand*                    c_MinigunForm;                                            // 0x3300(0x0008)
-	class UTgDeviceForm_RaumRev*                       c_RevUpForm;                                              // 0x3308(0x0008)
-	float                                              m_fShardTimeToLive;                                       // 0x3310(0x0004)
-	float                                              m_fShardSuckSpeed;                                        // 0x3314(0x0004)
-	float                                              m_fShardSuckAcceleration;                                 // 0x3318(0x0004)
-	float                                              m_fShardMinSuckDistance;                                  // 0x331C(0x0004)
-	float                                              m_fShardSuckDistanceIncreasePerSec;                       // 0x3320(0x0004)
-	float                                              m_fInitialShardSpeed;                                     // 0x3324(0x0004)
-	float                                              m_fInitialShardPitch;                                     // 0x3328(0x0004)
-	float                                              m_fSpinPercentBonusWhileFiring;                           // 0x332C(0x0004)
-	float                                              r_fLastRevUpRateBefore;                                   // 0x3330(0x0004) (Net)
-	float                                              r_fLastRevUpRateAfter;                                    // 0x3334(0x0004) (Net)
-	unsigned char                                      s_nNextAvailableId;                                       // 0x3338(0x0001)
-	TEnumAsByte<ERaumFiringState>                      r_eFiringState;                                           // 0x3339(0x0001) (Net)
-	TEnumAsByte<ERaumFiringState>                      c_eFiringStateAckd;                                       // 0x333A(0x0001)
-	unsigned char                                      r_nShardNonces[0x14];                                     // 0x333B(0x0001) (Net)
-	unsigned char                                      r_nShardIds[0x14];                                        // 0x334F(0x0001) (Net)
-	unsigned char                                      r_bShardFlags[0x14];                                      // 0x3363(0x0001) (Net)
-	unsigned char                                      UnknownData00[0x1];                                       // 0x3377(0x0001) MISSED OFFSET
-	TArray<struct FName>                               m_nmFiringStateDisplayGroups;                             // 0x3378(0x0010) (NeedCtorLink)
-	float                                              m_fMinigunSpinningThreshold;                              // 0x3388(0x0004)
-	float                                              m_fMinigunFiringHighThreshold;                            // 0x338C(0x0004)
-	struct FVector                                     r_vShardLocations[0x14];                                  // 0x3390(0x000C) (Net)
-	int                                                r_nShardVelocityYaw[0x14];                                // 0x3480(0x0004) (Net)
-	int                                                s_nCurrentShardPoints;                                    // 0x34D0(0x0004)
-	float                                              r_fSpinUpPct;                                             // 0x34D4(0x0004) (Net)
-	unsigned long                                      r_bIsLMBHeld : 1;                                         // 0x34D8(0x0004) (Net)
-	unsigned long                                      r_bIsRMBHeld : 1;                                         // 0x34D8(0x0004) (Net)
-	int                                                m_nActiveShards;                                          // 0x34DC(0x0004)
-	int                                                m_nPointsPerShot[0x31];                                   // 0x34E0(0x0004)
-	int                                                m_nPointsPerShard;                                        // 0x35A4(0x0004)
-	int                                                m_nMaxCachedShards;                                       // 0x35A8(0x0004)
-	int                                                r_nCachedShards;                                          // 0x35AC(0x0004) (Net)
-	int                                                r_nMaxShardStacks;                                        // 0x35B0(0x0004) (Net)
-	int                                                r_nCurrentShardStacks;                                    // 0x35B4(0x0004) (Net)
-	struct FRaumShard                                  m_LocalShards[0x14];                                      // 0x35B8(0x0018)
+	class ATgDevice_RaumMinigun*                       m_CachedMinigun;                                          // 0x32D8(0x0008)
+	class ATgDevice_RaumRevUp*                         m_CachedRev;                                              // 0x32E0(0x0008)
+	class ATgDevice_RaumSuck*                          m_CachedSuck;                                             // 0x32E8(0x0008)
+	class ATgDevice_RaumUlt*                           m_CachedUlt;                                              // 0x32F0(0x0008)
+	class ATgDevice_RaumStomp*                         m_CachedStomp;                                            // 0x32F8(0x0008)
+	class ATgDevice_RaumShardTalent*                   m_CachedShardTalent;                                      // 0x3300(0x0008)
+	class UTgDeviceForm_RaumInhand*                    c_MinigunForm;                                            // 0x3308(0x0008)
+	class UTgDeviceForm_RaumRev*                       c_RevUpForm;                                              // 0x3310(0x0008)
+	float                                              m_fShardTimeToLive;                                       // 0x3318(0x0004)
+	float                                              m_fShardSuckSpeed;                                        // 0x331C(0x0004)
+	float                                              m_fShardSuckAcceleration;                                 // 0x3320(0x0004)
+	float                                              m_fShardMinSuckDistance;                                  // 0x3324(0x0004)
+	float                                              m_fShardSuckDistanceIncreasePerSec;                       // 0x3328(0x0004)
+	float                                              m_fInitialShardSpeed;                                     // 0x332C(0x0004)
+	float                                              m_fInitialShardPitch;                                     // 0x3330(0x0004)
+	float                                              m_fSpinPercentBonusWhileFiring;                           // 0x3334(0x0004)
+	float                                              r_fLastRevUpRateBefore;                                   // 0x3338(0x0004) (Net)
+	float                                              r_fLastRevUpRateAfter;                                    // 0x333C(0x0004) (Net)
+	unsigned char                                      s_nNextAvailableId;                                       // 0x3340(0x0001)
+	TEnumAsByte<ERaumFiringState>                      r_eFiringState;                                           // 0x3341(0x0001) (Net)
+	TEnumAsByte<ERaumFiringState>                      c_eFiringStateAckd;                                       // 0x3342(0x0001)
+	unsigned char                                      r_nShardNonces[0x14];                                     // 0x3343(0x0001) (Net)
+	unsigned char                                      r_nShardIds[0x14];                                        // 0x3357(0x0001) (Net)
+	unsigned char                                      r_bShardFlags[0x14];                                      // 0x336B(0x0001) (Net)
+	unsigned char                                      UnknownData00[0x1];                                       // 0x337F(0x0001) MISSED OFFSET
+	TArray<struct FName>                               m_nmFiringStateDisplayGroups;                             // 0x3380(0x0010) (NeedCtorLink)
+	float                                              m_fMinigunSpinningThreshold;                              // 0x3390(0x0004)
+	float                                              m_fMinigunFiringHighThreshold;                            // 0x3394(0x0004)
+	struct FVector                                     r_vShardLocations[0x14];                                  // 0x3398(0x000C) (Net)
+	int                                                r_nShardVelocityYaw[0x14];                                // 0x3488(0x0004) (Net)
+	int                                                s_nCurrentShardPoints;                                    // 0x34D8(0x0004)
+	float                                              r_fSpinUpPct;                                             // 0x34DC(0x0004) (Net)
+	unsigned long                                      r_bIsLMBHeld : 1;                                         // 0x34E0(0x0004) (Net)
+	unsigned long                                      r_bIsRMBHeld : 1;                                         // 0x34E0(0x0004) (Net)
+	int                                                m_nActiveShards;                                          // 0x34E4(0x0004)
+	int                                                m_nPointsPerShot[0x31];                                   // 0x34E8(0x0004)
+	int                                                m_nPointsPerShard;                                        // 0x35AC(0x0004)
+	int                                                m_nMaxCachedShards;                                       // 0x35B0(0x0004)
+	int                                                r_nCachedShards;                                          // 0x35B4(0x0004) (Net)
+	int                                                r_nMaxShardStacks;                                        // 0x35B8(0x0004) (Net)
+	int                                                r_nCurrentShardStacks;                                    // 0x35BC(0x0004) (Net)
+	struct FRaumShard                                  m_LocalShards[0x14];                                      // 0x35C0(0x0018)
 
 	static UClass* StaticClass()
 	{
@@ -40900,7 +40953,7 @@ public:
 	float STATIC_GetCurrentScalingFactor();
 	bool STATIC_HasCachedAlwaysOnFx();
 	bool STATIC_HasCachedFire();
-	bool STATIC_HasCachedDevice();
+	bool HasCachedDevice();
 };
 
 
@@ -41035,7 +41088,7 @@ public:
 	void PostHitLockOut();
 	void STATIC_ConsumeAmmoFromFiring(int nAmmoConsumptionOverride, int nFireRequestIDOverride);
 	bool HasCachedTiberius();
-	void STATIC_PerformConeAttack();
+	void PerformConeAttack();
 	bool STATIC_CanDeviceFireNow(unsigned char FireModeNum, const struct FAimData& Aim, bool bDeviceFailLog, TEnumAsByte<EDeviceFailType>* failType);
 	bool IsPostHitLockOutActive();
 };
@@ -41069,7 +41122,7 @@ public:
 	void OnLinkDevice(class ATgPawn* TgP);
 	void OnOwnerRespawn();
 	void OnOwnerLiveRespawn();
-	void STATIC_OnRetrieved(bool bPickedUp);
+	void OnRetrieved(bool bPickedUp);
 	void BladeInRecallTimeout();
 	void BladeThrownTimeout();
 	void RecallLockoutWindow();
@@ -41115,7 +41168,7 @@ public:
 	void OnUnlinkDevice(class ATgPawn* TgP);
 	void OnLinkDevice(class ATgPawn* TgP);
 	bool ShouldMountCancelFiring();
-	void STATIC_NotifyNewLeapDirection(const struct FVector& vNewDir);
+	void NotifyNewLeapDirection(const struct FVector& vNewDir);
 	bool ShouldLockRotation();
 };
 
@@ -41342,30 +41395,30 @@ public:
 
 
 // Class TgGame.TgPawn_Tiberius
-// 0x0088 (0x3358 - 0x32D0)
+// 0x0088 (0x3360 - 0x32D8)
 class ATgPawn_Tiberius : public ATgPawn_Character
 {
 public:
-	class ATgDevice_TigronHeavyBlade*                  m_CachedHeavyBlade;                                       // 0x32D0(0x0008)
-	class ATgDevice_TiberiusLeap*                      m_CachedLeap;                                             // 0x32D8(0x0008)
-	class ATgDevice_TigronUlt*                         m_CachedUlt;                                              // 0x32E0(0x0008)
-	class ATgDevice_TiberiusBladeExplode*              m_CachedBladeDetonateTalent;                              // 0x32E8(0x0008)
-	class ATgDevice_TiberiusLeapAssault*               m_CachedLeapAssaultTalent;                                // 0x32F0(0x0008)
-	class UTgDeviceForm_TiberiusRMB*                   m_CachedHeavyBladeForm;                                   // 0x32F8(0x0008)
-	TEnumAsByte<ETigerBladeState>                      r_eRemoteBladeState;                                      // 0x3300(0x0001) (Net)
-	unsigned char                                      UnknownData00[0x3];                                       // 0x3301(0x0003) MISSED OFFSET
-	class ATgProj_TigronHeavyBlade*                    r_BladeProjectile;                                        // 0x3304(0x0008) (Net)
-	class ATgDeploy_TigronHeavyBlade*                  r_BladeDeployable;                                        // 0x330C(0x0008) (Net)
-	struct FVector                                     r_vLastLeapDirection;                                     // 0x3314(0x000C) (Net)
-	unsigned long                                      r_bHasViciousAssault : 1;                                 // 0x3320(0x0004) (Net)
-	unsigned long                                      r_bBladeInRecall : 1;                                     // 0x3320(0x0004) (Net)
-	int                                                m_nAltInhandSlot;                                         // 0x3324(0x0004) (Const)
-	int                                                m_nAltAltfireSlot;                                        // 0x3328(0x0004) (Const)
-	float                                              r_fRemoteUltDurationPercent;                              // 0x332C(0x0004) (Net)
-	int                                                r_nRemainingUltCharges;                                   // 0x3330(0x0004) (Net)
-	int                                                r_nMaxUltCharges;                                         // 0x3334(0x0004) (Net)
-	struct FString                                     m_sSecondaryActivationIconOverride;                       // 0x3338(0x0010) (NeedCtorLink)
-	TArray<class USkelControlBase*>                    m_HeavyBladeScaleSkelControls;                            // 0x3348(0x0010) (NeedCtorLink)
+	class ATgDevice_TigronHeavyBlade*                  m_CachedHeavyBlade;                                       // 0x32D8(0x0008)
+	class ATgDevice_TiberiusLeap*                      m_CachedLeap;                                             // 0x32E0(0x0008)
+	class ATgDevice_TigronUlt*                         m_CachedUlt;                                              // 0x32E8(0x0008)
+	class ATgDevice_TiberiusBladeExplode*              m_CachedBladeDetonateTalent;                              // 0x32F0(0x0008)
+	class ATgDevice_TiberiusLeapAssault*               m_CachedLeapAssaultTalent;                                // 0x32F8(0x0008)
+	class UTgDeviceForm_TiberiusRMB*                   m_CachedHeavyBladeForm;                                   // 0x3300(0x0008)
+	TEnumAsByte<ETigerBladeState>                      r_eRemoteBladeState;                                      // 0x3308(0x0001) (Net)
+	unsigned char                                      UnknownData00[0x3];                                       // 0x3309(0x0003) MISSED OFFSET
+	class ATgProj_TigronHeavyBlade*                    r_BladeProjectile;                                        // 0x330C(0x0008) (Net)
+	class ATgDeploy_TigronHeavyBlade*                  r_BladeDeployable;                                        // 0x3314(0x0008) (Net)
+	struct FVector                                     r_vLastLeapDirection;                                     // 0x331C(0x000C) (Net)
+	unsigned long                                      r_bHasViciousAssault : 1;                                 // 0x3328(0x0004) (Net)
+	unsigned long                                      r_bBladeInRecall : 1;                                     // 0x3328(0x0004) (Net)
+	int                                                m_nAltInhandSlot;                                         // 0x332C(0x0004) (Const)
+	int                                                m_nAltAltfireSlot;                                        // 0x3330(0x0004) (Const)
+	float                                              r_fRemoteUltDurationPercent;                              // 0x3334(0x0004) (Net)
+	int                                                r_nRemainingUltCharges;                                   // 0x3338(0x0004) (Net)
+	int                                                r_nMaxUltCharges;                                         // 0x333C(0x0004) (Net)
+	struct FString                                     m_sSecondaryActivationIconOverride;                       // 0x3340(0x0010) (NeedCtorLink)
+	TArray<class USkelControlBase*>                    m_HeavyBladeScaleSkelControls;                            // 0x3350(0x0010) (NeedCtorLink)
 
 	static UClass* StaticClass()
 	{
@@ -41383,11 +41436,11 @@ public:
 	void SetRemainingUltCharges(int nRemainingCharges, bool bIsReset);
 	TEnumAsByte<ETG_EQUIP_POINT> OverrideOffhandSlot(TEnumAsByte<ETG_EQUIP_POINT> eqp);
 	void OnRetrievalFinished();
-	void STATIC_PrepareForLiveRespawn();
+	void PrepareForLiveRespawn();
 	bool STATIC_Died(class AController* Killer, class UClass* dmgType, const struct FVector& HitLocation);
-	void STATIC_NotifyNewLeapDirection(const struct FVector& vNewLeapdir);
+	void NotifyNewLeapDirection(const struct FVector& vNewLeapdir);
 	void STATIC_HeavyBladeExplodeAt(const struct FVector& vLoc);
-	void STATIC_PlayDetonateTalent(const struct FVector& vLoc);
+	void PlayDetonateTalent(const struct FVector& vLoc);
 	void PostInitAnimTree(class USkeletalMeshComponent* SkelComp);
 	void ReplicatedEvent(const struct FName& VarName);
 	void ResetHeavyBladeSkelControlScale();
@@ -41396,7 +41449,7 @@ public:
 	bool TriggerHeavyBladeSecondaryActivation();
 	void STATIC_ForwardSimulateHeavyBlade(float DeltaTime);
 	void STATIC_FaceRotation(const struct FRotator& NewRotation, float DeltaTime);
-	bool STATIC_NotifyHeavyBladeExpired();
+	bool NotifyHeavyBladeExpired();
 	bool STATIC_HasCachedHeavyBladeForm();
 	void SetBladeInRecall(bool bBladeInRecall);
 	bool SecondaryActivationDetonates();
@@ -41429,8 +41482,8 @@ public:
 	bool STATIC_ShouldHitBounce(class AActor* Target, const struct FVector& HitNormal);
 	void PostProjectileInitialize();
 	void STATIC_ApplyBounce(const struct FVector& HitNormal, class AActor* Wall, class UPrimitiveComponent* WallComp);
-	void STATIC_MarkPosition();
-	void STATIC_OnBounceBacktrack();
+	void MarkPosition();
+	void OnBounceBacktrack();
 	struct FVector STATIC_GetPositionAtTime(float fTime);
 };
 
@@ -41453,7 +41506,7 @@ public:
 	void STATIC_ProcessTouch(class AActor* Other, const struct FVector& HitLocation, const struct FVector& HitNormal);
 	bool CheckTeamPassThrough(class AActor* Other);
 	void SecondaryExplode(const struct FVector& HitLocation, const struct FVector& HitNormal);
-	void STATIC_OnRetrieved();
+	void OnRetrieved();
 	void PlayHitWallExplosionFX(const struct FVector& HitNormal, const struct FVector& HitLocation);
 	bool HasCachedTiberius();
 	bool STATIC_GetDeployLocationAndRotation(const struct FVector& vLocation, class AActor* TargetActor, const struct FVector& vNormal, struct FVector* OutLocation, struct FRotator* OutRotation);
@@ -41718,7 +41771,7 @@ public:
 	void StopFire(int nFireModeNum);
 	void Hit(int nFireMode, class AActor* Target, float fDamageAmount, const struct FVector& HitLocation, const struct FVector& HitNormal, struct FExtraDamageInfo* ExtraInfo);
 	void StartFire(int nFireMode, float fRefireTime, class AActor* Target, int nAmmoRemaining);
-	void STATIC_HideChain();
+	void HideChain();
 	void StartMissInvalidEnd();
 	void StartMissNoHitEnd();
 	void Generic4(unsigned char byExtraData);
@@ -41731,7 +41784,7 @@ public:
 	void ClearAnimNodes(bool bIs3p);
 	struct FVector STATIC_GetChainSocketLocation();
 	void STATIC_UpdateChainEffects(const struct FVector& vEndPoint);
-	void STATIC_HandleMissConditions();
+	void HandleMissConditions();
 };
 
 
@@ -41796,20 +41849,20 @@ public:
 
 
 // Class TgGame.TgPawn_Makoa
-// 0x002C (0x32FC - 0x32D0)
+// 0x002C (0x3304 - 0x32D8)
 class ATgPawn_Makoa : public ATgPawn_Character
 {
 public:
-	float                                              m_fSmashSpeedModifier;                                    // 0x32D0(0x0004)
-	float                                              m_fShellSpinZoomOverride;                                 // 0x32D4(0x0004)
-	unsigned long                                      r_bShellShieldIsActive : 1;                               // 0x32D8(0x0004) (Net)
-	unsigned long                                      r_bAncientRageActive : 1;                                 // 0x32D8(0x0004) (Net)
-	unsigned long                                      r_bAbility1CanEmote : 1;                                  // 0x32D8(0x0004) (Net)
-	float                                              m_fShellShieldSpeedModifier;                              // 0x32DC(0x0004)
-	float                                              m_fShellShieldZoomOverride;                               // 0x32E0(0x0004)
-	class UTgSpecialFx*                                m_ShellShieldMovementFX;                                  // 0x32E4(0x0008)
-	class ATgDevice*                                   m_AncientRageInHand;                                      // 0x32EC(0x0008)
-	class ATgDevice*                                   m_CachedDavyJones;                                        // 0x32F4(0x0008)
+	float                                              m_fSmashSpeedModifier;                                    // 0x32D8(0x0004)
+	float                                              m_fShellSpinZoomOverride;                                 // 0x32DC(0x0004)
+	unsigned long                                      r_bShellShieldIsActive : 1;                               // 0x32E0(0x0004) (Net)
+	unsigned long                                      r_bAncientRageActive : 1;                                 // 0x32E0(0x0004) (Net)
+	unsigned long                                      r_bAbility1CanEmote : 1;                                  // 0x32E0(0x0004) (Net)
+	float                                              m_fShellShieldSpeedModifier;                              // 0x32E4(0x0004)
+	float                                              m_fShellShieldZoomOverride;                               // 0x32E8(0x0004)
+	class UTgSpecialFx*                                m_ShellShieldMovementFX;                                  // 0x32EC(0x0008)
+	class ATgDevice*                                   m_AncientRageInHand;                                      // 0x32F4(0x0008)
+	class ATgDevice*                                   m_CachedDavyJones;                                        // 0x32FC(0x0008)
 
 	static UClass* StaticClass()
 	{
@@ -41852,7 +41905,7 @@ public:
 	bool STATIC_StartDrag(class AActor* Target, const struct FVector& HitLocation);
 	void ExplodeOnTarget(class AActor* Target, const struct FVector& HitLocation, const struct FVector& HitNormal);
 	void Fizzle();
-	void RangeReached();
+	void STATIC_RangeReached();
 	bool STATIC_CheckProjectileRange(const struct FVector& vLocOverride);
 };
 
@@ -41881,7 +41934,7 @@ public:
 	void STATIC_StartPull();
 	void ApplyHit(TArray<struct FImpactInfo>* ImpactList);
 	void STATIC_UpdateBeams();
-	void STATIC_HideBeams();
+	void HideBeams();
 	void STATIC_CreateBeams();
 	void STATIC_ApplyForcedView();
 	void ReplicatedEvent(const struct FName& VarName);
@@ -41953,7 +42006,7 @@ public:
 	void DeliverHit(const struct FImpactInfo& Impact);
 	bool ShouldCooldownAfterFire();
 	void DeliverQueuedPendingHits();
-	bool STATIC_HasCachedOracle();
+	bool HasCachedOracle();
 	bool CanBeInterrupted();
 	bool CanBeCanceled();
 	bool STATIC_CanDeviceFireNow(unsigned char FireModeNum, const struct FAimData& Aim, bool bDeviceFailLog, TEnumAsByte<EDeviceFailType>* failType);
@@ -42053,7 +42106,7 @@ public:
 	bool IsAreaHealActive();
 	TArray<class ATgPawn*> STATIC_GetAreaHealTargets(class AActor* PrimaryTarget);
 	float STATIC_GetPostHitDelay();
-	bool STATIC_IgnoreTargetForBlocking(class AActor* Target);
+	bool IgnoreTargetForBlocking(class AActor* Target);
 };
 
 
@@ -42075,11 +42128,11 @@ public:
 	void STATIC_UpdateAmmoCountFx(float fPreviousPerc, float fCurrentPerc);
 	void STATIC_UpdateAmmoCountSingleFx(class UTgSpecialFx* Fx, float fAmmoPerc);
 	void StopFire(int nFireModeNum);
-	void RecoverDeviceState(TEnumAsByte<ETG_REP_DEVICE_STATE> DesiredState);
+	void STATIC_RecoverDeviceState(TEnumAsByte<ETG_REP_DEVICE_STATE> DesiredState);
 	void PlayToggleTransitionAnimations(float transitionPercent, float totalTransitionTime, bool transitionToActive);
 	void Fire(const struct FVector& HitLocation, int nFireMode, int nEquipSlot, int nSocketIndex, bool bSuccessfulHit, float fRefireTime);
 	class UTgAnimNodeSlot* STATIC_GetFullBodyAnimNode();
-	bool STATIC_HasCachedOracle();
+	bool HasCachedOracle();
 };
 
 
@@ -42099,31 +42152,31 @@ public:
 
 
 // Class TgGame.TgPawn_Oracle
-// 0x0104 (0x33D4 - 0x32D0)
+// 0x0104 (0x33DC - 0x32D8)
 class ATgPawn_Oracle : public ATgPawn_Character
 {
 public:
-	class AActor*                                      r_RestoreSoulTarget;                                      // 0x32D0(0x0008) (Net)
-	struct FVector                                     r_RestoreSoulHitOffset;                                   // 0x32D8(0x000C) (Net)
-	class AActor*                                      r_RestoreSoulSecondaryTargets[0x4];                       // 0x32E4(0x0008) (Net)
-	class UTgBeamHelper*                               c_RestoreSoulSecondaryBeams[0x4];                         // 0x3304(0x0008)
-	unsigned long                                      r_bRestoreSoulActive : 1;                                 // 0x3324(0x0004) (Net)
-	unsigned long                                      r_bHasAgonyTalent : 1;                                    // 0x3324(0x0004) (Net)
-	unsigned long                                      m_bIsDetonatedOrbsCanBeRedeemed : 1;                      // 0x3324(0x0004)
-	int                                                r_SoulStackTargetPawnId[0xA];                             // 0x3328(0x0004) (Net)
-	int                                                r_SoulStackTargetCount[0xA];                              // 0x3350(0x0004) (Net)
-	int                                                c_CachedSoulStackTargetCount[0xA];                        // 0x3378(0x0004)
-	struct FVector                                     c_InterpRestoreSoulHitOffset;                             // 0x33A0(0x000C)
-	float                                              c_fRestoreSoulHitOffsetInterpSpeed;                       // 0x33AC(0x0004)
-	float                                              m_fFrictionMultiplier;                                    // 0x33B0(0x0004) (Edit)
-	int                                                m_nStackAddedVictimFxId;                                  // 0x33B4(0x0004)
-	int                                                m_nStackAddedSourceFxId;                                  // 0x33B8(0x0004)
-	int                                                m_nMaxStacksVictimFxId;                                   // 0x33BC(0x0004)
-	int                                                m_nMaxStacksSourceFxId;                                   // 0x33C0(0x0004)
-	int                                                m_nDetonatedOrbsCount;                                    // 0x33C4(0x0004)
-	int                                                r_nSoulCollectorEffectGroupId;                            // 0x33C8(0x0004) (Net)
-	int                                                r_nSoulCollectorStacksApplied;                            // 0x33CC(0x0004) (Net)
-	float                                              s_fAgonyDenotatedOrbsTimerDuration;                       // 0x33D0(0x0004)
+	class AActor*                                      r_RestoreSoulTarget;                                      // 0x32D8(0x0008) (Net)
+	struct FVector                                     r_RestoreSoulHitOffset;                                   // 0x32E0(0x000C) (Net)
+	class AActor*                                      r_RestoreSoulSecondaryTargets[0x4];                       // 0x32EC(0x0008) (Net)
+	class UTgBeamHelper*                               c_RestoreSoulSecondaryBeams[0x4];                         // 0x330C(0x0008)
+	unsigned long                                      r_bRestoreSoulActive : 1;                                 // 0x332C(0x0004) (Net)
+	unsigned long                                      r_bHasAgonyTalent : 1;                                    // 0x332C(0x0004) (Net)
+	unsigned long                                      m_bIsDetonatedOrbsCanBeRedeemed : 1;                      // 0x332C(0x0004)
+	int                                                r_SoulStackTargetPawnId[0xA];                             // 0x3330(0x0004) (Net)
+	int                                                r_SoulStackTargetCount[0xA];                              // 0x3358(0x0004) (Net)
+	int                                                c_CachedSoulStackTargetCount[0xA];                        // 0x3380(0x0004)
+	struct FVector                                     c_InterpRestoreSoulHitOffset;                             // 0x33A8(0x000C)
+	float                                              c_fRestoreSoulHitOffsetInterpSpeed;                       // 0x33B4(0x0004)
+	float                                              m_fFrictionMultiplier;                                    // 0x33B8(0x0004) (Edit)
+	int                                                m_nStackAddedVictimFxId;                                  // 0x33BC(0x0004)
+	int                                                m_nStackAddedSourceFxId;                                  // 0x33C0(0x0004)
+	int                                                m_nMaxStacksVictimFxId;                                   // 0x33C4(0x0004)
+	int                                                m_nMaxStacksSourceFxId;                                   // 0x33C8(0x0004)
+	int                                                m_nDetonatedOrbsCount;                                    // 0x33CC(0x0004)
+	int                                                r_nSoulCollectorEffectGroupId;                            // 0x33D0(0x0004) (Net)
+	int                                                r_nSoulCollectorStacksApplied;                            // 0x33D4(0x0004) (Net)
+	float                                              s_fAgonyDenotatedOrbsTimerDuration;                       // 0x33D8(0x0004)
 
 	static UClass* StaticClass()
 	{
@@ -42279,18 +42332,18 @@ public:
 
 
 // Class TgGame.TgPawn_Pip
-// 0x0018 (0x32E8 - 0x32D0)
+// 0x0018 (0x32F0 - 0x32D8)
 class ATgPawn_Pip : public ATgPawn_Character
 {
 public:
-	unsigned long                                      r_bWeightless : 1;                                        // 0x32D0(0x0004) (Net)
-	unsigned long                                      m_bWeightlessDurationEnded : 1;                           // 0x32D0(0x0004)
-	unsigned long                                      r_bAcrobaticsActive : 1;                                  // 0x32D0(0x0004) (Net)
-	unsigned long                                      r_bHasMegaPotion : 1;                                     // 0x32D0(0x0004) (Net)
-	float                                              m_fWeightlessMaxSpeedModifier;                            // 0x32D4(0x0004)
-	float                                              m_fWeightlessJumpZModifier;                               // 0x32D8(0x0004)
-	float                                              r_fRadiusForHealingPotionFX;                              // 0x32DC(0x0004) (Net)
-	class ATgDevice_Weightless*                        m_CachedWeightless;                                       // 0x32E0(0x0008)
+	unsigned long                                      r_bWeightless : 1;                                        // 0x32D8(0x0004) (Net)
+	unsigned long                                      m_bWeightlessDurationEnded : 1;                           // 0x32D8(0x0004)
+	unsigned long                                      r_bAcrobaticsActive : 1;                                  // 0x32D8(0x0004) (Net)
+	unsigned long                                      r_bHasMegaPotion : 1;                                     // 0x32D8(0x0004) (Net)
+	float                                              m_fWeightlessMaxSpeedModifier;                            // 0x32DC(0x0004)
+	float                                              m_fWeightlessJumpZModifier;                               // 0x32E0(0x0004)
+	float                                              r_fRadiusForHealingPotionFX;                              // 0x32E4(0x0004) (Net)
+	class ATgDevice_Weightless*                        m_CachedWeightless;                                       // 0x32E8(0x0008)
 
 	static UClass* StaticClass()
 	{
@@ -42379,7 +42432,7 @@ public:
 	void TimeOut();
 	void STATIC_StartTimeOut();
 	bool CanBeCanceled();
-	bool STATIC_HasCachedPrincess();
+	bool HasCachedPrincess();
 };
 
 
@@ -42400,7 +42453,7 @@ public:
 
 	bool STATIC_ShouldSwitchBackToBasicAttackTargeting(TEnumAsByte<ECastMode> CastMode);
 	bool UsesSimulatedAmmo();
-	bool STATIC_HasCachedPrincess();
+	bool HasCachedPrincess();
 	bool STATIC_RequiresAmmoToFire();
 };
 
@@ -42438,7 +42491,7 @@ public:
 
 
 	struct FImpactInfo STATIC_CalcWeaponFire(const struct FAimData& Aim, TArray<struct FImpactInfo>* ImpactList);
-	bool STATIC_HasCachedLian();
+	bool HasCachedLian();
 	void STATIC_GetTargetingAim(struct FAimData* Aim);
 	bool STATIC_UsesCachedAim();
 	bool STATIC_CanFiringBeLocked();
@@ -42544,9 +42597,9 @@ public:
 	void ManageGraceTracer(int Index);
 	void STATIC_ClearGraceTracer(int Index);
 	void STATIC_ClearGraceTracers();
-	void STATIC_HideGraceTracers();
+	void HideGraceTracers();
 	void STATIC_ShowGraceTracers();
-	bool STATIC_HasCachedLian();
+	bool HasCachedLian();
 };
 
 
@@ -42604,7 +42657,7 @@ public:
 	}
 
 
-	bool STATIC_HasCachedRuckusOwner();
+	bool HasCachedRuckusOwner();
 	bool InterceptRightMouseReleased(class ATgPlayerController* TgController);
 	bool InterceptRightMousePressed(class ATgPlayerController* TgController);
 	bool InterceptLeftMouseReleased(class ATgPlayerController* TgController);
@@ -42698,7 +42751,7 @@ public:
 	bool CanBeCanceled();
 	bool STATIC_ShouldLockJumping();
 	struct FVector GetProjectileSpawnOffset();
-	bool STATIC_HasCachedRuckus();
+	bool HasCachedRuckus();
 	bool ShouldUseGradualMovement();
 	float STATIC_GetMoveSpeedMultiplier();
 	void STATIC_GetCachedAim(struct FAimData* Aim);
@@ -42841,29 +42894,29 @@ public:
 
 
 // Class TgGame.TgPawn_Ruckus
-// 0x0068 (0x3338 - 0x32D0)
+// 0x0068 (0x3340 - 0x32D8)
 class ATgPawn_Ruckus : public ATgPawn_Character
 {
 public:
-	float                                              m_fDamageAccumulator;                                     // 0x32D0(0x0004)
-	unsigned long                                      r_bHexaFireFiring : 1;                                    // 0x32D4(0x0004) (Net)
-	unsigned long                                      m_bInstancedGemArmMaterials : 1;                          // 0x32D4(0x0004)
-	unsigned long                                      m_bInstancedGemBodyMaterials : 1;                         // 0x32D4(0x0004)
-	unsigned long                                      m_bRegisteredAudioCallbacks : 1;                          // 0x32D4(0x0004)
-	unsigned long                                      m_bHasBoltGemFX : 1;                                      // 0x32D4(0x0004)
-	float                                              r_fBarrelSpinRate;                                        // 0x32D8(0x0004) (Net)
-	float                                              r_fBarrelSpinFactor;                                      // 0x32DC(0x0004) (Net)
-	class ATgDevice_RuckusInhand*                      m_CachedRuckusInhand;                                     // 0x32E0(0x0008)
-	class ATgDevice_HexaFireGuns*                      m_CachedHexaFireGuns;                                     // 0x32E8(0x0008)
-	class ATgDevice_Emitter*                           m_CachedEmitter;                                          // 0x32F0(0x0008)
-	class ATgDevice_RepulsorField*                     m_CachedRepulsorField;                                    // 0x32F8(0x0008)
-	TArray<class UMaterialInstanceConstant*>           m_ReplacementArmMICs;                                     // 0x3300(0x0010) (NeedCtorLink)
-	TArray<class UMaterialInstanceConstant*>           m_ReplacementBodyMICs;                                    // 0x3310(0x0010) (NeedCtorLink)
-	int                                                m_nInstancedGemArmMaterialsHandle;                        // 0x3320(0x0004)
-	int                                                m_nInstancedGemBodyMaterialsHandle;                       // 0x3324(0x0004)
-	struct Fdword                                      m_dwGemFXBusID;                                           // 0x3328(0x0004)
-	float                                              m_fVGSMatBlue;                                            // 0x332C(0x0004)
-	class UTgSpecialFx*                                m_IdleFX;                                                 // 0x3330(0x0008)
+	float                                              m_fDamageAccumulator;                                     // 0x32D8(0x0004)
+	unsigned long                                      r_bHexaFireFiring : 1;                                    // 0x32DC(0x0004) (Net)
+	unsigned long                                      m_bInstancedGemArmMaterials : 1;                          // 0x32DC(0x0004)
+	unsigned long                                      m_bInstancedGemBodyMaterials : 1;                         // 0x32DC(0x0004)
+	unsigned long                                      m_bRegisteredAudioCallbacks : 1;                          // 0x32DC(0x0004)
+	unsigned long                                      m_bHasBoltGemFX : 1;                                      // 0x32DC(0x0004)
+	float                                              r_fBarrelSpinRate;                                        // 0x32E0(0x0004) (Net)
+	float                                              r_fBarrelSpinFactor;                                      // 0x32E4(0x0004) (Net)
+	class ATgDevice_RuckusInhand*                      m_CachedRuckusInhand;                                     // 0x32E8(0x0008)
+	class ATgDevice_HexaFireGuns*                      m_CachedHexaFireGuns;                                     // 0x32F0(0x0008)
+	class ATgDevice_Emitter*                           m_CachedEmitter;                                          // 0x32F8(0x0008)
+	class ATgDevice_RepulsorField*                     m_CachedRepulsorField;                                    // 0x3300(0x0008)
+	TArray<class UMaterialInstanceConstant*>           m_ReplacementArmMICs;                                     // 0x3308(0x0010) (NeedCtorLink)
+	TArray<class UMaterialInstanceConstant*>           m_ReplacementBodyMICs;                                    // 0x3318(0x0010) (NeedCtorLink)
+	int                                                m_nInstancedGemArmMaterialsHandle;                        // 0x3328(0x0004)
+	int                                                m_nInstancedGemBodyMaterialsHandle;                       // 0x332C(0x0004)
+	struct Fdword                                      m_dwGemFXBusID;                                           // 0x3330(0x0004)
+	float                                              m_fVGSMatBlue;                                            // 0x3334(0x0004)
+	class UTgSpecialFx*                                m_IdleFX;                                                 // 0x3338(0x0008)
 
 	static UClass* StaticClass()
 	{
@@ -42878,10 +42931,10 @@ public:
 	void PlayHexaFireEffects(bool bEnabled);
 	bool StartAction(class ATgDevice* Dev, bool bUpdateTimeStamp, TEnumAsByte<EDeviceFailType>* failType);
 	void ReplicatedEvent(const struct FName& VarName);
-	bool STATIC_HasCachedRepulsorField();
-	bool STATIC_HasCachedEmitter();
-	bool STATIC_HasCachedHexaFireGuns();
-	bool STATIC_HasCachedRuckusInhand();
+	bool HasCachedRepulsorField();
+	bool HasCachedEmitter();
+	bool HasCachedHexaFireGuns();
+	bool HasCachedRuckusInhand();
 	bool STATIC_CanSpawnScalableShields();
 	bool InstanceArmMaterials();
 	bool InstanceBodyMaterials();
@@ -42936,7 +42989,7 @@ public:
 	void STATIC_SpawnInitialCenter();
 	void STATIC_DeployComplete();
 	void STATIC_SetPointIntensity(int PointIndex, int nIntensityLevel);
-	int AddNewPoint(const struct FVector& vLocation, const struct FRotator& rRotation, bool bAddEffectSpot, bool bSkipEligibilityCheck);
+	int STATIC_AddNewPoint(const struct FVector& vLocation, const struct FRotator& rRotation, bool bAddEffectSpot, bool bSkipEligibilityCheck);
 	struct FRotator STATIC_AlignSpotByRotation(const struct FVector& HitNormal, const struct FRotator& rRotation);
 	void SetMomentumDirection(const struct FVector& projVelocity, const struct FVector& HitNormal);
 	void STATIC_UpdateAllRanks();
@@ -43022,12 +43075,12 @@ public:
 
 
 // Class TgGame.TgPawn_Tyra
-// 0x0018 (0x32E8 - 0x32D0)
+// 0x0018 (0x32F0 - 0x32D8)
 class ATgPawn_Tyra : public ATgPawn_Character
 {
 public:
-	class ATgDevice_HuntersMark*                       m_HuntersMarkDevice;                                      // 0x32D0(0x0008)
-	TArray<class ATgPawn*>                             m_HuntersMarkTargets;                                     // 0x32D8(0x0010) (AlwaysInit, NeedCtorLink)
+	class ATgDevice_HuntersMark*                       m_HuntersMarkDevice;                                      // 0x32D8(0x0008)
+	TArray<class ATgPawn*>                             m_HuntersMarkTargets;                                     // 0x32E0(0x0010) (AlwaysInit, NeedCtorLink)
 
 	static UClass* StaticClass()
 	{
@@ -43168,7 +43221,7 @@ public:
 	bool StartFire();
 	bool CanBeInterrupted();
 	bool ShouldInterruptReloadOnFire();
-	bool STATIC_NativeCanBeCanceled();
+	bool NativeCanBeCanceled();
 	bool STATIC_CanDeviceFireNow(unsigned char FireModeNum, const struct FAimData& Aim, bool bDeviceFailLog, TEnumAsByte<EDeviceFailType>* failType);
 	bool STATIC_CanFireWhileMounted();
 	bool STATIC_ShouldInterruptStealth();
@@ -43176,7 +43229,7 @@ public:
 
 
 // Class TgGame.TgPawn_Skye
-// 0x0000 (0x32D0 - 0x32D0)
+// 0x0000 (0x32D8 - 0x32D8)
 class ATgPawn_Skye : public ATgPawn_Character
 {
 public:
@@ -43267,7 +43320,7 @@ public:
 
 	void LinkedDeviceUnequipped(class ATgDevice* Dev);
 	void LinkedDeviceEquipped(class ATgDevice* Dev);
-	void STATIC_HandleDeviceFormStartFire(int nDeviceModeNum, float fRefireTime, struct FAimData* Aim);
+	void HandleDeviceFormStartFire(int nDeviceModeNum, float fRefireTime, struct FAimData* Aim);
 	void STATIC_CustomFire();
 	bool STATIC_ShouldConsumePowerPoolAfterFire();
 	bool STATIC_ShouldConsumePowerPoolOnStartFire();
@@ -43305,7 +43358,7 @@ public:
 	bool CanBeInterrupted();
 	void ClientInterrupt(bool bServerFireFailed);
 	void InterruptFiring(bool bServerFireFailed);
-	bool STATIC_HasCachedViktor();
+	bool HasCachedViktor();
 	void STATIC_ServerEndCook(float fCookPct);
 	void STATIC_SetAndSendGrenadeTimingsViaStartThrowTimer();
 	bool InterceptSlotReleased(class ATgPlayerController* TgController);
@@ -43446,11 +43499,11 @@ public:
 	}
 
 
-	void STATIC_HandleDeviceFormStartFire(int nDeviceModeNum, float fRefireTime, struct FAimData* Aim);
+	void HandleDeviceFormStartFire(int nDeviceModeNum, float fRefireTime, struct FAimData* Aim);
 	float STATIC_GetMinAccuracy();
 	float STATIC_GetRecoilMultiplier();
 	class UTgGameplayCurvesSet_RecoilSimple* STATIC_GetRecoilCurve();
-	bool STATIC_HasCachedCharacter();
+	bool HasCachedCharacter();
 	void LinkedDeviceUnequipped(class ATgDevice* Dev);
 	void LinkedDeviceEquipped(class ATgDevice* Dev);
 	void STATIC_EndADSBonuses();
@@ -43520,27 +43573,27 @@ public:
 
 
 // Class TgGame.TgPawn_Viktor
-// 0x0048 (0x3318 - 0x32D0)
+// 0x0048 (0x3320 - 0x32D8)
 class ATgPawn_Viktor : public ATgPawn_Character
 {
 public:
-	float                                              r_fFragGrenadeExplodeTime;                                // 0x32D0(0x0004) (Net)
-	unsigned long                                      r_bFragGrenadeExplodeOnTouch : 1;                         // 0x32D4(0x0004) (Net)
-	float                                              m_fBounceDampingVertMin;                                  // 0x32D8(0x0004) (Edit)
-	float                                              m_fBounceDampingVertMax;                                  // 0x32DC(0x0004) (Edit)
-	float                                              m_fBounceDampingHorizMin;                                 // 0x32E0(0x0004) (Edit)
-	float                                              m_fBounceDampingHorizMax;                                 // 0x32E4(0x0004) (Edit)
-	unsigned char                                      r_nGrenadeRefreshSound;                                   // 0x32E8(0x0001) (Net)
-	unsigned char                                      r_nAmmoRefreshSound;                                      // 0x32E9(0x0001) (Net)
-	unsigned char                                      UnknownData00[0x2];                                       // 0x32EA(0x0002) MISSED OFFSET
-	class ATgDevice_Hustle*                            m_CachedHustleDevice;                                     // 0x32EC(0x0008)
-	struct FVector                                     c_vForced3pAdditionalOffsetADS;                           // 0x32F4(0x000C) (Config)
-	float                                              m_fUnderheadADSDistanceClampAngle;                        // 0x3300(0x0004) (Config)
-	float                                              m_fUnderheadADSDistanceClampPushIn;                       // 0x3304(0x0004) (Config)
-	float                                              m_fUnderheadADSDistanceClampOvershoot;                    // 0x3308(0x0004) (Config)
-	float                                              m_fOverheadADSDistanceClampAngle;                         // 0x330C(0x0004) (Config)
-	float                                              m_fOverheadADSDistanceClampPushIn;                        // 0x3310(0x0004) (Config)
-	float                                              m_fOverheadADSDistanceClampOvershoot;                     // 0x3314(0x0004) (Config)
+	float                                              r_fFragGrenadeExplodeTime;                                // 0x32D8(0x0004) (Net)
+	unsigned long                                      r_bFragGrenadeExplodeOnTouch : 1;                         // 0x32DC(0x0004) (Net)
+	float                                              m_fBounceDampingVertMin;                                  // 0x32E0(0x0004) (Edit)
+	float                                              m_fBounceDampingVertMax;                                  // 0x32E4(0x0004) (Edit)
+	float                                              m_fBounceDampingHorizMin;                                 // 0x32E8(0x0004) (Edit)
+	float                                              m_fBounceDampingHorizMax;                                 // 0x32EC(0x0004) (Edit)
+	unsigned char                                      r_nGrenadeRefreshSound;                                   // 0x32F0(0x0001) (Net)
+	unsigned char                                      r_nAmmoRefreshSound;                                      // 0x32F1(0x0001) (Net)
+	unsigned char                                      UnknownData00[0x2];                                       // 0x32F2(0x0002) MISSED OFFSET
+	class ATgDevice_Hustle*                            m_CachedHustleDevice;                                     // 0x32F4(0x0008)
+	struct FVector                                     c_vForced3pAdditionalOffsetADS;                           // 0x32FC(0x000C) (Config)
+	float                                              m_fUnderheadADSDistanceClampAngle;                        // 0x3308(0x0004) (Config)
+	float                                              m_fUnderheadADSDistanceClampPushIn;                       // 0x330C(0x0004) (Config)
+	float                                              m_fUnderheadADSDistanceClampOvershoot;                    // 0x3310(0x0004) (Config)
+	float                                              m_fOverheadADSDistanceClampAngle;                         // 0x3314(0x0004) (Config)
+	float                                              m_fOverheadADSDistanceClampPushIn;                        // 0x3318(0x0004) (Config)
+	float                                              m_fOverheadADSDistanceClampOvershoot;                     // 0x331C(0x0004) (Config)
 
 	static UClass* StaticClass()
 	{
@@ -43561,23 +43614,23 @@ public:
 
 
 // Class TgGame.TgPawn_Stoker
-// 0x0034 (0x334C - 0x3318)
+// 0x0034 (0x3354 - 0x3320)
 class ATgPawn_Stoker : public ATgPawn_Viktor
 {
 public:
-	struct FVector                                     m_vCurrentWallRunNormal;                                  // 0x3318(0x000C)
-	unsigned long                                      m_bIsWallRunning : 1;                                     // 0x3324(0x0004)
-	unsigned long                                      r_bWantsWallRun : 1;                                      // 0x3324(0x0004)
-	unsigned long                                      m_bHasDoubleJumped : 1;                                   // 0x3324(0x0004)
-	float                                              m_fWallMagnetMovePerSec;                                  // 0x3328(0x0004) (Edit)
-	float                                              m_fWallRunStickinessDuration;                             // 0x332C(0x0004) (Edit)
-	float                                              m_fWallRunStickinessTimer;                                // 0x3330(0x0004)
-	float                                              m_fWallRunLockoutJumpDuration;                            // 0x3334(0x0004) (Edit)
-	float                                              m_fWallRunLockoutJumpTimer;                               // 0x3338(0x0004)
-	float                                              m_fWallJumpZSpeed;                                        // 0x333C(0x0004) (Edit)
-	float                                              m_fDoubleJumpZSpeed;                                      // 0x3340(0x0004) (Edit)
-	float                                              m_fNewWallAllowableRunAngle;                              // 0x3344(0x0004) (Edit)
-	float                                              m_fWallRunTime;                                           // 0x3348(0x0004)
+	struct FVector                                     m_vCurrentWallRunNormal;                                  // 0x3320(0x000C)
+	unsigned long                                      m_bIsWallRunning : 1;                                     // 0x332C(0x0004)
+	unsigned long                                      r_bWantsWallRun : 1;                                      // 0x332C(0x0004)
+	unsigned long                                      m_bHasDoubleJumped : 1;                                   // 0x332C(0x0004)
+	float                                              m_fWallMagnetMovePerSec;                                  // 0x3330(0x0004) (Edit)
+	float                                              m_fWallRunStickinessDuration;                             // 0x3334(0x0004) (Edit)
+	float                                              m_fWallRunStickinessTimer;                                // 0x3338(0x0004)
+	float                                              m_fWallRunLockoutJumpDuration;                            // 0x333C(0x0004) (Edit)
+	float                                              m_fWallRunLockoutJumpTimer;                               // 0x3340(0x0004)
+	float                                              m_fWallJumpZSpeed;                                        // 0x3344(0x0004) (Edit)
+	float                                              m_fDoubleJumpZSpeed;                                      // 0x3348(0x0004) (Edit)
+	float                                              m_fNewWallAllowableRunAngle;                              // 0x334C(0x0004) (Edit)
+	float                                              m_fWallRunTime;                                           // 0x3350(0x0004)
 
 	static UClass* StaticClass()
 	{
@@ -43775,11 +43828,11 @@ public:
 
 
 // Class TgGame.TgPawn_MalDamba
-// 0x0008 (0x32D8 - 0x32D0)
+// 0x0008 (0x32E0 - 0x32D8)
 class ATgPawn_MalDamba : public ATgPawn_Character
 {
 public:
-	class UTgDeviceFire_SnakeToss*                     m_CachedSnakeTossDeviceFire;                              // 0x32D0(0x0008)
+	class UTgDeviceFire_SnakeToss*                     m_CachedSnakeTossDeviceFire;                              // 0x32D8(0x0008)
 
 	static UClass* StaticClass()
 	{
@@ -43820,7 +43873,7 @@ public:
 	void PlayDimensionalLinkFX();
 	bool IsNotDestroyed();
 	class AActor* STATIC_GetActorFromInterface();
-	void AddOnDestroyDelegate(const struct FScriptDelegate& delDestroy);
+	void STATIC_AddOnDestroyDelegate(const struct FScriptDelegate& delDestroy);
 	void PlayShatterFX();
 	void Shatter();
 	void STATIC_TriggerShatter(float fDelay);
@@ -43833,7 +43886,7 @@ public:
 	void STATIC_ClearBeamTarget();
 	void STATIC_BeamFireAtTarget();
 	void STATIC_StartBeamFire();
-	bool AcquireTarget();
+	bool STATIC_AcquireTarget();
 	void STATIC_TryBeamFire();
 	void DestroyedEvent(class AActor* destroyedActor);
 };
@@ -43877,13 +43930,13 @@ public:
 	void STATIC_SetRequiresReset();
 	void IsFullyReset();
 	void STATIC_EndSwappingPeriod();
-	void STATIC_IllusionDied(class AActor* illusion);
+	void IllusionDied(class AActor* illusion);
 	void PawnEvent(class ATgPawn* DeadPawn);
 	bool ShouldCooldownAfterFire();
 	void STATIC_FireAmmunition();
 	void STATIC_GenerateCycleTargets();
 	class AActor* STATIC_CreateTeleportTargetDeployable(const struct FVector& TargetLocation, const struct FRotator& TargetRotation);
-	bool STATIC_HasCachedYingPawn();
+	bool HasCachedYingPawn();
 	bool STATIC_UsesCachedAim();
 	void STATIC_GetTargetingAim(struct FAimData* Aim);
 	bool IsTargetingModeReady(TEnumAsByte<EDeviceFailType>* failType);
@@ -43961,7 +44014,7 @@ public:
 	}
 
 
-	bool STATIC_HasYingPawn();
+	bool HasYingPawn();
 	void STATIC_CustomFire();
 	bool STATIC_CanDeviceFireNow(unsigned char FireModeNum, const struct FAimData& Aim, bool bDeviceFailLog, TEnumAsByte<EDeviceFailType>* failType);
 };
@@ -43981,11 +44034,11 @@ public:
 	}
 
 
-	void STATIC_HandleClientReportedInstantShot(int nFireRequestId, const struct FAimData& InServerAim, const struct FAimData& InClientAim, const struct FImpactToValidate& InPrimaryImpact, TArray<struct FImpactToValidate> InClientImpacts);
+	void HandleClientReportedInstantShot(int nFireRequestId, const struct FAimData& InServerAim, const struct FAimData& InClientAim, const struct FImpactToValidate& InPrimaryImpact, TArray<struct FImpactToValidate> InClientImpacts);
 	void STATIC_UpdateInhandTargetInfo(class AActor* HitActor, const struct FVector& HitLocation);
 	void OnInstantShotVerified(const struct FImpactInfo& VerifiedPrimaryImpact);
 	struct FImpactInfo STATIC_CalcWeaponFire(const struct FAimData& Aim, TArray<struct FImpactInfo>* ImpactList);
-	bool STATIC_HasCachedYingPawn();
+	bool HasCachedYingPawn();
 	bool ShouldCooldownAfterFire();
 	bool CanBeInterrupted();
 	bool CanBeCanceled();
@@ -44090,21 +44143,21 @@ public:
 
 
 // Class TgGame.TgPawn_Ying
-// 0x003C (0x330C - 0x32D0)
+// 0x003C (0x3314 - 0x32D8)
 class ATgPawn_Ying : public ATgPawn_Character
 {
 public:
-	class AActor*                                      r_InhandTarget;                                           // 0x32D0(0x0008) (Net)
-	struct FVector                                     r_InhandHitOffset;                                        // 0x32D8(0x000C) (Net)
-	class ATgPawn_Character*                           m_TeleportTarget;                                         // 0x32E4(0x0008)
-	unsigned long                                      m_bRetrievedIllusionListThisTick : 1;                     // 0x32EC(0x0004)
-	unsigned long                                      m_bHasShatterableIllusionsThisTick : 1;                   // 0x32EC(0x0004)
-	unsigned long                                      r_bHasCompensate : 1;                                     // 0x32EC(0x0004) (Net)
-	unsigned long                                      m_bPulledTargetFromList : 1;                              // 0x32EC(0x0004)
-	TArray<TScriptInterface<class UTgInterface_YingIllusion>> m_ActiveIllusions;                                        // 0x32F0(0x0010) (NeedCtorLink)
-	float                                              m_fFrictionMultiplier;                                    // 0x3300(0x0004) (Edit)
-	float                                              m_fGravityMultiplier;                                     // 0x3304(0x0004) (Edit)
-	float                                              m_fMaxFallSpeed;                                          // 0x3308(0x0004) (Edit)
+	class AActor*                                      r_InhandTarget;                                           // 0x32D8(0x0008) (Net)
+	struct FVector                                     r_InhandHitOffset;                                        // 0x32E0(0x000C) (Net)
+	class ATgPawn_Character*                           m_TeleportTarget;                                         // 0x32EC(0x0008)
+	unsigned long                                      m_bRetrievedIllusionListThisTick : 1;                     // 0x32F4(0x0004)
+	unsigned long                                      m_bHasShatterableIllusionsThisTick : 1;                   // 0x32F4(0x0004)
+	unsigned long                                      r_bHasCompensate : 1;                                     // 0x32F4(0x0004) (Net)
+	unsigned long                                      m_bPulledTargetFromList : 1;                              // 0x32F4(0x0004)
+	TArray<TScriptInterface<class UTgInterface_YingIllusion>> m_ActiveIllusions;                                        // 0x32F8(0x0010) (NeedCtorLink)
+	float                                              m_fFrictionMultiplier;                                    // 0x3308(0x0004) (Edit)
+	float                                              m_fGravityMultiplier;                                     // 0x330C(0x0004) (Edit)
+	float                                              m_fMaxFallSpeed;                                          // 0x3310(0x0004) (Edit)
 
 	static UClass* StaticClass()
 	{
@@ -44123,36 +44176,36 @@ public:
 
 
 // Class TgGame.TgPawn_Illusion
-// 0x0088 (0x3394 - 0x330C)
+// 0x0088 (0x339C - 0x3314)
 class ATgPawn_Illusion : public ATgPawn_Ying
 {
 public:
-	struct FPointer                                    VfTable_ITgInterface_YingIllusion;                        // 0x330C(0x0008) (Const, Native, NoExport)
-	TEnumAsByte<EDecoyAIState>                         m_eAIState;                                               // 0x3314(0x0001)
-	TEnumAsByte<EINITIALIZEABLE_BOOL>                  r_eLifelike;                                              // 0x3315(0x0001) (Net)
-	unsigned char                                      UnknownData00[0x2];                                       // 0x3316(0x0002) MISSED OFFSET
-	float                                              m_fDamageScale;                                           // 0x3318(0x0004)
-	float                                              m_fDamageAccumulator;                                     // 0x331C(0x0004)
-	float                                              m_fDamageAccumulatorReductionRatePerSec;                  // 0x3320(0x0004)
-	float                                              m_fFlickerDamageMin;                                      // 0x3324(0x0004)
-	float                                              m_fFlickerDamageMax;                                      // 0x3328(0x0004)
-	float                                              m_fDamageAccumulatorCap;                                  // 0x332C(0x0004)
-	float                                              m_fPrevFrameHealth;                                       // 0x3330(0x0004)
-	float                                              m_fTimedDestroyedFXDuration;                              // 0x3334(0x0004) (Const)
-	float                                              m_fTimedDestroyedFXMeshHiddenTime;                        // 0x3338(0x0004) (Const)
-	float                                              m_fEarlyShatterRecheckTime;                               // 0x333C(0x0004) (Const)
-	unsigned long                                      m_bCanShatterEarly : 1;                                   // 0x3340(0x0004) (Const)
-	unsigned long                                      m_bUsingReplacementMIC : 1;                               // 0x3340(0x0004)
-	unsigned long                                      m_bSpringBloomFlag : 1;                                   // 0x3340(0x0004)
-	unsigned long                                      c_BeamsCreated : 1;                                       // 0x3340(0x0004)
-	float                                              r_fShatterDelay;                                          // 0x3344(0x0004) (Net)
-	class ATgDevice*                                   m_CachedShatterDevice;                                    // 0x3348(0x0008)
-	TArray<struct FScriptDelegate>                     s_OnDeathDelegates;                                       // 0x3350(0x0010) (NeedCtorLink)
-	class ATgPawn_Character*                           r_Targets[0x2];                                           // 0x3360(0x0008) (Net)
-	TArray<class UTgBeamHelper*>                       c_Beams;                                                  // 0x3370(0x0010) (NeedCtorLink)
-	int                                                r_nBeamSpawnIterator;                                     // 0x3380(0x0004) (Net)
-	struct FScriptDelegate                             __DestroyedEvent__Delegate;                               // 0x3384(0x000C) (NeedCtorLink)
-	unsigned char                                      UnknownData01[0x4];                                       // 0x3384(0x0004) FIX WRONG TYPE SIZE OF PREVIOUS PROPERTY
+	struct FPointer                                    VfTable_ITgInterface_YingIllusion;                        // 0x3314(0x0008) (Const, Native, NoExport)
+	TEnumAsByte<EDecoyAIState>                         m_eAIState;                                               // 0x331C(0x0001)
+	TEnumAsByte<EINITIALIZEABLE_BOOL>                  r_eLifelike;                                              // 0x331D(0x0001) (Net)
+	unsigned char                                      UnknownData00[0x2];                                       // 0x331E(0x0002) MISSED OFFSET
+	float                                              m_fDamageScale;                                           // 0x3320(0x0004)
+	float                                              m_fDamageAccumulator;                                     // 0x3324(0x0004)
+	float                                              m_fDamageAccumulatorReductionRatePerSec;                  // 0x3328(0x0004)
+	float                                              m_fFlickerDamageMin;                                      // 0x332C(0x0004)
+	float                                              m_fFlickerDamageMax;                                      // 0x3330(0x0004)
+	float                                              m_fDamageAccumulatorCap;                                  // 0x3334(0x0004)
+	float                                              m_fPrevFrameHealth;                                       // 0x3338(0x0004)
+	float                                              m_fTimedDestroyedFXDuration;                              // 0x333C(0x0004) (Const)
+	float                                              m_fTimedDestroyedFXMeshHiddenTime;                        // 0x3340(0x0004) (Const)
+	float                                              m_fEarlyShatterRecheckTime;                               // 0x3344(0x0004) (Const)
+	unsigned long                                      m_bCanShatterEarly : 1;                                   // 0x3348(0x0004) (Const)
+	unsigned long                                      m_bUsingReplacementMIC : 1;                               // 0x3348(0x0004)
+	unsigned long                                      m_bSpringBloomFlag : 1;                                   // 0x3348(0x0004)
+	unsigned long                                      c_BeamsCreated : 1;                                       // 0x3348(0x0004)
+	float                                              r_fShatterDelay;                                          // 0x334C(0x0004) (Net)
+	class ATgDevice*                                   m_CachedShatterDevice;                                    // 0x3350(0x0008)
+	TArray<struct FScriptDelegate>                     s_OnDeathDelegates;                                       // 0x3358(0x0010) (NeedCtorLink)
+	class ATgPawn_Character*                           r_Targets[0x2];                                           // 0x3368(0x0008) (Net)
+	TArray<class UTgBeamHelper*>                       c_Beams;                                                  // 0x3378(0x0010) (NeedCtorLink)
+	int                                                r_nBeamSpawnIterator;                                     // 0x3388(0x0004) (Net)
+	struct FScriptDelegate                             __DestroyedEvent__Delegate;                               // 0x338C(0x000C) (NeedCtorLink)
+	unsigned char                                      UnknownData01[0x4];                                       // 0x338C(0x0004) FIX WRONG TYPE SIZE OF PREVIOUS PROPERTY
 
 	static UClass* StaticClass()
 	{
@@ -44167,7 +44220,7 @@ public:
 	void PlayDimensionalLinkFX();
 	bool IsNotDestroyed();
 	class AActor* STATIC_GetActorFromInterface();
-	void AddOnDestroyDelegate(const struct FScriptDelegate& delDestroy);
+	void STATIC_AddOnDestroyDelegate(const struct FScriptDelegate& delDestroy);
 	void STATIC_ClearDimensionalLink();
 	void Shatter();
 	void Suicide();
@@ -44302,7 +44355,7 @@ public:
 	bool CanBeCanceled();
 	bool CanBeInterrupted();
 	void STATIC_FireAmmunition();
-	bool STATIC_HasKineticDevice();
+	bool HasKineticDevice();
 	bool ShouldUseGradualMovement();
 	float STATIC_GetMoveSpeedMultiplier();
 };
@@ -44327,7 +44380,7 @@ public:
 	bool ShouldMountCancelFiring();
 	bool ShouldCooldownAfterFire();
 	void STATIC_FireAmmunition();
-	bool STATIC_HasCachedInhand();
+	bool HasCachedInhand();
 	void LinkedDeviceUnequipped(class ATgDevice* Dev);
 	void LinkedDeviceEquipped(class ATgDevice* Dev);
 	bool IsFunctionallyToggleDevice();
@@ -44425,7 +44478,7 @@ public:
 
 
 	bool ApplyHit(const struct FImpactInfo& Impact, class AActor* DamageInstigator);
-	void AddEffectiveRangeReduction(class AActor* DamageInstigator, const struct FVector& OriginLocation, bool bUseRadius, struct FImpactInfo* Impact);
+	void STATIC_AddEffectiveRangeReduction(class AActor* DamageInstigator, const struct FVector& OriginLocation, bool bUseRadius, struct FImpactInfo* Impact);
 };
 
 
@@ -44502,7 +44555,7 @@ public:
 
 	void Cooldown(int nFireModeNum, float fCooldownTime);
 	void StartFire(int nFireMode, float fRefireTime, class AActor* Target, int nAmmoRemaining);
-	bool STATIC_HasCachedMIC();
+	bool HasCachedMIC();
 };
 
 
@@ -44557,19 +44610,19 @@ public:
 
 
 // Class TgGame.TgPawn_Flak
-// 0x0034 (0x3304 - 0x32D0)
+// 0x0034 (0x330C - 0x32D8)
 class ATgPawn_Flak : public ATgPawn_Character
 {
 public:
-	class ATgDevice_KineticBurst*                      m_CachedKineticBurstDevice;                               // 0x32D0(0x0008)
-	class ATgDevice_SiegeUnit*                         m_CachedSiegeUnitDevice;                                  // 0x32D8(0x0008)
-	class ATgDevice_AssertDominance*                   m_CachedUltimateDevice;                                   // 0x32E0(0x0008)
-	class ATgDevice_ShoulderBash*                      m_CachedShoulderBashDevice;                               // 0x32E8(0x0008)
-	class UTgSpecialFx*                                m_WepIdleSound;                                           // 0x32F0(0x0008)
-	float                                              m_PreviousZHeight;                                        // 0x32F8(0x0004)
-	float                                              m_GravityMultiplier;                                      // 0x32FC(0x0004)
-	unsigned long                                      m_bUseShoulderBashRetrieve : 1;                           // 0x3300(0x0004)
-	unsigned long                                      m_bUseShoulderBashZoom : 1;                               // 0x3300(0x0004)
+	class ATgDevice_KineticBurst*                      m_CachedKineticBurstDevice;                               // 0x32D8(0x0008)
+	class ATgDevice_SiegeUnit*                         m_CachedSiegeUnitDevice;                                  // 0x32E0(0x0008)
+	class ATgDevice_AssertDominance*                   m_CachedUltimateDevice;                                   // 0x32E8(0x0008)
+	class ATgDevice_ShoulderBash*                      m_CachedShoulderBashDevice;                               // 0x32F0(0x0008)
+	class UTgSpecialFx*                                m_WepIdleSound;                                           // 0x32F8(0x0008)
+	float                                              m_PreviousZHeight;                                        // 0x3300(0x0004)
+	float                                              m_GravityMultiplier;                                      // 0x3304(0x0004)
+	unsigned long                                      m_bUseShoulderBashRetrieve : 1;                           // 0x3308(0x0004)
+	unsigned long                                      m_bUseShoulderBashZoom : 1;                               // 0x3308(0x0004)
 
 	static UClass* StaticClass()
 	{
@@ -44586,7 +44639,7 @@ public:
 	void RampUpTimer();
 	bool STATIC_CanSpawnScalableShields();
 	void PawnOnLandAfterLeap();
-	bool STATIC_HasCachedKineticBurstDevice();
+	bool HasCachedKineticBurstDevice();
 	void STATIC_DeployableOnDestroyed(class ATgDeployable* dep);
 	void STATIC_ResetGravTimers();
 	void STATIC_SpawnFlagDeployable();
@@ -44770,7 +44823,7 @@ public:
 	bool ShouldUseGradualMovement();
 	float STATIC_GetMoveSpeedMultiplier();
 	void FiringEndTransition();
-	void STATIC_HandleDeviceFormStartFire(int nDeviceModeNum, float fRefireTime, struct FAimData* Aim);
+	void HandleDeviceFormStartFire(int nDeviceModeNum, float fRefireTime, struct FAimData* Aim);
 	bool ShouldMountCancelFiring();
 	bool IsFunctionallyToggleDevice();
 	bool CanBeCanceled();
@@ -44791,7 +44844,7 @@ public:
 	}
 
 
-	void RecoverDeviceState(TEnumAsByte<ETG_REP_DEVICE_STATE> DesiredState);
+	void STATIC_RecoverDeviceState(TEnumAsByte<ETG_REP_DEVICE_STATE> DesiredState);
 	void DoInterrupt();
 	void StopFire(int nFireModeNum);
 	void BuildUp(int nFireMode, int nEquipSlot, int nSocketIndex, float fBuildupTime);
@@ -44838,7 +44891,7 @@ public:
 	}
 
 
-	void RecoverDeviceState(TEnumAsByte<ETG_REP_DEVICE_STATE> DesiredState);
+	void STATIC_RecoverDeviceState(TEnumAsByte<ETG_REP_DEVICE_STATE> DesiredState);
 	void STATIC_SetSkelControlsActive(bool bActive, TArray<class UTgSkelControlSingleBone*>* SkelControls);
 	void STATIC_CacheControls(class UTgSkeletalMeshComponent* SkelComp, const struct FName& nmPistol, const struct FName& nmRifle, TArray<class UTgSkelControlSingleBone*>* PistolSkelControls, TArray<class UTgSkelControlSingleBone*>* RifleSkelControls);
 	void Cache3PAnimNodes(class UTgSkeletalMeshComponent* SkelComp);
@@ -44932,20 +44985,20 @@ public:
 
 
 // Class TgGame.TgPawn_Owl
-// 0x0024 (0x32F4 - 0x32D0)
+// 0x0024 (0x32FC - 0x32D8)
 class ATgPawn_Owl : public ATgPawn_Character
 {
 public:
-	unsigned long                                      m_bUseSecondWeapon : 1;                                   // 0x32D0(0x0004)
-	unsigned long                                      m_bSwappingWeapons : 1;                                   // 0x32D0(0x0004)
-	unsigned long                                      c_bUseSecondDeathAnim : 1;                                // 0x32D0(0x0004)
-	int                                                m_nAltInhandSlot;                                         // 0x32D4(0x0004) (Const)
-	int                                                m_nAltAltfireSlot;                                        // 0x32D8(0x0004) (Const)
-	float                                              m_fOwlStealthJuice;                                       // 0x32DC(0x0004)
-	float                                              m_fMaxOwlStealthJuice;                                    // 0x32E0(0x0004)
-	float                                              r_fRemoteOwlStealthJuice;                                 // 0x32E4(0x0004) (Net)
-	float                                              c_fOldRemoteOwlStealthJuice;                              // 0x32E8(0x0004)
-	class ATgDevice_OwlStealth*                        m_CachedOwlStealth;                                       // 0x32EC(0x0008)
+	unsigned long                                      m_bUseSecondWeapon : 1;                                   // 0x32D8(0x0004)
+	unsigned long                                      m_bSwappingWeapons : 1;                                   // 0x32D8(0x0004)
+	unsigned long                                      c_bUseSecondDeathAnim : 1;                                // 0x32D8(0x0004)
+	int                                                m_nAltInhandSlot;                                         // 0x32DC(0x0004) (Const)
+	int                                                m_nAltAltfireSlot;                                        // 0x32E0(0x0004) (Const)
+	float                                              m_fOwlStealthJuice;                                       // 0x32E4(0x0004)
+	float                                              m_fMaxOwlStealthJuice;                                    // 0x32E8(0x0004)
+	float                                              r_fRemoteOwlStealthJuice;                                 // 0x32EC(0x0004) (Net)
+	float                                              c_fOldRemoteOwlStealthJuice;                              // 0x32F0(0x0004)
+	class ATgDevice_OwlStealth*                        m_CachedOwlStealth;                                       // 0x32F4(0x0008)
 
 	static UClass* StaticClass()
 	{
@@ -45073,14 +45126,14 @@ public:
 
 
 // Class TgGame.TgDevice_LazarusInhand
-// 0x0024 (0x0A3C - 0x0A18)
+// 0x0024 (0x0A40 - 0x0A1C)
 class ATgDevice_LazarusInhand : public ATgDevice_ChainSequence
 {
 public:
-	TArray<struct FHitSoundData>                       HitActorsAngles;                                          // 0x0A18(0x0010) (NeedCtorLink)
-	int                                                m_nHitIndex;                                              // 0x0A28(0x0004)
-	struct FScriptDelegate                             __InterruptFiringAndResetChainDelegate__Delegate;         // 0x0A2C(0x000C) (NeedCtorLink)
-	unsigned char                                      UnknownData00[0x4];                                       // 0x0A2C(0x0004) FIX WRONG TYPE SIZE OF PREVIOUS PROPERTY
+	TArray<struct FHitSoundData>                       HitActorsAngles;                                          // 0x0A1C(0x0010) (NeedCtorLink)
+	int                                                m_nHitIndex;                                              // 0x0A2C(0x0004)
+	struct FScriptDelegate                             __InterruptFiringAndResetChainDelegate__Delegate;         // 0x0A30(0x000C) (NeedCtorLink)
+	unsigned char                                      UnknownData00[0x4];                                       // 0x0A30(0x0004) FIX WRONG TYPE SIZE OF PREVIOUS PROPERTY
 
 	static UClass* StaticClass()
 	{
@@ -45280,7 +45333,7 @@ public:
 	}
 
 
-	bool STATIC_IgnoreTargetForBlocking(class AActor* Target);
+	bool IgnoreTargetForBlocking(class AActor* Target);
 };
 
 
@@ -45297,7 +45350,7 @@ public:
 	}
 
 
-	bool STATIC_IgnoreTargetForBlocking(class AActor* Target);
+	bool IgnoreTargetForBlocking(class AActor* Target);
 };
 
 
@@ -45372,42 +45425,42 @@ public:
 
 
 // Class TgGame.TgPawn_Lazarus
-// 0x00C0 (0x3390 - 0x32D0)
+// 0x00C0 (0x3398 - 0x32D8)
 class ATgPawn_Lazarus : public ATgPawn_Character
 {
 public:
-	class ATgDeployable*                               m_pCrystalDeployable;                                     // 0x32D0(0x0008)
-	class ATgDevice_SelfResurrection*                  m_SelfResurrectionDevice;                                 // 0x32D8(0x0008)
-	class ATgDevice_AbsorptionField*                   m_AbsorptionFieldDevice;                                  // 0x32E0(0x0008)
-	class ATgDevice_ChargeBurst*                       m_ChargeBurstDevice;                                      // 0x32E8(0x0008)
-	class ATgDevice_Shatterfall*                       m_ShatterfallDevice;                                      // 0x32F0(0x0008)
-	class ATgDevice*                                   m_SeethingRageCard;                                       // 0x32F8(0x0008)
-	class ATgDevice_PlayingGod*                        m_PlayingGodCard;                                         // 0x3300(0x0008)
-	class ATgDevice_ItWaits*                           m_ItWaitsCard;                                            // 0x3308(0x0008)
-	class ATgDevice_StoneStrength*                     m_StoneStrengthCard;                                      // 0x3310(0x0008)
-	class ATgDevice_ItFollows*                         m_ItFollowsCard;                                          // 0x3318(0x0008)
-	class UTgCameraShake*                              m_CameraShake;                                            // 0x3320(0x0008)
-	class UTgCameraShake*                              m_CameraShakeOwner;                                       // 0x3328(0x0008)
-	class UTgCameraShake*                              m_InhandShake0;                                           // 0x3330(0x0008)
-	class UTgCameraShake*                              m_InhandShake1;                                           // 0x3338(0x0008)
-	class UTgCameraShake*                              m_UltimateShake;                                          // 0x3340(0x0008)
-	class AController*                                 m_Killer;                                                 // 0x3348(0x0008)
-	unsigned long                                      r_bShouldRez : 1;                                         // 0x3350(0x0004) (Net)
-	unsigned long                                      m_bUseShatterFallZoom : 1;                                // 0x3350(0x0004)
-	unsigned long                                      m_bUsingDeathMesh : 1;                                    // 0x3350(0x0004)
-	float                                              r_fEnergy;                                                // 0x3354(0x0004) (Net)
-	float                                              r_fAccumulatedDamage;                                     // 0x3358(0x0004) (Net)
-	TEnumAsByte<EResurrectionState>                    r_mCurrentState;                                          // 0x335C(0x0001) (Net)
-	unsigned char                                      UnknownData00[0x3];                                       // 0x335D(0x0003) MISSED OFFSET
-	int                                                m_nChargeNumber;                                          // 0x3360(0x0004)
-	float                                              m_PreviousZHeight;                                        // 0x3364(0x0004)
-	float                                              m_GravityMultiplier;                                      // 0x3368(0x0004)
-	float                                              m_fItWaitsTimer;                                          // 0x336C(0x0004)
-	float                                              m_fItFollowsMovementSpeedMult;                            // 0x3370(0x0004)
-	float                                              m_fStrengthOfStoneDamageReduction;                        // 0x3374(0x0004)
-	int                                                m_nDeathMeshAsmId;                                        // 0x3378(0x0004)
-	int                                                m_nQueuedFireDevice;                                      // 0x337C(0x0004)
-	TArray<struct FBloodStoneTarget>                   m_BloodStoneTargets;                                      // 0x3380(0x0010) (NeedCtorLink)
+	class ATgDeployable*                               m_pCrystalDeployable;                                     // 0x32D8(0x0008)
+	class ATgDevice_SelfResurrection*                  m_SelfResurrectionDevice;                                 // 0x32E0(0x0008)
+	class ATgDevice_AbsorptionField*                   m_AbsorptionFieldDevice;                                  // 0x32E8(0x0008)
+	class ATgDevice_ChargeBurst*                       m_ChargeBurstDevice;                                      // 0x32F0(0x0008)
+	class ATgDevice_Shatterfall*                       m_ShatterfallDevice;                                      // 0x32F8(0x0008)
+	class ATgDevice*                                   m_SeethingRageCard;                                       // 0x3300(0x0008)
+	class ATgDevice_PlayingGod*                        m_PlayingGodCard;                                         // 0x3308(0x0008)
+	class ATgDevice_ItWaits*                           m_ItWaitsCard;                                            // 0x3310(0x0008)
+	class ATgDevice_StoneStrength*                     m_StoneStrengthCard;                                      // 0x3318(0x0008)
+	class ATgDevice_ItFollows*                         m_ItFollowsCard;                                          // 0x3320(0x0008)
+	class UTgCameraShake*                              m_CameraShake;                                            // 0x3328(0x0008)
+	class UTgCameraShake*                              m_CameraShakeOwner;                                       // 0x3330(0x0008)
+	class UTgCameraShake*                              m_InhandShake0;                                           // 0x3338(0x0008)
+	class UTgCameraShake*                              m_InhandShake1;                                           // 0x3340(0x0008)
+	class UTgCameraShake*                              m_UltimateShake;                                          // 0x3348(0x0008)
+	class AController*                                 m_Killer;                                                 // 0x3350(0x0008)
+	unsigned long                                      r_bShouldRez : 1;                                         // 0x3358(0x0004) (Net)
+	unsigned long                                      m_bUseShatterFallZoom : 1;                                // 0x3358(0x0004)
+	unsigned long                                      m_bUsingDeathMesh : 1;                                    // 0x3358(0x0004)
+	float                                              r_fEnergy;                                                // 0x335C(0x0004) (Net)
+	float                                              r_fAccumulatedDamage;                                     // 0x3360(0x0004) (Net)
+	TEnumAsByte<EResurrectionState>                    r_mCurrentState;                                          // 0x3364(0x0001) (Net)
+	unsigned char                                      UnknownData00[0x3];                                       // 0x3365(0x0003) MISSED OFFSET
+	int                                                m_nChargeNumber;                                          // 0x3368(0x0004)
+	float                                              m_PreviousZHeight;                                        // 0x336C(0x0004)
+	float                                              m_GravityMultiplier;                                      // 0x3370(0x0004)
+	float                                              m_fItWaitsTimer;                                          // 0x3374(0x0004)
+	float                                              m_fItFollowsMovementSpeedMult;                            // 0x3378(0x0004)
+	float                                              m_fStrengthOfStoneDamageReduction;                        // 0x337C(0x0004)
+	int                                                m_nDeathMeshAsmId;                                        // 0x3380(0x0004)
+	int                                                m_nQueuedFireDevice;                                      // 0x3384(0x0004)
+	TArray<struct FBloodStoneTarget>                   m_BloodStoneTargets;                                      // 0x3388(0x0010) (NeedCtorLink)
 
 	static UClass* StaticClass()
 	{
@@ -45453,7 +45506,7 @@ public:
 	void STATIC_StartZTracking();
 	void STATIC_GetAdditionalDamageTakenMultipliers(class ATgDevice* damagingDevice, struct FDiminishedEffectInfo* DiminishingInfo, struct FImpactInfo* Impact);
 	void STATIC_UpdateChargeNumber();
-	void STATIC_IncrementDamageCharge(float pDamageAmt);
+	void IncrementDamageCharge(float pDamageAmt);
 	bool STATIC_HandleAutofireDevices();
 	bool STATIC_ShouldBeFirstPersonThisTick(TEnumAsByte<ECameraPerspectiveType>* ePersectiveType);
 	void STATIC_SpawnCrystalDeployable();
@@ -45527,7 +45580,7 @@ public:
 	}
 
 
-	bool STATIC_HasCachedChurchill();
+	bool HasCachedChurchill();
 	void STATIC_UpdateDetectedColor(bool bDetected);
 	void ScaleFX();
 	void ApplyHit(TArray<struct FImpactInfo>* ImpactList);
@@ -45579,7 +45632,7 @@ public:
 	float STATIC_GetMinAccuracy();
 	float STATIC_GetRecoilMultiplier();
 	class UTgGameplayCurvesSet_RecoilSimple* STATIC_GetRecoilCurve();
-	bool STATIC_HasCachedCharacter();
+	bool HasCachedCharacter();
 	void LinkedDeviceUnequipped(class ATgDevice* Dev);
 	void LinkedDeviceEquipped(class ATgDevice* Dev);
 	void STATIC_EndADSBonuses();
@@ -45643,7 +45696,7 @@ public:
 
 
 	bool CanBeCanceled();
-	bool STATIC_HasCachedPawn();
+	bool HasCachedPawn();
 	bool CanBeInterrupted();
 	void CancelSafetyPeriodTimer();
 	bool STATIC_CanBeSilenced();
@@ -45728,26 +45781,26 @@ public:
 
 
 // Class TgGame.TgPawn_Churchill
-// 0x0054 (0x3324 - 0x32D0)
+// 0x0054 (0x332C - 0x32D8)
 class ATgPawn_Churchill : public ATgPawn_Character
 {
 public:
-	class ATgDeploy_ChurchillTurret*                   r_LeftDrone;                                              // 0x32D0(0x0008) (Net)
-	class ATgDeploy_ChurchillTurret*                   r_RightDrone;                                             // 0x32D8(0x0008) (Net)
-	unsigned long                                      s_bFireLeftDroneNext : 1;                                 // 0x32E0(0x0004)
-	unsigned long                                      s_bStopDroneFiring : 1;                                   // 0x32E0(0x0004)
-	unsigned long                                      s_bLeftDroneInFireTimeout : 1;                            // 0x32E0(0x0004)
-	unsigned long                                      s_bRightDroneInFireTimeout : 1;                           // 0x32E0(0x0004)
-	TArray<class UTgAnimBlendByChurchillDrone*>        m_ChurchillDroneAnims1p;                                  // 0x32E4(0x0010) (NeedCtorLink)
-	float                                              r_fVisualRecoilMultiplier;                                // 0x32F4(0x0004) (Net)
-	struct FVector                                     c_vForced3pAdditionalOffsetADS;                           // 0x32F8(0x000C) (Config)
-	float                                              m_fUnderheadADSDistanceClampAngle;                        // 0x3304(0x0004) (Config)
-	float                                              m_fUnderheadADSDistanceClampPushIn;                       // 0x3308(0x0004) (Config)
-	float                                              m_fUnderheadADSDistanceClampOvershoot;                    // 0x330C(0x0004) (Config)
-	float                                              m_fOverheadADSDistanceClampAngle;                         // 0x3310(0x0004) (Config)
-	float                                              m_fOverheadADSDistanceClampPushIn;                        // 0x3314(0x0004) (Config)
-	float                                              m_fOverheadADSDistanceClampOvershoot;                     // 0x3318(0x0004) (Config)
-	class ATgDevice_BoobyTrap*                         m_EquippedBoobyTrap;                                      // 0x331C(0x0008)
+	class ATgDeploy_ChurchillTurret*                   r_LeftDrone;                                              // 0x32D8(0x0008) (Net)
+	class ATgDeploy_ChurchillTurret*                   r_RightDrone;                                             // 0x32E0(0x0008) (Net)
+	unsigned long                                      s_bFireLeftDroneNext : 1;                                 // 0x32E8(0x0004)
+	unsigned long                                      s_bStopDroneFiring : 1;                                   // 0x32E8(0x0004)
+	unsigned long                                      s_bLeftDroneInFireTimeout : 1;                            // 0x32E8(0x0004)
+	unsigned long                                      s_bRightDroneInFireTimeout : 1;                           // 0x32E8(0x0004)
+	TArray<class UTgAnimBlendByChurchillDrone*>        m_ChurchillDroneAnims1p;                                  // 0x32EC(0x0010) (NeedCtorLink)
+	float                                              r_fVisualRecoilMultiplier;                                // 0x32FC(0x0004) (Net)
+	struct FVector                                     c_vForced3pAdditionalOffsetADS;                           // 0x3300(0x000C) (Config)
+	float                                              m_fUnderheadADSDistanceClampAngle;                        // 0x330C(0x0004) (Config)
+	float                                              m_fUnderheadADSDistanceClampPushIn;                       // 0x3310(0x0004) (Config)
+	float                                              m_fUnderheadADSDistanceClampOvershoot;                    // 0x3314(0x0004) (Config)
+	float                                              m_fOverheadADSDistanceClampAngle;                         // 0x3318(0x0004) (Config)
+	float                                              m_fOverheadADSDistanceClampPushIn;                        // 0x331C(0x0004) (Config)
+	float                                              m_fOverheadADSDistanceClampOvershoot;                     // 0x3320(0x0004) (Config)
+	class ATgDevice_BoobyTrap*                         m_EquippedBoobyTrap;                                      // 0x3324(0x0008)
 
 	static UClass* StaticClass()
 	{
@@ -45764,7 +45817,7 @@ public:
 	struct FVector STATIC_GetCameraOriginOverride(const struct FVector& originalOrigin, TEnumAsByte<ECameraPerspectiveType> ePerspectiveType);
 	void OnInhandAmmoCountUpdated();
 	void ForceUpdateAmmoAnim();
-	void AddVisualRecoil(int nEquipSlot, float fFireDuration);
+	void STATIC_AddVisualRecoil(int nEquipSlot, float fFireDuration);
 	void STATIC_DroneLowHealth(bool bLeftDrone, bool bIsLowHealth);
 	void STATIC_DroneDestroyed(bool bLeftDrone);
 	void STATIC_DroneFired(bool bLeftDrone);
@@ -45915,7 +45968,7 @@ public:
 	}
 
 
-	bool STATIC_HasCachedVanguard();
+	bool HasCachedVanguard();
 	void STATIC_ClientFailGrab(class AActor* Other);
 	void STATIC_ClientStartGrab(class AActor* Other);
 	void STATIC_ClientThrowTarget();
@@ -46077,7 +46130,7 @@ public:
 	}
 
 
-	void RecoverDeviceState(TEnumAsByte<ETG_REP_DEVICE_STATE> DesiredState);
+	void STATIC_RecoverDeviceState(TEnumAsByte<ETG_REP_DEVICE_STATE> DesiredState);
 	void STATIC_UpdateVanguardUltAnim(TEnumAsByte<EVanguardUltAnimUpdate> eState);
 	void STATIC_SetPostureOnTarget(TEnumAsByte<ETG_POSTURE> Posture);
 	void STATIC_ClearTarget();
@@ -46110,15 +46163,15 @@ public:
 
 
 // Class TgGame.TgPawn_Vanguard
-// 0x0064 (0x3334 - 0x32D0)
+// 0x0064 (0x333C - 0x32D8)
 class ATgPawn_Vanguard : public ATgPawn_Character
 {
 public:
-	class ATgDeploy_VanguardShield*                    r_ActiveShield;                                           // 0x32D0(0x0008) (Net)
-	unsigned long                                      r_bShieldWasDestroyed : 1;                                // 0x32D8(0x0004) (Net)
-	class ATgPawn_Character*                           c_UltTarget;                                              // 0x32DC(0x0008)
-	class ATgPawn*                                     r_UltTargetForKillCam;                                    // 0x32E4(0x0008) (Net)
-	struct FMap_Mirror                                 m_CachedDevices;                                          // 0x32EC(0x0048) (Native)
+	class ATgDeploy_VanguardShield*                    r_ActiveShield;                                           // 0x32D8(0x0008) (Net)
+	unsigned long                                      r_bShieldWasDestroyed : 1;                                // 0x32E0(0x0004) (Net)
+	class ATgPawn_Character*                           c_UltTarget;                                              // 0x32E4(0x0008)
+	class ATgPawn*                                     r_UltTargetForKillCam;                                    // 0x32EC(0x0008) (Net)
+	struct FMap_Mirror                                 m_CachedDevices;                                          // 0x32F4(0x0048) (Native)
 
 	static UClass* StaticClass()
 	{
@@ -46130,7 +46183,7 @@ public:
 	void STATIC_GetCameraZoomOverride(float* fZoom, float* fZoomDuration);
 	TEnumAsByte<EEmoteCategory> GetEmoteCategory(TEnumAsByte<EEmote> Emote);
 	bool STATIC_CanSpawnScalableShields();
-	class ATgDevice* STATIC_HasCachedDevice(int nDeviceId);
+	class ATgDevice* HasCachedDevice(int nDeviceId);
 	float STATIC_GetManaRegen();
 };
 
@@ -46328,28 +46381,28 @@ public:
 
 
 // Class TgGame.TgPawn_Rider
-// 0x0088 (0x3358 - 0x32D0)
+// 0x0088 (0x3360 - 0x32D8)
 class ATgPawn_Rider : public ATgPawn_Character
 {
 public:
-	class ATgDevice_RiderUlt*                          m_CachedRiderUlt;                                         // 0x32D0(0x0008)
-	class ATgDevice_RiderMovement*                     m_CachedRiderMovement;                                    // 0x32D8(0x0008)
-	float                                              m_fLastSelfShieldFxTimestamp;                             // 0x32E0(0x0004)
-	unsigned long                                      m_bUseCameraOffsetOverride : 1;                           // 0x32E4(0x0004)
-	struct FVector                                     m_vCameraOffsetOverride;                                  // 0x32E8(0x000C)
-	float                                              m_fVelocityLag;                                           // 0x32F4(0x0004)
-	float                                              m_fPrevSpeed;                                             // 0x32F8(0x0004)
-	float                                              m_fVelocityLagRecoverySpeed;                              // 0x32FC(0x0004) (Edit)
-	float                                              m_fVelocityLagStrength;                                   // 0x3300(0x0004) (Edit)
-	float                                              m_fSmoothedVelocityLag;                                   // 0x3304(0x0004)
-	float                                              m_fSmoothedVelocityLagSpeed;                              // 0x3308(0x0004) (Edit)
-	float                                              m_fDeathFadeMaterialEndTimestamp;                         // 0x330C(0x0004)
-	float                                              m_fDeathFadeMaterialTime;                                 // 0x3310(0x0004) (Edit)
-	struct FVector                                     m_vLastAccelDir;                                          // 0x3314(0x000C)
-	float                                              m_fMaxMovementDegPerSec;                                  // 0x3320(0x0004) (Edit)
-	float                                              m_fGreaterGoodLifesteal;                                  // 0x3324(0x0004)
-	struct FRiderMarkedTargetInfo                      r_RiderMarkedTargets[0x5];                                // 0x3328(0x0008) (Net)
-	struct FRiderLastMaxMarkedTarget                   r_RiderLastMaxMarkedTarget;                               // 0x3350(0x0008) (Net)
+	class ATgDevice_RiderUlt*                          m_CachedRiderUlt;                                         // 0x32D8(0x0008)
+	class ATgDevice_RiderMovement*                     m_CachedRiderMovement;                                    // 0x32E0(0x0008)
+	float                                              m_fLastSelfShieldFxTimestamp;                             // 0x32E8(0x0004)
+	unsigned long                                      m_bUseCameraOffsetOverride : 1;                           // 0x32EC(0x0004)
+	struct FVector                                     m_vCameraOffsetOverride;                                  // 0x32F0(0x000C)
+	float                                              m_fVelocityLag;                                           // 0x32FC(0x0004)
+	float                                              m_fPrevSpeed;                                             // 0x3300(0x0004)
+	float                                              m_fVelocityLagRecoverySpeed;                              // 0x3304(0x0004) (Edit)
+	float                                              m_fVelocityLagStrength;                                   // 0x3308(0x0004) (Edit)
+	float                                              m_fSmoothedVelocityLag;                                   // 0x330C(0x0004)
+	float                                              m_fSmoothedVelocityLagSpeed;                              // 0x3310(0x0004) (Edit)
+	float                                              m_fDeathFadeMaterialEndTimestamp;                         // 0x3314(0x0004)
+	float                                              m_fDeathFadeMaterialTime;                                 // 0x3318(0x0004) (Edit)
+	struct FVector                                     m_vLastAccelDir;                                          // 0x331C(0x000C)
+	float                                              m_fMaxMovementDegPerSec;                                  // 0x3328(0x0004) (Edit)
+	float                                              m_fGreaterGoodLifesteal;                                  // 0x332C(0x0004)
+	struct FRiderMarkedTargetInfo                      r_RiderMarkedTargets[0x5];                                // 0x3330(0x0008) (Net)
+	struct FRiderLastMaxMarkedTarget                   r_RiderLastMaxMarkedTarget;                               // 0x3358(0x0008) (Net)
 
 	static UClass* StaticClass()
 	{
@@ -46416,7 +46469,7 @@ public:
 
 
 	void STATIC_UpdateAttackSpeed();
-	void AddHolyWrath(float fAmt);
+	void STATIC_AddHolyWrath(float fAmt);
 };
 
 
@@ -46492,7 +46545,7 @@ public:
 	}
 
 
-	bool STATIC_IgnoreTargetForBlocking(class AActor* Target);
+	bool IgnoreTargetForBlocking(class AActor* Target);
 };
 
 
@@ -46557,24 +46610,24 @@ public:
 
 
 // Class TgGame.TgPawn_Furia
-// 0x0034 (0x3304 - 0x32D0)
+// 0x0034 (0x330C - 0x32D8)
 class ATgPawn_Furia : public ATgPawn_Character
 {
 public:
-	class ATgPawn*                                     r_RMBTarget;                                              // 0x32D0(0x0008) (Net)
-	float                                              m_fDelayTargetValid;                                      // 0x32D8(0x0004)
-	float                                              r_fHolyWrathBuff;                                         // 0x32DC(0x0004) (Net)
-	unsigned long                                      r_bStopFuriaQProjOnHit : 1;                               // 0x32E0(0x0004) (Net)
-	unsigned long                                      r_bFuriaQHitAllies : 1;                                   // 0x32E0(0x0004) (Net)
-	unsigned long                                      m_bUltimateReadyDisplayGroupOn : 1;                       // 0x32E0(0x0004)
-	float                                              c_fMinBladeGlow;                                          // 0x32E4(0x0004)
-	float                                              c_fMaxBladeGlow;                                          // 0x32E8(0x0004)
-	float                                              c_fMinCrystalGlow;                                        // 0x32EC(0x0004)
-	float                                              c_fMaxCrystalGlow;                                        // 0x32F0(0x0004)
-	float                                              m_fLastWrathAmt;                                          // 0x32F4(0x0004)
-	int                                                m_nLastWrathTier;                                         // 0x32F8(0x0004)
-	float                                              m_fGravityMultiplier;                                     // 0x32FC(0x0004) (Edit)
-	float                                              m_fMaxFallSpeed;                                          // 0x3300(0x0004) (Edit)
+	class ATgPawn*                                     r_RMBTarget;                                              // 0x32D8(0x0008) (Net)
+	float                                              m_fDelayTargetValid;                                      // 0x32E0(0x0004)
+	float                                              r_fHolyWrathBuff;                                         // 0x32E4(0x0004) (Net)
+	unsigned long                                      r_bStopFuriaQProjOnHit : 1;                               // 0x32E8(0x0004) (Net)
+	unsigned long                                      r_bFuriaQHitAllies : 1;                                   // 0x32E8(0x0004) (Net)
+	unsigned long                                      m_bUltimateReadyDisplayGroupOn : 1;                       // 0x32E8(0x0004)
+	float                                              c_fMinBladeGlow;                                          // 0x32EC(0x0004)
+	float                                              c_fMaxBladeGlow;                                          // 0x32F0(0x0004)
+	float                                              c_fMinCrystalGlow;                                        // 0x32F4(0x0004)
+	float                                              c_fMaxCrystalGlow;                                        // 0x32F8(0x0004)
+	float                                              m_fLastWrathAmt;                                          // 0x32FC(0x0004)
+	int                                                m_nLastWrathTier;                                         // 0x3300(0x0004)
+	float                                              m_fGravityMultiplier;                                     // 0x3304(0x0004) (Edit)
+	float                                              m_fMaxFallSpeed;                                          // 0x3308(0x0004) (Edit)
 
 	static UClass* StaticClass()
 	{
@@ -46615,9 +46668,9 @@ public:
 	bool ApplyHit(class AActor* Target, const struct FVector& HitLocation, const struct FVector& HitNormal, int HitItem);
 	bool STATIC_ApplyTheHit(class UTgDeviceFire* FireMode, const struct FImpactInfo& Impact, class AActor* DamageInstigator);
 	void Tick(float DeltaSeconds);
-	void STATIC_HandleTick();
+	void HandleTick();
 	void STATIC_CompleteInitialization(unsigned char ExtraInfo);
-	void STATIC_HideProjectile();
+	void HideProjectile();
 	float CheckOcclusion();
 };
 
@@ -46640,7 +46693,7 @@ public:
 
 
 	void Touch(class AActor* Other, class UPrimitiveComponent* OtherComp, const struct FVector& HitLocation, const struct FVector& HitNormal);
-	void ActivatePortal();
+	void STATIC_ActivatePortal();
 	void STATIC_SetPortalActive(bool bActive, class ATgDeploy_DredgeF* connectedPortal);
 	void STATIC_ConnectPortal(class ATgDeploy_DredgeF* connectedPortal);
 	void StartDeploy();
@@ -46782,13 +46835,13 @@ public:
 
 
 // Class TgGame.TgPawn_Dredge
-// 0x000C (0x32DC - 0x32D0)
+// 0x000C (0x32E4 - 0x32D8)
 class ATgPawn_Dredge : public ATgPawn_Character
 {
 public:
-	float                                              m_fBoostedJumpMultiplier;                                 // 0x32D0(0x0004)
-	float                                              m_fBoostedJumpGravityMultiplier;                          // 0x32D4(0x0004)
-	unsigned long                                      m_bIsBoostedJumping : 1;                                  // 0x32D8(0x0004)
+	float                                              m_fBoostedJumpMultiplier;                                 // 0x32D8(0x0004)
+	float                                              m_fBoostedJumpGravityMultiplier;                          // 0x32DC(0x0004)
+	unsigned long                                      m_bIsBoostedJumping : 1;                                  // 0x32E0(0x0004)
 
 	static UClass* StaticClass()
 	{
@@ -46935,10 +46988,10 @@ public:
 	void Destroyed();
 	void STATIC_AddProjectileToSlow(class ATgProjectile* Proj);
 	bool STATIC_IsProjectileAlreadyHandled(class ATgProjectile* Proj);
-	void STATIC_PerformTouch(class AActor* Other, class UPrimitiveComponent* OtherComp, const struct FVector& HitLocation, const struct FVector& HitNormal, bool bForce);
+	void PerformTouch(class AActor* Other, class UPrimitiveComponent* OtherComp, const struct FVector& HitLocation, const struct FVector& HitNormal, bool bForce);
 	bool ShouldDisableProjectile(class ATgProjectile* Proj);
 	void Touch(class AActor* Other, class UPrimitiveComponent* OtherComp, const struct FVector& HitLocation, const struct FVector& HitNormal);
-	void STATIC_NotifyQueuedLagCompWorldExplosion(class ATgProj_Simulated* Proj, const struct FVector& HitLocation, const struct FVector& HitVelocity);
+	void NotifyQueuedLagCompWorldExplosion(class ATgProj_Simulated* Proj, const struct FVector& HitLocation, const struct FVector& HitVelocity);
 	bool STATIC_CanQueueLagCompWorldExplosion(class ATgProj_Simulated* Proj, unsigned char* bHideProjectile);
 	class UTgSpecialFx* STATIC_GetTakeHitFxOverride(class UTgSpecialFx* TakeHit);
 };
@@ -47012,7 +47065,7 @@ public:
 
 	void LinkedDeviceUnequipped(class ATgDevice* Dev);
 	void LinkedDeviceEquipped(class ATgDevice* Dev);
-	void STATIC_HandleDeviceFormStartFire(int nDeviceModeNum, float fRefireTime, struct FAimData* Aim);
+	void HandleDeviceFormStartFire(int nDeviceModeNum, float fRefireTime, struct FAimData* Aim);
 	void STATIC_FireAmmunition();
 	bool STATIC_ShouldConsumePowerPoolAfterFire();
 	bool STATIC_ShouldConsumePowerPoolOnStartFire();
@@ -47040,8 +47093,8 @@ public:
 	}
 
 
-	void STATIC_PlayRewindEndFx();
-	void STATIC_PlayRewindSelfFx();
+	void PlayRewindEndFx();
+	void PlayRewindSelfFx();
 	void OnLinkDevice(class ATgPawn* TgP);
 	bool CanBeInterrupted();
 	bool CanBeCanceled();
@@ -47121,7 +47174,7 @@ public:
 	bool CanBeInterrupted();
 	bool CanBeCanceled();
 	float STATIC_GetRewindProtection(class ATgPawn* pTarget);
-	bool STATIC_QueueRewindTarget(class ATgPawn* pTarget, float fDelay, float fDuration, float fRate);
+	bool QueueRewindTarget(class ATgPawn* pTarget, float fDelay, float fDuration, float fRate);
 };
 
 
@@ -47228,18 +47281,18 @@ public:
 
 
 // Class TgGame.TgPawn_Atlas
-// 0x003C (0x330C - 0x32D0)
+// 0x003C (0x3314 - 0x32D8)
 class ATgPawn_Atlas : public ATgPawn_Character
 {
 public:
-	int                                                r_nReplicatedInhandFireLevel;                             // 0x32D0(0x0004) (Net)
-	class ATgDevice_AtlasRMB*                          m_CachedRMB;                                              // 0x32D4(0x0008)
-	class ATgDevice_BeyondTheVeil*                     m_CachedBeyondTheVeil;                                    // 0x32DC(0x0008)
-	TArray<struct FRewindingPawn>                      s_PawnsRewinding;                                         // 0x32E4(0x0010) (NeedCtorLink)
-	struct FName                                       m_nmXenoName;                                             // 0x32F4(0x0008) (Const)
-	unsigned long                                      m_bMeshSwappedDirty : 1;                                  // 0x32FC(0x0004)
-	int                                                m_nSuperWarpTalentId;                                     // 0x3300(0x0004)
-	class ATgDevice*                                   m_SuperWarpTalent;                                        // 0x3304(0x0008)
+	int                                                r_nReplicatedInhandFireLevel;                             // 0x32D8(0x0004) (Net)
+	class ATgDevice_AtlasRMB*                          m_CachedRMB;                                              // 0x32DC(0x0008)
+	class ATgDevice_BeyondTheVeil*                     m_CachedBeyondTheVeil;                                    // 0x32E4(0x0008)
+	TArray<struct FRewindingPawn>                      s_PawnsRewinding;                                         // 0x32EC(0x0010) (NeedCtorLink)
+	struct FName                                       m_nmXenoName;                                             // 0x32FC(0x0008) (Const)
+	unsigned long                                      m_bMeshSwappedDirty : 1;                                  // 0x3304(0x0004)
+	int                                                m_nSuperWarpTalentId;                                     // 0x3308(0x0004)
+	class ATgDevice*                                   m_SuperWarpTalent;                                        // 0x330C(0x0008)
 
 	static UClass* StaticClass()
 	{
@@ -47518,7 +47571,7 @@ public:
 	bool ShouldInterruptReloadOnFire();
 	bool ShouldMountCancelFiring();
 	void STATIC_CustomFire();
-	void STATIC_PostHardenDamageReduc();
+	void PostHardenDamageReduc();
 	void ServerHardenExplode();
 	void STATIC_HardenExplode();
 	bool IsFunctionallyToggleDevice();
@@ -47561,7 +47614,7 @@ public:
 	void STATIC_ServerEndPull();
 	void STATIC_BounceTarget();
 	void STATIC_ClientPullInterrupted();
-	void STATIC_PullInterrupted();
+	void PullInterrupted();
 	void EndPull(bool bInterrupted);
 	void MissInvalidTarget();
 	void MissPull();
@@ -47608,7 +47661,7 @@ public:
 	void TimeoutInterrupt();
 	bool CanDeviceStartFiringNow(unsigned char FireModeNum, const struct FAimData& Aim, bool bDebugRelevant, bool bIgnoreCachedValue, TEnumAsByte<EDeviceFailType>* failType);
 	bool STATIC_CanReload(bool bIsAutoReload);
-	bool STATIC_HasAmmo();
+	bool HasAmmo();
 	bool STATIC_ShouldShowAmmoCount();
 	bool STATIC_CanBeSilenced();
 };
@@ -47821,41 +47874,41 @@ public:
 
 
 // Class TgGame.TgPawn_Yagorath
-// 0x009C (0x336C - 0x32D0)
+// 0x009C (0x3374 - 0x32D8)
 class ATgPawn_Yagorath : public ATgPawn_Character
 {
 public:
-	TArray<struct FName>                               CritPointBoneNames;                                       // 0x32D0(0x0010) (NeedCtorLink)
-	float                                              m_fCritDamageMult;                                        // 0x32E0(0x0004)
-	float                                              m_fDamageReductionMult;                                   // 0x32E4(0x0004)
-	class ATgDevice_YagoSpray*                         m_CachedYagoSpray;                                        // 0x32E8(0x0008)
-	float                                              m_fTurnModifierDuringSpray;                               // 0x32F0(0x0004)
-	float                                              m_fLookUpModifierDuringSpray;                             // 0x32F4(0x0004)
-	class ATgDevice_YagoTravel*                        m_CachedYagoTravel;                                       // 0x32F8(0x0008)
-	unsigned long                                      r_bTravelFormActive : 1;                                  // 0x3300(0x0004) (Net)
-	unsigned long                                      m_bIsMovingForward : 1;                                   // 0x3300(0x0004)
-	unsigned long                                      m_bForcedAcceleration : 1;                                // 0x3300(0x0004)
-	unsigned long                                      m_bForcedDeceleration : 1;                                // 0x3300(0x0004)
-	unsigned long                                      m_bShowUltUI : 1;                                         // 0x3300(0x0004)
-	float                                              r_TravelFormCurrSpeedMult;                                // 0x3304(0x0004) (Net)
-	float                                              m_fTravelFormTurnRateMult;                                // 0x3308(0x0004)
-	float                                              m_TravelFormMaxSpeedMult;                                 // 0x330C(0x0004)
-	float                                              m_fYagorathPlantedHeightOffset;                           // 0x3310(0x0004)
-	class UPrimitiveComponent*                         m_PlantedFormCollisionComponent;                          // 0x3314(0x0008) (ExportObject, Component, EditInline)
-	class ATgDevice_YagorathQ*                         m_CachedYagoQ;                                            // 0x331C(0x0008)
-	float                                              m_fAccumulatedMovementDeviation;                          // 0x3324(0x0004)
-	float                                              m_fMovementDeviationMeanLifetime;                         // 0x3328(0x0004)
-	float                                              m_fAccelerationStartTime;                                 // 0x332C(0x0004)
-	float                                              m_fDecelerationStartTime;                                 // 0x3330(0x0004)
-	float                                              m_fPassiveDecelerationStartTime;                          // 0x3334(0x0004)
-	float                                              r_fMaxMovementDegPerSec;                                  // 0x3338(0x0004) (Net)
-	float                                              m_fLastMovementBearing;                                   // 0x333C(0x0004)
-	int                                                m_nAltInhandSlot;                                         // 0x3340(0x0004) (Const)
-	int                                                m_nAltAltfireSlot;                                        // 0x3344(0x0004) (Const)
-	int                                                m_nAltQAbilitySlot;                                       // 0x3348(0x0004) (Const)
-	struct FString                                     m_sSkillIconOverride;                                     // 0x334C(0x0010) (NeedCtorLink)
-	class ATgDevice_YagorathUlt*                       m_CachedYagoUlt;                                          // 0x335C(0x0008)
-	class ATgPawn_Character*                           m_UltTarget;                                              // 0x3364(0x0008)
+	TArray<struct FName>                               CritPointBoneNames;                                       // 0x32D8(0x0010) (NeedCtorLink)
+	float                                              m_fCritDamageMult;                                        // 0x32E8(0x0004)
+	float                                              m_fDamageReductionMult;                                   // 0x32EC(0x0004)
+	class ATgDevice_YagoSpray*                         m_CachedYagoSpray;                                        // 0x32F0(0x0008)
+	float                                              m_fTurnModifierDuringSpray;                               // 0x32F8(0x0004)
+	float                                              m_fLookUpModifierDuringSpray;                             // 0x32FC(0x0004)
+	class ATgDevice_YagoTravel*                        m_CachedYagoTravel;                                       // 0x3300(0x0008)
+	unsigned long                                      r_bTravelFormActive : 1;                                  // 0x3308(0x0004) (Net)
+	unsigned long                                      m_bIsMovingForward : 1;                                   // 0x3308(0x0004)
+	unsigned long                                      m_bForcedAcceleration : 1;                                // 0x3308(0x0004)
+	unsigned long                                      m_bForcedDeceleration : 1;                                // 0x3308(0x0004)
+	unsigned long                                      m_bShowUltUI : 1;                                         // 0x3308(0x0004)
+	float                                              r_TravelFormCurrSpeedMult;                                // 0x330C(0x0004) (Net)
+	float                                              m_fTravelFormTurnRateMult;                                // 0x3310(0x0004)
+	float                                              m_TravelFormMaxSpeedMult;                                 // 0x3314(0x0004)
+	float                                              m_fYagorathPlantedHeightOffset;                           // 0x3318(0x0004)
+	class UPrimitiveComponent*                         m_PlantedFormCollisionComponent;                          // 0x331C(0x0008) (ExportObject, Component, EditInline)
+	class ATgDevice_YagorathQ*                         m_CachedYagoQ;                                            // 0x3324(0x0008)
+	float                                              m_fAccumulatedMovementDeviation;                          // 0x332C(0x0004)
+	float                                              m_fMovementDeviationMeanLifetime;                         // 0x3330(0x0004)
+	float                                              m_fAccelerationStartTime;                                 // 0x3334(0x0004)
+	float                                              m_fDecelerationStartTime;                                 // 0x3338(0x0004)
+	float                                              m_fPassiveDecelerationStartTime;                          // 0x333C(0x0004)
+	float                                              r_fMaxMovementDegPerSec;                                  // 0x3340(0x0004) (Net)
+	float                                              m_fLastMovementBearing;                                   // 0x3344(0x0004)
+	int                                                m_nAltInhandSlot;                                         // 0x3348(0x0004) (Const)
+	int                                                m_nAltAltfireSlot;                                        // 0x334C(0x0004) (Const)
+	int                                                m_nAltQAbilitySlot;                                       // 0x3350(0x0004) (Const)
+	struct FString                                     m_sSkillIconOverride;                                     // 0x3354(0x0010) (NeedCtorLink)
+	class ATgDevice_YagorathUlt*                       m_CachedYagoUlt;                                          // 0x3364(0x0008)
+	class ATgPawn_Character*                           m_UltTarget;                                              // 0x336C(0x0008)
 
 	static UClass* StaticClass()
 	{
@@ -47891,7 +47944,7 @@ public:
 	class ATgDevice* STATIC_GetCurrentInhandDevice();
 	void PawnOnPreDamageMitigation(class ATgPawn* attacker, class UTgEffectGroup* eg, int nPropertyId, float* fDamage);
 	bool STATIC_CanPawnMountUp();
-	void STATIC_OnAutoMount();
+	void OnAutoMount();
 };
 
 
@@ -47908,7 +47961,7 @@ public:
 	}
 
 
-	void STATIC_HitPassThroughTarget(class AActor* Target, const struct FVector& HitLocation, const struct FVector& HitNormal);
+	void HitPassThroughTarget(class AActor* Target, const struct FVector& HitLocation, const struct FVector& HitNormal);
 	class ATgDeployable* STATIC_SpawnDeployable(const struct FVector& vLocation, class AActor* TargetActor, const struct FVector& vNormal);
 };
 
@@ -47930,7 +47983,7 @@ public:
 	void PlayHitTargetFX(class AActor* Target, const struct FVector& HitLocation, const struct FVector& HitNormal, bool bExploded);
 	void STATIC_DelayExplodeOnTarget();
 	void ExplodeOnTarget(class AActor* Target, const struct FVector& HitLocation, const struct FVector& HitNormal);
-	void STATIC_HitPassThroughTarget(class AActor* Target, const struct FVector& HitLocation, const struct FVector& HitNormal);
+	void HitPassThroughTarget(class AActor* Target, const struct FVector& HitLocation, const struct FVector& HitNormal);
 };
 
 
@@ -48037,7 +48090,7 @@ public:
 	void STATIC_ApplyTouchHit(class ATgPawn* InstigatorPawn, const struct FVector& vHitLocation, const struct FVector& vHitNormal, class AActor* Target);
 	bool InterceptLeftMousePressed(class ATgPlayerController* TgController);
 	bool STATIC_StartFireHold();
-	void STATIC_MinChargeTime();
+	void MinChargeTime();
 	bool STATIC_HasCachedShadow();
 	bool STATIC_ShouldConsumePowerPoolAfterFire();
 	bool STATIC_ShouldConsumePowerPoolOnStartFire();
@@ -48233,16 +48286,16 @@ public:
 
 
 // Class TgGame.TgPawn_Shadow
-// 0x0030 (0x3300 - 0x32D0)
+// 0x0030 (0x3308 - 0x32D8)
 class ATgPawn_Shadow : public ATgPawn_Character
 {
 public:
-	class ATgPawn_Character*                           m_pTeleportTarget;                                        // 0x32D0(0x0008)
-	float                                              fInputForward;                                            // 0x32D8(0x0004)
-	float                                              fInputStrafe;                                             // 0x32DC(0x0004)
-	class ATgShadowStickProp*                          m_StickyBombProps[0x3];                                   // 0x32E0(0x0008)
-	int                                                m_nNextStickyBombIndex;                                   // 0x32F8(0x0004)
-	int                                                m_BeamFXId;                                               // 0x32FC(0x0004)
+	class ATgPawn_Character*                           m_pTeleportTarget;                                        // 0x32D8(0x0008)
+	float                                              fInputForward;                                            // 0x32E0(0x0004)
+	float                                              fInputStrafe;                                             // 0x32E4(0x0004)
+	class ATgShadowStickProp*                          m_StickyBombProps[0x3];                                   // 0x32E8(0x0008)
+	int                                                m_nNextStickyBombIndex;                                   // 0x3300(0x0004)
+	int                                                m_BeamFXId;                                               // 0x3304(0x0004)
 
 	static UClass* StaticClass()
 	{
@@ -48281,7 +48334,7 @@ public:
 	void PlayHitTargetFX(class AActor* Target, const struct FVector& HitLocation, const struct FVector& HitNormal, bool bExploded);
 	void STATIC_DelayExplodeOnTarget();
 	void ExplodeOnTarget(class AActor* Target, const struct FVector& HitLocation, const struct FVector& HitNormal);
-	bool STATIC_MoveSticky(const struct FVector& Loc);
+	bool MoveSticky(const struct FVector& Loc);
 };
 
 
@@ -48480,7 +48533,7 @@ public:
 
 	void OnUnlinkDevice(class ATgPawn* TgP);
 	void OnLinkDevice(class ATgPawn* TgP);
-	void STATIC_ManagePassiveBuff();
+	void ManagePassiveBuff();
 };
 
 
@@ -48675,12 +48728,12 @@ public:
 
 
 // Class TgGame.TgPawn_Saati
-// 0x0004 (0x32D4 - 0x32D0)
+// 0x0004 (0x32DC - 0x32D8)
 class ATgPawn_Saati : public ATgPawn_Character
 {
 public:
-	unsigned long                                      m_bUltimateReadyDisplayGroupOn : 1;                       // 0x32D0(0x0004)
-	unsigned long                                      m_bHasDecoyTalent : 1;                                    // 0x32D0(0x0004)
+	unsigned long                                      m_bUltimateReadyDisplayGroupOn : 1;                       // 0x32D8(0x0004)
+	unsigned long                                      m_bHasDecoyTalent : 1;                                    // 0x32D8(0x0004)
 
 	static UClass* StaticClass()
 	{
@@ -48692,11 +48745,11 @@ public:
 
 
 // Class TgGame.TgPawn_SaatiDecoy
-// 0x0008 (0x2F28 - 0x2F20)
+// 0x0008 (0x2F30 - 0x2F28)
 class ATgPawn_SaatiDecoy : public ATgPawn_Pet
 {
 public:
-	class ATgDevice*                                   m_CachedSpawningDevice;                                   // 0x2F20(0x0008)
+	class ATgDevice*                                   m_CachedSpawningDevice;                                   // 0x2F28(0x0008)
 
 	static UClass* StaticClass()
 	{
@@ -48807,7 +48860,7 @@ public:
 
 	float GetCustomTimerBarMaxTime();
 	float GetCustomTimerBarCurrentTime();
-	void STATIC_OriginalPostHitTimer();
+	void OriginalPostHitTimer();
 	void LinkedDeviceEquipped(class ATgDevice* Dev);
 	void LastShotCancelTimer();
 	bool CanBeInterrupted();
@@ -48850,7 +48903,7 @@ public:
 	void STATIC_ServerStartFire(float MovementTimeStamp, const struct FVector& MovementInAccel, const struct FVector& MovementClientLoc, unsigned char MovementNewFlags, unsigned char MovementClientRoll, int MovementView, int ClientFireRequestId, unsigned char ClientFireMode, class AActor* HitActor, float StartTraceX, float StartTraceY, float StartTraceZ, float EndTraceX, float EndTraceY, float EndTraceZ, int nCompressedAimVector, bool bFirstBurstShot, float fAttackSpeedPercChange);
 	void STATIC_CallServerStartFire(const struct FAimData& Aim, bool bPendingUpdate);
 	void LinkedDeviceEquipped(class ATgDevice* Dev);
-	void STATIC_PerProjectileFired(class ATgProjectile* Proj);
+	void PerProjectileFired(class ATgProjectile* Proj);
 	void StartLerpTimer();
 	void STATIC_ClientStartLerpTimer();
 	void STATIC_Lerp3PTimer();
@@ -48859,7 +48912,7 @@ public:
 	void STATIC_EndUlt();
 	void STATIC_DoLerp(const struct FTeleportParams& Params, float fLerpTime);
 	void ZeroPitchTimer();
-	void STATIC_Land();
+	void Land();
 	void STATIC_DoShockwave();
 	void STATIC_ClientStartLerpSequence();
 	void STATIC_DoFirstShockwave();
@@ -48917,18 +48970,18 @@ public:
 	bool IsDeviceFiringForUI();
 	bool STATIC_UsesTargetingMode();
 	bool ShouldBankCooldown();
-	void STATIC_NativeSpawnFlankingWalls();
+	void NativeSpawnFlankingWalls();
 	bool STATIC_CanDeviceFireNow(unsigned char FireModeNum, const struct FAimData& Aim, bool bDeviceFailLog, TEnumAsByte<EDeviceFailType>* failType);
 };
 
 
 // Class TgGame.TgDevice_AzaanInhand
-// 0x000C (0x0A24 - 0x0A18)
+// 0x000C (0x0A28 - 0x0A1C)
 class ATgDevice_AzaanInhand : public ATgDevice_ChainSequence
 {
 public:
-	class ATgPawn_Azaan*                               m_pAzaan;                                                 // 0x0A18(0x0008)
-	float                                              m_fServerThresholdForgiveness;                            // 0x0A20(0x0004)
+	class ATgPawn_Azaan*                               m_pAzaan;                                                 // 0x0A1C(0x0008)
+	float                                              m_fServerThresholdForgiveness;                            // 0x0A24(0x0004)
 
 	static UClass* StaticClass()
 	{
@@ -49159,37 +49212,37 @@ public:
 
 
 // Class TgGame.TgPawn_Azaan
-// 0x007C (0x334C - 0x32D0)
+// 0x007C (0x3354 - 0x32D8)
 class ATgPawn_Azaan : public ATgPawn_Character
 {
 public:
-	float                                              r_fIreBuff;                                               // 0x32D0(0x0004) (Net)
-	float                                              m_fMaxIre;                                                // 0x32D4(0x0004)
-	float                                              m_fIreDamagePercent;                                      // 0x32D8(0x0004)
-	float                                              m_fIreDamageDonePercent;                                  // 0x32DC(0x0004)
-	float                                              s_fIreDecayStartTime;                                     // 0x32E0(0x0004)
-	float                                              m_fIreThreshold;                                          // 0x32E4(0x0004)
-	float                                              m_fDRAtMax;                                               // 0x32E8(0x0004)
-	float                                              m_fIreDecayDelay;                                         // 0x32EC(0x0004)
-	float                                              m_fIreDecayRate;                                          // 0x32F0(0x0004)
-	float                                              m_fIreDamageIncreasePercent;                              // 0x32F4(0x0004)
-	float                                              m_fIreDamageDecreasePercent;                              // 0x32F8(0x0004)
-	float                                              m_fFrictionMultiplier;                                    // 0x32FC(0x0004) (Edit)
-	unsigned long                                      m_bAboveIre : 1;                                          // 0x3300(0x0004)
-	unsigned long                                      m_bHasIreDrainStopTalent : 1;                             // 0x3300(0x0004)
-	class ATgDevice_AzaanUlt*                          m_CachedUlt;                                              // 0x3304(0x0008)
-	class ATgDevice_AzaanDash*                         m_CachedDash;                                             // 0x330C(0x0008)
-	class UTgInvListener_AzaanIreConsumed*             m_CachedListener;                                         // 0x3314(0x0008)
-	float                                              m_fFlightMaxRiseSpeed;                                    // 0x331C(0x0004)
-	float                                              m_fUltStartHeight;                                        // 0x3320(0x0004)
-	float                                              m_fMaxHoverDistance;                                      // 0x3324(0x0004) (Const)
-	float                                              m_fDampenVelocityFactor;                                  // 0x3328(0x0004) (Const)
-	float                                              m_fMaxUpwardsVelocity;                                    // 0x332C(0x0004) (Const)
-	float                                              m_fMinUpwardsVelocity;                                    // 0x3330(0x0004) (Const)
-	float                                              m_fUpwardsAccel;                                          // 0x3334(0x0004) (Const)
-	struct FName                                       m_nmIreAboveThreshold;                                    // 0x3338(0x0008)
-	struct FName                                       m_nmIreDropBelowThreshold;                                // 0x3340(0x0008)
-	int                                                m_nIreDrainDeviceID;                                      // 0x3348(0x0004)
+	float                                              r_fIreBuff;                                               // 0x32D8(0x0004) (Net)
+	float                                              m_fMaxIre;                                                // 0x32DC(0x0004)
+	float                                              m_fIreDamagePercent;                                      // 0x32E0(0x0004)
+	float                                              m_fIreDamageDonePercent;                                  // 0x32E4(0x0004)
+	float                                              s_fIreDecayStartTime;                                     // 0x32E8(0x0004)
+	float                                              m_fIreThreshold;                                          // 0x32EC(0x0004)
+	float                                              m_fDRAtMax;                                               // 0x32F0(0x0004)
+	float                                              m_fIreDecayDelay;                                         // 0x32F4(0x0004)
+	float                                              m_fIreDecayRate;                                          // 0x32F8(0x0004)
+	float                                              m_fIreDamageIncreasePercent;                              // 0x32FC(0x0004)
+	float                                              m_fIreDamageDecreasePercent;                              // 0x3300(0x0004)
+	float                                              m_fFrictionMultiplier;                                    // 0x3304(0x0004) (Edit)
+	unsigned long                                      m_bAboveIre : 1;                                          // 0x3308(0x0004)
+	unsigned long                                      m_bHasIreDrainStopTalent : 1;                             // 0x3308(0x0004)
+	class ATgDevice_AzaanUlt*                          m_CachedUlt;                                              // 0x330C(0x0008)
+	class ATgDevice_AzaanDash*                         m_CachedDash;                                             // 0x3314(0x0008)
+	class UTgInvListener_AzaanIreConsumed*             m_CachedListener;                                         // 0x331C(0x0008)
+	float                                              m_fFlightMaxRiseSpeed;                                    // 0x3324(0x0004)
+	float                                              m_fUltStartHeight;                                        // 0x3328(0x0004)
+	float                                              m_fMaxHoverDistance;                                      // 0x332C(0x0004) (Const)
+	float                                              m_fDampenVelocityFactor;                                  // 0x3330(0x0004) (Const)
+	float                                              m_fMaxUpwardsVelocity;                                    // 0x3334(0x0004) (Const)
+	float                                              m_fMinUpwardsVelocity;                                    // 0x3338(0x0004) (Const)
+	float                                              m_fUpwardsAccel;                                          // 0x333C(0x0004) (Const)
+	struct FName                                       m_nmIreAboveThreshold;                                    // 0x3340(0x0008)
+	struct FName                                       m_nmIreDropBelowThreshold;                                // 0x3348(0x0008)
+	int                                                m_nIreDrainDeviceID;                                      // 0x3350(0x0004)
 
 	static UClass* StaticClass()
 	{
@@ -49237,7 +49290,7 @@ public:
 	struct FName STATIC_GetExplodeInAirFxGroup();
 	struct FName STATIC_GetHitWallFxGroup();
 	struct FName STATIC_GetHitTargetFxGroup();
-	void STATIC_HideProjectile();
+	void HideProjectile();
 	void STATIC_ApplySpawnParams(float fDamageRadius, float fGeneric2);
 	void STATIC_CompleteInitialization(unsigned char ExtraInfo);
 };
@@ -49256,7 +49309,7 @@ public:
 	}
 
 
-	void RangeReached();
+	void STATIC_RangeReached();
 };
 
 
@@ -49274,8 +49327,8 @@ public:
 
 
 	void ClientExplode(class AActor* Target, const struct FVector& HitLocation, const struct FVector& HitNormal);
-	void RangeReached();
-	void STATIC_HitPassThroughTarget(class AActor* Target, const struct FVector& HitLocation, const struct FVector& HitNormal);
+	void STATIC_RangeReached();
+	void HitPassThroughTarget(class AActor* Target, const struct FVector& HitLocation, const struct FVector& HitNormal);
 };
 
 
@@ -49439,7 +49492,7 @@ public:
 	void OnLinkDevice(class ATgPawn* TgP);
 	void PlayClientFireFx(const struct FVector& HitLocation, int nSocketIndex, bool bSuccessfulHit, float fRefireTime, int nShotsFired);
 	bool STATIC_HasElementalTalentEquipped();
-	void STATIC_ProcessElementalEffects(const struct FImpactInfo& Impact);
+	void ProcessElementalEffects(const struct FImpactInfo& Impact);
 	void DeliverHit(const struct FImpactInfo& Impact);
 	float STATIC_GetMagDumpRecoilMultiplier();
 	float STATIC_GetRecoilMultiplier();
@@ -49593,22 +49646,22 @@ public:
 
 
 // Class TgGame.TgPawn_Seven
-// 0x007C (0x334C - 0x32D0)
+// 0x007C (0x3354 - 0x32D8)
 class ATgPawn_Seven : public ATgPawn_Character
 {
 public:
-	class ATgDevice_SevenLatch*                        m_CachedLatch;                                            // 0x32D0(0x0008)
-	class ATgDevice_SevenInhand*                       m_CachedInhand;                                           // 0x32D8(0x0008)
-	class ATgDevice_SevenMaskedFear*                   m_CachedUltDevice;                                        // 0x32E0(0x0008)
-	class ATgDevice_SevenExplosiveUltTalent*           m_CachedExplosiveUltTalent;                               // 0x32E8(0x0008)
-	float                                              m_fMiniumHeightFromGroundForLatch;                        // 0x32F0(0x0004)
-	unsigned long                                      r_bHasElementalTalent : 1;                                // 0x32F4(0x0004) (Net)
-	unsigned long                                      r_bHasDoubleDropTalent : 1;                               // 0x32F4(0x0004) (Net)
-	int                                                r_nClosestTargetDistance;                                 // 0x32F8(0x0004) (Net)
-	class AActor*                                      r_BeamTarget;                                             // 0x32FC(0x0008) (Net)
-	struct FSevenMarkedTargetInfo                      r_SevenMarkedTargets[0x5];                                // 0x3304(0x0008) (Net)
-	TArray<int>                                        m_ClientMarkedForFearTargets;                             // 0x332C(0x0010) (NeedCtorLink)
-	TArray<class AActor*>                              m_ClientUITrackedTargets;                                 // 0x333C(0x0010) (NeedCtorLink)
+	class ATgDevice_SevenLatch*                        m_CachedLatch;                                            // 0x32D8(0x0008)
+	class ATgDevice_SevenInhand*                       m_CachedInhand;                                           // 0x32E0(0x0008)
+	class ATgDevice_SevenMaskedFear*                   m_CachedUltDevice;                                        // 0x32E8(0x0008)
+	class ATgDevice_SevenExplosiveUltTalent*           m_CachedExplosiveUltTalent;                               // 0x32F0(0x0008)
+	float                                              m_fMiniumHeightFromGroundForLatch;                        // 0x32F8(0x0004)
+	unsigned long                                      r_bHasElementalTalent : 1;                                // 0x32FC(0x0004) (Net)
+	unsigned long                                      r_bHasDoubleDropTalent : 1;                               // 0x32FC(0x0004) (Net)
+	int                                                r_nClosestTargetDistance;                                 // 0x3300(0x0004) (Net)
+	class AActor*                                      r_BeamTarget;                                             // 0x3304(0x0008) (Net)
+	struct FSevenMarkedTargetInfo                      r_SevenMarkedTargets[0x5];                                // 0x330C(0x0008) (Net)
+	TArray<int>                                        m_ClientMarkedForFearTargets;                             // 0x3334(0x0010) (NeedCtorLink)
+	TArray<class AActor*>                              m_ClientUITrackedTargets;                                 // 0x3344(0x0010) (NeedCtorLink)
 
 	static UClass* StaticClass()
 	{
@@ -49665,7 +49718,7 @@ public:
 	void STATIC_InitializeDeployIndices();
 	void STATIC_TimeDeviceFiring();
 	void STATIC_FireAmmunitionDeployable();
-	void RefireCheckTimer();
+	void STATIC_RefireCheckTimer();
 	void STATIC_DelayedBeginLogic();
 	void STATIC_ClientControllerStartBombBag(int nPawnId, const struct FCLIENT_PAWN_FUNCTION_ARGS& args);
 	float STATIC_GetRandFraction();
@@ -49770,7 +49823,7 @@ public:
 	void OnLinkDevice(class ATgPawn* TgP);
 	bool STATIC_HasCachedBombQueen();
 	class ATgProj_Simulated* SpawnMissile();
-	bool STATIC_OverrideProjectileAim(struct FAimData* Aim);
+	bool OverrideProjectileAim(struct FAimData* Aim);
 	class AProjectile* ProjectileFire(int ProjectileIndex);
 	void STATIC_FireAmmunition();
 	void UnlockInputSafely();
@@ -49784,7 +49837,7 @@ public:
 	bool CanFiringBeCanceledByLeftMouse();
 	void STATIC_ClientInitiateFireMissile();
 	void STATIC_CueFireMissile(float fDelay, bool bForce);
-	void STATIC_PerformFireMissile();
+	void PerformFireMissile();
 	void STATIC_AnticipateFireMissile();
 	void OnHitValidWall(class AActor* HitActor);
 	float STATIC_GetChargeSpeed();
@@ -49835,18 +49888,18 @@ public:
 
 
 // Class TgGame.TgPawn_BombQueen
-// 0x00A8 (0x3378 - 0x32D0)
+// 0x00A8 (0x3380 - 0x32D8)
 class ATgPawn_BombQueen : public ATgPawn_Character
 {
 public:
-	class ATgDevice_BombQueenUlt*                      m_CachedUlt;                                              // 0x32D0(0x0008)
-	class ATgBombBagBombProp*                          m_Props[0x10];                                            // 0x32D8(0x0008)
-	int                                                m_nPropIndex;                                             // 0x3358(0x0004)
-	int                                                m_nDefaultBombPropId;                                     // 0x335C(0x0004) (Const)
-	int                                                m_nTalent1DeviceId;                                       // 0x3360(0x0004)
-	float                                              m_fTalent3Scaling;                                        // 0x3364(0x0004)
-	class UTgDeviceFire*                               m_RangeCardFiremode;                                      // 0x3368(0x0008)
-	class UTgDeviceFire*                               m_Talent1Firemode;                                        // 0x3370(0x0008)
+	class ATgDevice_BombQueenUlt*                      m_CachedUlt;                                              // 0x32D8(0x0008)
+	class ATgBombBagBombProp*                          m_Props[0x10];                                            // 0x32E0(0x0008)
+	int                                                m_nPropIndex;                                             // 0x3360(0x0004)
+	int                                                m_nDefaultBombPropId;                                     // 0x3364(0x0004) (Const)
+	int                                                m_nTalent1DeviceId;                                       // 0x3368(0x0004)
+	float                                              m_fTalent3Scaling;                                        // 0x336C(0x0004)
+	class UTgDeviceFire*                               m_RangeCardFiremode;                                      // 0x3370(0x0008)
+	class UTgDeviceFire*                               m_Talent1Firemode;                                        // 0x3378(0x0008)
 
 	static UClass* StaticClass()
 	{
@@ -50080,7 +50133,7 @@ public:
 	void InstantFire();
 	bool STATIC_HasMarkDeviceMode();
 	void STATIC_ApplyAllyHealing(class ATgPawn* Target, int nStackAmount);
-	class ATgPawn_Character* STATIC_QueryForTarget();
+	class ATgPawn_Character* QueryForTarget();
 	int STATIC_GetMaxMarks();
 };
 
@@ -50191,24 +50244,24 @@ public:
 
 
 // Class TgGame.TgPawn_Vampire
-// 0x0038 (0x3308 - 0x32D0)
+// 0x0038 (0x3310 - 0x32D8)
 class ATgPawn_Vampire : public ATgPawn_Character
 {
 public:
-	float                                              m_fMarkBreakDelay;                                        // 0x32D0(0x0004) (Const)
-	float                                              m_fMaxMarkRangeFeet;                                      // 0x32D4(0x0004) (Const)
-	unsigned long                                      m_bMarkViewConstraint : 1;                                // 0x32D8(0x0004) (Const)
-	unsigned long                                      m_bMarkLoSConstraint : 1;                                 // 0x32D8(0x0004) (Const)
-	unsigned long                                      m_bMarkRefreshesEffects : 1;                              // 0x32D8(0x0004) (Const)
-	unsigned long                                      m_bWhileEnemyMarkedEffectsApplied : 1;                    // 0x32D8(0x0004)
-	unsigned long                                      m_bWhileFriendlyMarkedEffectsApplied : 1;                 // 0x32D8(0x0004)
-	unsigned long                                      m_bMarkedPawnsNetworkUpdate : 1;                          // 0x32D8(0x0004)
-	float                                              m_fMarkLoSFoVClient;                                      // 0x32DC(0x0004) (Const)
-	float                                              m_fMarkLoSFoVServerGrace;                                 // 0x32E0(0x0004) (Const)
-	class ATgDevice_VampireAltfire*                    m_CachedVampireMark;                                      // 0x32E4(0x0008)
-	float                                              m_fBloodReduceCostMulti;                                  // 0x32EC(0x0004)
-	int                                                r_nMarkedPawnIds[0x2];                                    // 0x32F0(0x0004) (Net)
-	TArray<struct FVampMark>                           m_ActiveMarks;                                            // 0x32F8(0x0010) (AlwaysInit, NeedCtorLink)
+	float                                              m_fMarkBreakDelay;                                        // 0x32D8(0x0004) (Const)
+	float                                              m_fMaxMarkRangeFeet;                                      // 0x32DC(0x0004) (Const)
+	unsigned long                                      m_bMarkViewConstraint : 1;                                // 0x32E0(0x0004) (Const)
+	unsigned long                                      m_bMarkLoSConstraint : 1;                                 // 0x32E0(0x0004) (Const)
+	unsigned long                                      m_bMarkRefreshesEffects : 1;                              // 0x32E0(0x0004) (Const)
+	unsigned long                                      m_bWhileEnemyMarkedEffectsApplied : 1;                    // 0x32E0(0x0004)
+	unsigned long                                      m_bWhileFriendlyMarkedEffectsApplied : 1;                 // 0x32E0(0x0004)
+	unsigned long                                      m_bMarkedPawnsNetworkUpdate : 1;                          // 0x32E0(0x0004)
+	float                                              m_fMarkLoSFoVClient;                                      // 0x32E4(0x0004) (Const)
+	float                                              m_fMarkLoSFoVServerGrace;                                 // 0x32E8(0x0004) (Const)
+	class ATgDevice_VampireAltfire*                    m_CachedVampireMark;                                      // 0x32EC(0x0008)
+	float                                              m_fBloodReduceCostMulti;                                  // 0x32F4(0x0004)
+	int                                                r_nMarkedPawnIds[0x2];                                    // 0x32F8(0x0004) (Net)
+	TArray<struct FVampMark>                           m_ActiveMarks;                                            // 0x3300(0x0010) (AlwaysInit, NeedCtorLink)
 
 	static UClass* StaticClass()
 	{
@@ -50228,24 +50281,42 @@ public:
 	bool STATIC_IsPawnMarked(class ATgPawn* QueryTarget);
 	void RemoveMark(class ATgPawn* MarkTarget);
 	void STATIC_RemoveMarkByIndex(int nIndex);
-	void AddMark(class ATgPawn* MarkedTarget);
+	void STATIC_AddMark(class ATgPawn* MarkedTarget);
 	bool RemoveMarkedEffects(class ATgPawn* MarkedTarget);
 	bool STATIC_ApplyMarkedEffects(class ATgPawn* MarkedTarget);
 	float STATIC_GetMarkBreakDelay();
-	void STATIC_PawnOnKilledGlobal(class AActor* Victim, class AActor* Killer, TArray<class ATgRepInfo_Player*> AssistingPlayers);
+	void PawnOnKilledGlobal(class AActor* Victim, class AActor* Killer, TArray<class ATgRepInfo_Player*> AssistingPlayers);
 	void STATIC_ApplyMarkKillBonus(class ATgPawn* InstigatedBy, bool bAssist);
 	class UTgDeviceFire* STATIC_GetBloodBonusFiremode();
 };
 
 
+// Class TgGame.TgAnimNodeChannelFire_CaspianMovement
+// 0x0001 (0x0181 - 0x0180)
+class UTgAnimNodeChannelFire_CaspianMovement : public UTgAnimNodeChannelFire
+{
+public:
+	TEnumAsByte<ECaspianMovementAnimState>             m_eAnimState;                                             // 0x0180(0x0001)
+
+	static UClass* StaticClass()
+	{
+		static auto ptr = UObject::FindClass("Class TgGame.TgAnimNodeChannelFire_CaspianMovement");
+		return ptr;
+	}
+
+
+	void STATIC_SetAnimState(TEnumAsByte<ECaspianMovementAnimState> animState);
+};
+
+
 // Class TgGame.TgDevice_CaspianAltfire
-// 0x0018 (0x0A24 - 0x0A0C)
+// 0x0014 (0x0A20 - 0x0A0C)
 class ATgDevice_CaspianAltfire : public ATgDevice
 {
 public:
 	class ATgPawn_Caspian*                             m_pCaspian;                                               // 0x0A0C(0x0008)
 	class ATgDevice*                                   m_CachedInhand;                                           // 0x0A14(0x0008)
-	class ATgDevice_SpyGlass*                          m_RevealDev;                                              // 0x0A1C(0x0008)
+	float                                              m_fPostHitLockOutThreshold;                               // 0x0A1C(0x0004)
 
 	static UClass* StaticClass()
 	{
@@ -50254,19 +50325,20 @@ public:
 	}
 
 
-	void STATIC_PrepReload();
+	void PrepReload();
 	void LinkedDeviceUnequipped(class ATgDevice* Dev);
 	void LinkedDeviceEquipped(class ATgDevice* Dev);
 	void ReloadAmmo(bool bToFull, bool bShouldValidate);
 	void SetAmmo(int AmmoCount, int ClipSize, bool bShouldValidate, int ValidationIDOverride);
 	bool UsesSimulatedAmmo();
+	void ConsumeAmmo(int Amount, bool bShouldValidate);
 	void STATIC_FireAmmunition();
 	bool STATIC_HasCachedCaspian();
 	float STATIC_GetFiringPostHitDelay(int nMode);
 	float STATIC_GetFiringPreHitDelay(int nMode);
 	bool STATIC_CanDeviceFireNow(unsigned char FireModeNum, const struct FAimData& Aim, bool bDeviceFailLog, TEnumAsByte<EDeviceFailType>* failType);
 	bool STATIC_ShouldBlockReload(class ATgDevice* Dev, bool bIsAutoReload);
-	bool STATIC_HasAmmo();
+	bool HasAmmo();
 	bool IsReloading();
 	int STATIC_GetCurrentAmmoAmount();
 	bool STATIC_RequiresAmmoToFire();
@@ -50293,22 +50365,35 @@ public:
 };
 
 
+// Class TgGame.TgDevice_CaspianQTalent
+// 0x0000 (0x0A18 - 0x0A18)
+class ATgDevice_CaspianQTalent : public ATgDevice_CaspianQ
+{
+public:
+
+	static UClass* StaticClass()
+	{
+		static auto ptr = UObject::FindClass("Class TgGame.TgDevice_CaspianQTalent");
+		return ptr;
+	}
+
+
+	void OnUnlinkDevice(class ATgPawn* TgP);
+	void OnLinkDevice(class ATgPawn* TgP);
+	void FireTalentProjectile();
+	bool STATIC_CanSpawnOnClientFirst(class UClass* ProjectileClass, bool bUsesTrackingTarget);
+};
+
+
 // Class TgGame.TgDevice_CaspianUlt
-// 0x011C (0x0B28 - 0x0A0C)
+// 0x0018 (0x0A24 - 0x0A0C)
 class ATgDevice_CaspianUlt : public ATgDevice
 {
 public:
 	class ATgDevice_CaspianUltFire*                    m_CaspianUltFire;                                         // 0x0A0C(0x0008)
 	class ATgPawn_Caspian*                             m_pCaspian;                                               // 0x0A14(0x0008)
 	float                                              c_fClientFalsePostHitTime;                                // 0x0A1C(0x0004)
-	float                                              c_fSwordAttemptedFireLockout;                             // 0x0A20(0x0004)
-	float                                              m_fSwordInitializationTimeout;                            // 0x0A24(0x0004)
-	unsigned char                                      r_nSwordNonces[0x5];                                      // 0x0A28(0x0001) (Net)
-	unsigned char                                      r_nSwordIds[0x5];                                         // 0x0A2D(0x0001) (Net)
-	unsigned char                                      r_bSwordFlags[0x5];                                       // 0x0A32(0x0001) (Net)
-	unsigned char                                      s_nNextAvailableId;                                       // 0x0A37(0x0001)
-	int                                                r_nSwordPositions[0x5];                                   // 0x0A38(0x0004) (Net)
-	struct FCaspianSword                               m_LocalSwords[0x5];                                       // 0x0A4C(0x002C)
+	float                                              m_fSwordInitializationTimeout;                            // 0x0A20(0x0004)
 
 	static UClass* StaticClass()
 	{
@@ -50321,39 +50406,14 @@ public:
 	void OnLinkDevice(class ATgPawn* TgP);
 	void LinkedDeviceUnequipped(class ATgDevice* Dev);
 	void LinkedDeviceEquipped(class ATgDevice* Dev);
-	void EarlyOut();
-	void UpdateSwordMissiles();
-	void UpdateSword(int Index);
-	void STATIC_DeactivateSword(int I);
 	void DeactivateAllSwords();
-	void STATIC_LocalActivateSword(int I);
-	void SpawnSword(int nPosition);
-	void RollbackSimulatedSwordMissileFire(int Index);
-	void STATIC_DeactivateSwordFx(int Index);
-	void STATIC_ActivateSwordFx(int Index);
-	int STATIC_GetNextFreeSwordIndex();
-	struct FVector STATIC_GetSwordWorldLocation(int nNdx);
-	struct FVector STATIC_GetNextSwordProjectileFireOffset();
-	int STATIC_GetNextSwordToFire();
-	void OnSwordExploded(class ATgProjectile* SwordProjectile);
-	void OnSwordFired(class ATgProjectile* SwordProjectile);
+	void EarlyOut();
 	void STATIC_FireAmmunition();
 	void Tick(float DeltaSeconds);
-	void STATIC_AuthSwordUpdated(int I);
 	bool ShouldInterruptInhand();
-	void ReplicatedEvent(const struct FName& VarName);
-	bool STATIC_GetSwordIsFiredSimulated(int nNdx);
-	void SetSwordPositionIndex(int nNdx, int nPosition);
-	void SetSwordIsFired(int nNdx, bool bIsFired);
-	void SetSwordIsActive(int nNdx, bool bIsActive);
-	int STATIC_NumSwordsReadyToFire(bool bAuthoritativeOnly);
-	bool STATIC_GetSwordIsActive(int nNdx, bool byRep);
-	int STATIC_GetSwordPositionIndex(int nNdx, bool byRep);
-	bool STATIC_GetSwordIsFired(int nNdx, bool byRep);
 	bool STATIC_CanDeviceFireNow(unsigned char FireModeNum, const struct FAimData& Aim, bool bDeviceFailLog, TEnumAsByte<EDeviceFailType>* failType);
 	bool IsDeviceFiringForUI();
 	bool STATIC_IsInFalsePostfire();
-	bool STATIC_IsSimulatingSpeculativeSwordFired(int Index);
 };
 
 
@@ -50378,17 +50438,17 @@ public:
 	void LinkedDeviceEquipped(class ATgDevice* Dev);
 	struct FVector GetProjectileSpawnOffset();
 	bool ShouldInterruptInhand();
-	int STATIC_GetSwordMeshAsmId();
 	bool STATIC_CanDeviceFireNow(unsigned char FireModeNum, const struct FAimData& Aim, bool bDeviceFailLog, TEnumAsByte<EDeviceFailType>* failType);
 };
 
 
 // Class TgGame.TgDevice_CaspianInhand
-// 0x0008 (0x0A20 - 0x0A18)
+// 0x0018 (0x0A34 - 0x0A1C)
 class ATgDevice_CaspianInhand : public ATgDevice_ChainSequence
 {
 public:
-	class ATgPawn_Caspian*                             m_pCaspian;                                               // 0x0A18(0x0008)
+	class ATgPawn_Caspian*                             m_pCaspian;                                               // 0x0A1C(0x0008)
+	TArray<class AActor*>                              m_HitActors;                                              // 0x0A24(0x0010) (NeedCtorLink)
 
 	static UClass* StaticClass()
 	{
@@ -50397,9 +50457,18 @@ public:
 	}
 
 
+	void PlayClientFireFx(const struct FVector& HitLocation, int nSocketIndex, bool bSuccessfulHit, float fRefireTime, int nShotsFired);
 	int GetChainMax();
+	void ConsumeAmmo(int Amount, bool bShouldValidate);
 	void STATIC_FireAmmunition();
+	void ClientDeactivateTalentThreeEvent();
+	void ClientActivateTalentThreeEvent();
+	void STATIC_ClientDeactivateTalentThree();
+	void STATIC_ClientActivateTalentThree();
+	void STATIC_DeactivateTalentThree();
+	void STATIC_ActivateTalentThree();
 	bool STATIC_HasCachedCaspian();
+	void STATIC_DeviceAdjustDamage(int nPropertyId, struct FImpactInfo* Impact, float* fDamage);
 	float STATIC_GetFiringPostHitDelay(int nMode);
 	float STATIC_GetFiringPreHitDelay(int nMode);
 	void STATIC_SetFireMode(int nFireModeNum, bool ForceSet);
@@ -50407,14 +50476,15 @@ public:
 
 
 // Class TgGame.TgDevice_CaspianMovement
-// 0x0010 (0x0A90 - 0x0A80)
+// 0x0020 (0x0AA0 - 0x0A80)
 class ATgDevice_CaspianMovement : public ATgDevice_Charge
 {
 public:
 	class ATgPawn_Caspian*                             m_pCachedCaspian;                                         // 0x0A80(0x0008)
 	float                                              m_fSecondaryActivationDelay;                              // 0x0A88(0x0004)
-	unsigned long                                      c_bReactivationRequested : 1;                             // 0x0A8C(0x0004)
-	unsigned long                                      r_bQueueSpinningSwords : 1;                               // 0x0A8C(0x0004) (Net)
+	unsigned long                                      r_bReactivationRequested : 1;                             // 0x0A8C(0x0004) (Net)
+	unsigned long                                      r_bHasTalentTwo : 1;                                      // 0x0A8C(0x0004) (Net)
+	TArray<class AActor*>                              s_talentTwoAppliedList;                                   // 0x0A90(0x0010) (NeedCtorLink)
 
 	static UClass* StaticClass()
 	{
@@ -50423,15 +50493,104 @@ public:
 	}
 
 
+	float GetChargeTime();
+	void STATIC_CancelSafetyTimer();
+	void STATIC_DeactivateTalentTwo();
+	void STATIC_ActivateTalentTwo();
+	void ResetTimers();
+	void ResetPhys();
+	void STATIC_EndPhys();
+	bool CanBeInterrupted();
+	bool CanFiringBeCanceledByReactivation();
+	bool CanFiringBeCanceledByRightMouse();
+	bool CanFiringBeCanceledByLeftMouse();
+	bool CanBeCanceled();
+	void STATIC_ApplyTouchHit(class ATgPawn* InstigatorPawn, const struct FVector& vHitLocation, const struct FVector& vHitNormal, class AActor* Target);
+	void STATIC_CheckTalentTwoStack(class AActor* Target);
 	void STATIC_BeginSpinningSwords();
+	void STATIC_ClientBeginSpinningSwords();
 	void STATIC_BeginSpinningSwordsTimer();
 	void STATIC_EndSpinningSwordsTimer();
 	void STATIC_ClientEndSpinningSwords();
 	void STATIC_EndSpinningSwords();
 	bool TrySpinningSwords(float fOffsetDelay);
 	void ServerTrySpinningSwords(float fTimeOfActivation);
+	bool InterceptSlotReleased(class ATgPlayerController* TgController);
 	bool InterceptSlotPressed(class ATgPlayerController* TgController);
+	bool STATIC_CheckSpinningSwords();
+	void STATIC_FireAmmunition();
 	bool STATIC_HasCachedCaspian();
+	void StartCooldown(int nMode, float fCooldownTimeOverride);
+	bool ShouldBankCooldown();
+};
+
+
+// Class TgGame.TgDeviceFire_CaspianInHand
+// 0x0010 (0x0278 - 0x0268)
+class UTgDeviceFire_CaspianInHand : public UTgDeviceFire
+{
+public:
+	class ATgDevice_CaspianInhand*                     m_pCachedInHandDevice;                                    // 0x0268(0x0008)
+	float                                              m_fFirePostHitDelayOverride;                              // 0x0270(0x0004)
+	float                                              m_fRangeOverrideMultiplier;                               // 0x0274(0x0004)
+
+	static UClass* StaticClass()
+	{
+		static auto ptr = UObject::FindClass("Class TgGame.TgDeviceFire_CaspianInHand");
+		return ptr;
+	}
+
+
+	float STATIC_GetRange();
+};
+
+
+// Class TgGame.TgDeviceFire_CaspianInHandAOE
+// 0x000C (0x0274 - 0x0268)
+class UTgDeviceFire_CaspianInHandAOE : public UTgDeviceFire
+{
+public:
+	class ATgDevice_CaspianInhand*                     m_pCachedInHandDevice;                                    // 0x0268(0x0008)
+	float                                              m_fRangeOverrideMultiplier;                               // 0x0270(0x0004)
+
+	static UClass* StaticClass()
+	{
+		static auto ptr = UObject::FindClass("Class TgGame.TgDeviceFire_CaspianInHandAOE");
+		return ptr;
+	}
+
+
+	float STATIC_GetRange();
+};
+
+
+// Class TgGame.TgDeviceFire_CaspianInHandAOETwo
+// 0x0000 (0x0274 - 0x0274)
+class UTgDeviceFire_CaspianInHandAOETwo : public UTgDeviceFire_CaspianInHandAOE
+{
+public:
+
+	static UClass* StaticClass()
+	{
+		static auto ptr = UObject::FindClass("Class TgGame.TgDeviceFire_CaspianInHandAOETwo");
+		return ptr;
+	}
+
+};
+
+
+// Class TgGame.TgDeviceFire_CaspianMovement
+// 0x0000 (0x0268 - 0x0268)
+class UTgDeviceFire_CaspianMovement : public UTgDeviceFire
+{
+public:
+
+	static UClass* StaticClass()
+	{
+		static auto ptr = UObject::FindClass("Class TgGame.TgDeviceFire_CaspianMovement");
+		return ptr;
+	}
+
 };
 
 
@@ -50450,25 +50609,175 @@ public:
 };
 
 
+// Class TgGame.TgDeviceFire_CaspianInHandAOEThree
+// 0x000C (0x0284 - 0x0278)
+class UTgDeviceFire_CaspianInHandAOEThree : public UTgDeviceFire_EncroachmentFireCone
+{
+public:
+	class ATgDevice_CaspianInhand*                     m_pCachedInHandDevice;                                    // 0x0278(0x0008)
+	float                                              m_fRangeOverrideMultiplier;                               // 0x0280(0x0004)
+
+	static UClass* StaticClass()
+	{
+		static auto ptr = UObject::FindClass("Class TgGame.TgDeviceFire_CaspianInHandAOEThree");
+		return ptr;
+	}
+
+
+	float STATIC_GetRange();
+};
+
+
+// Class TgGame.TgDeviceForm_CaspianInhand
+// 0x0000 (0x028C - 0x028C)
+class UTgDeviceForm_CaspianInhand : public UTgDeviceForm
+{
+public:
+
+	static UClass* StaticClass()
+	{
+		static auto ptr = UObject::FindClass("Class TgGame.TgDeviceForm_CaspianInhand");
+		return ptr;
+	}
+
+
+	void Fire(const struct FVector& HitLocation, int nFireMode, int nEquipSlot, int nSocketIndex, bool bSuccessfulHit, float fRefireTime);
+};
+
+
+// Class TgGame.TgDeviceForm_CaspianMovement
+// 0x0038 (0x02C4 - 0x028C)
+class UTgDeviceForm_CaspianMovement : public UTgDeviceForm
+{
+public:
+	TArray<class UTgAnimNodeChannelFire_CaspianMovement*> m_CaspianMovementNodes3p;                                 // 0x028C(0x0010) (NeedCtorLink)
+	TArray<class UTgAnimNodeChannelFire_CaspianMovement*> m_CaspianMovementNodes1p;                                 // 0x029C(0x0010) (NeedCtorLink)
+	class ATgPawn_Caspian*                             m_pCachedCaspian;                                         // 0x02AC(0x0008)
+	struct FName                                       m_nmWhirlActivation;                                      // 0x02B4(0x0008)
+	struct FName                                       m_nmDashConeActivation;                                   // 0x02BC(0x0008)
+
+	static UClass* StaticClass()
+	{
+		static auto ptr = UObject::FindClass("Class TgGame.TgDeviceForm_CaspianMovement");
+		return ptr;
+	}
+
+
+	void StartFire(int nFireMode, float fRefireTime, class AActor* Target, int nAmmoRemaining);
+	void STATIC_CacheAnimNode(class UAnimNode* Node, bool bIs3p);
+	void ClearAnimNodes(bool bIs3p);
+	bool STATIC_HasCachedCaspian();
+	void PlayEndSound();
+	void Generic1(unsigned char byExtraData);
+	void UpdateMovementAnimState(TEnumAsByte<ECaspianMovementAnimState> eNewState);
+};
+
+
+// Class TgGame.TgInvListener_CaspianAddStacks
+// 0x0008 (0x00CC - 0x00C4)
+class UTgInvListener_CaspianAddStacks : public UTgInvListener
+{
+public:
+	class ATgPawn_Caspian*                             m_CachedCaspian;                                          // 0x00C4(0x0008)
+
+	static UClass* StaticClass()
+	{
+		static auto ptr = UObject::FindClass("Class TgGame.TgInvListener_CaspianAddStacks");
+		return ptr;
+	}
+
+
+	bool STATIC_HasCachedCaspian();
+};
+
+
+// Class TgGame.TgInvListener_CaspianExtendStackLifetime
+// 0x0008 (0x00CC - 0x00C4)
+class UTgInvListener_CaspianExtendStackLifetime : public UTgInvListener
+{
+public:
+	class ATgPawn_Caspian*                             m_CachedCaspian;                                          // 0x00C4(0x0008)
+
+	static UClass* StaticClass()
+	{
+		static auto ptr = UObject::FindClass("Class TgGame.TgInvListener_CaspianExtendStackLifetime");
+		return ptr;
+	}
+
+
+	bool STATIC_HasCachedCaspian();
+};
+
+
+// Class TgGame.TgInvListener_CaspianStackExpired
+// 0x0008 (0x00CC - 0x00C4)
+class UTgInvListener_CaspianStackExpired : public UTgInvListener
+{
+public:
+	class ATgPawn_Caspian*                             m_CachedCaspian;                                          // 0x00C4(0x0008)
+
+	static UClass* StaticClass()
+	{
+		static auto ptr = UObject::FindClass("Class TgGame.TgInvListener_CaspianStackExpired");
+		return ptr;
+	}
+
+
+	bool STATIC_HasCachedCaspian();
+};
+
+
+// Class TgGame.TgInvListener_CaspianTalentThree
+// 0x0008 (0x00CC - 0x00C4)
+class UTgInvListener_CaspianTalentThree : public UTgInvListener
+{
+public:
+	class ATgPawn_Caspian*                             m_CachedCaspian;                                          // 0x00C4(0x0008)
+
+	static UClass* StaticClass()
+	{
+		static auto ptr = UObject::FindClass("Class TgGame.TgInvListener_CaspianTalentThree");
+		return ptr;
+	}
+
+
+	bool STATIC_HasCachedCaspian();
+};
+
+
 // Class TgGame.TgPawn_Caspian
-// 0x0068 (0x3338 - 0x32D0)
+// 0x0194 (0x346C - 0x32D8)
 class ATgPawn_Caspian : public ATgPawn_Character
 {
 public:
-	TArray<struct FCaspianStackCountHistoryEntry>      s_StackCountHistory;                                      // 0x32D0(0x0010) (NeedCtorLink)
-	float                                              s_fStackHistoryWindow;                                    // 0x32E0(0x0004)
-	TArray<struct FCaspianPassiveStack>                s_Stacks;                                                 // 0x32E4(0x0010) (NeedCtorLink)
-	struct FCaspianStackConfig                         m_InhandStackConfig;                                      // 0x32F4(0x0008)
-	struct FCaspianStackConfig                         m_AltfireStackConfig;                                     // 0x32FC(0x0008)
-	unsigned long                                      m_bStacksExpireIndividually : 1;                          // 0x3304(0x0004)
-	unsigned long                                      m_bIsSpinningSwords : 1;                                  // 0x3304(0x0004)
-	int                                                m_nLastAcknowledgedInhandStacks;                          // 0x3308(0x0004)
-	int                                                m_nLastAcknowledgedAltfireStacks;                         // 0x330C(0x0004)
-	int                                                r_nCurrentInhandStacks;                                   // 0x3310(0x0004) (Net)
-	int                                                r_nCurrentAltfireStacks;                                  // 0x3314(0x0004) (Net)
-	TArray<struct FName>                               m_nmSwordMissileSockets;                                  // 0x3318(0x0010) (NeedCtorLink)
-	class ATgDevice_CaspianUlt*                        m_CaspianUlt;                                             // 0x3328(0x0008)
-	class ATgDevice_CaspianUltFire*                    m_CaspianUltFire;                                         // 0x3330(0x0008)
+	TArray<struct FCaspianStackCountHistoryEntry>      s_StackCountHistory;                                      // 0x32D8(0x0010) (NeedCtorLink)
+	float                                              s_fStackHistoryWindow;                                    // 0x32E8(0x0004)
+	TArray<struct FCaspianPassiveStack>                s_Stacks;                                                 // 0x32EC(0x0010) (NeedCtorLink)
+	struct FCaspianStackConfig                         m_InhandStackConfig;                                      // 0x32FC(0x0008)
+	struct FCaspianStackConfig                         m_AltfireStackConfig;                                     // 0x3304(0x0008)
+	unsigned long                                      m_bStacksExpireIndividually : 1;                          // 0x330C(0x0004)
+	unsigned long                                      m_bIsSpinningSwords : 1;                                  // 0x330C(0x0004)
+	unsigned long                                      s_bHasBonusProjectileTalent : 1;                          // 0x330C(0x0004)
+	unsigned long                                      m_bHasTalentThree : 1;                                    // 0x330C(0x0004)
+	int                                                m_nLastAcknowledgedInhandStacks;                          // 0x3310(0x0004)
+	int                                                m_nLastAcknowledgedAltfireStacks;                         // 0x3314(0x0004)
+	int                                                r_nCurrentInhandStacks;                                   // 0x3318(0x0004) (Net)
+	int                                                r_nCurrentAltfireStacks;                                  // 0x331C(0x0004) (Net)
+	TArray<struct FName>                               m_nmSwordMissileSockets;                                  // 0x3320(0x0010) (NeedCtorLink)
+	class ATgDevice_CaspianUlt*                        m_CaspianUlt;                                             // 0x3330(0x0008)
+	class ATgDevice_CaspianUltFire*                    m_CaspianUltFire;                                         // 0x3338(0x0008)
+	class ATgDevice_CaspianQTalent*                    m_CachedProjTalent;                                       // 0x3340(0x0008)
+	int                                                s_nCurrentAmmoConsumed;                                   // 0x3348(0x0004)
+	int                                                s_nAmmoConsumedThreshold;                                 // 0x334C(0x0004)
+	TArray<class UTgInvListener_CaspianStackExpired*>  m_CachedStackExpiredListeners;                            // 0x3350(0x0010) (NeedCtorLink)
+	class UTgInvListener_CaspianAddStacks*             m_CachedStackAdderListener;                               // 0x3360(0x0008)
+	unsigned char                                      s_nNextAvailableId;                                       // 0x3368(0x0001)
+	unsigned char                                      r_nSwordNonces[0x5];                                      // 0x3369(0x0001) (Net)
+	unsigned char                                      r_nSwordIds[0x5];                                         // 0x336E(0x0001) (Net)
+	unsigned char                                      r_bSwordFlags[0x5];                                       // 0x3373(0x0001) (Net)
+	float                                              c_fSwordAttemptedFireLockout;                             // 0x3378(0x0004)
+	struct FCaspianSword                               m_LocalSwords[0x5];                                       // 0x337C(0x002C)
+	int                                                r_nSwordPositions[0x5];                                   // 0x3458(0x0004) (Net)
 
 	static UClass* StaticClass()
 	{
@@ -50477,16 +50786,40 @@ public:
 	}
 
 
+	int STATIC_GetNextSwordToFire();
+	struct FVector STATIC_GetNextSwordProjectileFireOffset();
+	void RollbackSimulatedSwordMissileFire(int Index);
+	void STATIC_DeactivateSwordFx(int Index);
+	void STATIC_DeactivateSword(int I);
+	void STATIC_ActivateSwordFx(int Index);
+	int STATIC_GetNextFreeSwordIndex();
+	void STATIC_LocalActivateSword(int I);
+	void SpawnSword(int nPosition);
+	void UpdateSwordMissiles();
+	void UpdateSword(int Index);
+	void OnSwordExploded(class ATgProjectile* SwordProjectile);
+	void OnSwordFired(class ATgProjectile* SwordProjectile);
+	void STATIC_AttemptFireUltSword();
+	void STATIC_AuthSwordUpdated(int I);
+	void Tick(float DeltaSeconds);
 	bool CanFlyWithoutHover();
 	void ReplicatedEvent(const struct FName& VarName);
-	void STATIC_AttemptFireUltSword();
+	void STATIC_ClearStacksOnRespawn();
+	bool OnLiveRespawn();
+	void OnRespawn();
+	int STATIC_GetUISkillEqpSlotOverride_Caspian(int nEquipSlot, TEnumAsByte<EUI_SKILL_EQUIP_SLOT> eUISlot, bool bShouldSwapAltAndInhandInputs, int nFallThroughValue);
+	int STATIC_GetUISkillEqpSlotOverrideStaticDefault(int nEquipSlot, TEnumAsByte<EUI_SKILL_EQUIP_SLOT> eUISlot);
+	int STATIC_GetUISkillEqpSlotOverride(int nEquipSlot, TEnumAsByte<EUI_SKILL_EQUIP_SLOT> eUISlot, bool bBaseSkillOnly, bool bGamepadUI);
+	bool STATIC_ShouldSwapAltAndInhandInputs();
 	void OnProjectileExploded(class ATgProjectile* ExplodedProjectile, class AActor* HitActor, const struct FVector& HitLocation, const struct FVector& HitNormal);
 	void ProjectileOnFire(class ATgProjectile* Proj);
 	struct FVector STATIC_GetSwordMissileLocation(int nIndex);
 	struct FName STATIC_GetSwordMissileSocketName(int nIndex);
 	bool ValidateClientStacks(TEnumAsByte<ECaspianStackSource> eSource, float fRewindAmount, int* nStacks);
+	void TrackAmmoConsumed(int nAmount);
 	void STATIC_DeviceOnDamaged(struct FOnDamagedParams* Params);
 	void UpdateStackCounts();
+	void OnStackExpired(unsigned char eSource);
 	void STATIC_AddStackHistoryRecord(unsigned char eSource);
 	int STATIC_GetCurrentStacks(TEnumAsByte<ECaspianStackSource> eSource);
 	void STATIC_AddStack(TEnumAsByte<ECaspianStackSource> eSource);
@@ -50494,6 +50827,16 @@ public:
 	void STATIC_CullStacks();
 	int STATIC_CountStacks_Internal(TEnumAsByte<ECaspianStackSource> eSource);
 	void STATIC_ClientOnCurrentStacksUpdated();
+	bool STATIC_GetSwordIsFiredSimulated(int nNdx);
+	void SetSwordPositionIndex(int nNdx, int nPosition);
+	void SetSwordIsFired(int nNdx, bool bIsFired);
+	void SetSwordIsActive(int nNdx, bool bIsActive);
+	int NumSwordsReadyToFire(bool bAuthoritativeOnly);
+	bool STATIC_GetSwordIsActive(int nNdx, bool byRep);
+	int STATIC_GetSwordPositionIndex(int nNdx, bool byRep);
+	bool STATIC_GetSwordIsFired(int nNdx, bool byRep);
+	bool STATIC_IsSimulatingSpeculativeSwordFired(int Index);
+	void STATIC_LocalOnSwordFired(int nSwordIndex);
 };
 
 
@@ -50588,28 +50931,28 @@ public:
 
 
 // Class TgGame.TgRepInfo_Game_Flagball
-// 0x0078 (0x0678 - 0x0600)
+// 0x0078 (0x067C - 0x0604)
 class ATgRepInfo_Game_Flagball : public ATgRepInfo_Game
 {
 public:
-	float                                              c_fFlagballCorrectInterval;                               // 0x0600(0x0004)
-	float                                              c_fFlagballCorrectTimer;                                  // 0x0604(0x0004)
-	unsigned long                                      c_bInFarMoveState : 1;                                    // 0x0608(0x0004)
-	unsigned long                                      r_bPassingEnabled : 1;                                    // 0x0608(0x0004) (Net)
-	unsigned long                                      r_bBallActive : 1;                                        // 0x0608(0x0004) (Net)
-	unsigned long                                      r_bBallExists : 1;                                        // 0x0608(0x0004) (Net)
-	class ATgFlagBall*                                 c_Flagball;                                               // 0x060C(0x0008)
-	class ATgFlagballGoal*                             c_TF1Goal;                                                // 0x0614(0x0008)
-	class ATgFlagballGoal*                             c_TF2Goal;                                                // 0x061C(0x0008)
-	float                                              r_nTimeRemaining;                                         // 0x0624(0x0004) (Net)
-	class ATgPawn_Character*                           r_BallCarrier;                                            // 0x0628(0x0008) (Net)
-	struct FVector                                     r_vBallPosition;                                          // 0x0630(0x000C) (Net)
-	struct FVector                                     r_vBallVelocity;                                          // 0x063C(0x000C) (Net)
-	struct FVector                                     r_vBallPositionForHUD;                                    // 0x0648(0x000C) (Net)
-	struct FVector                                     r_vTF1GoalLocation;                                       // 0x0654(0x000C) (Net)
-	struct FVector                                     r_vTF2GoalLocation;                                       // 0x0660(0x000C) (Net)
-	int                                                c_nFlagballDeviceFireID;                                  // 0x066C(0x0004)
-	class ATgDeploy_FlagballGoalMarker*                r_GoalMarker;                                             // 0x0670(0x0008) (Net)
+	float                                              c_fFlagballCorrectInterval;                               // 0x0604(0x0004)
+	float                                              c_fFlagballCorrectTimer;                                  // 0x0608(0x0004)
+	unsigned long                                      c_bInFarMoveState : 1;                                    // 0x060C(0x0004)
+	unsigned long                                      r_bPassingEnabled : 1;                                    // 0x060C(0x0004) (Net)
+	unsigned long                                      r_bBallActive : 1;                                        // 0x060C(0x0004) (Net)
+	unsigned long                                      r_bBallExists : 1;                                        // 0x060C(0x0004) (Net)
+	class ATgFlagBall*                                 c_Flagball;                                               // 0x0610(0x0008)
+	class ATgFlagballGoal*                             c_TF1Goal;                                                // 0x0618(0x0008)
+	class ATgFlagballGoal*                             c_TF2Goal;                                                // 0x0620(0x0008)
+	float                                              r_nTimeRemaining;                                         // 0x0628(0x0004) (Net)
+	class ATgPawn_Character*                           r_BallCarrier;                                            // 0x062C(0x0008) (Net)
+	struct FVector                                     r_vBallPosition;                                          // 0x0634(0x000C) (Net)
+	struct FVector                                     r_vBallVelocity;                                          // 0x0640(0x000C) (Net)
+	struct FVector                                     r_vBallPositionForHUD;                                    // 0x064C(0x000C) (Net)
+	struct FVector                                     r_vTF1GoalLocation;                                       // 0x0658(0x000C) (Net)
+	struct FVector                                     r_vTF2GoalLocation;                                       // 0x0664(0x000C) (Net)
+	int                                                c_nFlagballDeviceFireID;                                  // 0x0670(0x0004)
+	class ATgDeploy_FlagballGoalMarker*                r_GoalMarker;                                             // 0x0674(0x0008) (Net)
 
 	static UClass* StaticClass()
 	{
@@ -50670,7 +51013,7 @@ public:
 	void STATIC_ConsiderSpawningEchoForSiege();
 	void Tick(float DeltaSeconds);
 	void STATIC_SelectAbyssalEcho();
-	void STATIC_InitEcho(class ATgPawn_Character* pChar);
+	void InitEcho(class ATgPawn_Character* pChar);
 };
 
 
@@ -55454,10 +55797,10 @@ public:
 
 
 	void STATIC_EndFlying();
-	void STATIC_HitTarget();
+	void HitTarget();
 	void STATIC_Fly();
-	void ReadyFlightFromAir();
-	void ReadyFlightFromGround();
+	void STATIC_ReadyFlightFromAir();
+	void STATIC_ReadyFlightFromGround();
 };
 
 
@@ -55967,7 +56310,7 @@ public:
 	void STATIC_SetCurrentCaptor(class ATgPawn* TgP);
 	void STATIC_ConsiderForCurrentCaptor(class ATgPawn_Character* TgPC);
 	void CollisionProxyOnTouch(class AActor* Other, class UPrimitiveComponent* OtherComp, const struct FVector& HitLocation, const struct FVector& HitNormal);
-	void Deactivate();
+	void STATIC_Deactivate();
 	void Activate();
 	void Tick(float DeltaSeconds);
 	void STATIC_UpdateVisibility();
@@ -56551,7 +56894,7 @@ public:
 
 
 	class AActor* STATIC_GetMoveTarget();
-	bool STATIC_HigherPriorityThan(class ATgDefensePoint* S, class ATgAIController* B);
+	bool HigherPriorityThan(class ATgDefensePoint* S, class ATgAIController* B);
 	void PreBeginPlay();
 	void STATIC_FreePoint();
 	void Reset();
@@ -56926,7 +57269,7 @@ public:
 
 	void STATIC_StopFireEffects(int nEquipSlot, int nFireMode);
 	void PlayFireFx(int nEquipSlot, int nFireMode);
-	void STATIC_Hide3PWeaponMesh();
+	void Hide3PWeaponMesh();
 	void STATIC_Unhide3PWeaponMesh();
 	void Initialize3P(unsigned char EquipPoint, int DeviceID);
 	void Initialize1P(unsigned char EquipPoint, int DeviceID, int MeshAsmId1P);
@@ -57182,6 +57525,7 @@ public:
 	}
 
 
+	void STATIC_ApplyCustomFireToInitial(class AActor* InitialTarget, class UTgDeviceFire* FireMode);
 	void STATIC_TriggerArc(int Index);
 };
 
@@ -57396,13 +57740,13 @@ public:
 
 
 // Class TgGame.TgPawn_Princess
-// 0x0100 (0x33D0 - 0x32D0)
+// 0x0100 (0x33D8 - 0x32D8)
 class ATgPawn_Princess : public ATgPawn_Character
 {
 public:
-	class ATgDevice_Enlightenment*                     m_CachedEnlightenment;                                    // 0x32D0(0x0008)
-	class ATgDevice_EnlightenmentGun*                  m_CachedEnlightenmentGun;                                 // 0x32D8(0x0008)
-	TScriptInterface<class UTgCombatActor>             r_GraceTargets[0xF];                                      // 0x32E0(0x0010)
+	class ATgDevice_Enlightenment*                     m_CachedEnlightenment;                                    // 0x32D8(0x0008)
+	class ATgDevice_EnlightenmentGun*                  m_CachedEnlightenmentGun;                                 // 0x32E0(0x0008)
+	TScriptInterface<class UTgCombatActor>             r_GraceTargets[0xF];                                      // 0x32E8(0x0010)
 
 	static UClass* StaticClass()
 	{
@@ -57412,8 +57756,8 @@ public:
 
 
 	void STATIC_ToggleEnlightenmentGun(bool bEnabled);
-	bool STATIC_HasCachedEnlightenmentGun();
-	bool STATIC_HasCachedEnlightenment();
+	bool HasCachedEnlightenmentGun();
+	bool HasCachedEnlightenment();
 	void ManageGraceTracers();
 	void ReplicatedEvent(const struct FName& VarName);
 };
@@ -57498,7 +57842,7 @@ public:
 	float GetCustomTimerBarCurrentTime();
 	void OnUnlinkDevice(class ATgPawn* TgP);
 	void OnLinkDevice(class ATgPawn* TgP);
-	void Deactivate();
+	void STATIC_Deactivate();
 	void STATIC_ClientActivate();
 	void Activate();
 };
@@ -57602,7 +57946,7 @@ public:
 
 
 	float STATIC_GetRange();
-	bool STATIC_HasCachedBarik();
+	bool HasCachedBarik();
 };
 
 
@@ -57825,8 +58169,8 @@ public:
 	}
 
 
-	bool STATIC_HasCachedSniperDevice();
-	bool STATIC_HasCachedInhandDevice();
+	bool HasCachedSniperDevice();
+	bool HasCachedInhandDevice();
 	void STATIC_ToggleCamFX(bool bEnable);
 	void Tick(float DeltaTime);
 	void OnStartFireRequestSent();
@@ -58083,7 +58427,7 @@ public:
 
 	void STATIC_SetBeamTangent(const struct FVector& HitLocation, int nEquipSlot);
 	void STATIC_UpdateFireLoopBeamParams(bool bHasEndPoint, const struct FVector& HitLocation, int nEquipSlot);
-	void ActivateFireLoopFailed(bool bIsActive);
+	void STATIC_ActivateFireLoopFailed(bool bIsActive);
 	void STATIC_StopFireEffects(int nEquipSlot, int nFireMode);
 	void PlayFireFx(int nEquipSlot, int nFireMode);
 	bool STATIC_GetAccurateBeamTarget(int nEquipSlot, struct FVector* HitLocation);
@@ -58151,7 +58495,7 @@ public:
 	}
 
 
-	bool STATIC_HasCachedOwl();
+	bool HasCachedOwl();
 	void PlayTracerEffects(const struct FVector& endLocation, int nEquipSlot, bool bSyntheticShot);
 	void PlayInstantHitImpactEffects(const struct FVector& HitLocation, bool bSuccessfulHit, class AActor* HitActor, const struct FVector& HitNormal, const struct FVector& FireOrigin, int nEquipSlot);
 };
@@ -58239,7 +58583,7 @@ public:
 	}
 
 
-	bool STATIC_HasCachedSupportDevice();
+	bool HasCachedSupportDevice();
 };
 
 
@@ -58274,7 +58618,7 @@ public:
 	}
 
 
-	void ActivateFireAimed(bool bSetActive);
+	void STATIC_ActivateFireAimed(bool bSetActive);
 	void STATIC_SetLoopingMuzzleEffects(bool bSetActive, int nEquipSlot, int nFireMode);
 	void OnBehindViewUpdated(bool bNewBehindView);
 	void STATIC_UpdateFireAimedFX();
@@ -59188,7 +59532,7 @@ public:
 	}
 
 
-	bool STATIC_HasCachedYingPawn();
+	bool HasCachedYingPawn();
 	void Fire(const struct FVector& HitLocation, int nFireMode, int nEquipSlot, int nSocketIndex, bool bSuccessfulHit, float fRefireTime);
 };
 
@@ -59224,12 +59568,12 @@ public:
 	}
 
 
-	void RecoverDeviceState(TEnumAsByte<ETG_REP_DEVICE_STATE> DesiredState);
+	void STATIC_RecoverDeviceState(TEnumAsByte<ETG_REP_DEVICE_STATE> DesiredState);
 	void Cleanup();
 	void DoInterrupt();
 	void StopFire(int nFireModeNum);
 	void Hit(int nFireMode, class AActor* Target, float fDamageAmount, const struct FVector& HitLocation, const struct FVector& HitNormal, struct FExtraDamageInfo* ExtraInfo);
-	void STATIC_OnFly();
+	void OnFly();
 	void Fire(const struct FVector& HitLocation, int nFireMode, int nEquipSlot, int nSocketIndex, bool bSuccessfulHit, float fRefireTime);
 	void StartFire(int nFireMode, float fRefireTime, class AActor* Target, int nAmmoRemaining);
 	void BuildUp(int nFireMode, int nEquipSlot, int nSocketIndex, float fBuildupTime);
@@ -59327,7 +59671,7 @@ public:
 
 	void Hit(int nFireMode, class AActor* Target, float fDamageAmount, const struct FVector& HitLocation, const struct FVector& HitNormal, struct FExtraDamageInfo* ExtraInfo);
 	void StartFire(int nFireMode, float fRefireTime, class AActor* Target, int nAmmoRemaining);
-	bool STATIC_HasCachedWMA();
+	bool HasCachedWMA();
 };
 
 
@@ -59558,7 +59902,7 @@ public:
 	void Fire(const struct FVector& HitLocation, int nFireMode, int nEquipSlot, int nSocketIndex, bool bSuccessfulHit, float fRefireTime);
 	void StartFire(int nFireMode, float fRefireTime, class AActor* Target, int nAmmoRemaining);
 	void BuildUp(int nFireMode, int nEquipSlot, int nSocketIndex, float fBuildupTime);
-	void RecoverDeviceState(TEnumAsByte<ETG_REP_DEVICE_STATE> DesiredState);
+	void STATIC_RecoverDeviceState(TEnumAsByte<ETG_REP_DEVICE_STATE> DesiredState);
 };
 
 
@@ -59756,7 +60100,7 @@ public:
 	void StartFire(int nFireMode, float fRefireTime, class AActor* Target, int nAmmoRemaining);
 	void Cache3PAnimNodes(class UTgSkeletalMeshComponent* SkelComp);
 	void Cache1PAnimNodes(class UTgSkeletalMeshComponent* SkelComp);
-	bool STATIC_HasCachedLex();
+	bool HasCachedLex();
 };
 
 
@@ -59793,7 +60137,7 @@ public:
 
 
 	void Generic1(unsigned char byExtraData);
-	void ActivateFx(class UTgSpecialFx* Fx, float fHealStacks);
+	void STATIC_ActivateFx(class UTgSpecialFx* Fx, float fHealStacks);
 };
 
 
@@ -59811,8 +60155,8 @@ public:
 	}
 
 
-	void RecoverDeviceState(TEnumAsByte<ETG_REP_DEVICE_STATE> DesiredState);
-	bool STATIC_HasCachedOracle();
+	void STATIC_RecoverDeviceState(TEnumAsByte<ETG_REP_DEVICE_STATE> DesiredState);
+	bool HasCachedOracle();
 };
 
 
@@ -59831,7 +60175,7 @@ public:
 	}
 
 
-	bool STATIC_HasCachedRider();
+	bool HasCachedRider();
 	void StopFire(int nFireModeNum);
 	void StartFire(int nFireMode, float fRefireTime, class AActor* Target, int nAmmoRemaining);
 };
@@ -60064,8 +60408,8 @@ public:
 	void StartFire(int nFireMode, float fRefireTime, class AActor* Target, int nAmmoRemaining);
 	void Cache3PAnimNodes(class UTgSkeletalMeshComponent* SkelComp);
 	void Cache1PAnimNodes(class UTgSkeletalMeshComponent* SkelComp);
-	bool STATIC_HasCachedWMA();
-	bool STATIC_HasCachedLex();
+	bool HasCachedWMA();
+	bool HasCachedLex();
 };
 
 
@@ -60180,7 +60524,7 @@ public:
 
 
 	void STATIC_SetPostureOnTarget(TEnumAsByte<ETG_POSTURE> Posture);
-	void RecoverDeviceState(TEnumAsByte<ETG_REP_DEVICE_STATE> DesiredState);
+	void STATIC_RecoverDeviceState(TEnumAsByte<ETG_REP_DEVICE_STATE> DesiredState);
 	void STATIC_UpdateVanguardGrabAnim(TEnumAsByte<EVanguardGrabAnimUpdate> eState);
 	void StopFire(int nFireModeNum);
 	void DoInterrupt();
@@ -60791,7 +61135,7 @@ public:
 
 	void CollisionProxyOnTouch(class AActor* Other, class UPrimitiveComponent* OtherComp, const struct FVector& HitLocation, const struct FVector& HitNormal);
 	void Touch(class AActor* Other, class UPrimitiveComponent* OtherComp, const struct FVector& HitLocation, const struct FVector& HitNormal);
-	void STATIC_HandleTouch(class AActor* Other, class UPrimitiveComponent* OtherComp, const struct FVector& HitLocation, const struct FVector& HitNormal);
+	void HandleTouch(class AActor* Other, class UPrimitiveComponent* OtherComp, const struct FVector& HitLocation, const struct FVector& HitNormal);
 	void PostBeginPlay();
 	void PreBeginPlay();
 };
@@ -61028,7 +61372,7 @@ public:
 	}
 
 
-	void STATIC_OnCapturePointTick(class ATgChaosCapturePoint* CapturePoint, int nControllingTaskforce);
+	void OnCapturePointTick(class ATgChaosCapturePoint* CapturePoint, int nControllingTaskforce);
 };
 
 
@@ -61787,7 +62131,7 @@ public:
 	}
 
 
-	void ReachTicketLimit(int nTaskForce, TEnumAsByte<EVictoryType> VictoryType);
+	void STATIC_ReachTicketLimit(int nTaskForce, TEnumAsByte<EVictoryType> VictoryType);
 	bool STATIC_GainTickets(int nTaskForce, int nNumTickets, TEnumAsByte<EVictoryType> VictoryType);
 	void STATIC_SetTickets(int nTaskForce, int nNumTickets);
 	void STATIC_BeginPhase();
@@ -61826,7 +62170,7 @@ public:
 	}
 
 
-	void STATIC_OnCapturePointTick(class ATgChaosCapturePoint* CapturePoint, int nControllingTaskforce);
+	void OnCapturePointTick(class ATgChaosCapturePoint* CapturePoint, int nControllingTaskforce);
 };
 
 
@@ -62632,7 +62976,7 @@ public:
 
 	void STATIC_TeleportHelperToActor(class AActor* Destination);
 	void MoveHelperToActor(class AActor* Destination);
-	bool STATIC_HelperIsNavigatingToOrAtDestination(class AActor* Destination);
+	bool HelperIsNavigatingToOrAtDestination(class AActor* Destination);
 	void STATIC_DestroyHelperBot();
 	void STATIC_SpawnHelperBot();
 };
@@ -63502,17 +63846,17 @@ public:
 
 
 // Class TgGame.TgPawn_Halloween_Vivian
-// 0x0020 (0x3344 - 0x3324)
+// 0x0020 (0x334C - 0x332C)
 class ATgPawn_Halloween_Vivian : public ATgPawn_Churchill
 {
 public:
-	float                                              r_fShieldRotation;                                        // 0x3324(0x0004) (Net)
-	float                                              m_fShieldOffset;                                          // 0x3328(0x0004)
-	float                                              m_fShieldRotation;                                        // 0x332C(0x0004)
-	float                                              m_fShieldRotationRate;                                    // 0x3330(0x0004)
-	float                                              c_fShieldRotationError;                                   // 0x3334(0x0004)
-	float                                              c_fShieldRotationErrorCorrectionRate;                     // 0x3338(0x0004)
-	class ATgDevice*                                   m_CachedShieldDevice;                                     // 0x333C(0x0008)
+	float                                              r_fShieldRotation;                                        // 0x332C(0x0004) (Net)
+	float                                              m_fShieldOffset;                                          // 0x3330(0x0004)
+	float                                              m_fShieldRotation;                                        // 0x3334(0x0004)
+	float                                              m_fShieldRotationRate;                                    // 0x3338(0x0004)
+	float                                              c_fShieldRotationError;                                   // 0x333C(0x0004)
+	float                                              c_fShieldRotationErrorCorrectionRate;                     // 0x3340(0x0004)
+	class ATgDevice*                                   m_CachedShieldDevice;                                     // 0x3344(0x0008)
 
 	static UClass* StaticClass()
 	{
@@ -63528,7 +63872,7 @@ public:
 
 
 // Class TgGame.TgPawn_SiegeEngine_ImmuneWhileTraveling
-// 0x0000 (0x3084 - 0x3084)
+// 0x0000 (0x308C - 0x308C)
 class ATgPawn_SiegeEngine_ImmuneWhileTraveling : public ATgPawn_Juggernaut
 {
 public:
@@ -63562,7 +63906,7 @@ public:
 
 
 // Class TgGame.TgPawn_Tower_Inner
-// 0x0000 (0x2F68 - 0x2F68)
+// 0x0000 (0x2F70 - 0x2F70)
 class ATgPawn_Tower_Inner : public ATgPawn_Tower_FA
 {
 public:
@@ -63577,7 +63921,7 @@ public:
 
 
 // Class TgGame.TgPawn_Tower_Outer
-// 0x0000 (0x2F68 - 0x2F68)
+// 0x0000 (0x2F70 - 0x2F70)
 class ATgPawn_Tower_Outer : public ATgPawn_Tower_FA
 {
 public:
@@ -63592,7 +63936,7 @@ public:
 
 
 // Class TgGame.TgPawn_Tower_Upper
-// 0x0000 (0x2F68 - 0x2F68)
+// 0x0000 (0x2F70 - 0x2F70)
 class ATgPawn_Tower_Upper : public ATgPawn_Tower_FA
 {
 public:
@@ -63607,7 +63951,7 @@ public:
 
 
 // Class TgGame.TgPawn_Turret_DefaultCone
-// 0x0000 (0x2F40 - 0x2F40)
+// 0x0000 (0x2F48 - 0x2F48)
 class ATgPawn_Turret_DefaultCone : public ATgPawn_Turret
 {
 public:
@@ -63667,7 +64011,7 @@ public:
 	void OnAnimEnd(class UAnimNodeSequence* SeqNode, float PlayedTime, float ExcessTime);
 	void Tick(float DeltaSeconds);
 	void STATIC_SetAllMotorsAngularDriveStrength(float InAngularSpringStrength, float InAngularDampingStrength, float InAngularForceLimitStrength, class USkeletalMeshComponent* SkelMeshComp);
-	void RecoverFromRagdoll();
+	void STATIC_RecoverFromRagdoll();
 	void STATIC_SetBoneSprings(bool bEnabled);
 	bool IsAngularBoneSpringName(const struct FName& InName);
 	bool IsLinearBoneSpringName(const struct FName& InName);
@@ -63923,7 +64267,7 @@ public:
 	float STATIC_GetRemainingTime();
 	void ExplodeOnTarget(class AActor* Target, const struct FVector& HitLocation, const struct FVector& HitNormal);
 	void Tick(float DeltaSeconds);
-	void STATIC_HandleTick();
+	void HandleTick();
 	void STATIC_CompleteInitialization(unsigned char ExtraInfo);
 };
 
@@ -65152,6 +65496,42 @@ public:
 };
 
 
+// Class TgGame.TgDevice_CaspianBonusProjectileTalent
+// 0x0000 (0x0A0C - 0x0A0C)
+class ATgDevice_CaspianBonusProjectileTalent : public ATgDevice
+{
+public:
+
+	static UClass* StaticClass()
+	{
+		static auto ptr = UObject::FindClass("Class TgGame.TgDevice_CaspianBonusProjectileTalent");
+		return ptr;
+	}
+
+
+	void OnUnlinkDevice(class ATgPawn* TgP);
+	void OnLinkDevice(class ATgPawn* TgP);
+};
+
+
+// Class TgGame.TgDevice_CaspianTalentTwo
+// 0x0000 (0x0A0C - 0x0A0C)
+class ATgDevice_CaspianTalentTwo : public ATgDevice
+{
+public:
+
+	static UClass* StaticClass()
+	{
+		static auto ptr = UObject::FindClass("Class TgGame.TgDevice_CaspianTalentTwo");
+		return ptr;
+	}
+
+
+	void OnUnlinkDevice(class ATgPawn* TgP);
+	void OnLinkDevice(class ATgPawn* TgP);
+};
+
+
 // Class TgGame.TgDevice_GaeBolg_Test
 // 0x0000 (0x0A0C - 0x0A0C)
 class ATgDevice_GaeBolg_Test : public ATgDevice
@@ -65719,7 +66099,7 @@ public:
 	}
 
 
-	void STATIC_PlayUltActiveEffect(bool bActive);
+	void PlayUltActiveEffect(bool bActive);
 	void Generic1(unsigned char byExtraData);
 	void StartFire(int nFireMode, float fRefireTime, class AActor* Target, int nAmmoRemaining);
 };
@@ -65785,7 +66165,7 @@ public:
 
 
 	bool STATIC_HasCaptureObjectives();
-	void STATIC_PointSwapAlert();
+	void PointSwapAlert();
 	void SelectCapturePoint(int nCapturePointIndex);
 	void SelectRandomCapturePoint();
 	void SelectInitialCapturePoint();
